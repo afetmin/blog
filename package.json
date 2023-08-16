@@ -5,7 +5,8 @@
   "scripts": {
     "build": "hexo clean & hexo generate",
     "deploy": "hexo deploy",
-    "server": "hexo server"
+    "server": "hexo server",
+    "dev": "hexo clean & hexo generate & hexo server"
   },
   "hexo": {
     "version": "6.3.0"
@@ -23,6 +24,7 @@
     "hexo-renderer-stylus": "^3.0.0",
     "hexo-server": "^3.0.0",
     "hexo-theme-landscape": "^1.0.0",
-    "hexo-theme-next": "^8.18.0"
+    "hexo-theme-next": "^8.18.0",
+    "hexo-word-counter": "^0.1.0"
   }
 }

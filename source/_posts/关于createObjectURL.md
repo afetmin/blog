@@ -1,16 +1,15 @@
 ---
 title: createObjectURL
 date: 2021-09-08 09:08:43
-tags: 
-  - js
+categories: js
 ---
 
 ## createObjectURL 是什么
 
 > URL.createObjectURL() 静态方法会创建一个 DOMString，其中包含一个表示参数中给出的对象的 URL。这个 URL 的生命周期和创建它的窗口中的 document 绑定。这个新的 URL 对象表示指定的 File 对象或 Blob 对象。 — MDN
+<!--more-->
 
 ## Blob URL/Object URL
-<!--more-->
 Blob URL/Object URL 是⼀种伪协议，允许 Blob 和 File 对象⽤作图像，下载⼆进制数据链接等的 URL
 源。在浏览器中，我们使⽤ URL.createObjectURL ⽅法来创建 Blob URL，该⽅法接收⼀个 Blob 对
 象，并为其创建⼀个唯⼀的 URL，其形式为 `blob:<origin>/<uuid>` ，对应的示例如下：

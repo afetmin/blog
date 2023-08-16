@@ -1,9 +1,7 @@
 ---
 title: 关于vue的mixin
 date: 2020-10-30 10:47:27
-tags: 
-  - vue
-categories: 进阶
+categories: vue
 ---
 
 ## vue的mixin

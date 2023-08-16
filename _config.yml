@@ -5,7 +5,7 @@
 # Site
 title: 我曾七次鄙视自己的灵魂
 subtitle: ''
-description: '一个前端的博客，记录一些所学所获'
+description: '瞎写一气，乱编一通'
 keywords: '前端,图形学,js,React'
 author: ranxiu
 language: zh-CN
@@ -45,16 +45,17 @@ relative_link: false
 future: true
 highlight:
   enable: true
-  line_number: true
+  line_number: false
+  line_threshold: 10
   auto_detect: false
-  tab_replace: '  '
+  tab_replace: '    '
   wrap: true
   hljs: false
 prismjs:
   enable: false
-  preprocess: true
-  line_number: true
-  tab_replace: ''
+  preprocess: false
+  line_number: false
+  tab_replace: '    '
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
@@ -98,6 +99,16 @@ ignore:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: next
+
+# word_count
+symbols_count_time:
+  symbols: true
+  time: true
+  total_symbols: true
+  total_time: true
+  exclude_codeblock: false
+  wpm: 300
+  suffix: "分钟."
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
