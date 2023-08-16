@@ -1,7 +1,8 @@
 ---
 title: 关于vue的mixin
 date: 2020-10-30 10:47:27
-tags: vue
+tags: 
+  - vue
 categories: 进阶
 ---
 
@@ -23,6 +24,7 @@ export const bookMixin = {
   }
 }
 ```
+<!--more-->
 接下来就可以在组件内这样写：
 ```js
 import { bookMixin } from 'utils/mixin'
