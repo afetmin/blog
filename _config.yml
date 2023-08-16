@@ -113,6 +113,14 @@ symbols_count_time:
   wpm: 300
   suffix: "分钟"
 
+# 摘要设置
+excerpt:			# 一定要顶格写，注意格式
+  depth: 3			# 他的大小就是全文阅读预览长度设置
+  excerpt_excludes: []
+  more_excludes: []
+  hideWholePostExcerpts: true
+
+
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
