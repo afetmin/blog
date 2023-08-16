@@ -108,7 +108,7 @@ menu:
 # Enable / Disable menu icons / item badges.
 menu_settings:
   icons: true
-  badges: false
+  badges: true
 
 
 # ---------------------------------------------------------------
@@ -387,7 +387,7 @@ back2top:
 
 # Reading progress bar
 reading_progress:
-  enable: false
+  enable: true
   # Available values: left | right
   start_at: left
   # Available values: top | bottom
@@ -515,9 +515,9 @@ note:
 # Tabs tag
 tabs:
   # Make the nav bar of tabs with long content stick to the top.
-  sticky: true
+  sticky: false
   transition:
-    tabs: true
+    tabs: false
     labels: true
 
 # PDF tag
