@@ -7,7 +7,7 @@ title: 我曾七次鄙视自己的灵魂
 subtitle: ''
 description: '瞎写一气，乱编一通'
 keywords: '前端,图形学,js,React'
-author: ranxiu
+author: afetmin
 language: zh-CN
 timezone: ''
 
@@ -40,7 +40,10 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
+marked:
+  prependRoot: true
+  postAsset: true
 relative_link: false
 future: true
 highlight:
