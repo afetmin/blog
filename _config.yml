@@ -108,7 +108,7 @@ symbols_count_time:
   total_time: true
   exclude_codeblock: false
   wpm: 300
-  suffix: "分钟."
+  suffix: "分钟"
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
