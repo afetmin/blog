@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":400},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":true,"nav":null,"activeClass":"utterances"},"stickytabs":true,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
+
+    <meta name="description" content="性能优化的一般性原则一般性原则依据数据而不是凭空猜测">
+<meta property="og:type" content="article">
+<meta property="og:title" content="性能优化的一般性原则">
+<meta property="og:url" content="https://afetmin.github.io/blog/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E4%B8%80%E8%88%AC%E6%80%A7%E5%8E%9F%E5%88%99/index.html">
+<meta property="og:site_name" content="我曾七次鄙视自己的灵魂">
+<meta property="og:description" content="性能优化的一般性原则一般性原则依据数据而不是凭空猜测">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-03T09:17:08.000Z">
+<meta property="article:modified_time" content="2023-08-16T14:53:39.764Z">
+<meta property="article:author" content="afetmin">
+<meta property="article:tag" content="前端,图形学,js,React">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E4%B8%80%E8%88%AC%E6%80%A7%E5%8E%9F%E5%88%99/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E4%B8%80%E8%88%AC%E6%80%A7%E5%8E%9F%E5%88%99/","path":"性能优化的一般性原则/","title":"性能优化的一般性原则"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>性能优化的一般性原则 | 我曾七次鄙视自己的灵魂</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">我曾七次鄙视自己的灵魂</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E4%B8%80%E8%88%AC%E6%80%A7%E5%8E%9F%E5%88%99"><span class="nav-number">1.</span> <span class="nav-text">性能优化的一般性原则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%80%A7%E5%8E%9F%E5%88%99"><span class="nav-number">1.1.</span> <span class="nav-text">一般性原则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E6%8D%AE%E6%95%B0%E6%8D%AE%E8%80%8C%E4%B8%8D%E6%98%AF%E5%87%AD%E7%A9%BA%E7%8C%9C%E6%B5%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">依据数据而不是凭空猜测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%8C%E8%BF%87%E6%97%A9%E4%BC%98%E5%8C%96"><span class="nav-number">1.1.2.</span> <span class="nav-text">忌过早优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%8C%E8%BF%87%E5%BA%A6%E4%BC%98%E5%8C%96"><span class="nav-number">1.1.3.</span> <span class="nav-text">忌过度优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E4%B8%9A%E5%8A%A1"><span class="nav-number">1.1.4.</span> <span class="nav-text">深入理解业务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%98%AF%E6%8C%81%E4%B9%85%E6%88%98"><span class="nav-number">1.1.5.</span> <span class="nav-text">性能优化是持久战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E8%A1%A1%E9%87%8F%E6%8C%87%E6%A0%87%E3%80%81%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E3%80%81%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.6.</span> <span class="nav-text">选择合适的衡量指标、测试用例、测试环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E5%B1%82%E6%AC%A1"><span class="nav-number">1.2.</span> <span class="nav-text">性能优化的层次</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E9%98%B6%E6%AE%B5"><span class="nav-number">1.2.1.</span> <span class="nav-text">需求阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E9%98%B6%E6%AE%B5"><span class="nav-number">1.2.2.</span> <span class="nav-text">设计阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E9%98%B6%E6%AE%B5"><span class="nav-number">1.2.3.</span> <span class="nav-text">实现阶段</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%80%A7%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">一般性方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E5%AD%98"><span class="nav-number">1.3.1.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E7%BC%93%E5%AD%98"><span class="nav-number">1.3.2.</span> <span class="nav-text">数据的缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E7%BB%93%E6%9E%9C%E7%9A%84%E7%BC%93%E5%AD%98"><span class="nav-number">1.3.3.</span> <span class="nav-text">计算结果的缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91"><span class="nav-number">1.3.4.</span> <span class="nav-text">并发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%83%B0%E6%80%A7"><span class="nav-number">1.3.5.</span> <span class="nav-text">惰性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%B9%E9%87%8F%EF%BC%8C%E5%90%88%E5%B9%B6"><span class="nav-number">1.3.6.</span> <span class="nav-text">批量，合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.3.7.</span> <span class="nav-text">更高效的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%A9%E5%B0%8F%E8%A7%A3%E7%A9%BA%E9%97%B4"><span class="nav-number">1.3.8.</span> <span class="nav-text">缩小解空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B8%8E%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F"><span class="nav-number">1.4.</span> <span class="nav-text">性能优化与代码质量</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="afetmin"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">afetmin</p>
+  <div class="site-description" itemprop="description">瞎写一气，乱编一通</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:kingpenguins@163.com" title="E-Mail → mailto:kingpenguins@163.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E4%B8%80%E8%88%AC%E6%80%A7%E5%8E%9F%E5%88%99/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="afetmin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我曾七次鄙视自己的灵魂">
+      <meta itemprop="description" content="瞎写一气，乱编一通">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="性能优化的一般性原则 | 我曾七次鄙视自己的灵魂">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          性能优化的一般性原则
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-05-03 09:17:08" itemprop="dateCreated datePublished" datetime="2023-05-03T09:17:08+00:00">2023-05-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-16 14:53:39" itemprop="dateModified" datetime="2023-08-16T14:53:39+00:00">2023-08-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">性能优化</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>10 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="性能优化的一般性原则"><a href="#性能优化的一般性原则" class="headerlink" title="性能优化的一般性原则"></a>性能优化的一般性原则</h1><h2 id="一般性原则"><a href="#一般性原则" class="headerlink" title="一般性原则"></a>一般性原则</h2><h3 id="依据数据而不是凭空猜测"><a href="#依据数据而不是凭空猜测" class="headerlink" title="依据数据而不是凭空猜测"></a>依据数据而不是凭空猜测</h3><p>这是前端性能优化的第一原则，当我们怀疑前端性能有问题的时候，应该通过测试、浏览器开发者工具、性能分析工具来分析出哪里有问题，有的放矢，而不是凭感觉、撞运气。一个前端页面有了性能问题，瓶颈有可能是 JavaScript 执行时间过长，有可能是网络请求过多或请求资源过大，有可能是 DOM 操作频繁导致重排重绘，大方向的定位可以使用浏览器开发者工具的 Performance 面板来定位，针对具体的代码块，可以使用 console.time 和 console.timeEnd 来分析执行时间。</p>
+<h3 id="忌过早优化"><a href="#忌过早优化" class="headerlink" title="忌过早优化"></a>忌过早优化</h3><blockquote>
+<p>The real problem is that programmers have spent far too much time worrying about efficiency in the wrong places and at the wrong times; premature optimization is the root of all evil (or at least most of it) in programming.</p>
+</blockquote>
+<p>我并不十分清楚 Donald Knuth 说出这句名言的上下文环境，但我自己是十分认同这个观念的。在我的工作环境（以及典型的互联网应用开发）与编程模式下，追求的是快速的迭代与试错，过早的优化往往是无用功。而且，过早的优化很容易拍脑袋，优化的点往往不是真正的性能瓶颈。</p>
+<h3 id="忌过度优化"><a href="#忌过度优化" class="headerlink" title="忌过度优化"></a>忌过度优化</h3><blockquote>
+<p>As performance is part of the specification of a program – a program that is unusably slow is not fit for purpose</p>
+</blockquote>
+<p>性能优化的目标是追求合适的性价比。</p>
+<p>在不同的阶段，我们对系统的性能会有一定的要求，比如吞吐量要达到多少多少。如果达不到这个指标，就需要去优化。如果能满足预期，那么就无需花费时间精力去优化，比如只有几十个人使用的内部系统，就不用按照十万在线的目标去优化。</p>
+<p>而且，一些优化方法是“有损”的，可能会对代码的可读性、可维护性有副作用。这个时候，就更不能过度优化。</p>
+<h3 id="深入理解业务"><a href="#深入理解业务" class="headerlink" title="深入理解业务"></a>深入理解业务</h3><p>代码是服务于业务的，也许是服务于最终用户，也许是服务于其他程序员。不了解业务，很难理解系统的流程，很难找出系统设计的不足之处。</p>
+<h3 id="性能优化是持久战"><a href="#性能优化是持久战" class="headerlink" title="性能优化是持久战"></a>性能优化是持久战</h3><p>当核心业务方向明确之后，就应该开始关注性能问题，当项目上线之后，更应该持续的进行性能检测与优化。</p>
+<p>现在的互联网产品，不再是一锤子买卖，在上线之后还需要持续的开发，用户的涌入也会带来性能问题。因此需要自动化的检测性能问题，保持稳定的测试环境，持续的发现并解决性能问题，而不是被动地等到用户的投诉。</p>
+<h3 id="选择合适的衡量指标、测试用例、测试环境"><a href="#选择合适的衡量指标、测试用例、测试环境" class="headerlink" title="选择合适的衡量指标、测试用例、测试环境"></a>选择合适的衡量指标、测试用例、测试环境</h3><p>正因为性能优化是一个长期的行为，所以需要固定衡量指标、测试用例、测试环境，这样才能客观反映性能的实际情况，也能展现出优化的效果。</p>
+<p>衡量性能有很多指标，比如系统响应时间、系统吞吐量、系统并发量。不同的系统核心指标是不一样的，首先要明确本系统的核心性能诉求，固定测试用例；其次也要兼顾其他指标，不能顾此失彼。</p>
+<p>测试环境也很重要，有一次突然发现我们的 QPS 高了许多，但是程序压根儿没优化，查了半天，才发现是换了一个更牛逼的物理机做测试服务器。</p>
+<h2 id="性能优化的层次"><a href="#性能优化的层次" class="headerlink" title="性能优化的层次"></a>性能优化的层次</h2><p>可以分为需求阶段，设计阶段，实现阶段；越上层的阶段优化效果越明显，同时也更需要对业务、需求的深入理解。</p>
+<h3 id="需求阶段"><a href="#需求阶段" class="headerlink" title="需求阶段"></a>需求阶段</h3><p>程序员的需求可能来自 PM、UI 的业务需求（或者说是功能性需求），也可能来自 Team Leader 的需求。当我们拿到一个需求的时候，首先需要的是思考、讨论需求的合理性，而不是立刻去设计、去编码。</p>
+<p>需求是为了解决某个问题，<strong>问题是本质，需求是解决问题的手段</strong>。那么需求是否能否真正的解决问题，程序员也得自己去思考，产品经理（特别是知道一点技术的产品经理）的某个需求可能只是某个问题的解决方案，他认为这个方法可以解决他的问题，于是把解决方案当成了需求，而不是真正的问题。</p>
+<p>需求讨论的前提对业务的深入了解，如果不了解业务，根本没法讨论。即使需求已经实现了，当我们发现有性能问题的时候，首先也可以从需求出发。</p>
+<p>需求分析对性能优化有什么帮助呢，第一，为了达到同样的目的，解决同样问题，也许可以有性能更优（消耗更小）的办法。这种优化是无损的，即不改变需求本质的同时，又能达到性能优化的效果；第二种情况，有损的优化，即在不明显影响用户的体验，稍微修改需求、放宽条件，就能大大解决性能问题。PM 退步一小步，程序前进一大步。</p>
+<p>需求讨论也有助于设计时更具扩展性，应对未来的需求变化。</p>
+<h3 id="设计阶段"><a href="#设计阶段" class="headerlink" title="设计阶段"></a>设计阶段</h3><p>高手都是花 80% 时间思考，20% 时间实现；新手写起代码来很快，但后面是无穷无尽的修 bug</p>
+<p>设计的概念很宽泛，包括架构设计、技术选型、接口设计等等。架构设计约束了系统的扩展、技术选型决定了代码实现。编程语言、框架都是工具，不同的系统、业务需要选择适当的工具集。如果设计的时候做的不够好，那么后面就很难优化，甚至需要推到重来。</p>
+<h3 id="实现阶段"><a href="#实现阶段" class="headerlink" title="实现阶段"></a>实现阶段</h3><p>实现是把功能翻译成代码的过程，这个层面的优化，主要是针对一个调用流程，一个函数，一段代码的优化。各种 profile 工具也主要是在这个阶段生效。除了静态的代码的优化，还有编译时优化，运行时优化。后二者要求就很高了，程序员可控性较弱。</p>
+<p>代码层面，造成性能瓶颈的原因通常是高频调用的函数、或者单次消耗非常高的函数、或者二者的结合。</p>
+<h2 id="一般性方法"><a href="#一般性方法" class="headerlink" title="一般性方法"></a>一般性方法</h2><h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><blockquote>
+<p>没有什么性能问题是缓存解决不了的，如果有，那就再加一级缓存</p>
+</blockquote>
+<p>缓存的本质是加速访问，访问的数据要么是其他数据的副本 – 让数据离用户更近；要么是之前的计算结果 – 避免重复计算.</p>
+<p>缓存需要用空间换时间，在缓存空间有限的情况下，需要优秀的置换换算来保证缓存有较高的命中率。</p>
+<h3 id="数据的缓存"><a href="#数据的缓存" class="headerlink" title="数据的缓存"></a>数据的缓存</h3><p>这是我们最常见的缓存形式，将数据缓存在离使用者更近的地方。比如操作系统中的 CPU cache、disk cache。对于一个 web 应用，前端会有浏览器缓存，有 CDN，有反向代理提供的静态内容缓存；后端则有本地缓存、分布式缓存。</p>
+<p>数据的缓存，很多时候是设计层面的考虑。</p>
+<p>对于数据缓存，需要考虑的是缓存一致性问题。对于分布式系统中有强一致性要求的场景，可行的解决办法有 lease，版本号。</p>
+<h3 id="计算结果的缓存"><a href="#计算结果的缓存" class="headerlink" title="计算结果的缓存"></a>计算结果的缓存</h3><p>对于消耗较大的计算，可以将计算结果缓存起来，下次直接使用。</p>
+<p>我们知道，对递归代码的一个有效优化手段就是缓存中间结果，lookup table，避免了重复计算。python 中的 method cache 就是这种思想.</p>
+<p>对于可能重复创建、销毁，且创建销毁代价很大的对象，比如进程、线程，也可以缓存，对应的缓存形式如单例、资源池（连接池、线程池）。</p>
+<p>对于计算结果的缓存，也需要考虑缓存失效的情况，对于 pure function，固定的输入有固定的输出，缓存是不会失效的。</p>
+<h3 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h3><p>一个人干不完的活，那就找两个人干。并发既增加了系统的吞吐，又减少了用户的平均等待时间。</p>
+<h3 id="惰性"><a href="#惰性" class="headerlink" title="惰性"></a>惰性</h3><p>将计算推迟到必需的时刻，这样很可能避免了多余的计算，甚至根本不用计算。</p>
+<p>CopyOnWrite、Dirty flag</p>
+<h3 id="批量，合并"><a href="#批量，合并" class="headerlink" title="批量，合并"></a>批量，合并</h3><p>前端开发中经常会有资源的压缩和合并。</p>
+<p>当涉及到网络请求的时候，网络传输的时间可能远大于请求的处理时间，因此合并网络请求就很有必要。</p>
+<h3 id="更高效的实现"><a href="#更高效的实现" class="headerlink" title="更高效的实现"></a>更高效的实现</h3><p>同一个算法，肯定会有不同的实现，那么就会有不同的性能；有的实现可能是时间换空间，有的实现可能是空间换时间，那么就需要根据自己的实际情况权衡。</p>
+<p>程序员都喜欢早轮子，用于练手无可厚非，但在项目中，使用成熟的、经过验证的轮子往往比自己造的轮子性能更好。当然不管使用别人的轮子，还是自己的工具，当出现性能的问题的时候，要么优化它，要么替换掉他。</p>
+<h3 id="缩小解空间"><a href="#缩小解空间" class="headerlink" title="缩小解空间"></a>缩小解空间</h3><p>缩小解空间的意思是说，在一个更小的数据范围内进行计算，而不是遍历全部数据。最常见的就是索引，通过索引，能够很快定位数据，对数据库的优化绝大多数时候都是对索引的优化。</p>
+<p>如果有本地缓存，那么使用索引也会大大加快访问速度。不过，索引比较适合读多写少的情况，毕竟索引的构建也是需有消耗的。</p>
+<h2 id="性能优化与代码质量"><a href="#性能优化与代码质量" class="headerlink" title="性能优化与代码质量"></a>性能优化与代码质量</h2><p>衡量代码质量的标准是可读性、可维护性、可扩展性，但性能优化有可能会违背这些特性，比如为了屏蔽实现细节与使用方式，我们会可能会加入接口层（虚拟层），这样可读性、可维护性、可扩展性会好很多，但是额外增加了一层函数调用，如果这个地方调用频繁，那么也是一笔开销；又如前面提到的 C 扩展，也是会降低可维护性、</p>
+<p>这种有损代码质量的优化，应该放到最后，不得已而为之，同时写清楚注释与文档。</p>
+<p>为了追求可扩展性，我们经常会引入一些设计模式，如状态模式、策略模式、模板方法、装饰器模式等，但这些模式不一定是性能友好的。所以，为了性能，我们可能写出一些反模式的、定制化的、不那么优雅的代码，这些代码其实是脆弱的，需求的一点点变动，对代码逻辑可能有至关重要的影响，所以还是回到前面所说，不要过早优化，不要过度优化。<br>​</p>
+<p>‍</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E5%85%B3%E4%BA%8E%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="prev" title="关于中间件">
+                  <i class="fa fa-angle-left"></i> 关于中间件
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">afetmin</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">8k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">28 分钟</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script><script src="/blog/js/bookmark.js"></script><script src="/blog/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  <script src="/blog/js/third-party/pace.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://afetmin.github.io/blog/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E4%B8%80%E8%88%AC%E6%80%A7%E5%8E%9F%E5%88%99/"}</script>
+  <script src="/blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>
