@@ -3,12 +3,12 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: my blog
+title: 我曾七次鄙视自己的灵魂
 subtitle: ''
-description: ''
-keywords:
+description: '一个前端的博客，记录一些所学所获'
+keywords: '前端,图形学,js,React'
 author: ranxiu
-language: en
+language: zh-CN
 timezone: ''
 
 # URL
@@ -47,7 +47,7 @@ highlight:
   enable: true
   line_number: true
   auto_detect: false
-  tab_replace: ''
+  tab_replace: '  '
   wrap: true
   hljs: false
 prismjs:
@@ -97,7 +97,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
