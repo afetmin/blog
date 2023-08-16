@@ -6,8 +6,9 @@
     <content><![CDATA[<h2 id="createObjectURL-是什么"><a href="#createObjectURL-是什么" class="headerlink" title="createObjectURL 是什么"></a>createObjectURL 是什么</h2><blockquote>
 <p>URL.createObjectURL() 静态方法会创建一个 DOMString，其中包含一个表示参数中给出的对象的 URL。这个 URL 的生命周期和创建它的窗口中的 document 绑定。这个新的 URL 对象表示指定的 File 对象或 Blob 对象。 — MDN</p>
 </blockquote>
-<h2 id="Blob-URL-Object-URL"><a href="#Blob-URL-Object-URL" class="headerlink" title="Blob URL&#x2F;Object URL"></a>Blob URL&#x2F;Object URL</h2><span id="more"></span>
-<p>Blob URL&#x2F;Object URL 是⼀种伪协议，允许 Blob 和 File 对象⽤作图像，下载⼆进制数据链接等的 URL<br>源。在浏览器中，我们使⽤ URL.createObjectURL ⽅法来创建 Blob URL，该⽅法接收⼀个 Blob 对<br>象，并为其创建⼀个唯⼀的 URL，其形式为 <code>blob:&lt;origin&gt;/&lt;uuid&gt;</code> ，对应的示例如下：</p>
+<span id="more"></span>
+
+<h2 id="Blob-URL-Object-URL"><a href="#Blob-URL-Object-URL" class="headerlink" title="Blob URL&#x2F;Object URL"></a>Blob URL&#x2F;Object URL</h2><p>Blob URL&#x2F;Object URL 是⼀种伪协议，允许 Blob 和 File 对象⽤作图像，下载⼆进制数据链接等的 URL<br>源。在浏览器中，我们使⽤ URL.createObjectURL ⽅法来创建 Blob URL，该⽅法接收⼀个 Blob 对<br>象，并为其创建⼀个唯⼀的 URL，其形式为 <code>blob:&lt;origin&gt;/&lt;uuid&gt;</code> ，对应的示例如下：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">blob</span>:<span class="attr">https</span>:<span class="comment">//example.org/40a5fb5a-d56d-4a33-b4e2-0acf6a8e5f641</span></span><br></pre></td></tr></table></figure>
 
 <p>浏览器内部为每个通过 URL.createObjectURL ⽣成的 URL 存储了⼀个 URL → Blob 映射。因此，此<br>类 URL 较短，但可以访问 Blob 。⽣成的 URL 仅在当前⽂档打开的状态下才有效。它允许引⽤<br><code>&lt;img&gt; 、 &lt;a&gt;</code> 中的 Blob ，但如果你访问的 Blob URL 不再存在，则会从浏览器中收到 404 错误。</p>
@@ -33,9 +34,9 @@
 <p>来一张终极图：</p>
 <p><img src="/blog/img/createObjectURL/3.jpg" alt="data_url.jpg"></p>
 ]]></content>
-      <tags>
-        <tag>js</tag>
-      </tags>
+      <categories>
+        <category>js</category>
+      </categories>
   </entry>
   <entry>
     <title>关于vue的mixin</title>
@@ -49,11 +50,8 @@
 <p>mapActions是写到methods里的，这样就可以替换这种写法</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 原来写法</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$store</span>.<span class="title function_">dispatch</span>(<span class="string">&#x27;setBookName&#x27;</span>,<span class="variable language_">this</span>.<span class="property">bookName</span>)</span><br><span class="line"><span class="comment">// 优雅写法</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="title function_">setBookName</span>(<span class="variable language_">this</span>.<span class="property">bookName</span>)</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>进阶</category>
+        <category>vue</category>
       </categories>
-      <tags>
-        <tag>vue</tag>
-      </tags>
   </entry>
   <entry>
     <title>关于中间件</title>
@@ -100,10 +98,10 @@
 <p>每个中间件足够的小而美，职责单一，同时多个中间件又具备良好的逻辑拓展性和可组合性，并且易于测试。这个设计模式真是太“漂亮”了。</p>
 ]]></content>
       <categories>
-        <category>进阶</category>
+        <category>node</category>
       </categories>
       <tags>
-        <tag>node</tag>
+        <tag>进阶</tag>
       </tags>
   </entry>
   <entry>
@@ -195,10 +193,10 @@
 <p>但数据太大，最好还是用 post</p>
 ]]></content>
       <categories>
-        <category>进阶</category>
+        <category>js</category>
       </categories>
       <tags>
-        <tag>错误</tag>
+        <tag>监控</tag>
       </tags>
   </entry>
 </search>
