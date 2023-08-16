@@ -8,7 +8,7 @@ subtitle: ''
 description: '瞎写一气，乱编一通'
 keywords: '前端,图形学,js,React'
 author: afetmin
-language: zh-CN
+language: [zh-CN]
 timezone: ''
 
 # URL
@@ -104,14 +104,14 @@ ignore:
 theme: next
 
 # word_count
-symbols_count_time:
-  symbols: true
-  time: true
-  total_symbols: true
-  total_time: true
-  exclude_codeblock: false
-  wpm: 300
-  suffix: "分钟"
+# symbols_count_time:
+#   symbols: true
+#   time: true
+#   total_symbols: true
+#   total_time: true
+#   exclude_codeblock: false
+#   wpm: 300
+#   suffix: "分钟"
 
 # 摘要设置
 excerpt:			# 一定要顶格写，注意格式
