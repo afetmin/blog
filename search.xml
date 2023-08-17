@@ -1,6 +1,426 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>React Props Children 混合插槽</title>
+    <url>/blog/React-Props-Children-%E6%B7%B7%E5%90%88%E6%8F%92%E6%A7%BD/</url>
+    <content><![CDATA[<h2 id="当多种-children-一起输入时"><a href="#当多种-children-一起输入时" class="headerlink" title="当多种 children 一起输入时"></a>当多种 children 一起输入时</h2><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Container</span>(<span class="params">props</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> defaultProps = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;alen&quot;</span>,</span><br><span class="line">    <span class="attr">msg</span>: <span class="string">&quot;hello&quot;</span>,</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> props.<span class="property">children</span>.<span class="title function_">map</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 通过判断 clone 混入props</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">React</span>.<span class="title function_">isValidElement</span>(item)) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title class_">React</span>.<span class="title function_">cloneElement</span>(item, &#123; ...defaultProps &#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> item === <span class="string">&quot;function&quot;</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">item</span>(defaultProps)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Child</span>(<span class="params">props</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;props.name + props.msg&#125; <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">App</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Container</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      // 多种方式混入</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Child</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;(props) =&gt; <span class="tag">&lt;<span class="name">Child</span> &#123;<span class="attr">...props</span>&#125; /&gt;</span>&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">Container</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">render</span>(<span class="language-xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;root&quot;</span>))</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>React</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>React memo lazy</title>
+    <url>/blog/React-memo-lazy/</url>
+    <content><![CDATA[<h2 id="React-memo"><a href="#React-memo" class="headerlink" title="React.memo"></a>React.memo</h2><p>react.memo 有第二个参数，可以通过第二个参数来自定义组件的渲染时机。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="title class_">React</span>.<span class="title function_">memo</span>(<span class="title class_">Component</span>, compare)</span><br></pre></td></tr></table></figure>
+
+<p>React.memo 接受两个参数，第一个参数 Component 原始组件本身，第二个参数 compare 是一个函数，可以根据一次更新中 props 是否相同决定原始组件是否重新渲染。</p>
+<p>memo 的几个特点是：</p>
+<ul>
+<li><p>React.memo: 第二个参数 返回 true 组件不渲染 ， 返回 false 组件重新渲染。<br>和 shouldComponentUpdate 相反，shouldComponentUpdate : 返回 true 组件渲染 ， 返回 false 组件不渲染。</p>
+</li>
+<li><p>memo 当二个参数 compare 不存在时，会用浅比较原则处理 props ，相当于仅比较 props 版本的 pureComponent 。</p>
+</li>
+<li><p>memo 同样适合类组件和函数组件。<br>关于第二个参数你可以这样写：</p>
+</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">compare</span> = (<span class="params">prev, next</span>) =&gt;</span><br><span class="line">  prev.<span class="property">number</span> === next.<span class="property">number</span> ||</span><br><span class="line">  (prev.<span class="property">number</span> !== next.<span class="property">number</span> &amp;&amp; next.<span class="property">number</span> &gt; <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这里有两个意思：</p>
+<ul>
+<li>number 改变时 组件渲染</li>
+<li>number 小于 1 时 组件渲染</li>
+</ul>
+<h2 id="关于-rander"><a href="#关于-rander" class="headerlink" title="关于 rander"></a>关于 rander</h2><h3 id="有没有必要在乎组件不必要渲染。"><a href="#有没有必要在乎组件不必要渲染。" class="headerlink" title="有没有必要在乎组件不必要渲染。"></a>有没有必要在乎组件不必要渲染。</h3><p>在正常情况下，无须过分在乎 React 没有必要的渲染，执行 render 不等于真正的浏览器渲染视图，render 阶段执行是在 js 当中，js 中运行代码远快于浏览器的 Rendering 和 Painting 的，更何况 React 还提供了 diff 算法等手段，去复用真实 DOM 。</p>
+<h3 id="什么时候需要注意渲染节流。"><a href="#什么时候需要注意渲染节流。" class="headerlink" title="什么时候需要注意渲染节流。"></a>什么时候需要注意渲染节流。</h3><p>但是对于以下情况，值得开发者注意，需要采用渲染节流：</p>
+<ul>
+<li>第一种情况数据可视化的模块组件（展示了大量的数据），这种情况比较小心因为一次更新，可能伴随大量的 diff ，数据量越大也就越浪费性能，所以对于数据展示模块组件，有必要采取 memo ， shouldComponentUpdate 等方案控制自身组件渲染。</li>
+<li>第二种情况含有大量表单的页面，React 一般会采用受控组件的模式去管理表单数据层，表单数据层完全托管于 props 或是 state ，而用户操作表单往往是频繁的，需要频繁改变数据层，所以很有可能让整个页面组件高频率 render 。</li>
+<li>第三种情况就是越是靠近 app root 根组件越值得注意，根组件渲染会波及到整个组件树重新 render ，子组件 render ，一是浪费性能，二是可能执行 useEffect ，componentWillReceiveProps 等钩子，造成意想不到的情况发生。</li>
+</ul>
+<h2 id="使用-Suspense-和-React-lazy-模拟实现异步加载组件"><a href="#使用-Suspense-和-React-lazy-模拟实现异步加载组件" class="headerlink" title="使用 Suspense 和 React.lazy 模拟实现异步加载组件"></a>使用 Suspense 和 React.lazy 模拟实现异步加载组件</h2><h3 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h3><ul>
+<li>异步请求数据，请求完数据挂载组件，请求过程中展示 loading 效果。</li>
+<li>全程组件只渲染一次</li>
+</ul>
+<h3 id="编写"><a href="#编写" class="headerlink" title="编写"></a>编写</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">AsyncComp</span>(<span class="params">Comp, asyncFn</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">AsyncCompPromise</span> = (<span class="params"></span>) =&gt;</span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">async</span> (resolve) =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> data = <span class="keyword">await</span> <span class="title function_">asyncFn</span>()</span><br><span class="line">      <span class="title function_">resolve</span>(&#123;</span><br><span class="line">        <span class="attr">default</span>: <span class="function">(<span class="params">props</span>) =&gt;</span> <span class="language-xml"><span class="tag">&lt;<span class="name">Comp</span> <span class="attr">value</span>=<span class="string">&#123;data&#125;</span> &#123;<span class="attr">...props</span>&#125; /&gt;</span></span>,</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">React</span>.<span class="title function_">lazy</span>(<span class="title class_">AsyncCompPromise</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">fetchData</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">resolve</span>(&#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&quot;ranxiu&quot;</span>,</span><br><span class="line">        <span class="attr">msg</span>: <span class="string">&quot;a lot of data&quot;</span>,</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Test</span>(<span class="params">&#123; value, gender &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; name, msg &#125; = value</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">div</span>&gt;</span>my name is &#123;name&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">div</span>&gt;</span>this is &#123;msg&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">div</span>&gt;</span>my gender is &#123;gender&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">App</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="title class_">LzayTest</span> = <span class="title class_">AsyncComp</span>(<span class="title class_">Test</span>, fetchData)</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Suspense</span> <span class="attr">fallback</span>=<span class="string">&#123;</span>&lt;<span class="attr">div</span>&gt;</span>loading...<span class="tag">&lt;/<span class="name">div</span>&gt;</span>&#125;&gt;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">LzayTest</span> <span class="attr">gender</span>=<span class="string">&#x27;男&#x27;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">Suspense</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>React.lazy 要求函数需要返回一个 Promise。大致流程是，react.lazy 第一次渲染时会向外抛个异常 Promise，这个异常会被 Suspense 捕获到，Suspense 处理 Promise，Promise 执行成功后 Susponse 发起渲染，返回真正需要渲染的组件。</p>
+]]></content>
+      <categories>
+        <category>React</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>React的diff</title>
+    <url>/blog/React%E7%9A%84diff/</url>
+    <content><![CDATA[<h1 id="React-的-diff"><a href="#React-的-diff" class="headerlink" title="React 的 diff"></a>React 的 diff</h1><p>一个<code>DOM节点</code>在某一时刻最多会有 4 个节点和它相关。</p>
+<ol>
+<li><code>current Fiber</code>。如果该<code>DOM节点</code>已在页面中，<code>current Fiber</code>代表该<code>DOM节点</code>对应的<code>Fiber节点</code>。</li>
+<li><code>workInProgress Fiber</code>。如果该<code>DOM节点</code>将在本次更新中渲染到页面中，<code>workInProgress Fiber</code>代表该<code>DOM节点</code>对应的<code>Fiber节点</code>。</li>
+<li><code>DOM节点</code>本身。</li>
+<li><code>JSX对象</code>。即<code>ClassComponent</code>的<code>render</code>方法的返回结果，或<code>FunctionComponent</code>的调用结果。<code>JSX对象</code>中包含描述<code>DOM节点</code>的信息。</li>
+</ol>
+<p><code>Diff算法</code>的本质是对比 1 和 4，生成 2</p>
+<h2 id="diff-算法的优化"><a href="#diff-算法的优化" class="headerlink" title="diff 算法的优化"></a>diff 算法的优化</h2><p>由于 diff 算法本身会带来性能损耗，前后两颗树完全比对的算法复杂度为 O(n3)，其中 n 是树中元素的的数量。</p>
+<p>为了降低算法复杂度，<code>React</code>的<code>diff</code>会预设三个限制：</p>
+<ol>
+<li>只对同级元素进行<code>Diff</code>。如果一个<code>DOM节点</code>在前后两次更新中跨越了层级，那么<code>React</code>不会尝试复用他。</li>
+<li>两个不同类型的元素会产生出不同的树。如果元素由<code>div</code>变为<code>p</code>，React 会销毁<code>div</code>及其子孙节点，并新建<code>p</code>及其子孙节点。</li>
+<li>开发者可以通过  <code>key prop</code>来暗示哪些子元素在不同的渲染下能保持稳定。</li>
+</ol>
+<p>考虑如下例子：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">// 更新前</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">key</span>=<span class="string">&quot;ran&quot;</span>&gt;</span>ran<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span> <span class="attr">key</span>=<span class="string">&quot;xiu&quot;</span>&gt;</span>xiu<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">// 更新后</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span> <span class="attr">key</span>=<span class="string">&quot;xiu&quot;</span>&gt;</span>xiu<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">key</span>=<span class="string">&quot;ran&quot;</span>&gt;</span>ran<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果没有<code>key</code>，<code>React</code>会认为<code>div</code>的第一个子节点由<code>p</code>变为<code>h1</code>，第二个子节点由<code>h1</code>变为<code>p</code>。这符合限制 2 的设定，会销毁并新建。</p>
+<p>但是当我们用<code>key</code>指明了节点前后对应关系后，<code>React</code>知道<code>key === &quot;ran&quot;</code>的<code>p</code>在更新后还存在，所以<code>DOM节点</code>可以复用，只是需要交换下顺序。</p>
+<p>reconcileChildFibers 函数会根据不同的 newChild（JSX 对象）调用不同的处理函数。</p>
+<h2 id="单节点-diff"><a href="#单节点-diff" class="headerlink" title="单节点 diff"></a>单节点 diff</h2><p>当 newChild 类型为 object、number、string，代表同级只有一个节点。</p>
+<ol>
+<li>先判断 key 是否相同，然后 type，都相同时 DOM 才能复用。</li>
+<li>当 child !&#x3D;&#x3D; null 且 key 相同且 type 不同时，执行 deleteRemainingChildren 将 child 及其兄弟 fiber 都标记删除。</li>
+<li>当 child !&#x3D;&#x3D; null 且 key 不同时，仅将 child 标记删除。</li>
+</ol>
+<p>关于 2，3 步，当 key 相同但 type 不同，说明已经完全无法复用了，都需要删除。但 key 不同只代表该 fiber 不能复用，后面的兄弟 fiber 还有复用的可能性。</p>
+<h2 id="多节点-diff"><a href="#多节点-diff" class="headerlink" title="多节点 diff"></a>多节点 diff</h2><p>当 newChild 类型为 Array，同级有多个节点。</p>
+<p>多节点 diff 有多种情况需要处理</p>
+<h3 id="1-节点更新"><a href="#1-节点更新" class="headerlink" title="1. 节点更新"></a>1. 节点更新</h3><p>节点更新又包含两种情况：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">key</span>=<span class="string">&quot;p&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">// 属性变化</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">key</span>=<span class="string">&quot;p&quot;</span> <span class="attr">className</span>=<span class="string">&quot;p&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">// 类型变化</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span> <span class="attr">key</span>=<span class="string">&quot;p&quot;</span> <span class="attr">className</span>=<span class="string">&quot;p&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-节点新增或删除"><a href="#2-节点新增或删除" class="headerlink" title="2. 节点新增或删除"></a>2. 节点新增或删除</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">key</span>=<span class="string">&quot;1&quot;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">key</span>=<span class="string">&quot;2&quot;</span>&gt;</span>2<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">// 新增</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">key</span>=<span class="string">&quot;1&quot;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">key</span>=<span class="string">&quot;2&quot;</span>&gt;</span>2<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">key</span>=<span class="string">&quot;3&quot;</span>&gt;</span>3<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">//删除</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">key</span>=<span class="string">&quot;1&quot;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-节点位置变化"><a href="#3-节点位置变化" class="headerlink" title="3. 节点位置变化"></a>3. 节点位置变化</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">key</span>=<span class="string">&quot;1&quot;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">key</span>=<span class="string">&quot;2&quot;</span>&gt;</span>2<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">//</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">key</span>=<span class="string">&quot;2&quot;</span>&gt;</span>2<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">key</span>=<span class="string">&quot;1&quot;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>不同的情况执行不同的逻辑，React 团队发现更新比其他两种的频率更高，于是 diff 优先判断更新情况。又因为 fiber 是单链表结构的，所以无法使用双指针优化遍历。diff 会经过两轮遍历：</p>
+<ul>
+<li>第一轮：处理更新节点。</li>
+<li>第二轮：处理不为更新的节点。</li>
+</ul>
+<h2 id="React-中触发更新"><a href="#React-中触发更新" class="headerlink" title="React 中触发更新"></a>React 中触发更新</h2><p>除了 SSR 相关，触发更新的方法：</p>
+<ul>
+<li>ReactDOM.render</li>
+<li>this.setState</li>
+<li>this.forceUpdate</li>
+<li>useState</li>
+<li>useReducer</li>
+</ul>
+<h3 id="调度更新"><a href="#调度更新" class="headerlink" title="调度更新"></a>调度更新</h3><p>render 阶段从 rootFiber 开始向下遍历，触发更新的 fiber 调用 markUpdateLaneFromFiberToRoot 一直向上遍历到 rootFiber 并返回 rootFiber。触发更新的 fiber 中保存了一个 Update 的对象。</p>
+<p>之后通知 Scheduler 根据更新的优先级，决定以同步还是异步的方式调度本次更新。</p>
+<p><code>高优更新</code>中断正在进行中的<code>低优更新</code>，先完成<code>render - commit流程</code>。</p>
+<p>待<code>高优更新</code>完成后，<code>低优更新</code>基于<code>高优更新</code>的结果<code>重新更新</code>。</p>
+]]></content>
+      <categories>
+        <category>进阶</category>
+      </categories>
+      <tags>
+        <tag>js</tag>
+        <tag>react</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>better-scroll结合vue遇到图片引起的问题</title>
+    <url>/blog/better-scroll%E7%BB%93%E5%90%88vue%E9%81%87%E5%88%B0%E5%9B%BE%E7%89%87%E5%BC%95%E8%B5%B7%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h2 id="使用better-scroll遇到的问题"><a href="#使用better-scroll遇到的问题" class="headerlink" title="使用better-scroll遇到的问题"></a>使用better-scroll遇到的问题</h2><p>原来项目中只使用了better-scroll来做轮播图和滑动组件，但是头部和标签栏是固定的，只滑动下面部分，于是设置 scroll-warpper样式如下：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.scroll-wrapper</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">80px</span>;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是想要实现下部组件与上部标签的联动，仅仅靠better-scroll就不够了，于是项目中按需引入了vant的的标签组件，来实现移动端的左右滑动（不得不说，封装好的东西就是香）。紧接着就产生了问题，</p>
+<ul>
+<li>一是：下部组件无法滑动，</li>
+<li>二是：better-scroll滑不到底部，只能滑一部分。刷新页面后可以滑动了</li>
+</ul>
+<p>分析问题：</p>
+<ul>
+<li>查看dom发现vant的content__wrap没有高度，而scroll-warpper和内容高度一致。这是由于content__wrap的定位是relative，而scroll-wrapper是相对于content__wrap而定位的，并不是相对整个页面定位，所有内容是被里面撑开的。</li>
+<li>页面中有大量图片，当dom加载完成后图片并没有加载完成，scroll已经初始化了，所以滑不到底部。刷新页面可以滑动是因为图片已经被浏览器缓存了，刷新直接拿到图片不需要重新请求。</li>
+</ul>
+<p>解决问题：</p>
+<ul>
+<li>第一个问题是定位的原因，那我们把wrapper的高度写死就好了，<br>  但是由于头部和标签是自适应的，高度是不确定的，就没法写死了。使用动态获取设置wrapper的style：<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">setScrollWrapperHeight</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">scroll</span>.<span class="property">$el</span>.<span class="property">style</span>.<span class="property">height</span> =</span><br><span class="line">        <span class="variable language_">window</span>.<span class="property">innerHeight</span> - <span class="variable language_">this</span>.<span class="property">topHeight</span> + <span class="string">&#x27;px&#x27;</span></span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure></li>
+<li>由于多个页面都需要这个配置，放到mixin中，在mounted方法中调用此方法。<br>解决wrapper高度问题。</li>
+<li>第二个问题是图片加载时content的高度设置错误问题，可以通过img的load方法判断图片是否加载完成。<br> 子组件： <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">imgAllLoad</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> mulitImg = <span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;.suggest-item-img&#x27;</span>)</span><br><span class="line">      <span class="keyword">const</span> promiseAll = []</span><br><span class="line">      <span class="keyword">const</span> imgTotal = mulitImg.<span class="property">length</span></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; imgTotal; i++) &#123;</span><br><span class="line">        promiseAll[i] = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">          mulitImg[i].<span class="property">onload</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="comment">// 第i张加载完成</span></span><br><span class="line">            <span class="title function_">resolve</span>(mulitImg[i])</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> promiseAll</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+在子组件mounted中：派发一个imgLoad方法<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title class_">Promise</span>.<span class="title function_">all</span>(<span class="variable language_">this</span>.<span class="title function_">imgAllLoad</span>()).<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.$emit(<span class="string">&#x27;imgLoad&#x27;</span>)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+在父组件监听此方法，并刷新scroll组件<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="title function_">imgLoad</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">scroll</span>.<span class="title function_">refresh</span>()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+这样体验就不错了。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>express三大概念</title>
+    <url>/blog/express%E4%B8%89%E5%A4%A7%E6%A6%82%E5%BF%B5/</url>
+    <content><![CDATA[<h2 id="Express-三大基础概念"><a href="#Express-三大基础概念" class="headerlink" title="Express 三大基础概念"></a>Express 三大基础概念</h2><h3 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h3><p>中间件是一个函数，在请求和响应周期中被顺序调用</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> myLogger = <span class="keyword">function</span>(<span class="params">req, res, next</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;myLogger&#x27;</span>)</span><br><span class="line">  <span class="title function_">next</span>()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(myLogger)</span><br></pre></td></tr></table></figure>
+<p>提示：中间件需要在响应结束前被调用</p>
+<h3 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h3><p>应用如何响应请求的一种规则<br>响应 &#x2F; 路径的 get 请求：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/&#x27;</span>, <span class="keyword">function</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(<span class="string">&#x27;hello node&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>响应 &#x2F; 路径的 post 请求：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">app.<span class="title function_">post</span>(<span class="string">&#x27;/&#x27;</span>, <span class="keyword">function</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(<span class="string">&#x27;hello node&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>规则主要分两部分：</p>
+<ul>
+<li>请求方法：get、post……</li>
+<li>请求的路径：&#x2F;、&#x2F;user、&#x2F;.*fly$&#x2F;……</li>
+</ul>
+<h3 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h3><p>通过自定义异常处理中间件处理请求中产生的异常</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/&#x27;</span>, <span class="keyword">function</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;something has error...&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> errorHandler = <span class="keyword">function</span> (<span class="params">err, req, res, next</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;errorHandler...&#x27;</span>)</span><br><span class="line">  res.<span class="title function_">status</span>(<span class="number">500</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">    <span class="attr">error</span>:<span class="string">&#x27;Error...&#x27;</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(errorHandler)</span><br></pre></td></tr></table></figure>
+<p>使用时需要注意两点：</p>
+<ul>
+<li>第一，参数一个不能少，否则会视为普通的中间件</li>
+<li>第二，中间件需要在请求之后引用</li>
+</ul>
+]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+      <tags>
+        <tag>express</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>js语法细节</title>
+    <url>/blog/js%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82/</url>
+    <content><![CDATA[<h2 id="箭头函数中的this"><a href="#箭头函数中的this" class="headerlink" title="箭头函数中的this"></a>箭头函数中的this</h2><p>它们没有 this。在箭头函数内部访问到的 this 都是从外部获取的。</p>
+<h2 id="可选链"><a href="#可选链" class="headerlink" title="可选链"></a>可选链</h2><ul>
+<li>通常我们这样写<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> user = &#123;&#125;; <span class="comment">// user 没有 address</span></span><br><span class="line"><span class="title function_">alert</span>( user &amp;&amp; user.<span class="property">address</span> &amp;&amp; user.<span class="property">address</span>.<span class="property">street</span> ); <span class="comment">// undefined（不报错）</span></span><br></pre></td></tr></table></figure>
+依次对整条路径上的属性使用与运算进行判断，以确保所有节点是存在的（如果不存在，则停止计算），但是写起来很麻烦。</li>
+<li>通过可选链可以这样<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> user = <span class="literal">null</span>;</span><br><span class="line"><span class="title function_">alert</span>( user?.<span class="property">address</span> ); <span class="comment">// undefined</span></span><br><span class="line"><span class="title function_">alert</span>( user?.<span class="property">address</span>.<span class="property">street</span> ); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>不要过度使用可选链</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>我们应该只将 ?. 使用在一些东西可以不存在的地方。<br>例如，如果根据我们的代码逻辑，user 对象必须存在，但 address 是可选的，那么 user.address?.street 会更好。<br>所以，如果 user 恰巧因为失误变为 undefined，我们会看到一个编程错误并修复它。否则，代码中的错误在不恰当的地方被消除了，这会导致调试更加困难。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">### 总结</span><br><span class="line">可选链 ?. 语法有三种形式：</span><br><span class="line"></span><br><span class="line">- obj?.prop —— 如果 obj 存在则返回 obj.prop，否则返回 undefined。</span><br><span class="line">- obj?.[prop] —— 如果 obj 存在则返回 obj[prop]，否则返回 undefined。</span><br><span class="line">- obj.method?.() —— 如果 obj.method 存在则调用 obj.method()，否则返回 undefined。</span><br><span class="line">&gt;正如我们所看到的，这些语法形式用起来都很简单直接。?. 检查左边部分是否为 null/undefined，如果不是则继续运算。</span><br><span class="line">?. 链使我们能够安全地访问嵌套属性。</span><br><span class="line"></span><br><span class="line">&gt;但是，我们应该谨慎地使用 ?.，仅在当左边部分不存在也没问题的情况下使用为宜。以保证在代码中有编程上的错误出现时，也不会对我们隐藏。</span><br><span class="line"></span><br><span class="line">## Symbol</span><br><span class="line">如果我们要在对象字面量 &#123;...&#125; 中使用 Symbol，则需要使用方括号把它括起来。</span><br><span class="line">就像这样：</span><br><span class="line">```js</span><br><span class="line">let id = Symbol(&quot;id&quot;);</span><br><span class="line"></span><br><span class="line">let user = &#123;</span><br><span class="line">  name: &quot;John&quot;,</span><br><span class="line">  [id]: 123 // 而不是 &quot;id&quot;：123</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这是因为我们需要变量 id 的值作为键，而不是字符串 “id”。</p>
+<blockquote>
+<p>Symbol 属性不参与 for..in 循环。</p>
+</blockquote>
+<blockquote>
+<p>Object.assign 会同时复制字符串和 symbol 属性</p>
+</blockquote>
+<blockquote>
+<p>参考：<a href="https://zh.javascript.info/symbol#dui-xiang-zi-mian-liang-zhong-de-symbol">symbol</a></p>
+</blockquote>
+<h2 id="对象原始值的转换"><a href="#对象原始值的转换" class="headerlink" title="对象原始值的转换"></a>对象原始值的转换</h2><p>如果没有 Symbol.toPrimitive，那么 JavaScript 将尝试找到它们，并且按照下面的顺序进行尝试：</p>
+<ul>
+<li>对于 “string” hint，toString -&gt; valueOf。</li>
+<li>其他情况，valueOf -&gt; toString。</li>
+</ul>
+<p>默认情况下，普通对象具有 toString 和 valueOf 方法：</p>
+<ul>
+<li>toString 方法返回一个字符串 “[object Object]”。</li>
+<li>valueOf 方法返回对象自身。</li>
+<li>如果没有 Symbol.toPrimitive 和 valueOf，toString 将处理所有原始转换。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>对象到原始值的转换，是由许多期望以原始值作为值的内建函数和运算符自动调用的。</p>
+<p>这里有三种类型（hint）：</p>
+<ul>
+<li>“string”（对于 alert 和其他需要字符串的操作）</li>
+<li>“number”（对于数学运算）</li>
+<li>“default”（少数运算符）<br>规范明确描述了哪个运算符使用哪个 hint。很少有运算符“不知道期望什么”并使用 “default” hint。通常对于内建对象，”default” hint 的处理方式与 “number” 相同，因此在实践中，最后两个 hint 常常合并在一起。</li>
+</ul>
+<p>转换算法是：</p>
+<p>1.调用 obj<a href="hint">Symbol.toPrimitive</a> 如果这个方法存在，</p>
+<p>2.否则，如果 hint 是 “string”</p>
+<ul>
+<li>尝试 obj.toString() 和 obj.valueOf()，无论哪个存在。</li>
+</ul>
+<p>3.否则，如果 hint 是 “number” 或者 “default”</p>
+<ul>
+<li>尝试 obj.valueOf() 和 obj.toString()，无论哪个存在。<br>在实践中，为了便于进行日志记录或调试，对于所有能够返回一种“可读性好”的对象的表达形式的转换，只实现以 obj.toString() 作为全能转换的方法就够了。</li>
+</ul>
+<blockquote>
+<p>参考 <a href="https://zh.javascript.info/object-toprimitive#symboltoprimitive">Symbol.toPrimitive</a></p>
+</blockquote>
+<h2 id="关于数组的length"><a href="#关于数组的length" class="headerlink" title="关于数组的length"></a>关于数组的length</h2><p>当我们修改数组的时候，length 属性会自动更新。准确来说，它实际上不是数组里元素的个数，而是最大的数字索引值加一。</p>
+<p>例如，一个数组只有一个元素，但是这个元素的索引值很大，那么这个数组的 length 也会很大：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> fruits = [];</span><br><span class="line">fruits[<span class="number">123</span>] = <span class="string">&quot;Apple&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">alert</span>( fruits.<span class="property">length</span> ); <span class="comment">// 124</span></span><br></pre></td></tr></table></figure>
+<p>要知道的是我们通常不会这样使用数组。</p>
+<p>length 属性的另一个有意思的点是它是可写的。</p>
+<p>如果我们手动增加它，则不会发生任何有趣的事儿。但是如果我们减少它，数组就会被截断。该过程是不可逆的，下面是例子：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"></span><br><span class="line">arr.<span class="property">length</span> = <span class="number">2</span>; <span class="comment">// 截断到只剩 2 个元素</span></span><br><span class="line"><span class="title function_">alert</span>( arr ); <span class="comment">// [1, 2]</span></span><br><span class="line"></span><br><span class="line">arr.<span class="property">length</span> = <span class="number">5</span>; <span class="comment">// 又把 length 加回来</span></span><br><span class="line"><span class="title function_">alert</span>( arr[<span class="number">3</span>] ); <span class="comment">// undefined：被截断的那些数值并没有回来</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>所以，清空数组最简单的方法就是：arr.length &#x3D; 0;</p>
+</blockquote>
+<h2 id="关于JSON的转换"><a href="#关于JSON的转换" class="headerlink" title="关于JSON的转换"></a>关于JSON的转换</h2><p>JSON 是语言无关的纯数据规范，因此一些特定于 JavaScript 的对象属性会被 JSON.stringify 跳过。</p>
+<p>即：</p>
+<ul>
+<li>函数属性（方法）。</li>
+<li>Symbol 类型的属性。</li>
+<li>存储 undefined 的属性。</li>
+</ul>
+<h2 id="js中函数就是对象"><a href="#js中函数就是对象" class="headerlink" title="js中函数就是对象"></a>js中函数就是对象</h2><blockquote>
+<p>被赋值给函数的属性，比如 sayHi.counter &#x3D; 0，不会 在函数内定义一个局部变量 counter。换句话说，属性 counter 和变量 let counter 是毫不相关的两个东西。</p>
+</blockquote>
+<blockquote>
+<p>我们可以把函数当作对象，在它里面存储属性，但是这对它的执行没有任何影响。变量不是函数属性，反之亦然。它们之间是平行的。</p>
+</blockquote>
+<h2 id="关于this和箭头函数"><a href="#关于this和箭头函数" class="headerlink" title="关于this和箭头函数"></a>关于this和箭头函数</h2><p>箭头函数</p>
+<ul>
+<li>没有 this</li>
+<li>没有 arguments</li>
+<li>不能使用 new 进行调用</li>
+<li>它们也没有 super</li>
+</ul>
+<p>所以箭头函数里的 <code>this</code> 的查找与常规变量的搜索方式完全相同：在外部词法环境中查找。</p>
+<h2 id="关于-proto-和prototype"><a href="#关于-proto-和prototype" class="headerlink" title="关于__proto__和prototype"></a>关于__proto__和prototype</h2><blockquote>
+<p>初学者常犯一个普遍的错误，就是不知道 <code>__proto__</code> 和 [[Prototype]] 的区别。<br>请注意，<code>__proto__</code> 与内部的 [[Prototype]] 不一样。<code>__proto__</code> 是 [[Prototype]] 的 getter&#x2F;setter。稍后，我们将看到在什么情况下理解它们很重要，在建立对 JavaScript 语言的理解时，让我们牢记这一点。</p>
+</blockquote>
+<figure class="highlight plaintext"><figcaption><span>属性有点过时了。它的存在是出于历史的原因，现代编程语言建议我们应该使用函数 Object.getPrototypeOf/Object.setPrototypeOf 来取代 ```__proto__``` 去 get/set 原型。稍后我们将介绍这些函数。</span></figcaption><table><tr><td class="code"><pre><span class="line">根据规范，```__proto__``` 必须仅受浏览器环境的支持。但实际上，包括服务端在内的所有环境都支持它，因此我们使用它是非常安全的。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">重要：[this的值](https://zh.javascript.info/prototype-inheritance#this-de-zhi)</span><br><span class="line"></span><br><span class="line">### 设置和直接访问原型的现代方法</span><br><span class="line">设置和直接访问原型的现代方法有：</span><br><span class="line"></span><br><span class="line">- Object.create(proto, [descriptors]) —— 利用给定的 proto 作为 [[Prototype]]（可以是 null）和可选的属性描述来创建一个空对象。</span><br><span class="line">- Object.getPrototypeOf(obj) —— 返回对象 obj 的 [[Prototype]]（与 ```__proto__``` 的 getter 相同）。</span><br><span class="line">- Object.setPrototypeOf(obj, proto) —— 将对象 obj 的 [[Prototype]] 设置为 proto（与 ```__proto__``` 的 setter 相同）。</span><br><span class="line"></span><br><span class="line">如果要将一个用户生成的键放入一个对象，那么内建的 ```__proto__``` getter/setter 是不安全的。因为用户可能会输入 &quot;```__proto__```&quot; 作为键，这会导致一个 error，虽然我们希望这个问题不会造成什么大影响，但通常会造成不可预料的后果。</span><br><span class="line"></span><br><span class="line">因此，我们可以使用 Object.create(null) 创建一个没有 ```__proto__``` 的 “very plain” 对象，或者对此类场景坚持使用 Map 对象就可以了。</span><br><span class="line"></span><br><span class="line">此外，Object.create 提供了一种简单的方式来浅拷贝一个对象的所有描述符：</span><br><span class="line">```js</span><br><span class="line">let clone = Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj));</span><br></pre></td></tr></table></figure>
+
+<p>此外，我们还明确了 <code>__proto__</code> 是 [[Prototype]] 的 getter&#x2F;setter，就像其他方法一样，它位于 Object.prototype。</p>
+<p>我们可以通过 Object.create(null) 来创建没有原型的对象。这样的对象被用作 “pure dictionaries”，对于它们而言，使用 “<code>__proto__</code>“ 作为键是没有问题的。</p>
+<p>其他方法：</p>
+<ul>
+<li>Object.keys(obj) &#x2F; Object.values(obj) &#x2F; Object.entries(obj) —— 返回一个可枚举的由自身的字符串属性名&#x2F;值&#x2F;键值对组成的数组。</li>
+<li>Object.getOwnPropertySymbols(obj) —— 返回一个由自身所有的 symbol 类型的键组成的数组。</li>
+<li>Object.getOwnPropertyNames(obj) —— 返回一个由自身所有的字符串键组成的数组。</li>
+<li>Reflect.ownKeys(obj) —— 返回一个由自身所有键组成的数组。</li>
+<li>obj.hasOwnProperty(key)：如果 obj 拥有名为 key 的自身的属性（非继承而来的），则返回 true。</li>
+</ul>
+<p>所有返回对象属性的方法（如Object.keys 及其他）—— 都返回“自身”的属性。如果我们想继承它们，我们可以使用 for…in。</p>
+<h2 id="关于类继承"><a href="#关于类继承" class="headerlink" title="关于类继承"></a>关于类继承</h2><p>1.想要扩展一个类：class Child extends Parent：</p>
+<ul>
+<li>这意味着 Child.prototype.<strong>proto</strong> 将是 Parent.prototype，所以方法会被继承。</li>
+</ul>
+<p>2.重写一个 constructor：</p>
+<ul>
+<li>在使用 this 之前，我们必须在 Child 的 constructor 中将父 constructor 调用为 super()。</li>
+</ul>
+<p>3.重写一个方法：</p>
+<ul>
+<li>我们可以在一个 Child 方法中使用 super.method() 来调用 Parent 方法。</li>
+</ul>
+<p>4.内部：</p>
+<ul>
+<li>方法在内部的 [[HomeObject]] 属性中记住了它们的类&#x2F;对象。这就是 super 如何解析父方法的。</li>
+<li>因此，将一个带有 super 的方法从一个对象复制到另一个对象是不安全的。</li>
+</ul>
+<p>补充：</p>
+<p>箭头函数没有自己的 this 或 super，所以它们能融入到就近的上下文中，像透明似的。</p>
+<h2 id="类检查”instanceof”"><a href="#类检查”instanceof”" class="headerlink" title="类检查”instanceof”"></a>类检查”instanceof”</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>用于</th>
+<th>返回值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>type</td>
+<td>原始数据类型</td>
+<td>string</td>
+</tr>
+<tr>
+<td>{}.toString.call</td>
+<td>原始数据类型，内建对象，包含Symbol.toStringTag属性的对象</td>
+<td>string</td>
+</tr>
+<tr>
+<td>instanceof</td>
+<td>对象</td>
+<td>true&#x2F;false</td>
+</tr>
+</tbody></table>
+<p>如表所示：{}.toString.call (Object.prototype.toString) 可以检查对象的类型并返回字符串，而不是像toString仅仅返回 <code>[Object,Object]</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">alert</span>( s.<span class="title function_">call</span>(<span class="number">123</span>) ); <span class="comment">// [object Number]</span></span><br><span class="line"><span class="title function_">alert</span>( s.<span class="title function_">call</span>(<span class="literal">null</span>) ); <span class="comment">// [object Null]</span></span><br><span class="line"><span class="title function_">alert</span>( s.<span class="title function_">call</span>(alert) ); <span class="comment">// [object Function]</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="模块的导入和导出"><a href="#模块的导入和导出" class="headerlink" title="模块的导入和导出"></a>模块的导入和导出</h2><ul>
+<li>在声明一个 class&#x2F;function&#x2F;… 之前：<ul>
+<li>export [default] class&#x2F;function&#x2F;variable …</li>
+</ul>
+</li>
+<li>独立的导出：<ul>
+<li>export {x [as y], …}.</li>
+</ul>
+</li>
+<li>重新导出：<ul>
+<li>export {x [as y], …} from “module”</li>
+<li>export * from “module”（不会重新导出默认的导出）。</li>
+<li>export {default [as y]} from “module”（重新导出默认的导出）。</li>
+</ul>
+</li>
+</ul>
+<p>导入：</p>
+<ul>
+<li>模块中命名的导入：<ul>
+<li>import {x [as y], …} from “module”</li>
+</ul>
+</li>
+<li>默认的导入：<ul>
+<li>import x from “module”</li>
+<li>import {default as x} from “module”</li>
+</ul>
+</li>
+<li>所有：<ul>
+<li>import * as obj from “module”</li>
+</ul>
+</li>
+<li>导入模块（它的代码，并运行），但不要将其赋值给变量：<ul>
+<li>import “module”</li>
+</ul>
+</li>
+</ul>
+<p>我们把 import&#x2F;export 语句放在脚本的顶部或底部，都没关系。</p>
+<h2 id="处理程序选项-“passive”"><a href="#处理程序选项-“passive”" class="headerlink" title="处理程序选项 “passive”"></a>处理程序选项 “passive”</h2><p>addEventListener 的可选项 passive: true 向浏览器发出信号，表明处理程序将不会调用 preventDefault()。</p>
+<p>为什么需要这样做？</p>
+<p>移动设备上会发生一些事件，例如 touchmove（当用户在屏幕上移动手指时），默认情况下会导致滚动，但是可以使用处理程序的 preventDefault() 来阻止滚动。</p>
+<p>因此，当浏览器检测到此类事件时，它必须首先处理所有处理程序，然后如果没有任何地方调用 preventDefault，则页面可以继续滚动。但这可能会导致 UI 中不必要的延迟和“抖动”。</p>
+<p>passive: true 选项告诉浏览器，处理程序不会取消滚动。然后浏览器立即滚动页面以提供最大程度的流畅体验，并通过某种方式处理事件。</p>
+<p>对于某些浏览器（Firefox，Chrome），默认情况下，touchstart 和 touchmove 事件的 passive 为 true。</p>
+<h2 id="async和defer"><a href="#async和defer" class="headerlink" title="async和defer"></a>async和defer</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>顺序</th>
+<th>DOMContentLoaded</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>async</td>
+<td>加载优先顺序。脚本在文档中的顺序不重要 —— 先加载完成的先执行</td>
+<td>不相关。可能在文档加载完成前加载并执行完毕。如果脚本很小或者来自于缓存，同时文档足够长，就会发生这种情况。</td>
+</tr>
+<tr>
+<td>defer</td>
+<td>文档顺序（它们在文档中的顺序）</td>
+<td>在文档加载和解析完成之后（如果需要，则会等待），即在 DOMContentLoaded 之前执行。</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>requestAnimationFrame思考</title>
+    <url>/blog/requestAnimationFrame%E6%80%9D%E8%80%83/</url>
+    <content><![CDATA[<h2 id="关于setTimeout"><a href="#关于setTimeout" class="headerlink" title="关于setTimeout"></a>关于setTimeout</h2><p>首先要明白，setTimeout 的执行只是在内存中对元素属性进行改变，这个变化必须要等到屏幕下次绘制时才会被更新到屏幕上。如果两者的步调不一致，就可能会导致中间某一帧的操作被跨越过去，而直接更新下一帧的元素。假设屏幕每隔16.7ms刷新一次，而setTimeout 每隔10ms设置图像向左移动1px， 就会出现如下绘制过程（表格）：</p>
+<ul>
+<li>第    0  ms：屏幕未绘制，  等待中，setTimeout 也未执行，等待中；</li>
+<li>第   10 ms：屏幕未绘制，等待中，setTimeout 开始执行并设置元素属性 left&#x3D;1px；</li>
+<li>第 16.7 ms：屏幕开始绘制，屏幕上的元素向左移动了 1px， setTimeout 未执行，继续等待中；</li>
+<li>第   20 ms：屏幕未绘制，等待中，setTimeout 开始执行并设置 left&#x3D;2px;</li>
+<li>第   30 ms：屏幕未绘制，等待中，setTimeout 开始执行并设置 left&#x3D;3px;</li>
+<li>第33.4 ms：屏幕开始绘制，屏幕上的元素向左移动了 3px， setTimeout 未执行，继续等待中；<br>…</li>
+</ul>
+<p>从上面的绘制过程中可以看出，屏幕没有更新 left&#x3D;2px 的那一帧画面，元素直接从left&#x3D;1px 的位置跳到了 left&#x3D;3px 的的位置，这就是丢帧现象，这种现象就会引起动画卡顿。</p>
+<h2 id="关于requestAnimationFrame"><a href="#关于requestAnimationFrame" class="headerlink" title="关于requestAnimationFrame"></a>关于requestAnimationFrame</h2><p>与 setTimeout 相比，rAF 最大的优势是 由系统来决定回调函数的执行时机。具体一点讲就是，<code>系统每次绘制之前会主动调用 rAF 中的回调函数</code>，如果系统绘制率是 60Hz，那么回调函数就每16.7ms 被执行一次，如果绘制频率是75Hz，那么这个间隔时间就变成了 1000&#x2F;75&#x3D;13.3ms。换句话说就是，rAF 的执行步伐跟着系统的绘制频率走。<code>它能保证回调函数在屏幕每一次的绘制间隔中只被执行一次</code>，这样就不会引起丢帧现象，也不会导致动画出现卡顿的问题。</p>
+<p><em><strong>但是rAF并不能保证每次绘制都会执行,如果有个计算任务执行了  20ms，那么再一次回调会在 16.7 * 3 ms时执行，跳过了一次绘制。16.7+20 &#x3D; 36.7，36.7+16.7 &#x3D; 53.4， 16.7 * 3 &#x3D; 50.1, 50.1&lt;53.4</strong></em></p>
+<h2 id="rAF的优势"><a href="#rAF的优势" class="headerlink" title="rAF的优势"></a>rAF的优势</h2><ul>
+<li><p>CPU节能：使用 setTimeout 实现的动画，当页面被隐藏或最小化时，setTimeout 仍然在后台执行动画任务，由于此时页面处于不可见或不可用状态，刷新动画是没有意义的，而且还浪费 CPU 资源。而 rAF 则完全不同，当页面处理未激活的状态下，该页面的屏幕绘制任务也会被系统暂停，因此跟着系统步伐走的 rAF 也会停止渲染，当页面被激活时，动画就从上次停留的地方继续执行，有效节省了 CPU 开销。像是埋点也可以使用这个特性，当页面不可见时，不需要上报埋点，等页面可见时再上报。</p>
+</li>
+<li><p>函数节流：在高频率事件(resize,scroll 等)中，为了防止在一个刷新间隔内发生多次函数执行，使用 rAF 可保证每个绘制间隔内，函数只被执行一次，这样既能保证流畅性，也能更好的节省函数执行的开销。一个绘制间隔内函数执行多次时没有意义的，因为显示器每16.7ms 绘制一次，多次绘制并不会在屏幕上体现出来。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
+  </entry>
+  <entry>
     <title>一些Vue小技巧</title>
     <url>/blog/%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7/</url>
     <content><![CDATA[<h2 id="关于-vue-filters"><a href="#关于-vue-filters" class="headerlink" title="关于 vue.filters"></a>关于 vue.filters</h2><p>可以写在单个组件内，也可以单独写全局的然后加到 main.js 中，像是日期格式，数字格式就可以写在全局</p>
@@ -354,6 +774,756 @@
 ]]></content>
       <categories>
         <category>性能优化</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第一、二章：图形学概述、向量与线性代数</title>
+    <url>/blog/%E7%AC%AC%E4%B8%80%E3%80%81%E4%BA%8C%E7%AB%A0%EF%BC%9A%E5%9B%BE%E5%BD%A2%E5%AD%A6%E6%A6%82%E8%BF%B0%E3%80%81%E5%90%91%E9%87%8F%E4%B8%8E%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/</url>
+    <content><![CDATA[<h1 id="第一、二章：图形学概述、向量与线性代数"><a href="#第一、二章：图形学概述、向量与线性代数" class="headerlink" title="第一、二章：图形学概述、向量与线性代数"></a>第一、二章：图形学概述、向量与线性代数</h1><h3 id="第一章-图形学概述"><a href="#第一章-图形学概述" class="headerlink" title="第一章 图形学概述"></a>第一章 图形学概述</h3><h4 id="1-图形学应用场景"><a href="#1-图形学应用场景" class="headerlink" title="1.图形学应用场景"></a>1.图形学应用场景</h4><p>游戏场景渲染、电影特效、动画、设计、可视化（人体三维扫描）、虚拟现实、数字绘图、模拟、GUI、字体排版等</p>
+<h4 id="2-图形学包含内容："><a href="#2-图形学包含内容：" class="headerlink" title="2.图形学包含内容："></a>2.图形学包含内容：</h4><ul>
+<li><p>数学：矩阵、曲线、曲面</p>
+</li>
+<li><p>物理学：光学、着色</p>
+</li>
+<li><p>描述、操作三维的不同形体</p>
+</li>
+<li><p>动画、仿真</p>
+</li>
+</ul>
+<h4 id="3-本课程包含的内容："><a href="#3-本课程包含的内容：" class="headerlink" title="3.本课程包含的内容："></a>3.本课程包含的内容：</h4><ul>
+<li><p>光栅化</p>
+<ul>
+<li>光栅化是把三维空间的几何形体显示在屏幕上，是实时图形学的主要应用。实时：每秒钟生成 30 帧，否则叫做离线</li>
+</ul>
+</li>
+<li><p>曲线、曲面</p>
+<ul>
+<li>如何表示一条光滑的曲线、如何表示曲面、怎么把简单曲面通过细分的方法得到更复杂的曲面，形状发生变化的时候面要如何变化，如何保持物体的拓扑结构</li>
+</ul>
+</li>
+<li><p>光线追踪</p>
+<ul>
+<li>实时光线追踪技术</li>
+</ul>
+</li>
+<li><p>动画&#x2F;模拟</p>
+</li>
+</ul>
+<h4 id="4-本课程不包含的内容："><a href="#4-本课程不包含的内容：" class="headerlink" title="4.本课程不包含的内容："></a>4.本课程不包含的内容：</h4><ul>
+<li><p>怎么使用 API</p>
+</li>
+<li><p>怎么做三维建模</p>
+</li>
+<li><p>计算机视觉：一切需要猜测的东西是计算机视觉（根据图像推测模型）。</p>
+<p>​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816202909-3znjtvt.png" alt="image">​​</p>
+<p>model 描述三维空间中形状的几何形体，或对于渲染而言描述它的材质、光照，把这些三维空间中有的东西转为一幅图（渲染），就是计算机图形学。此外，还包括纯三维空间的仿真，材质建模、材质与光线之间作用的研究等，都属于计算机图形学的范畴。</p>
+</li>
+</ul>
+<p>从一张图识别出各种模型（比如识别出照片里哪些是桌子、椅子），或者图形、视频处理（中间涉及到一些推测、推理）等是计算机视觉的范畴。</p>
+<p>某些场景下没有严格的边界，比如 AR 需要二者的结合。</p>
+<h3 id="第二章-向量与线性代数"><a href="#第二章-向量与线性代数" class="headerlink" title="第二章 向量与线性代数"></a>第二章 向量与线性代数</h3><h4 id="1-图形学依赖："><a href="#1-图形学依赖：" class="headerlink" title="1.图形学依赖："></a>1.图形学依赖：</h4><ul>
+<li><p>数学基础：线性代数、微积分、统计</p>
+</li>
+<li><p>数学基础：力学、光学</p>
+</li>
+<li><p>其他杂项：信号处理、数值分析</p>
+</li>
+<li><p>一点点美学</p>
+</li>
+</ul>
+<h4 id="2-向量（Vectors）"><a href="#2-向量（Vectors）" class="headerlink" title="2.向量（Vectors）"></a>2.向量（Vectors）</h4><p>向量表示两个内容：方向和长度，平移向量不会改变它（因为方向和长度不变）。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816202955-jjx4cx2.png" alt="image">​</p>
+<p>一个向量除它的长度可以得到一个长度为 1 的单位向量。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203024-1bw8l0i.png" alt="image">​</p>
+<h5 id="向量求和："><a href="#向量求和：" class="headerlink" title="向量求和："></a><strong>向量求和：</strong></h5><p>几何上：平行四边形法则、三角形法则。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203030-99fojmi.png" alt="image">​</p>
+<p>代数上：坐标相加（笛卡尔坐标系）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203036-px3g9cs.png" alt="image">​</p>
+<h5 id="向量点乘："><a href="#向量点乘：" class="headerlink" title="向量点乘："></a><strong>向量点乘：</strong></h5><p>可以通过点乘快速得到两个向量的夹角（特别是两个向量都是方向向量，点乘后直接得到夹角的余弦）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203046-yssyjz7.png" alt="image">​</p>
+<p><strong>点乘运算满足交换律、分配律和结合律</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203054-ozx0y20.png" alt="image">​</p>
+<p><strong>代数上的点乘即对应的坐标元素做乘积之后相加：</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203059-3o1v0i4.png" alt="image">​</p>
+<h5 id="点乘在图形学中的应用："><a href="#点乘在图形学中的应用：" class="headerlink" title="点乘在图形学中的应用："></a>点乘在图形学中的应用：</h5><ul>
+<li>找到两个向量（两个方向）之间的夹角。比如光照模型，计算光照到物体表面的法线等等</li>
+<li>找到一个向量到另一个向量上的投影，分解向量</li>
+<li>计算两个向量之间有多接近：夹角越小（点乘的结果越大）越接近。比如镜面反射计算高光点</li>
+<li>可以知道两个向量之间的方向是相同还是相反（正数相同、负数相反）<br>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203127-e9vs5ug.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203146-rmtlix3.png" alt="image">​</li>
+</ul>
+<h5 id="向量叉乘"><a href="#向量叉乘" class="headerlink" title="向量叉乘"></a><strong>向量叉乘</strong></h5><p>叉乘后的向量同时垂直于两个原向量，叉乘得到的向量方向符合右手螺旋定则。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203210-spvivvu.png" alt="image">​</p>
+<p>叉乘不满足交换律，需要加一个负号。但满足分配律和结合律。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203223-2lm3df8.png" alt="image">​</p>
+<p>代数上：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203230-6axkrx6.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203230-6axkrx6.png" alt="image">​​</p>
+<h5 id="叉乘在图形学中的应用："><a href="#叉乘在图形学中的应用：" class="headerlink" title="叉乘在图形学中的应用："></a>叉乘在图形学中的应用：</h5><ul>
+<li><p>判定左和右</p>
+</li>
+<li><p>判定内和外（三角形光栅化的基础）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203304-8s5o1zi.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203311-5841k86.png" alt="image">​​</p>
+</li>
+</ul>
+<h4 id="3-矩阵（Matrics）"><a href="#3-矩阵（Matrics）" class="headerlink" title="3.矩阵（Matrics）"></a>3.矩阵（Matrics）</h4><p>矩阵就是一堆数字，用 m 行 n 列的结构表示。</p>
+<p>图形学中，用矩阵实现一些移动、旋转的变换。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203320-z1jydy0.png" alt="image">​</p>
+<p>矩阵乘一个数就是把矩阵中每一个数字和该数字想乘得到一个矩阵。</p>
+<h5 id="矩阵乘积"><a href="#矩阵乘积" class="headerlink" title="矩阵乘积"></a><strong>矩阵乘积</strong></h5><p>一定要满足前一个矩阵的列数等于后一个矩阵的行数才能实现相乘。计算方式：乘出来的结果在 m 行 b 列就去找相乘的前一个矩阵的 m 行对应的值与后一个矩阵的 n 列对应的值一一相乘后再相加。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203329-p0untj0.png" alt="image">​</p>
+<p>矩阵不满足交换律，但满足结合率和分配律：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203336-mb007jo.png" alt="image">​</p>
+<p>矩阵和向量相乘：认为向量是一个 m 乘 1 的矩阵，则可以将任意一个 n 乘 m 的矩阵与向量相乘，基于该前提实现一个向量变换（比如相对一个坐标轴翻转）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203343-fbta21s.png" alt="image">​</p>
+<h5 id="矩阵转置"><a href="#矩阵转置" class="headerlink" title="矩阵转置"></a><strong>矩阵转置</strong></h5><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203349-3r4s0yl.png" alt="image">​</p>
+<h5 id="单位矩阵"><a href="#单位矩阵" class="headerlink" title="单位矩阵"></a><strong>单位矩阵</strong></h5><p>单位矩阵只有对角线上有元素。</p>
+<p>如果两个矩阵相乘为单位矩阵，则该两个矩阵互为逆矩阵。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203400-dl98u4q.png" alt="image">​</p>
+<p><strong>向量点乘和叉乘写成矩阵的形式（用在旋转的推导上）</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203405-yaiw812.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第七章：z-buffer和着色</title>
+    <url>/blog/%E7%AC%AC%E4%B8%83%E7%AB%A0%EF%BC%9Az-buffer%E5%92%8C%E7%9D%80%E8%89%B2/</url>
+    <content><![CDATA[<h1 id="第七章：z-buffer和着色"><a href="#第七章：z-buffer和着色" class="headerlink" title="第七章：z-buffer和着色"></a>第七章：z-buffer和着色</h1><p>回顾上一课：</p>
+<ul>
+<li><p>光栅化一个三角形</p>
+</li>
+<li><p>采样</p>
+</li>
+<li><p>反走样</p>
+</li>
+</ul>
+<p>可见性&#x2F;遮挡（把三角形画在屏幕上，同时遮挡关系是对的）：</p>
+<ul>
+<li>z-buffer</li>
+</ul>
+<p><strong>painter’s algorithm（画家算法）</strong></p>
+<p>所有物体按深度排序（O(nlogn)），先把远的画上去，再把近的画上去，近的就会遮挡远的。但这种方式无法解决深度上互相遮挡的问题。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210915-pvb608h.png" alt="image">​</p>
+<p><strong>z-buffer</strong></p>
+<p>通过深度缓存维护存储每个像素当前的最小深度</p>
+<p>同步生成最后的结果（frame buffer）和当前看到的场景的任何一个像素对应的深度（depth buffer）。</p>
+<p>假设场景的点到相机的距离表示深度z，且这个值始终是正的，z越小的距离越近，越大的距离越远。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210941-qrlgori.png" alt="image">​</p>
+<p>先假设深度图上每一个像素的深度都是无限远，遍历每一个三角形的每一个像素，如果遍历到的像素深度比当前深度图记录的深度浅，就把深度图上的深度替换为这个像素的深度，否则不变。</p>
+<p>假设每个三角形覆盖的像素是常数项，时间复杂度O(n)。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210946-n9bslnc.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210954-8g8lbbc.png" alt="image">​</p>
+<p>一般两个浮点数值不会一样，所以比较深度的时候一般不会出现深度一样的情况。</p>
+<p>MSAA采样的时候一个像素可能有多个采样点，所以是记录每个采样点的深度。</p>
+<p>透明物体处理不了深度。</p>
+<h4 id="着色（shading）"><a href="#着色（shading）" class="headerlink" title="着色（shading）"></a><strong>着色（shading）</strong></h4><p>对不同物体应用不同的材质。</p>
+<p>一个基础的着色模型（Blinn-Phong 反射模型）</p>
+<p>高光、漫反射、环境光</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211003-0egfb17.png" alt="image">​</p>
+<p>对于一个物体表面的点，定义一个法线方向、一个视线方向、一个光照方向，和一些物体表面的参数</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211128-xr0alxy.png" alt="image">​</p>
+<p>着色有局部性。不考虑其他的物体，只考虑自己。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211133-dna2cne.png" alt="image">​</p>
+<p>一个shading point周围的单位面积接收的能量和光照方向和发现方向夹角的余弦成正比。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211139-xxs0w84.png" alt="image">​</p>
+<p>点光源，光线传播，每个时刻到达一个新的球壳。假如半径为1的时候，光的强度为I，则半径为r的时候，强度变为I&#x2F;r²</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211145-vw9pz1f.png" alt="image">​</p>
+<p>从不同的角度观测同一个点的结果是一样的。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211149-t038nb0.png" alt="image">​</p>
+<p>k_(d)  漫反射的系数，表示吸收了（反射了）多少颜色颜色。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211154-nrtvz3z.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第三章：变换</title>
+    <url>/blog/%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%9A%E5%8F%98%E6%8D%A2/</url>
+    <content><![CDATA[<h1 id="第三章：变换"><a href="#第三章：变换" class="headerlink" title="第三章：变换"></a>第三章：变换</h1><h3 id="变换"><a href="#变换" class="headerlink" title="变换"></a>变换</h3><p>本章学习内容：</p>
+<ul>
+<li>为什么学习变换</li>
+<li>2 维空间变换：旋转、缩放和切片</li>
+<li>齐次坐标</li>
+<li>变换组合（不同的变换组合形新的变换）</li>
+<li>3 维空间变换</li>
+</ul>
+<h4 id="为什么学习变换"><a href="#为什么学习变换" class="headerlink" title="为什么学习变换"></a>为什么学习变换</h4><p>变换分为：模型变换、视图变换</p>
+<p>变换的重要应用：</p>
+<p>modeling translation：描述摄像机的运动（位置移动）</p>
+<p>modeling rotation：机器人动画关节转动，逆运动学</p>
+<p>modeling scale：皮克斯开场动画 </p>
+<p>viewing：3 维到 2 维投影</p>
+<h4 id="二维变换"><a href="#二维变换" class="headerlink" title="二维变换"></a>二维变换</h4><p>scale matrix 缩放</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204136-qxvt0ld.png" alt="image">​</p>
+<p>reflection matrix 反射（对称）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204147-vqe87zn.png" alt="image">​</p>
+<p>shear matrix 切变</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204154-8vcpz15.png" alt="image">​</p>
+<p>rotation matrix 旋转</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204201-y4nybe9.png" alt="image">​</p>
+<p>（同维度的）矩阵乘输入坐标可以得到输出到坐标叫做线性变换</p>
+<h4 id="齐次坐标"><a href="#齐次坐标" class="headerlink" title="齐次坐标"></a>齐次坐标</h4><p>平移变换不能直接表示为矩阵乘坐标，需要加一个向量</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204222-f32ucjb.png" alt="image">​</p>
+<p>引入齐次坐标是为了找到一个解决方法统一表示二维变换</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204300-jhy7t5e.png" alt="image"></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204339-hdzd9sz.png" alt="image">​​​</p>
+<p>线性变化 + 平移可以统称为仿射变换，这种仿射变换都可以都可以转换为齐次坐标的形式。用一个矩阵可以统一所有的操作</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204358-hjfetw8.png" alt="image">​</p>
+<p>最后一行永远是 0 0 1</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204406-9c74516.png" alt="image">​</p>
+<p>逆变换（变换操作反过来，乘以变换的逆矩阵）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204416-s93vg8b.png" alt="image">​</p>
+<h4 id="变换组合"><a href="#变换组合" class="headerlink" title="变换组合"></a>变换组合</h4><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204426-omsp01l.png" alt="image">​</p>
+<p>先平移再旋转</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204433-fslqzhf.png" alt="image">​</p>
+<p>先旋转再平移</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204441-uhltcjb.png" alt="image">​</p>
+<p>复杂的变换可以通过简单的变换得到</p>
+<p>变换的顺序非常重要（矩阵乘法的顺序影响结果）</p>
+<p>变换组合从右到左应用矩阵</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204455-01rrf9f.png" alt="image"></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204509-qmc17ai.png" alt="image">​​</p>
+<p>变换分解</p>
+<p>如果希望在非原点旋转，可以把旋转点平移到原点后再进行旋转，旋转后再平移回去</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204520-braqfca.png" alt="image">​</p>
+<h4 id="三维变换"><a href="#三维变换" class="headerlink" title="三维变换"></a>三维变换</h4><p>与 2 维类似</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204527-f0sng0l.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第九章：重心坐标、纹理</title>
+    <url>/blog/%E7%AC%AC%E4%B9%9D%E7%AB%A0%EF%BC%9A%E9%87%8D%E5%BF%83%E5%9D%90%E6%A0%87%E3%80%81%E7%BA%B9%E7%90%86/</url>
+    <content><![CDATA[<h1 id="第九章：重心坐标、纹理"><a href="#第九章：重心坐标、纹理" class="headerlink" title="第九章：重心坐标、纹理"></a>第九章：重心坐标、纹理</h1><p>着色 1-2</p>
+<ul>
+<li><p>Blinn-Phong 反射模型（</p>
+<ul>
+<li>高光、漫反射、环境光，如何定义材质不同的表面和光线如何作用，可以得到不同的外观</li>
+</ul>
+</li>
+<li><p>着色模型&#x2F;频率</p>
+<ul>
+<li>flat shading、gouraud shading、Phong shading</li>
+</ul>
+</li>
+<li><p>实时渲染管线（vertax processing，fragment processing）</p>
+</li>
+<li><p>纹理映射</p>
+</li>
+</ul>
+<p>本节课</p>
+<p>着色 3</p>
+<ul>
+<li>重心坐标（插值）</li>
+<li>纹理怎么贴</li>
+<li>纹理的应用</li>
+</ul>
+<p><strong>重心坐标</strong></p>
+<p>为什么要做插值？</p>
+<ul>
+<li>希望在属性三角形内部做一个平滑的过渡</li>
+</ul>
+<p>需要插值哪些内容？</p>
+<ul>
+<li>纹理的坐标：三角形不同的顶点可以对应纹理的一个顶点，那么三角形内部就可以对应纹理的不同坐标</li>
+<li>颜色：逐顶点插值得到三角形内部的颜色</li>
+<li>法线</li>
+</ul>
+<p>如何在三角形内部做属性的插值？</p>
+<ul>
+<li>引入重心坐标</li>
+</ul>
+<h4 id="什么是重心坐标"><a href="#什么是重心坐标" class="headerlink" title="什么是重心坐标"></a>什么是重心坐标</h4><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212055-jnje6kl.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212059-5qtuxfj.png" alt="image">​</p>
+<p>三角形平面内的任意（x,y）都可以表示为顶点的线性组合</p>
+<p>如果这个点要在三角形内，α，β，γ 必须都为非负数</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212105-7dke1bs.png" alt="image">​</p>
+<p>可以通过面积比计算 α，β，γ，已经一个点的坐标和三个顶点的坐标，做叉乘可以计算每个三角形对面积</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212110-tb8xq9a.png" alt="image">​</p>
+<p>三角形的重心，把三角形等面积地分为了三部分，因此重心坐标 α，β，γ 都是 1&#x2F;3。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212115-4fyu6h0.png" alt="image">​</p>
+<p>也可以用公式进行计算</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212119-7yfx4en.png" alt="image">​</p>
+<p>得到三角形里任意一个点的重心坐标后，就可以对属性（颜色、法线、深度）做线性插值。</p>
+<p>重心坐标问题：在投影变换下重心坐标不能保持不变。所以做插值的时候，如果取的是三维空间中的坐标，只能在三维空间下做插值，不能投影到二维再做插值。</p>
+<h4 id="纹理应用"><a href="#纹理应用" class="headerlink" title="纹理应用"></a><strong>纹理应用</strong></h4><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212126-f1ja7qa.png" alt="image"></p>
+<p>每个屏幕上的采样点坐标对应一个纹理坐标，设置采样颜色为纹理颜色。</p>
+<p>纹理应用过程中会遇到一些问题：<br>纹理放大</p>
+<p>如果纹理图片太小了</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212136-vwh2tdy.png" alt="image">​</p>
+<p>Nearest：一个屏幕上的像素点对应的纹理坐标可能是小数，可以四舍五入为整数，使用用整数对应的纹理像素（texel），即多个像素可能对应同一个纹素。</p>
+<p>Bilinear（双线性插值）平滑过渡：</p>
+<p>先水平方向做插值，再竖直方向做插值。（方向反过来也是一样）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212142-432dvdh.png" alt="image">​</p>
+<p>Bicubic 插值：取临近的 16 个点。</p>
+<p>如果纹理图片太大了</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212146-ybw1kqq.png" alt="image">​</p>
+<p>一个像素覆盖多个纹素，直接用像素中心点采样会出现走样问题</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212151-yzdv3iw.png" alt="image">​</p>
+<h4 id="反走样"><a href="#反走样" class="headerlink" title="反走样"></a><strong>反走样</strong></h4><p>用超采样的方式，一个像素采用多个采样点进行采样，但这样会造成很大的成本</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212157-hiw1z5j.png" alt="image">​</p>
+<p>可以采用另一种方式：Range Query，给定一块区域，快速求出其平均值。</p>
+<p>Mipmap：快速，近似，正方形的范围查询。</p>
+<p>渲染之前，先生成 Mipmap</p>
+<p>每层像素小一半</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212205-y6dpwtl.png" alt="image">​</p>
+<p>计算机视觉里面会用图像金字塔表示</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212212-c292iom.png" alt="image">​</p>
+<p>最后的存储量是之前的 3&#x2F;4。用四个像素中心点投影到纹理坐标，像素点最大的连线模拟纹理坐标中一个对应的一个方形像素的边长。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212216-ofuai5f.png" alt="image">​</p>
+<p>D 是层数，L 是一个屏幕像素对应的纹理像素。求出在第几层一个屏幕像素对应的纹理像素会变成一个像素大小，就用这一层的 MipMap，快速求出范围平均值。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212223-a6eua3w.png" alt="image">​</p>
+<p>但这样查询可能出现不连续的问题，比如在近的地方用低层，远的地方用高层，但是每一层之间是不连续的。</p>
+<p>如果要求两层中间的值，这个时候又可以用双线性插值把两层的结果求出来，再对两层求出来的值合在一起再在层与层之间做线性插值。即三线形插值：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212229-u1nl40f.png" alt="image">​</p>
+<p>三线形插值的结果就是连续的：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212233-a5auinh.png" alt="image">​</p>
+<p>但由于 mipmap 限制在方块区域内，且插值都是近似结果，所以会出现 OverBlur 现象</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212240-kynmszt.png" alt="image">​</p>
+<p>可以用各向异性过滤（Anisotropic）来解决</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212244-wwuvaat.png" alt="image">​</p>
+<p>分层时把图片长宽方向压缩，这样屏幕像素就可以对应纹理坐标系中的一个矩形区域，而不局限于一个方形区域。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212250-9252tym.png" alt="image">​</p>
+<h4 id="各向异性过滤（RipMaps）要三倍的额外存储空间"><a href="#各向异性过滤（RipMaps）要三倍的额外存储空间" class="headerlink" title="各向异性过滤（RipMaps）要三倍的额外存储空间"></a>各向异性过滤（RipMaps）要三倍的额外存储空间</h4><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212255-54hzxxx.png" alt="image">​</p>
+<p>对于斜着的矩形区域还是不能正常模拟，因此还有其他的过滤方式：</p>
+<p>EWA 过滤</p>
+<p>任意一个不规则的形状都可以拆成多个圆形，覆盖在不规则的形状上，每次查询一个圆形，多次查询。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212304-vuf9svm.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第五章：光栅化</title>
+    <url>/blog/%E7%AC%AC%E4%BA%94%E7%AB%A0%EF%BC%9A%E5%85%89%E6%A0%85%E5%8C%96/</url>
+    <content><![CDATA[<h1 id="第五章：光栅化"><a href="#第五章：光栅化" class="headerlink" title="第五章：光栅化"></a>第五章：光栅化</h1><h3 id="光栅化（三角形）"><a href="#光栅化（三角形）" class="headerlink" title="光栅化（三角形）"></a>光栅化（三角形）</h3><p>上节课提到了观测变换：包含视图变换和投影变换。当完成观测矩阵变换后，下一步需要怎么绘制到屏幕上？这就是光栅化</p>
+<p>上节课提到透视投影转换为正交投影，近平面和远平面 z 轴位置不变，远平面大小变成和近平面一样大。</p>
+<p>正交投影里：x 轴定义左（l）和右（r），y 轴定义上（t）和下（b），z 轴定义远（f）和近（n）。</p>
+<h4 id="锥体定义"><a href="#锥体定义" class="headerlink" title="锥体定义"></a><strong>锥体定义</strong></h4><p>n 和 f 在正交投影和透视投影里面都是一样的，我们认为是已知的。做正交投影时我们把锥体 frustum 变成一个长方体，那么怎么定义这个 frustum？<br>假设我们从相机出发，看向一个区域，首先我们给这个近的平面可以定义一个出一个高度和宽度（高宽比），再定义一个视角（field of view，表示可以看到的角度范围）</p>
+<p>下图中平面的上下两条边中点到相机的连线（红线）所夹的角度是竖直方向的可视角度，这个角度用于定义看到的世界。比如广角相机这个角度就比较大，角度越小透视投影就越不明显，比如可以拍到很远的物体。</p>
+<p>同理可推出水平可视角度：相机和左右两条变中点连线所夹的角度。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205535-vbh78yk.png" alt="image">​</p>
+<p>长宽比和垂直可视角可以和做正交投影的长方体转为同一个概念。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205542-jgbgghv.png" alt="image">​</p>
+<p>经过 MVP 投影后，我们会得到一个（-1，1）的三次方的立方形，接着我们要将它绘制到屏幕上。</p>
+<h4 id="屏幕是什么"><a href="#屏幕是什么" class="headerlink" title="屏幕是什么"></a><strong>屏幕是什么</strong></h4><p>1.是一个二维数组，数组的每一个元素是一个像素（pixel）</p>
+<p>2.屏幕分辨率表示像素的多少</p>
+<p>3.屏幕是一个典型的光栅成像设备</p>
+<p>光栅（Raster）是德语里的屏幕的意思，光栅化即把东西画到屏幕上的过程。</p>
+<p>pixel 表示 picture element</p>
+<p>这门课里，我们把像素认为是一个个的小方块（实际的像素比这复杂得多），每一个方块表示一个颜色，一个像素里的颜色都不会变化。一般像素的颜色可以划分为不同的等级（0-255），用 RGB 表示。</p>
+<h4 id="屏幕的空间"><a href="#屏幕的空间" class="headerlink" title="屏幕的空间"></a><strong>屏幕的空间</strong></h4><p>认为屏幕左下角是原点，向右是 x，向上是 y。像素的坐标都是写成 x，y 的形式，用整数坐标来表示。如果一个屏幕的分别率是 width*height，那么所有的像素可以用（0, 0）到（width-1，height-1）来表示，所有像素的中心在(x+0.5, y+0.5)上，屏幕覆盖的范围为(0, 0)到（width, height）。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205553-c8jkudl.png" alt="image">​</p>
+<p>接下来需要把[-1,1]³ 映射到屏幕上，先不管 z 轴，[-1,1]² 转换为[0,width]和[0,height]。<br />先做缩放，然后要保持原点不变，所以还要做一个平移。这个变换被称为视口变换。<br />接下来要把所有的结果打散成像素，画到屏幕上。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205559-q7eeqc8.png" alt="image">​</p>
+<h4 id="成像设备"><a href="#成像设备" class="headerlink" title="成像设备"></a><strong>成像设备</strong></h4><p>早期的 CRT（Cathode Ray Tube）显示设备：</p>
+<p>成像原理：阴极射线管，电子加速后穿过显示设备，然后做偏转，电子打到屏幕上成像。</p>
+<p>成像的过程就是，通过扫描的方式，在屏幕上一行行的画线。提高扫描的速度：隔行扫描<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205606-7s6i94p.png" alt="image">​</p>
+<p>现在的显示设备：</p>
+<p>LCD（Liquid Crystal Display）显示设置</p>
+<p>把内存（比如显存）中的一块区域映射到屏幕上。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205616-c7cac97.png" alt="image">​</p>
+<p>液晶会通过自己的不同排布影响光的偏振方向</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205622-nhs1qm2.png" alt="image">​</p>
+<p>LED 显示设备（发光二极管）</p>
+<p>墨水屏（电压使得黑白墨水翻转， 刷新率很低）</p>
+<h4 id="怎么在成像设备上绘制"><a href="#怎么在成像设备上绘制" class="headerlink" title="怎么在成像设备上绘制"></a><strong>怎么在成像设备上绘制</strong></h4><p>成像即把变换后得到的多边形的顶点打散到各个像素上</p>
+<p>三角形</p>
+<ul>
+<li>三角形是最基础的多边形，任何多边形都可以拆成三角形</li>
+<li>三角形内部一定是平面的</li>
+<li>三角形内外定义一定是清晰的</li>
+<li>只要定义三角形的三个顶点，就可以做到一个顶点属性到另一个顶点属性的插值</li>
+</ul>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205632-lpzpswt.png" alt="image">​</p>
+<p>当三角形的边只有一部分覆盖到像素，怎么判断是不是要绘制，即判断像素中心点和三角形的关系？</p>
+<h5 id="采样"><a href="#采样" class="headerlink" title="采样"></a><strong>采样</strong></h5><p>把一个函数离散化的过程（给不同的 x 计算不同的函数值）</p>
+<p>用像素中心进行采样，定义不同的函数在像素中心的值</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205641-tuh5fok.png" alt="image">​</p>
+<p>定义一个 inside 的含义，给定任意（x,y）坐标，判定它是否在在三角形内，在三角形里其值为 1，不在则值为 0。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205650-sboxc7r.png" alt="image"></p>
+<p><img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205658-f0rr1m5.png" alt="image">​</p>
+<p>通过叉积的计算可以判断一个点是否在三角形内部</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205703-eu5ow97.png" alt="image">​</p>
+<p>如果有一个点正好在三角形的边界上，自己定义一个标准，不同的 API 可能有不同的标准。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205711-gg1og3r.png" alt="image">​</p>
+<p>不需要对屏幕上的所有像素做光栅化，只需要找到三角形的包围盒。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205716-nqlmtil.png" alt="image">​</p>
+<p>更快的方式是只找每一行的最左和最右。</p>
+<h5 id="实际的像素"><a href="#实际的像素" class="headerlink" title="实际的像素"></a><strong>实际的像素</strong></h5><p>bayer pattern（右侧的）绿色出现的频率最高，因为人眼对绿色更敏感</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205724-ybsurob.png" alt="image">​</p>
+<p>打印和屏幕相反，打印是一个减色系统（因为颜色越多越黑），但是屏幕 rgb 值越高，越亮，越靠近白色</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205729-8qixj10.png" alt="image">​</p>
+<p>光栅化后，由于颜色均匀的填在像素格子里，就会形成锯齿，采样率不够高会导致锯齿更明显，造成走样问题。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205734-cz8ulpy.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第八章：着色模型</title>
+    <url>/blog/%E7%AC%AC%E5%85%AB%E7%AB%A0%EF%BC%9A%E7%9D%80%E8%89%B2%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<h1 id="第八章：着色模型"><a href="#第八章：着色模型" class="headerlink" title="第八章：着色模型"></a>第八章：着色模型</h1><p><strong>Blinn-Phong 模型</strong></p>
+<ul>
+<li>漫反射</li>
+<li>高光</li>
+<li>环境光</li>
+</ul>
+<p>着色是在某一个点进行计算的，要得到一整张图就需要在不同的位置应用着色，就涉及到着色频率</p>
+<p>方向都是指单位向量</p>
+<p>本节课</p>
+<ul>
+<li><p>Blinn-phong 着色模型</p>
+<ul>
+<li>高光和环境光</li>
+</ul>
+</li>
+<li><p>着色频率</p>
+</li>
+<li><p>渲染管线</p>
+</li>
+<li><p>纹理映射</p>
+</li>
+<li><p>重心坐标</p>
+</li>
+</ul>
+<h4 id="高光"><a href="#高光" class="headerlink" title="高光"></a><strong>高光</strong></h4><p>观察方向和镜面反射方向接近的时候，可以看到高光。此时，半程向量也和法线方向接近。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211419-186t7zh.png" alt="image">​</p>
+<p>最早使用 Phong 模型：判断 <strong>R</strong> 和 <strong>v</strong> 是否足够接近，但是计算反射方向不好计算，计算量很大，所以后面优化为 Blinn-Phong 模型：判断 <strong>n</strong> 和半程向量 <strong>h</strong> 是否足够接近。</p>
+<p>这里简化掉了表示光吸收能量的系数（<strong>n</strong>*<strong>l</strong>）</p>
+<p>指数 p 是为了缩小高光的范围，在 Blinn-Phong 模型里一般取 100-200</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211426-qo64bm8.png" alt="image"></p>
+<p><img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211432-wrvh56t.png" alt="image">​</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211439-oigg0n5.png" alt="image">​</p>
+<h4 id="环境光"><a href="#环境光" class="headerlink" title="环境光"></a><strong>环境光</strong></h4><p>这里假设任何一个点收到的环境光的强度 I_(a)都是一样的，环境光和光照方向、观测方向都没有关系，是一个常数。（计算真正的环境光远比这个复杂，需要用到环境光照的知识）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211504-zq2wuvl.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211509-jl5x9sn.png" alt="image">​</p>
+<h4 id="着色频率"><a href="#着色频率" class="headerlink" title="着色频率"></a>着色频率</h4><p>着色分别应用在每个面、每个顶点（每个平面有四个顶点，每个顶点计算出法线，每个顶点做一个着色。三个顶点连接成三角形，三角形内部每一个点做插值）、每一个像素上（每个顶点求出法线，每个法线的方向在三角形内部做插值，得到每个像素的法线，再做一遍着色）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211517-p37tdsb.png" alt="image">​</p>
+<p><strong>Flat shading</strong></p>
+<p>三角形的两条边做叉积得到法线</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211523-u5qg48r.png" alt="image">​</p>
+<p><strong>gouraud shading</strong></p>
+<p>每个顶点求法线，着色后，内部的点通过插值求颜色</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211531-a5oyh96.png" alt="image">​</p>
+<p><strong>Phong shading</strong><br />顶点求出法线后，三角形内每个点通过插值求出法线方向，再进行着色</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211544-m2gpove.png" alt="image">​</p>
+<p>用哪种着色模型取决于模型的复杂度</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211548-1uy9e0v.png" alt="image">​</p>
+<p>顶点的法线怎么计算：相邻面的法线求（加权）平均</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211552-bwwoeee.png" alt="image">​</p>
+<p>求出两个顶点法线后，中间的法线插值求出来，需要注意求出来的方向向量都是单位向量。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211558-23gk3nx.png" alt="image">​</p>
+<h4 id="图形管线（实时渲染管线）"><a href="#图形管线（实时渲染管线）" class="headerlink" title="图形管线（实时渲染管线）"></a><strong>图形管线（实时渲染管线）</strong></h4><p>从一个场景到一张图经历的过程（显卡 GPU 里的操作）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211603-3bxqpnc.png" alt="image">​</p>
+<p>这个过程是部分可编程（vertex processing 和 fragment processing）的<strong>，</strong>即开发者可以控制顶点和像素是如何着色的，这部分代码就叫做 Shader。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211609-qhidiax.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211700-etbcuf7.png" alt="image">​</p>
+<p><a href="https://www.shadertoy.com/view/ld3Gz2">https://www.shadertoy.com/view/ld3Gz2</a><br /><strong>GPU 非常适合做图形学里的并行计算</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211709-48x15z4.png" alt="image">​</p>
+<h4 id="纹理映射"><a href="#纹理映射" class="headerlink" title="纹理映射"></a><strong>纹理映射</strong></h4><p>纹理用来定义着色时各个点的属性<strong>。</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211714-edon4vx.png" alt="image">​</p>
+<p>任何一个三维物体表面都是二维的，这个二维的图形就认为是纹理。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211732-ytqogpc.png" alt="image">​</p>
+<h4 id="纹理坐标"><a href="#纹理坐标" class="headerlink" title="纹理坐标"></a>纹理坐标</h4><p>三角形每个顶点都对应一个坐标。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211736-pfd8lww.png" alt="image">​</p>
+<p>纹理可以被重复多次</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211741-8eowj5b.png" alt="image">​</p>
+<p>这种重复使用依旧衔接的很好的纹理叫做 tiled textures。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211746-qu6dqrd.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第六章：反走样与深度缓冲</title>
+    <url>/blog/%E7%AC%AC%E5%85%AD%E7%AB%A0%EF%BC%9A%E5%8F%8D%E8%B5%B0%E6%A0%B7%E4%B8%8E%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2/</url>
+    <content><![CDATA[<h1 id="第六章：反走样与深度缓冲"><a href="#第六章：反走样与深度缓冲" class="headerlink" title="第六章：反走样与深度缓冲"></a>第六章：反走样与深度缓冲</h1><h3 id="反走样和深度缓冲"><a href="#反走样和深度缓冲" class="headerlink" title="反走样和深度缓冲"></a>反走样和深度缓冲</h3><p>上节课提到：<br>MVP变换后，把得到的[-1,1]3区域映射到屏幕上。光栅化的思想：用像素的中心对三角形的可见行函数进行采样。<br>本节课学习的主要内容：</p>
+<ul>
+<li>反走样<ul>
+<li>采样理论</li>
+<li>实际图形学中怎么做反走样</li>
+</ul>
+</li>
+<li>可见性&#x2F;遮挡<ul>
+<li>深度缓冲</li>
+</ul>
+</li>
+</ul>
+<p>采样在图形学中是一种广泛的做法：</p>
+<ul>
+<li><p>比如光栅化的过程，在屏幕空间用一些离散的点采样</p>
+</li>
+<li><p>照片，所有到达感光元件所在平面的光学信息离散成图像上的像素</p>
+</li>
+<li><p>采样可以发生在不同的时间，比如视频、动画是把一系列的图在不同时间进行采样。</p>
+</li>
+</ul>
+<p>采样artifacts（瑕疵）：</p>
+<ul>
+<li>锯齿-空间中采样</li>
+<li>摩尔纹（照片奇数行和技术列去掉），拿手机拍屏幕-不同位置采样</li>
+<li>顺时针转的轮子看起来在逆时针旋转-人眼在时间中采样跟不上运动的速度</li>
+</ul>
+<p>采样artifacts的本质：<br>信号的变化太快了，以至于采样的速度跟不上信号变换的速度。</p>
+<h4 id="反采样："><a href="#反采样：" class="headerlink" title="反采样："></a>反采样：</h4><p>采样前做一个模糊（滤波）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210106-lhslhi8.png" alt="image">​</p>
+<p>可以先模糊（滤波）再做采样，但不能先采样再模糊。</p>
+<p>为什么采样速度跟不上信号变换的速度会造成采样artifacts？</p>
+<h5 id="频域"><a href="#频域" class="headerlink" title="频域"></a><strong>频域</strong></h5><p>用f定义余弦波变换的速度，周期是频率的倒数</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210114-a300qnz.png" alt="image">​</p>
+<h5 id="傅立叶级数展开"><a href="#傅立叶级数展开" class="headerlink" title="傅立叶级数展开"></a>傅立叶级数展开</h5><p>任何一个周期函数都可以写成正弦、余弦的线性组合加常数项。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210122-j5p41kz.png" alt="image">​</p>
+<p>傅立叶变换：把一个函数变成另一个函数</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210129-x16mpp8.png" alt="image">​</p>
+<p>傅立叶变换就可以把函数变成不同频域的段并显示出来。</p>
+<p>相同的采样点，原函数频率越高，采样越不准确。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210134-al8w7gp.png" alt="image">​</p>
+<p>同样一个采样方法采样两种不同频率的函数，得出的结果无法区分，就叫做走样</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210140-rz0ct3y.png" alt="image">​</p>
+<h5 id="滤波"><a href="#滤波" class="headerlink" title="滤波"></a><strong>滤波</strong></h5><p>把某个特定的频率去掉，看信号会发生什么样的变化。</p>
+<p>傅立叶变换可以把一个函数从时域（把空间不同的位置也看作时域）变到频域。<br />把中心看作低频区，周围是高频区，用亮度表示在不同频率的位置上有多少信息，如下图大多数信息集中在低频上：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210149-07pjjcb.png" alt="image">​</p>
+<p>为什么右侧的图像会有两条白线，因为处理图片信号的时候，会把图片视作周期性变化（类似于图片水平方向和竖直方向依次叠放了多张图），由于图片并不是真的周期变化，到达图片边界时，会发生剧烈的信号变化，产生极其高的高频。</p>
+<p>傅立叶变换可以让我们看到一张图像在不同的频率长什么样，即得到一张图像的频谱。</p>
+<p>假如去掉低频的信息，再做傅立叶逆变换，会得到图像内容的边界，因为在边界处会发生剧烈的变化，即频率比较高。这种滤波称为高通滤波，即这种滤波器只有高频信号能通过。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210158-3rqn9kb.png" alt="image">​</p>
+<p>假如只留下高频的信息，去掉低频的信息，再做傅立叶逆变换，会得到一张（边界）比较模糊的图。这种滤波称为低通滤波。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210203-1oq5f7x.png" alt="image">​</p>
+<h5 id="滤波-平均-卷积"><a href="#滤波-平均-卷积" class="headerlink" title="滤波&#x3D;平均&#x3D;卷积"></a>滤波&#x3D;平均&#x3D;卷积</h5><p>卷积（图形学上定义：滑动过滤器，做点乘，得到一个加权平均值）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210208-4aeusae.png" alt="image">​</p>
+<p>卷积定理：时域上对两个信号做卷积，对应频域上两个信号做乘积。时域的卷积等于频域的乘积，时域上的乘积等于频域上的卷积：</p>
+<ul>
+<li>可以选择直接在时域上做卷积</li>
+</ul>
+<ul>
+<li><p>或者先做傅立叶变换变到频域上，卷积核也做傅立叶变换到频域上，在频域上做乘积，乘积结果再做逆变换变回来。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210218-9gaprqi.png" alt="image">​</p>
+</li>
+</ul>
+<p>卷积核：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210230-z26gbw7.png" alt="image">​</p>
+<p>盒子越大，对应的频域范围越小，结果越模糊。盒子越小，频域范围越大。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210235-9jmqqx0.png" alt="image">​</p>
+<p>从频率的角度上看采样：重复频域上的内容。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210241-70mdqp9.png" alt="image">​</p>
+<p>给一个原始信号(a)，乘一个冲击函数(c)（只在某些固定位置有值，其他位置值为0），得到采样结果(e)。</p>
+<p>把原始信号和冲击函数分别转换到频域上得到（b）和（d），做卷积得到（f）。</p>
+<p>可以看出来：采样就是重复原始信号的频谱。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210248-gg8fqbg.png" alt="image">​</p>
+<p>采样不同的间隔会引起频谱以不同的间隔移动，当采样率不足（采样不够快），原始信号复制粘贴的频谱间隔就很小。采样越稀疏，搬移频谱内容就越密集。原始信号和复制粘贴信号混在一起，这个时候发生了走样。</p>
+<h5 id="反走样："><a href="#反走样：" class="headerlink" title="反走样："></a><strong>反走样</strong>：</h5><p>1.增加采样率（高分辨率频幕）</p>
+<p>2.先做模糊再做采样（先把高频信号拿掉，再采样，这个时候频谱覆盖面变小，再以原本间隔复制，就不会发生混别）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210257-b3w0q1c.png" alt="image">​</p>
+<p>找一个一定大小的低通滤波器，对原来的频谱做卷积</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210307-u1sxhl3.png" alt="image">​</p>
+<p>用一个1像素的方块对三角形函数做一个卷积操作：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210314-yweopgt.png" alt="image">​</p>
+<p>对三角形覆盖面积求平均：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210321-rq1srs3.png" alt="image">​</p>
+<p>怎么计算三角形的覆盖面积，近似求解，把像素划分成很多小像素，判断小像素是不是在三角形里面再求平均：</p>
+<p>Antialiasing By Supersampling (MSAA)</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210326-or8d452.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210419-gk18psz.png" alt="image">​</p>
+<p>接着对格子中间进行采样（采样的结果就是平均的结果）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210429-oizrk0s.png" alt="image">​</p>
+<p>MSAA不是靠提升分辨率直接解决走样问题，增加采样点只是得到三角形的近似覆盖，屏幕像素值不变，它解决的是模糊的问题。<br><strong>MSAA的代价：</strong></p>
+<p>增大了计算量。工业上用更有效的不规则图案来减少采样点，有一些点还会被临近的像素来复用。</p>
+<p><strong>其他抗锯齿：</strong><br />FXAA(Fast Approximate AA 快速近似抗锯齿)：和采样无关，通过图像后期处理，先得到一个有锯齿的图，再通过图像匹配的方法找到这些边界，再把有锯齿的地方换成没有锯齿的边界。</p>
+<p>TAA（Temporal AA）：静态物体两帧不变，因此相邻两帧可以用一个像素内的不同点感知是否在三角形内部，当前帧可以复用上一帧的结果。</p>
+<p><strong>超分辨率：</strong></p>
+<p>小图拉大；有一个高分辨率的图，但是采样率不够，想要把这个图恢复出来。</p>
+<p>DLSS（Deep Learning Super Sampling）深度学习</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第十章：纹理应用、几何</title>
+    <url>/blog/%E7%AC%AC%E5%8D%81%E7%AB%A0%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8%E3%80%81%E5%87%A0%E4%BD%95/</url>
+    <content><![CDATA[<h1 id="第十章：纹理应用、几何"><a href="#第十章：纹理应用、几何" class="headerlink" title="第十章：纹理应用、几何"></a>第十章：纹理应用、几何</h1><p><br />Shading 1&amp;2</p>
+<ul>
+<li>Blinn-Phong 反射模型</li>
+<li>着色模型&#x2F;着色频率</li>
+<li>图形管线</li>
+<li>纹理映射</li>
+</ul>
+<p>Shading 3</p>
+<ul>
+<li><p>重心坐标系</p>
+</li>
+<li><p>纹理反走样（MIPMAP）</p>
+<ul>
+<li>纹理太小插值，纹理太大 MIPMAP 范围查询</li>
+</ul>
+</li>
+<li><p>纹理应用</p>
+</li>
+</ul>
+<h3 id="纹理应用"><a href="#纹理应用" class="headerlink" title="纹理应用"></a><strong>纹理应用</strong></h3><p>纹理：一块内存，可以做不同的范围查询（过滤）<br><strong>环境光照（环境光映射）</strong></p>
+<p>把任何一个方向来的光都记录下来，用纹理描述环境光，用环境光渲染其他物体。假设环境光源都是来自无限远处，不考虑位置。<br>犹他茶壶</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212623-5xuthiv.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212629-qk6miqf.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212633-7v6qdx7.png" alt="image">​</p>
+<p>环境光可以记录在球面上，放在不同的方向上记录一个点，再把图展开（就像世界地图）</p>
+<p>但这样会在顶部和底部出现扭曲</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212638-eo04j2k.png" alt="image">​</p>
+<p>此时可以假设球外面有一个包围盒，把球心到球表面的连线延长到立方体上，把环境光信息记录在一个立方体上对应的 6 个面上，再把立方体展开：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212643-fyppq96.png" alt="image">​</p>
+<p>6 个面基本是均匀的，所以不会发生扭曲，但是需要计算方向和面的对应关系。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212648-ecbhss9.png" alt="image">​</p>
+<p><strong>凹凸贴图（法线贴图）</strong><br />纹理不只是可以表示颜色，也可以表示高度。</p>
+<p>可以在不把几何形体变复杂的情况下，定义任意一个点的相对高度，通过相对高度计算出一个假的法线，产生着色上的明暗对比。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212704-suhh84z.png" alt="image">​</p>
+<p>对像素做扰动，重新计算法线方向</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212710-s5urew5.png" alt="image">​</p>
+<p>用相邻两点的高度差除长度，得到切线，通过切线旋转 90 度再算法线</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212716-3aznrqr.png" alt="image">​</p>
+<p>三维情况下需要计算两个方向的切线（假设局部坐标系的法线是（0，0，1））：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212722-c4makw8.png" alt="image">​</p>
+<h3 id="位移贴图"><a href="#位移贴图" class="headerlink" title="位移贴图"></a><strong>位移贴图</strong></h3><p>凹凸贴图没有真正改变顶点的高度，在边缘和自己的几何会产生自己的阴影的情况下表现失真，这个时候用位移贴图，真正改变三角形顶点的高度。问题就是三角形需要定义得足够细，能跟上纹理定义的频率。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212729-yp6rd9g.png" alt="image">​</p>
+<p>DirectX（动态曲面细分） 先应用一个粗糙一点的模型，应用过程中检测是否满足要求，根据需要把三角形拆得更细做位移贴图。</p>
+<h4 id="三维过程噪声"><a href="#三维过程噪声" class="headerlink" title="三维过程噪声"></a><strong>三维过程噪声</strong></h4><p>不真正生成纹理图，定义一个三维噪声函数，计算空间中每一个点计算出噪声的值，再通过一些计算得到纹理。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212735-avq67ya.png" alt="image">​</p>
+<h4 id="预计算阴影"><a href="#预计算阴影" class="headerlink" title="预计算阴影"></a><strong>预计算阴影</strong></h4><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212746-sjxdb4h.png" alt="image">​</p>
+<p>先计算环境光遮蔽写进纹理图，再把纹理图乘以着色的结果，得到阴影。</p>
+<h4 id="三维体积渲染"><a href="#三维体积渲染" class="headerlink" title="三维体积渲染"></a><strong>三维体积渲染</strong></h4><p>医学成像，核磁共振扫描人体，得到一个密度的三维纹理。</p>
+<h3 id="几何"><a href="#几何" class="headerlink" title="几何"></a>几何</h3><p>曲线、光滑曲面、齿轮、布料（透明的、纤维）、水的表面形状、城市（大量几何形状）、动物毛发、细胞等等怎么用几何表示。</p>
+<p>隐式表示</p>
+<p>满足特定关系的一些点表示一个几何，比如一个球体。</p>
+<p>f(x,y,z) &#x3D; 0;</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212759-2peym2g.png" alt="image">​</p>
+<p>问题：<br>不好直接看出来表示的几何是什么形状</p>
+<p>好处：<br>可以很快得判断一个点在不在这个几何面上（在几何体内还是外）</p>
+<p>显式表示</p>
+<p>1.把几何上的面的点直接表示出来</p>
+<p>2.通过参数映射定义表面</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212806-2gltnzg.png" alt="image">​</p>
+<p>好处：<br>很容易找到形状，把(u,v)都算一遍</p>
+<p>问题：<br>不能很快判断一个点是不是在表面上（在几何体内部还是外部）</p>
+<p>隐式表示方法：</p>
+<p>代数曲面：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212816-rlxf3yh.png" alt="image">​</p>
+<p>可以不只用代数方式来表达：</p>
+<p>Constructive Solid Geometry（构造立体几何法，CSG）</p>
+<p>用基础的结构体做一些简单运算形成复杂的几何：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212822-c479i43.png" alt="image">​</p>
+<h4 id="Distance-Function（距离函数）"><a href="#Distance-Function（距离函数）" class="headerlink" title="Distance Function（距离函数）"></a>Distance Function（距离函数）</h4><p>定义任意一个点到这个几何体表面的最近距离</p>
+<p>如果距离是正的，说明这个点在物体外部，距离是负的则在物体内部</p>
+<p>对两个几何做融合（blend）得到 A→B 从左到右运动的一个中间状态。blend 两个几何的距离函数，其实就是 blend 两个边界。可以通过 blend 出来的结果距离函数，还原出边界（SDF 为 0）。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212828-rbdw2xm.png" alt="image">​</p>
+<p>距离函数也可以不写成解析表达式，比如水平集</p>
+<p>等高线也是类似</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212834-av4rckb.png" alt="image">​</p>
+<p>水平集也可以定义在三维上。比如计算三维中 f(x)等于某一个值的所有点，可以得到一个三维空间中的一个表面。<br />医学扫描</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212840-rs0fg0z.png" alt="image">​</p>
+<p>水滴融合</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212844-gslgf7o.png" alt="image">​</p>
+<h4 id="分形"><a href="#分形" class="headerlink" title="分形"></a><strong>分形</strong></h4><p>自重复几何</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212849-ilbpjwt.png" alt="image">​</p>
+<p>总结：</p>
+<p>优点：<br>隐式函数表示起来比较容易，对存储也比较友好，比较容易判断是否在物体表面。用隐式函数表示的表面很容易对光线求交。严格地表示简单形体，很容易给出准确描述。很适合描述拓扑结构。<br>缺点：<br>对复杂的模型很难用一个规则的函数来描述。</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第四章：三维变换</title>
+    <url>/blog/%E7%AC%AC%E5%9B%9B%E7%AB%A0%EF%BC%9A%E4%B8%89%E7%BB%B4%E5%8F%98%E6%8D%A2/</url>
+    <content><![CDATA[<h1 id="第四章：三维变换"><a href="#第四章：三维变换" class="headerlink" title="第四章：三维变换"></a>第四章：三维变换</h1><p>补充知识：<br />旋转矩阵的逆等于它的转置，如果一个矩阵的逆等于它的转置，数学上称为正交矩阵</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204734-zbbfcch.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204738-oeybft0.png" alt="image">​</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204743-ranruz2.png" alt="image">​​</p>
+<h3 id="本章知识："><a href="#本章知识：" class="headerlink" title="本章知识："></a>本章知识：</h3><ul>
+<li><p>3D 变换</p>
+</li>
+<li><p>viewing（观测）变换</p>
+<ul>
+<li><p>View（视图）&#x2F;Camera transformation</p>
+</li>
+<li><p>Projection（投影） tranformation</p>
+<ul>
+<li>Orthographic（正交）projection</li>
+<li>Perspective（透视）projection</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="三维变换"><a href="#三维变换" class="headerlink" title="三维变换"></a>三维变换</h4><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204824-pewehrj.png" alt="image"></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204831-k0kbmdg.png" alt="image"></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204838-9w7o32h.png" alt="image">​​​</p>
+<p><strong>绕坐标轴旋转</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204848-uxkikg4.png" alt="image">​</p>
+<p>x 和 z 的旋转矩阵和 y 的旋转矩阵是互逆的。<br>循环对称：x 叉乘 y 得到 z，y 叉乘 z 得到 x，但是得到 y 是要 z 叉乘 x 而不是 x 叉乘 z。</p>
+<h5 id="一般旋转"><a href="#一般旋转" class="headerlink" title="一般旋转"></a><strong>一般旋转</strong></h5><p>用简单的旋转组合形成复杂的旋转</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204923-1ahrojl.png" alt="image">​</p>
+<p>绕任意轴的旋转都可以转换为绕 x、y、z 轴的旋转<br />罗德里格斯旋转公式（Rodrigues‘ Rotation Formula）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204933-6jo5ab6.png" alt="image"></p>
+<p>其中 n 是任意旋转轴（可以不经过原点），α 是旋转角</p>
+<p>绕任意轴旋转：先平移，让旋转轴位于原点，再旋转，再平移回来。<br>四元数：解决插值问题。比如二维旋转 20 度的矩阵和旋转 30 度的矩阵相加后除以 2，不等于旋转 25 度的旋转矩阵，需要用到四元数做旋转和旋转间的插值。</p>
+<h4 id="Viewing-Transform"><a href="#Viewing-Transform" class="headerlink" title="Viewing Transform"></a>Viewing Transform</h4><ul>
+<li><p>什么是视图变换</p>
+</li>
+<li><p>拍照片（MVP 变换）</p>
+<ul>
+<li>找一个好的位置放置模型（model transformation）</li>
+<li>找一个好的角度（view tansformation）</li>
+<li>茄子！（projection transformation）</li>
+</ul>
+</li>
+</ul>
+<h5 id="模型视图变换（Model-viewing-transformation）"><a href="#模型视图变换（Model-viewing-transformation）" class="headerlink" title="模型视图变换（Model viewing transformation）"></a><strong>模型视图变换（Model viewing transformation）</strong></h5><p>放在哪，往哪看，相机的向上方向（相机怎么摆）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205023-wd34p5r.png" alt="image"></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205031-n0jcxen.png" alt="image">​​</p>
+<p>约定俗成：相机放到（0，0，0）位置，向上摆放，沿着-Z 方向看</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205040-9ncss7e.png" alt="image"></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205053-62krasy.png" alt="image">​​</p>
+<p>直接旋转角度到坐标轴不好处理，但把坐标轴旋转到某个方向比较容易，所以可以先旋转坐标轴，得到旋转矩阵，再求它的逆。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205103-vjn5cf9.png" alt="image">​</p>
+<p>正交矩阵的逆就是它的转置。<br>先把中心移动到原点再做旋转的到的变换就是视图变换。相机通过这种变换变换到一个固定位置，其他物体也做一样的变换，保持和相机的相对位置不变。<br>总结：</p>
+<ul>
+<li><p>任何时候相机和物体做一样的变换</p>
+</li>
+<li><p>只要相机能移动到规定的位置，那其他物体也会落到需要的位置上</p>
+</li>
+</ul>
+<p>所以模型视图经常一起变换，被称为模型视图变换。</p>
+<h5 id="投影变换（Projection-TransFormation）"><a href="#投影变换（Projection-TransFormation）" class="headerlink" title="投影变换（Projection TransFormation）"></a><strong>投影变换（Projection TransFormation）</strong></h5><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205139-95pslji.png" alt="image">​</p>
+<p>正交投影不会近大远小（鸽子为什么那么大）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205147-ritsdvy.png" alt="image">​</p>
+<p>透视投影就是把相机放在空间的一个点，往一个方向连出一个四棱锥，把这个四棱锥某一个深度到另一个深度之间的区域（frustum）都显示出来，显示到近处的平面上<br>正交投影假设相机离得无限远，这个时候近和远基本是一样的大小</p>
+<h6 id="正交投影"><a href="#正交投影" class="headerlink" title="正交投影"></a><strong>正交投影</strong></h6><p>简单做法：</p>
+<p>相机移到原点，把 z 轴扔掉（怎么区分物体前后后面再说），所有东西都在(x,y)上，然后把范围约束到[-1，1]² 这样的一个矩形里（约定俗成），得到正交投影的结果。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205159-gzsq0g7.png" alt="image">​</p>
+<p>正式的做法：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205210-oc4fded.png" alt="image">​</p>
+<p>定义一个立方体，映射到一个正则（规范、标准）立方体上。先做平移，再做缩放。</p>
+<p>这里用的是右手系，z 方向向外，面离我们更远则 z 值更小，离我们更近则 z 值越大，所以 f 小于 n。所以有一些图形学的 API（比如 OpenGL 从透视空间到裁剪空间，webgl 也是类似）会用左手系，让 z 方向朝里。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205218-zzb2df2.png" alt="image">​</p>
+<h6 id="透视投影近大远小"><a href="#透视投影近大远小" class="headerlink" title="透视投影近大远小"></a><strong>透视投影</strong>近大远小</h6><p>平行线不再平行</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205234-fgcx5g3.png" alt="image">​</p>
+<p>先把锥体向内挤压成一个立方体，约定近面和远面的 z 轴不变，远面中心点不变，近面大小不变（从透视到正交）。</p>
+<p>再做正交投影</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205248-ba0qaqy.png" alt="image">​</p>
+<p>找到远面的 y 和近面的 y’之间的比例关系</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205257-yb7ie5l.png" alt="image">​</p>
+<p>齐次坐标里，点矩阵乘一个数字和以前表示的含义一样</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205305-qcme12h.png" alt="image"></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205320-y3vu5im.png" alt="image">​​</p>
+<p>近平面的所有点不改变，可以计算出转换矩阵的前两个数字</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205330-nmelurd.png" alt="image">​</p>
+<p>远平面中心点不变，结合前面近平面的特征，可以计算出剩下两个数字</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205337-1370gm2.png" alt="image">​</p>
+<p>最终得到透视到正交的转换矩阵</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205343-8w6owzr.png" alt="image">​</p>
+<h4 id="思考："><a href="#思考：" class="headerlink" title="思考："></a>思考：</h4><p>在近平面和远平面之间的中心点被挤压时，会被推向近平面还是远平面？<br>对原矩阵做转换后，得到的结果的第四行的值为(0 0 1 0) 和 (x y z 1)相乘后得到：z；<br>计算 z 转换后的值为（f&lt;z&lt;n）值：z(n+f)-nf，需要除以 z 把最后一位变为 1 后再和原来的 z 比较</p>
+<p>求解：(z(n+f) - nf)&#x2F;z 和 z 的关系，转换为抛物线求解，y &#x3D; z(n+f)- nf - z² , z 在 n 和 f 之间变化时，有两个解 n 和 f，且抛物线开口向下，即当 z 位于 n 和 f 之间时，其变换后的 z 的绝对值始终大于原来的 z 的绝对值。</p>
+<p>‍</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
       </categories>
   </entry>
   <entry>
