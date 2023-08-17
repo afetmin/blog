@@ -375,12 +375,6 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="React-的-diff"><a href="#React-的-diff" class="headerlink" title="React 的 diff"></a>React 的 diff</h1><p>一个<code>DOM节点</code>在某一时刻最多会有 4 个节点和它相关。</p>
-<ol>
-<li><code>current Fiber</code>。如果该<code>DOM节点</code>已在页面中，<code>current Fiber</code>代表该<code>DOM节点</code>对应的<code>Fiber节点</code>。</li>
-<li><code>workInProgress Fiber</code>。如果该<code>DOM节点</code>将在本次更新中渲染到页面中，<code>workInProgress Fiber</code>代表该<code>DOM节点</code>对应的<code>Fiber节点</code>。</li>
-<li><code>DOM节点</code>本身。</li>
-<li><code>JSX对象</code>。即<code>ClassComponent</code>的<code>render</code>方法的返回结果，或<code>FunctionComponent</code>的调用结果。<code>JSX对象</code>中包含描述<code>DOM节点</code>的信息。</li>
-</ol>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/React%E7%9A%84diff/#more" rel="contents">
@@ -481,7 +475,6 @@
     
     <div class="post-body" itemprop="articleBody">
           <h2 id="前端如何测试网络的速度？"><a href="#前端如何测试网络的速度？" class="headerlink" title="前端如何测试网络的速度？"></a>前端如何测试网络的速度？</h2><p>B 站视频播放时有一个自动根据网络环境调整分辨率的功能，想了解如何测速<br><img data-src="/blog/./%E7%BD%91%E7%BB%9C%E6%B5%8B%E9%80%9F/b.png" alt="b站"></p>
-<p>然后我找了下面的方法测速</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/%E7%BD%91%E7%BB%9C%E6%B5%8B%E9%80%9F/#more" rel="contents">
@@ -720,7 +713,6 @@
     
     <div class="post-body" itemprop="articleBody">
           <h2 id="React-memo"><a href="#React-memo" class="headerlink" title="React.memo"></a>React.memo</h2><p>react.memo 有第二个参数，可以通过第二个参数来自定义组件的渲染时机。</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="title class_">React</span>.<span class="title function_">memo</span>(<span class="title class_">Component</span>, compare)</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/React-memo-lazy/#more" rel="contents">
@@ -821,7 +813,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <h2 id="当多种-children-一起输入时"><a href="#当多种-children-一起输入时" class="headerlink" title="当多种 children 一起输入时"></a>当多种 children 一起输入时</h2><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Container</span>(<span class="params">props</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> defaultProps = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&quot;alen&quot;</span>,</span><br><span class="line">    <span class="attr">msg</span>: <span class="string">&quot;hello&quot;</span>,</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> props.<span class="property">children</span>.<span class="title function_">map</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 通过判断 clone 混入props</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">React</span>.<span class="title function_">isValidElement</span>(item)) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title class_">React</span>.<span class="title function_">cloneElement</span>(item, &#123; ...defaultProps &#125;)</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> item === <span class="string">&quot;function&quot;</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">item</span>(defaultProps)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Child</span>(<span class="params">props</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;props.name + props.msg&#125; <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">App</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Container</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      // 多种方式混入</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">Child</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;(props) =&gt; <span class="tag">&lt;<span class="name">Child</span> &#123;<span class="attr">...props</span>&#125; /&gt;</span>&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">Container</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">render</span>(<span class="language-xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;root&quot;</span>))</span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/React-Props-Children-%E6%B7%B7%E5%90%88%E6%8F%92%E6%A7%BD/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1016,7 +1015,6 @@
     
     <div class="post-body" itemprop="articleBody">
           <h2 id="原型与原型链"><a href="#原型与原型链" class="headerlink" title="原型与原型链"></a>原型与原型链</h2><p><strong>实例与构造函数原型之间有直接的联系，但实例与构造函数之间没有。</strong></p>
-<p>每个函数都有一个属性，就是 prototype，函数的 prototype 指向了一个对象，这个对象就是调用该构造函数创建的<strong>实例</strong>的原型。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/#more" rel="contents">
@@ -1117,7 +1115,6 @@
     
     <div class="post-body" itemprop="articleBody">
           <h2 id="虚假的洗牌算法"><a href="#虚假的洗牌算法" class="headerlink" title="虚假的洗牌算法"></a>虚假的洗牌算法</h2><p>最常见的：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">shuffle</span> = (<span class="params">list</span>) =&gt; list.<span class="title function_">sort</span>(<span class="function">(<span class="params">x, y</span>) =&gt;</span> <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">0.5</span>)</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/%E8%99%9A%E5%81%87%E7%9A%84%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95/#more" rel="contents">
@@ -1218,14 +1215,6 @@
     
     <div class="post-body" itemprop="articleBody">
           <h2 id="关于setTimeout"><a href="#关于setTimeout" class="headerlink" title="关于setTimeout"></a>关于setTimeout</h2><p>首先要明白，setTimeout 的执行只是在内存中对元素属性进行改变，这个变化必须要等到屏幕下次绘制时才会被更新到屏幕上。如果两者的步调不一致，就可能会导致中间某一帧的操作被跨越过去，而直接更新下一帧的元素。假设屏幕每隔16.7ms刷新一次，而setTimeout 每隔10ms设置图像向左移动1px， 就会出现如下绘制过程（表格）：</p>
-<ul>
-<li>第    0  ms：屏幕未绘制，  等待中，setTimeout 也未执行，等待中；</li>
-<li>第   10 ms：屏幕未绘制，等待中，setTimeout 开始执行并设置元素属性 left&#x3D;1px；</li>
-<li>第 16.7 ms：屏幕开始绘制，屏幕上的元素向左移动了 1px， setTimeout 未执行，继续等待中；</li>
-<li>第   20 ms：屏幕未绘制，等待中，setTimeout 开始执行并设置 left&#x3D;2px;</li>
-<li>第   30 ms：屏幕未绘制，等待中，setTimeout 开始执行并设置 left&#x3D;3px;</li>
-<li>第33.4 ms：屏幕开始绘制，屏幕上的元素向左移动了 3px， setTimeout 未执行，继续等待中；<br>…</li>
-</ul>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/blog/requestAnimationFrame%E6%80%9D%E8%80%83/#more" rel="contents">

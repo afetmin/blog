@@ -11,33 +11,6 @@
   </url>
   
   <url>
-    <loc>https://afetmin.github.io/blog/%E8%99%9A%E5%81%87%E7%9A%84%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95/</loc>
-    
-    <lastmod>2023-08-17</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://afetmin.github.io/blog/about/index.html</loc>
-    
-    <lastmod>2023-08-17</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://afetmin.github.io/blog/categories/index.html</loc>
-    
-    <lastmod>2023-08-17</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://afetmin.github.io/blog/%E5%85%B3%E4%BA%8Evue%E7%9A%84mixin/</loc>
     
     <lastmod>2023-08-17</lastmod>
@@ -165,6 +138,33 @@
   
   <url>
     <loc>https://afetmin.github.io/blog/%E7%BD%91%E7%BB%9C%E6%B5%8B%E9%80%9F/</loc>
+    
+    <lastmod>2023-08-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://afetmin.github.io/blog/%E8%99%9A%E5%81%87%E7%9A%84%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95/</loc>
+    
+    <lastmod>2023-08-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://afetmin.github.io/blog/about/index.html</loc>
+    
+    <lastmod>2023-08-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://afetmin.github.io/blog/categories/index.html</loc>
     
     <lastmod>2023-08-17</lastmod>
     

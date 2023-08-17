@@ -1,7 +1,4 @@
 https://afetmin.github.io/blog/tags/index.html
-https://afetmin.github.io/blog/%E8%99%9A%E5%81%87%E7%9A%84%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95/
-https://afetmin.github.io/blog/about/index.html
-https://afetmin.github.io/blog/categories/index.html
 https://afetmin.github.io/blog/%E5%85%B3%E4%BA%8Evue%E7%9A%84mixin/
 https://afetmin.github.io/blog/%E5%85%B3%E4%BA%8E%E4%B8%AD%E9%97%B4%E4%BB%B6/
 https://afetmin.github.io/blog/%E5%89%8D%E7%AB%AF%E9%94%99%E8%AF%AF%E7%9B%91%E6%8E%A7/
@@ -17,6 +14,9 @@ https://afetmin.github.io/blog/%E7%AC%AC%E5%85%AD%E7%AB%A0%EF%BC%9A%E5%8F%8D%E8%
 https://afetmin.github.io/blog/%E7%AC%AC%E5%8D%81%E7%AB%A0%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8%E3%80%81%E5%87%A0%E4%BD%95/
 https://afetmin.github.io/blog/%E7%AC%AC%E5%9B%9B%E7%AB%A0%EF%BC%9A%E4%B8%89%E7%BB%B4%E5%8F%98%E6%8D%A2/
 https://afetmin.github.io/blog/%E7%BD%91%E7%BB%9C%E6%B5%8B%E9%80%9F/
+https://afetmin.github.io/blog/%E8%99%9A%E5%81%87%E7%9A%84%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95/
+https://afetmin.github.io/blog/about/index.html
+https://afetmin.github.io/blog/categories/index.html
 https://afetmin.github.io/blog/React-Props-Children-%E6%B7%B7%E5%90%88%E6%8F%92%E6%A7%BD/
 https://afetmin.github.io/blog/React-memo-lazy/
 https://afetmin.github.io/blog/React%E7%9A%84diff/
