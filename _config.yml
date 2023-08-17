@@ -115,7 +115,7 @@ theme: next
 
 # 摘要设置
 excerpt:			# 一定要顶格写，注意格式
-  depth: 3			# 他的大小就是全文阅读预览长度设置
+  depth: 2			# 他的大小就是全文阅读预览长度设置
   excerpt_excludes: []
   more_excludes: []
   hideWholePostExcerpts: true
