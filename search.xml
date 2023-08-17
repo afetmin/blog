@@ -1096,6 +1096,427 @@
       </categories>
   </entry>
   <entry>
+    <title>第二十一章：Animation、Simulation</title>
+    <url>/blog/%E7%AC%AC%E4%BA%8C%E5%8D%81%E4%B8%80%E7%AB%A0%EF%BC%9AAnimation%E3%80%81Simulation/</url>
+    <content><![CDATA[<h1 id="第二十一章：Animation、Simulation"><a href="#第二十一章：Animation、Simulation" class="headerlink" title="第二十一章：Animation、Simulation"></a>第二十一章：Animation、Simulation</h1><p>Animation&#x2F;Simulation</p>
+<p>计算机动画介绍：</p>
+<ul>
+<li>历史</li>
+<li>基本制作方法：关键帧</li>
+<li>物理模拟方法</li>
+<li>运动学</li>
+<li>rigging（绑定动画）</li>
+</ul>
+<p>动画最初的定义“让东西动起来”：</p>
+<ul>
+<li>一种交流的工具，展示动起来的东西</li>
+<li>美学</li>
+</ul>
+<p>对于建模或者几何的拓展</p>
+<ul>
+<li>把 3D 模型延伸到时间的纬度</li>
+</ul>
+<p>动画怎么制作</p>
+<ul>
+<li>把很多图按顺序，按一定速度去播放（人眼有视觉暂留的效果）</li>
+</ul>
+<p>虚拟现实为了让人们带头戴设备不晕，对帧率要求非常高（2 只眼睛必须达到 90fps）​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212848-injp93u.png" alt="image">​</p>
+<p>动画的发展​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212854-ndj2f72.png" alt="image">​</p>
+<p>电影技术的历史<br />最早电影技术用于科学研究（比如生物学研究）​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212906-dnxd3g5.png" alt="image">​</p>
+<p>第一部手绘 Feature-Length 动画​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212910-465iyii.png" alt="image">​</p>
+<p>第一部数字动画​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212914-ac10gz7.png" alt="image">​</p>
+<p>早期计算机动画​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212918-zlqd2p3.png" alt="image">​</p>
+<p>电脑生成的恐龙​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212922-zod4uuh.png" alt="image">​</p>
+<p>玩具总动员（里程碑式的，整个电影都是用 CG 生成的，用光栅化的效果生成阴影）​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212927-kn2z84p.png" alt="image">​</p>
+<p>关键帧</p>
+<p>关键帧能定义动画的总的走向</p>
+<p>10 年前（食破天惊）​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212932-tfl3o4n.png" alt="image">​</p>
+<p>近年（冰雪奇缘 2）​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212936-zyspnsj.png" alt="image">​</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212943-ctpth6m.png" alt="image">​关键帧插值​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212947-ncw50fv.png" alt="image">​</p>
+<p>线性插值不够连续，所以去要用到一些样条去做到更光滑的插值​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212953-s28xvi5.png" alt="image">​</p>
+<h4 id="物理模拟"><a href="#物理模拟" class="headerlink" title="物理模拟"></a>物理模拟</h4><p>牛顿第二定律：F&#x3D;ma，只要知道一些初始条件，比如物体的初始位置，受到的力，可以动态算出物体的位置。</p>
+<p>物体仿真</p>
+<p>建立正确的受力模型​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212958-iai570w.png" alt="image">​</p>
+<p>布料的模拟（模拟的不对会发生穿模的现象，比如衣服穿透了人的身体）​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213003-6bmut2k.png" alt="image">​</p>
+<h5 id="流体："><a href="#流体：" class="headerlink" title="流体："></a>流体：</h5><p>分为两步：1.模拟水是怎么运动的，拿到水的形状、位置。2.把结果拿去渲染​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213008-k73xjhh.png" alt="image">​</p>
+<h5 id="质点弹簧系统模拟绳子的运动​​"><a href="#质点弹簧系统模拟绳子的运动​​" class="headerlink" title="质点弹簧系统模拟绳子的运动​​"></a>质点弹簧系统模拟绳子的运动​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213013-egmcdn8.png" alt="image">​</h5><h5 id="模拟头发的运动"><a href="#模拟头发的运动" class="headerlink" title="模拟头发的运动"></a>模拟头发的运动</h5><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213018-4fqjavn.png" alt="image">​</p>
+<p>用点符号表示求导</p>
+<p>一块布可以用很多的质点弹簧进行模拟​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213028-2371bm8.png" alt="image">​</p>
+<p>简单的弹簧</p>
+<p>理想的弹簧：a 受到的弹簧把 a 拉向 b 的力 fa-&gt;b &#x3D; ks(b-a)，b 受到的力与 a 相反力的大小和 a、b 间的距离成正比（胡克定律），ks 是弹性系数​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213031-1gwdpty.png" alt="image">​</p>
+<p>被拉伸的弹簧</p>
+<p>a 受到的力等于弹簧质点间的距离绝对值减去弹簧原本长度，再乘以 a 到 b 的方向的单位向量。问题是：弹窗不会停下来。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213037-ql0mn1f.png" alt="image">​</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213043-0lmyjru.png" alt="image">​质点在运动过程中的能量损失，可以用摩擦系数来计算。表现起来就像是质点运动的时候有一个拉力，使得质点的速度慢下来。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213049-w5efpt7.png" alt="image">​</p>
+<p>但也存在一个问题，这样做摩擦系数他会同时作用于两个质点，让所有的运动都慢下来（比如弹簧从高处落下来降到地上速度也会降低），但我们想要的是质点之间的关系。</p>
+<p>我们把弹簧的摩擦系数与质点之间的速度差做乘积，并在物体运动方向做投影，此时阻力仅在质点之间作用，不会影响整体。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213053-s2s9qf2.png" alt="image">​</p>
+<p>弹簧结构​</p>
+<p><img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213057-4mq04gb.png" alt="image">​</p>
+<p>模拟一块布的时候，会遇到一些问题：</p>
+<p>1.这个结构无法承受对角线方向的剪力</p>
+<p>2.这个结构无法抵抗平面外的弯曲（比如把一张纸对折时，基本对折处的节点不会受到周围节点对抗的力，但是对于布而言，显然折叠时，折叠处的节点会受到周围节点的拉力）​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213108-ntv3bsg.png" alt="image">​</p>
+<p>这个时候可以往剪力作用的方向的垂直方向加一个约束，此时可以对抗一个方向上的剪力，但还是无法对抗平面外的弯曲。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213112-ez1kdm2.png" alt="image">​</p>
+<p>再往另一个方向加一个约束，此时可以对抗两个方向的剪力，但还是无法对抗平面外弯曲​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213119-srnkhm1.png" alt="image">​</p>
+<p>在节点间跳连，来对抗平面外的弯曲，同时这个连接应该是一种较弱的起辅助作用的连接​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213128-gkyneu3.png" alt="image">​</p>
+<p>最后，可以得到一个比较好的对布的模拟：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213132-aw10l3w.png" alt="image">​</p>
+<p>除了质点弹窗系统外，还可以用有限元的方法进行布的运动的模拟，运动从一个位置传递到另一个位置。</p>
+<h4 id="粒子系统"><a href="#粒子系统" class="headerlink" title="粒子系统"></a>粒子系统</h4><p>有一些运动可以用大量粒子来模拟，比如说雾、沙子，在游戏中有广泛的应用。<br />粒子系统需要计算每个粒子受到的力，优点是易于理解和实现，可以用少量粒子来体现速度，更多的粒子来体现复杂度。缺点是有一些场景需要大量的粒子，比如说模拟流体，同时一个粒子会受到四周其他粒子的力的作用，这些计算需要用到加速结构。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213138-hjeok4e.png" alt="image">​</p>
+<p>粒子系统动画制作的步骤：<br>对于每一帧的运动：<br>1.创造一些粒子</p>
+<p>2.计算每个粒子受到的作用力</p>
+<p>3.更新粒子的位置和速度</p>
+<p>4.移除死掉的粒子</p>
+<p>5.渲染</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213144-k4aaya5.png" alt="image">​</p>
+<p>粒子系统的受力：</p>
+<p>1.引力和斥力</p>
+<p>2.摩擦力</p>
+<p>3.碰撞</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213150-xbzpva9.png" alt="image">​</p>
+<p>粒子间的引力：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213158-n6qmgmm.png" alt="image">​</p>
+<p>模拟星云：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213202-uuhi1so.png" alt="image">​</p>
+<p>模拟流体：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213206-p3x72r3.png" alt="image">​</p>
+<p>粒子系统就是对一个群里中的个体的运动进行计算</p>
+<p>模拟鸟群，把每只鸟作为一个粒子，鸟的运动遵循一些基本规则：</p>
+<p>1.每个鸟会受到周围鸟的吸引</p>
+<p>2.每个个体之间有一段距离（斥力）</p>
+<p>3.所有鸟基本都朝着一个方向运动​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213211-i8kp8gb.png" alt="image">​</p>
+<p>模拟分子运动​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213215-wqpkbdp.png" alt="image">​</p>
+<h4 id="正向运动学"><a href="#正向运动学" class="headerlink" title="正向运动学"></a>正向运动学</h4><p>骨骼的表示：<br>1.拓扑结构（找到每个骨骼相连的骨骼）</p>
+<p>2.关节处的几何关系</p>
+<p>3.树状结构：</p>
+<p>关节的连接类型</p>
+<p>1.一维的铰连接</p>
+<p>2.二维的球关节</p>
+<p>3.平移关节​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213223-7wbmkrp.png" alt="image">​</p>
+<p>2d 模拟一个两段的手臂：先算出第一个关节的旋转角，再算出第二个关节的旋转角​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213229-uxjwf4f.png" alt="image">​</p>
+<p>动画可以表示为时间和角度的函数​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213233-tqx7asr.png" alt="image">​</p>
+<p>正向运动学的优缺点：<br>优点：</p>
+<p>运动的控制很方便，实现方式也很直接</p>
+<p>缺点：物体表示和艺术家们想要的动画效果不一致，花费太多时间​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213237-g7l0pby.png" alt="image">​</p>
+<h4 id="逆向运动学"><a href="#逆向运动学" class="headerlink" title="逆向运动学"></a>逆向运动学</h4><p>从运动的顶点推测中间的位置​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213240-xxz7wwx.png" alt="image">​</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213244-ili860d.png" alt="image">​逆向运动学下的模拟的手臂运动的求解​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213249-0jafn1c.png" alt="image">​</p>
+<p>逆向运动学的困难点：</p>
+<p>可能有多个解或者没有解​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213253-gxqn0qo.png" alt="image">​</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213257-c1k6gsk.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213311-t2k0d1w.png" alt="image">​因此会用到一些优化算法（比如梯度优化算法）​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213318-arlr0bx.png" alt="image">​</p>
+<p>逆向运动学的模拟 demo​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213324-hsyrhfv.png" alt="image">​</p>
+<h4 id="Rigging"><a href="#Rigging" class="headerlink" title="Rigging"></a>Rigging</h4><p>就像牵线木偶一样，捕捉所有特征的变化，但制作成本很大，同时需要艺术和技术上的训练：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213330-yrtkw9l.png" alt="image">​</p>
+<p>Blend Shapes</p>
+<p>对两个面做插值，计算从一个面到另一个面变化的中间态。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213334-px0wl9y.png" alt="image">​</p>
+<h4 id="运动捕捉"><a href="#运动捕捉" class="headerlink" title="运动捕捉"></a>运动捕捉</h4><p>记录真实世界的运动，在大量数据中提取某一个动作。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213338-x6pa6de.png" alt="image">​</p>
+<p>运用最多的还是光学的</p>
+<p>运动捕捉的优缺点：<br>优点：可以快速捕捉大量真实数据，效果的真实性很高</p>
+<p>缺点：成本很大，捕捉的运动效果无法满足艺术家的需求（动画可以需要更夸张的运动）</p>
+<p>运动捕捉设备：光学的、电磁波的、机械的​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213343-fh06ewa.png" alt="image">​</p>
+<p>运用最多的还是光学的​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213347-nargvr7.png" alt="image">​</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213352-tauyql9.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213357-pfjw1bf.png" alt="image">​面部的动画模拟​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213402-afz91t3.png" alt="image">​</p>
+<p>当模拟的动画过于接近真实人类时，会有恐怖谷效应</p>
+<p>面部表情捕捉​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213406-ncqy94v.png" alt="image">​</p>
+<p>电影的生产线​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213411-b3rw3wd.png" alt="image">​</p>
+<p>下一节课：<br>怎么通过力、物理理论模拟真实的运动 </p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第二十二章：动画和仿真</title>
+    <url>/blog/%E7%AC%AC%E4%BA%8C%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9A%E5%8A%A8%E7%94%BB%E5%92%8C%E4%BB%BF%E7%9C%9F/</url>
+    <content><![CDATA[<h1 id="第二十二章：动画和仿真"><a href="#第二十二章：动画和仿真" class="headerlink" title="第二十二章：动画和仿真"></a>第二十二章：动画和仿真</h1><p>动画和仿真</p>
+<p>上节课主要说到了模拟各种运动的各种知识，比如定义一个物体的速度、加速度，就自然能算出来物体在某个时刻出现在某个位置。</p>
+<p>这节课从上节课的概念出发，说一下具体的解法，怎么计算物体在不同时间出现的位置。</p>
+<p>本节课的主要内容：</p>
+<p>单粒子模拟</p>
+<ul>
+<li><p>欧拉方法</p>
+</li>
+<li><p>解决不稳定的提高的若干办法</p>
+</li>
+</ul>
+<p>刚体模拟</p>
+<p>流体模拟</p>
+<h4 id="单粒子模拟"><a href="#单粒子模拟" class="headerlink" title="单粒子模拟"></a><strong>单粒子模拟</strong></h4><p>模拟物体的运动即规定一个物体在任何时刻的速度，同时知道开始出现的位置，就求解在某个时间后物体出现在哪里。</p>
+<p>如果是匀速的，在 t0 时刻出现在某个位置，在 t1 时刻出现的位置即为 t0 的位置加上速度乘时间。</p>
+<p>但大多数时候没有这么简单，比如要模拟一个粒子在速度场中的运动。</p>
+<p>速度场和光场、磁场类似，表示空间中速度的分布。任意一个粒子的运动可以由一个速度场决定，该速度场是位置和时间的函数。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213450-ljj9j9o.png" alt="image">​</p>
+<p>先从简单的出发，研究一个粒子的运动，后面再提高到很多粒子去考虑。</p>
+<p>求解一个例子的速度即求解一个一阶常微分方程：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213503-h9595ol.png" alt="image">​</p>
+<p>一阶表示知道一个量的微分是多少，希望推出这个量是多少</p>
+<p>常微分方程表示不存在对其他变量的微分（对应于偏微分可能存在对多个变量的微分）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213509-9vnyxa4.png" alt="image">​</p>
+<p>求解这个常微分方程，给定粒子的初始位置 x₀，用积分求解这个粒子在时间 t 的位置，得到粒子的运动轨迹。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213514-uelw0en.png" alt="image">​</p>
+<p>怎么求解？可以把时间细分成很多小块，计算每个小块（比如时间 t+ 步长 Δt）粒子的位置的变化，在时间上做离散。</p>
+<h5 id="欧拉方法（a-k-a-前向欧拉、显式欧拉）"><a href="#欧拉方法（a-k-a-前向欧拉、显式欧拉）" class="headerlink" title="欧拉方法（a.k.a. 前向欧拉、显式欧拉）"></a><strong>欧拉方法（a.k.a. 前向欧拉、显式欧拉）</strong></h5><p>下一帧的位置是上一帧的位置加 Δt 乘速度，下一帧的速度是上一帧的速度加 Δt 乘加速度</p>
+<p>始终都是用上一时刻的量计算下一时刻的量（也可以用计算出来的下一时刻的量计算下一时刻的量，比如用计算出来的下一时刻的速度来计算下一时刻的位置，但这种方法就不是欧拉方法）​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213526-ebni6lg.png" alt="image">​</p>
+<p>欧拉方法的问题：<br>不准确，且稳定性上会出问题，迅速地变得不稳定。</p>
+<p>对于不准确的问题：步长分的越细，就模拟得越精确。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213531-qap8taw.png" alt="image">​</p>
+<p>对于稳定性的问题：</p>
+<p>如果速度场是螺旋形的，任何时刻都有一个和位置方向垂直的速度，物体应该是按照圆周运动来运动的。但用欧拉方法无论取多大的步长，无论如何得到的线都不可能沿着这个螺旋形走，最后都会飞出去。</p>
+<p>如果是下面这幅图的情况下，正常的运动是从左到右走到中间那条线上，但是欧拉方法 Δt 的会让运动轨迹上下震荡走越偏越远。</p>
+<p>这种情况在信号处理上被称为正反馈，即一旦出现问题，这个问题会被无限放大。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213537-fidcvd6.png" alt="image">​</p>
+<p>误差和不稳定性</p>
+<p>一些用数值微分方法解决的问题都会遇到这些问题：</p>
+<ul>
+<li><p>误差</p>
+<ul>
+<li>每一步计算都会有误差，最后累加起来会变成更大的误差。但是可以通过用更小的步长降低误差</li>
+<li>误差在图形学应用中影响大，因为主要关注看起来效果怎么样，不要求物理上的完全一致</li>
+</ul>
+</li>
+<li><p>不稳定</p>
+<ul>
+<li>有任何一个模拟方法，不管怎么去模拟最后得到的结果都会和正确的结果差的很远，且越来越发散</li>
+<li>不稳定是模拟中一种不能被忽视的非常基础的问题​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213544-g53hxl2.png" alt="image">​</li>
+</ul>
+</li>
+</ul>
+<h5 id="解决不稳定性的方法"><a href="#解决不稳定性的方法" class="headerlink" title="解决不稳定性的方法"></a><strong>解决不稳定性的方法</strong></h5><ul>
+<li><p>中点法</p>
+</li>
+<li><p>自适应改变步长</p>
+</li>
+<li><p>隐式方法</p>
+</li>
+<li><p>不基于物理的方法，Verlet 积分​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213553-ob7rma5.png" alt="image">​</p>
+</li>
+</ul>
+<p><strong>中点法</strong></p>
+<p>假设有一个点用欧拉方法模拟经过 Δt 从原始点到 a 点，取原始点到 a 点的中点 b 点，再回到原始点，应用 b 点的速度重新算一遍欧拉方法，达到 c 点，这样计算出来的结果就会比欧拉方法更准确。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213605-i9ei5sy.png" alt="image">​</p>
+<p>中点法之所以更准确，是因为中点法比欧拉方法多出了一个二次项，得到了一个类似抛物线的运动轨迹。原本欧拉方法是一个局部线性的估计模型，中点法算出了一个局部的二次模型。​</p>
+<p><img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213609-6rx8v4g.png" alt="image">​</p>
+<p><strong>Adaptive Step Size</strong><br />应用两次 Δt&#x2F;2 和应用一次 Δt 的结果进行比较，如果应用两次 Δt&#x2F;2 计算的结果更准确，则把时间拆分得更短一点。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213627-bzlgkop.png" alt="image">​</p>
+<p><strong>隐式欧拉方法</strong></p>
+<ul>
+<li><p>隐式欧拉又叫做后向欧拉。</p>
+</li>
+<li><p>用下一帧的速度，下一帧的加速度去乘 Δt，解一个方程组。如果速度和加速度不是简单的按照线性方法叠加，这个方程就不是很好解。</p>
+</li>
+<li><p>假设当前位置知道，下一个时刻的加速度也知道，就可以解出来下一个时刻的位置和下一个时刻的速度。</p>
+</li>
+</ul>
+<ul>
+<li>可以用一些数值优化求根算法，比如牛顿方法</li>
+<li>有非常好的稳定性</li>
+</ul>
+<p><img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213638-q8uy3pd.png" alt="image">​</p>
+<p>怎么定义一个方法是不是稳定的</p>
+<ul>
+<li><p>用局部截断误差（ 每一步会产生的误差）和最后累积起来误差来衡量稳定性</p>
+</li>
+<li><p>研究这两个数字没有意义，应该研究他们的阶。即研究这两个数字和取的 Δt 的关系，误差是如何随着更小的 Δt 减小的</p>
+</li>
+<li><p>隐式的欧拉方法是一阶的，即：</p>
+<ul>
+<li>局部的误差是 O(h2)的</li>
+<li>全局的误差是 O(h)的</li>
+</ul>
+</li>
+<li><p>h 表示步长（即 Δt），h 越小，误差越小。O(h)表示：</p>
+<ul>
+<li>如果把 h 减小一半，得到的误差也会减小到一半。阶数越高越好，如果是 2 阶的，假如 h 减少一半，那误差就会减少到 1&#x2F;4。</li>
+</ul>
+</li>
+</ul>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213648-sgo2iwd.png" alt="image">​</p>
+<p><strong>Runge-Kutta 方法</strong></p>
+<p>一类用于解决常微分方程的解法</p>
+<ul>
+<li>特别擅长解非线性常微分方程</li>
+<li>有一个用得特别广泛的方法，叫做 RK4，是一个四阶的解法。</li>
+</ul>
+<p>y 相当于位置，h 相当于 Δt，k 相当于速度场在不同的位置和不同时间的值（相当于一个扩展的中点法）</p>
+<p>更多的数值计算方法可以看数值分析的课程</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213710-tahj55y.png" alt="image">​</p>
+<p><strong>Position-Based&#x2F;Verlet Integration</strong></p>
+<p>不是基于物理的方法，主要做法是：</p>
+<ul>
+<li><p>通过调整粒子的不同位置，使得结果能满足某一种限制，来防止出现发散的不稳定的行为。</p>
+</li>
+<li><p>使用约束的位置来计算速度。</p>
+</li>
+<li><p>这些方法都会消耗能量，稳定性好。</p>
+</li>
+</ul>
+<p>优缺点：</p>
+<ul>
+<li>速度很快</li>
+<li>不能保证能量守恒</li>
+</ul>
+<p>例子：比如说一个弹簧，被拉开后立刻回到原点，即被拉开后，会立刻调整两个端点的位置使得他们回到原点。这个是不符合真实物理的，是通过一种非物理的简化方式直接改变位置。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213719-vrrb6rm.png" alt="image">​</p>
+<h4 id="刚体模拟"><a href="#刚体模拟" class="headerlink" title="刚体模拟"></a><strong>刚体模拟</strong></h4><p>不会发生形变，让内部所有点按同一种方式运动，就类似于一个粒子的运动</p>
+<p>只是刚体要考虑更多的属性，比如：刚体的位置、朝向（旋转角度）、速度、角速度</p>
+<p>torque：扭矩； I：转动惯量</p>
+<p>用欧拉方法或者其他数值方法，可以求出任何一个时间 t 之后刚体对应的位置和旋转。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213725-0hpu6rk.png" alt="image">​</p>
+<h4 id="流体模拟"><a href="#流体模拟" class="headerlink" title="流体模拟"></a><strong>流体模拟</strong></h4><p>position-based 方法的例子：通过模拟形成整个水体的小球的位置来模拟浪花的运动</p>
+<p>首先认为整个水体是由不可压缩的刚体（小球）组成，只要能模拟出小球的位置就能模拟出浪的运动（模拟和渲染是分开的）</p>
+<p>假设水在任何地方都是不会被压缩的，即在任何时刻任何位置的密度都是一样的</p>
+<p>给任何一个时刻小球分布的位置，都可以知道任何一个地方的密度。如果有任何一个地方的密度和之前平静的水不一样的情况，就需要把这个密度修正过来。通过移动小球的位置来进行修正。</p>
+<p>要做这个修正需要知道任何一个点的密度对所有小球的位置的梯度是多少。一个点的密度会受到周围小球的位置的影响，任何一个点的密度都是任何一个其他小球的位置的函数。</p>
+<p>任何一个位置，要让不正确的密度变成正确的密度，且知道如何调整各个小球的位置使其密度朝向正确的方向去。这个过程就是梯度下降的过程。</p>
+<p>这个修正会导致停不下来，所以实际模拟过程中会考虑能量损失。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213730-mh2jf6w.png" alt="image">​</p>
+<p>在物理模拟中模拟大规模的物质用到两个不同思路：</p>
+<p>质点法：模拟水，认为水是由很多小水滴组成，逐个模拟，最后得到的结果就是正确的。这种方式被称为拉格朗日方法（也叫质点法）</p>
+<p>欧拉方法：和常微分方程的欧拉方法不是一回事。这里是指如何看待模拟一系列大规模的物体，把整个空间分成不同的网格，考虑网格随着不同的时间怎么变化。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213735-ghx94jt.png" alt="image">​</p>
+<p>Material Point Method（物质点方法）</p>
+<p>混合型的方法，即考虑拉格朗日，又考虑欧拉方法。</p>
+<ul>
+<li>认为不同的粒子都具有材质属性</li>
+<li>用格子模拟融化的过程，把信息都记录在格子上</li>
+<li>再把格子里的信息写回粒子上</li>
+</ul>
+<p>下面怎么深入学习：<br>《realtime rendering》、微分几何、离散几何、《games201》</p>
+<p>广告：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213749-xd70xc1.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213803-gk2tngc.png" alt="image">​</p>
+<p>《高质量实时渲染》</p>
+<p><a href="https://www.bilibili.com/video/BV1YK4y1T7yY/?spm_id_from=333.337.search-card.all.click&vd_source=d6c15f5bd49b1cdbb4227e5dc29a5666">https://www.bilibili.com/video/BV1YK4y1T7yY/?spm_id_from&#x3D;333.337.search-card.all.click&amp;vd_source&#x3D;d6c15f5bd49b1cdbb4227e5dc29a5666</a></p>
+<p>离线渲染《高级图像合成》</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213821-sc8qlgy.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第二十章：颜色和感知</title>
+    <url>/blog/%E7%AC%AC%E4%BA%8C%E5%8D%81%E7%AB%A0%EF%BC%9A%E9%A2%9C%E8%89%B2%E5%92%8C%E6%84%9F%E7%9F%A5/</url>
+    <content><![CDATA[<h1 id="第二十章：颜色和感知"><a href="#第二十章：颜色和感知" class="headerlink" title="第二十章：颜色和感知"></a>第二十章：颜色和感知</h1><p>颜色和感知（Color and Perception）</p>
+<p>本节课内容：<br>完成上节课的光场</p>
+<p>颜色</p>
+<ul>
+<li>什么是颜色</li>
+<li>颜色感知</li>
+<li>颜色再现&#x2F;匹配</li>
+<li>颜色空间</li>
+</ul>
+<p>光场（Light Field&#x2F;Lumigraph）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212149-biusqbv.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212153-wripzwk.png" alt="image">​</p>
+<p>我们看到的世界，可以用眼前的一块幕布，来模拟我们在各个方向看到的光照</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212159-t1z7726.png" alt="image">​</p>
+<p><a href="https://www.bilibili.com/video/BV1Je4y1e7g1/?vd_source=d6c15f5bd49b1cdbb4227e5dc29a5666">碟中谍 4 里全息投影</a></p>
+<p>全光函数描述我们能看到的所有东西</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212207-lkbdvwz.png" alt="image">​</p>
+<p>在某个方向看到的光照</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212212-j59oo2d.png" alt="image">​</p>
+<p>加上了波长的参数，可以看到彩色的</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212217-ljy981o.png" alt="image">​</p>
+<p>加上时间的参数，可以看到电影</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212222-ldyl2kk.png" alt="image">​</p>
+<p>再加上空间的参数，在不同位置看到的，可以看到全息电影</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212226-knvbyjb.png" alt="image">​</p>
+<p>最后把函数理解成在任何位置，往任何方向看，在任何时间，看到不同的颜色。这个 7 维的函数就叫做全光函数。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212230-8jqyzha.png" alt="image">​</p>
+<p>可以从全光函数提取一部分信息出来，用来表示复杂的光。光场就是全光函数的一个小部分。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212235-c9ukq57.png" alt="image">​</p>
+<p>定义光线：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212239-1alvcnu.png" alt="image">​</p>
+<p>可以是起点 + 方向，或者是取光线上的任意两点</p>
+<p>重点是需要二维的位置和二维的方向</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212244-vhro91v.png" alt="image">​</p>
+<p>根据光路可逆性，要描述一个物体能被看到的所有情况，即描述这个物体在包围盒上任何一个位置往各个方向过去的光线</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212249-2w9ir16.png" alt="image">​</p>
+<p>光场即在任何一个位置往任何一个方向去的光的强度</p>
+<p>首先三维物体的表面在一个二维的空间中，可以用（u,v）两个变量表示位置，任何一个空间中的方向都可以用（θ，φ）表示，所以光场是一个四维的函数。</p>
+<p>可以从光场中直接提取到任意一个位置看向一个物体的光强度</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212257-vy1ra6a.png" alt="image">​</p>
+<p>可以简化一点，我们不需要知道光场表示的是什么东西，我们只需要知道盒子上表面任意一个点往任意一个方向（观测点）发出的光的强度（前提是观测点不在盒子内部）。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212303-kuret66.png" alt="image">​</p>
+<p>更进一步，可以取一个平面，平面右边是发光的物体，光线会穿过平面。我们可以忽略平面右边的东西，对平面上任意一个点，只需要知道方向就可以。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212310-6saigsp.png" alt="image">​</p>
+<p>也可以用两个平面来定义光场，两个平面各取一个点确定方向：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212315-x788fiz.png" alt="image">​</p>
+<p>用(u,v)和(s,t)来确定光场：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212319-2ex6d8z.png" alt="image">​</p>
+<p>对于两个平面的参数化方法有不同的处理方式：<br />可以固定一个(s,t)，让（u,v）变化：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212324-9sw3nfv.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212327-hp3bgqm.png" alt="image">​</p>
+<p>上图中的上图是从(u,v)平面上找到一个点看向(s,t)平面的所有方向，得到从这个点的方向看过去的物体的全貌</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212332-i285fqr.png" alt="image">​</p>
+<p>下图是从(s,t)平面上找一个点，看向(u,v)平面，这里可以理解为(u,v)平面所有方向看向(s,t)同一个点得到的图像。</p>
+<p>类似于苍蝇的复眼，光照射到一个像素点上是不同方向的光混合起来的，这里在光前面用一个透镜，就可以把光分开，把一个像素不同方向上光分别记录在不同的位置。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212336-lz08vc2.png" alt="image">​</p>
+<h5 id="光场照相机"><a href="#光场照相机" class="headerlink" title="光场照相机"></a><strong>光场照相机</strong></h5><p>先拍照，后期再重新聚焦</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212347-x5da9aq.png" alt="image">​</p>
+<p>光场相机就是用透镜把光分开，一个像素的 irradiance 现在分开记录到一块区域上的 radiance。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212353-tcfytv2.png" alt="image">​</p>
+<p>光场相机还原照片，可以选择一个方向，计算这个方向上像素点接受的光照，这样就可以模拟相机移动。</p>
+<p>重新聚焦和移动相机位置一个道理，光场已经记录了所有方向所有位置的光照信息，只需要选取聚焦对应的方向和位置就可以计算得到。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212358-9q7c6jb.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212402-0ncmilv.png" alt="image">​</p>
+<p>光场照相机的缺陷：</p>
+<ul>
+<li>分辨率不足。以前的一个像素要用很多个像素去记录，对胶片要求很高</li>
+<li>高成本。透镜非常精密，实现需要巨大的成本</li>
+<li>如果要记录更精密的方向信息，位置信息就会丢失的更多（复眼如果圆圈更大，那么圆圈的数量就更少）</li>
+</ul>
+<p>Physical Basis of Color</p>
+<p>颜色是很多基本颜色混合得到的结果</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212412-2xr85v6.png" alt="image">​</p>
+<p>不同颜色的光有不同的波长，图形学关心的通常是可见光的光谱</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212417-e5ouu5i.png" alt="image">​</p>
+<p>谱功率密度就是描述光在任何一个波长的分布是多少</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212422-03r38eq.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212425-yb4zoad.png" alt="image">​</p>
+<p>不同的光有不同的 SPD</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212432-lf9bskw.png" alt="image">​</p>
+<p>SPD 有线性的性质</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212438-83o4esf.png" alt="image">​</p>
+<p>颜色是什么？<br />颜色是人的感知</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212443-9dw0i6f.png" alt="image">​</p>
+<p>人眼的构造：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212448-xrm3hz7.png" alt="image">​</p>
+<p>肌肉会拉扯晶状体改变焦距</p>
+<p>视网膜上有感光细胞</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212453-bfvlha9.png" alt="image">​</p>
+<p>RodCell 棒状细胞，感知光的强度，不感知颜色。用棒状细胞可以得到一个灰度图</p>
+<p>Cones 锥形细胞，感知颜色。锥形细胞内部又分成三种不同的锥形细胞（S，M，L），感应不同范围的波长。</p>
+<p>曲线线叫做响应曲线，即给不同的光会有多强的反应。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212459-wha2myo.png" alt="image">​</p>
+<p>不同的人这些细胞的分布非常不一样</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212503-qagx39w.png" alt="image">​</p>
+<p>把响应曲线和感应到的 SPD 做积分，得到三个数 S、M、L，就是人感知到的颜色，而不是光本身的 SPD。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212509-8gmpyoq.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212514-6wx4ip4.png" alt="image">​</p>
+<p>同色异谱</p>
+<p>光谱不一样，但是人感知到的颜色一样</p>
+<p>通过调和光谱，使得得到的颜色和看到的另一种颜色一样，就是 color mapping 的过程</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212523-a1oxy8r.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212527-jsnrcem.png" alt="image">​</p>
+<p>比如在显示器上显示一个太阳，混合的光谱可以和真实的完全不一样，但最后的颜色是一样的：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212533-rbxf13f.png" alt="image">​</p>
+<p>计算机的成像系统是加色系统<br />把 R、G、B 各自乘上不同的强度再混合起来（画画是减色系统，把各种颜色调和到一起最后会变成黑色）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212538-8531v6x.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212542-vi4gdg1.png" alt="image">​</p>
+<p>混色实验：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212547-dggcuc4.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212550-3k8imeq.png" alt="image">​</p>
+<p>但有一些颜色会怎么混两边颜色都不一样</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212555-61dtj1f.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212559-vg15b9h.png" alt="image">​</p>
+<p>这个时候给左边的颜色加一个颜色，相当于右边的颜色减了一个颜色（真实情况下不能减，因为是加色系统）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212605-w9725m9.png" alt="image">​</p>
+<p><strong>CIE RGB</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212611-z91bpi2.png" alt="image">​</p>
+<p>实验测算三种波长的光混出一个波长，得到一个匹配函数：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212616-ko9pk3o.png" alt="image">​</p>
+<p>给任何一种实际光的光谱，把每个波长需要多少 R、G、B 都算出来，然后做积分把颜色表示出来</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212620-zgaxgwj.png" alt="image">​</p>
+<p><strong>颜色空间</strong></p>
+<p>sRGB（标准 RGB）</p>
+<p>RGB 形成的颜色空间色域是有限的</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212625-gk3f7b7.png" alt="image">​</p>
+<p>A Universal Color Space: CIE XYZ</p>
+<p>定义颜色匹配函数，和 RGB 匹配函数不一样，不是实验测出来的匹配系统</p>
+<p>特别的 Y 本身还表示亮度​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212630-bzmd3o3.png" alt="image">​</p>
+<p>可视化 XYZ 系统得到的所有颜色，但是三维的不好显示，所以把 X、Y、Z 做归一化处理，Y 表示亮度，所以把 Y 固定成某一个数，让 X、Z 发生变化，显示的图显示小写的（x, y），看到的形状就叫做色域。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212636-wfe51o6.png" alt="image">​</p>
+<p>色域的中心是白色，是最不纯的颜色，最纯的颜色在边界上。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212642-qtjx9m0.png" alt="image">​</p>
+<p>不同的颜色空间表示的色域是不一样的：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212647-r2sokkt.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212653-57wp5tt.png" alt="image">​​</p>
+<p>HSV Color Space​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212708-u7dxdkg.png" alt="image">​</p>
+<p>通过色调选不同的颜色，通过饱和度选偏白还是偏这个颜色，亮度决定偏黑还是偏这个颜色​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212713-94ok1ay.png" alt="image">​</p>
+<p>CIELAB 空间<br />轴上任意两端端颜色都是互补色：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212719-iuoilio.png" alt="image">​</p>
+<p>互补色（实验得到的，人的大脑的定义）：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212723-3qotxdc.png" alt="image">​</p>
+<p>盯住下图的中心点十秒后切换到另一张白色的图上，会看到互补色：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212727-ny6h0qm.png" alt="image">​</p>
+<p>颜色是感知，所以看到的颜色有多强是感觉的：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212731-0aa227f.png" alt="image">​</p>
+<h5 id="​​​​​​减色系统"><a href="#​​​​​​减色系统" class="headerlink" title="​​​​​​减色系统"></a>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212740-uorj6m5.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212746-pbyyamz.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212750-d2843g9.png" alt="image">​减色系统</h5><p>**CMYK **</p>
+<p>打印上混合各种颜色，所有颜色混起来变成黑色。这里面虽然黑色可以由其他颜色混合得到，但是考虑打印成本，都会带上一个黑色：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212757-g32nl7k.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
     <title>第五章：光栅化</title>
     <url>/blog/%E7%AC%AC%E4%BA%94%E7%AB%A0%EF%BC%9A%E5%85%89%E6%A0%85%E5%8C%96/</url>
     <content><![CDATA[<h1 id="第五章：光栅化"><a href="#第五章：光栅化" class="headerlink" title="第五章：光栅化"></a>第五章：光栅化</h1><h3 id="光栅化（三角形）"><a href="#光栅化（三角形）" class="headerlink" title="光栅化（三角形）"></a>光栅化（三角形）</h3><p>上节课提到了观测变换：包含视图变换和投影变换。当完成观测矩阵变换后，下一步需要怎么绘制到屏幕上？这就是光栅化</p>
@@ -1335,6 +1756,1000 @@
 <p><strong>超分辨率：</strong></p>
 <p>小图拉大；有一个高分辨率的图，但是采样率不够，想要把这个图恢复出来。</p>
 <p>DLSS（Deep Learning Super Sampling）深度学习</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第十一章：显示几何，曲线、曲面</title>
+    <url>/blog/%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%EF%BC%9A%E6%98%BE%E7%A4%BA%E5%87%A0%E4%BD%95%EF%BC%8C%E6%9B%B2%E7%BA%BF%E3%80%81%E6%9B%B2%E9%9D%A2/</url>
+    <content><![CDATA[<h1 id="第十一章：显示几何，曲线、曲面"><a href="#第十一章：显示几何，曲线、曲面" class="headerlink" title="第十一章：显示几何，曲线、曲面"></a>第十一章：显示几何，曲线、曲面</h1><h3 id="几何入门："><a href="#几何入门：" class="headerlink" title="几何入门："></a>几何入门：</h3><ul>
+<li><p>几何例子</p>
+</li>
+<li><p>不同表示几何的方式</p>
+<ul>
+<li>隐式</li>
+<li>显式</li>
+</ul>
+</li>
+</ul>
+<p>本节课：</p>
+<ul>
+<li><p>显式几何</p>
+</li>
+<li><p>曲线</p>
+</li>
+<li><p>曲面</p>
+</li>
+</ul>
+<p>显式几何有不同的表示方法：<br>三角形面、贝塞尔曲面、点云</p>
+<h3 id="点云"><a href="#点云" class="headerlink" title="点云"></a><strong>点云</strong></h3><p>物体用一堆点表示。</p>
+<p>只要点足够密，可以表示任何形状的几何。</p>
+<p>点云转换三角形面。</p>
+<h3 id="多边形面"><a href="#多边形面" class="headerlink" title="多边形面"></a><strong>多边形面</strong></h3><p>三角形、四边形面。</p>
+<p>需要用更复杂的数据结构表示三角形对连接关系。</p>
+<p>是图形学中最常见的表示方式。</p>
+<p>三角形面形成的物体：</p>
+<p>v 定义 8 个点，vn 定义 6 个面的法线（图中有冗余）、vt 定义 12 个纹理坐标（每个面四个点的纹理坐标，中间会有共用的），f（face）定义三角形之间的连接关系（第一个参数是顶点，比如图中第一行使用第 5、1、4 三个顶点形成三角形，第二个参数是三个顶点的纹理坐标，第三个参数是指三个顶点的法线）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203227-f9vqkmt.png" alt="image">​</p>
+<h3 id="曲线"><a href="#曲线" class="headerlink" title="曲线"></a><strong>曲线</strong></h3><p>相机的运动曲线，三维建模模型的运动曲线、定义字体的控制点</p>
+<h4 id="贝塞尔曲线（用一系列控制点来定义曲线）"><a href="#贝塞尔曲线（用一系列控制点来定义曲线）" class="headerlink" title="贝塞尔曲线（用一系列控制点来定义曲线）"></a><strong>贝塞尔曲线</strong>（用一系列控制点来定义曲线）</h4><p>曲线的起点在 P0、开始的方向是 P0P1，曲线的终点是 P3，结束的方向是 P2P3</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203235-qhjl8qi.png" alt="image">​</p>
+<p>de Casteljau 算法</p>
+<p>给任意一个时间 t，计算贝塞尔曲线在时间 t 的位置</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203244-i5wtnv8.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203252-moz7wnk.png" alt="image">​</p>
+<p>是一个递归的过程</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203257-ylm5qf1.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203302-idycife.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203307-fq20vuf.png" alt="image">​</p>
+<p>n 阶贝塞尔曲线可以表示为控制点的线形组合，系数就是一个和时间有关的多项式，被称为 Bernstein 多项式</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203314-7n6txxz.png" alt="image">​</p>
+<p>三维空间中同样可以用 Bernstein 多项式</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203323-9kejl38.png" alt="image">​</p>
+<p>Bernstein 多项式就是 1 的多阶展开，所以在坐标轴上画一条竖线，经过的每个点的 y 轴加起来的值都等于 1</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203330-ntfrqts.png" alt="image">​</p>
+<h5 id="贝塞尔曲线的性质："><a href="#贝塞尔曲线的性质：" class="headerlink" title="贝塞尔曲线的性质："></a>贝塞尔曲线的性质：</h5><p>1.起点和终点固定</p>
+<p>2.切线方向固定</p>
+<p>3.对曲线的顶点、控制点做仿射变换后，再画贝塞尔曲线，和对原始贝塞尔曲线做仿射变换后得到的曲线是一样的；但对投影不是这样</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203336-09akmsq.png" alt="image">​</p>
+<p>4.秃包性质：任何一个贝塞尔曲线肯定在控制点形成秃包之内。比如如果给一堆控制点都在一条直线上，那这个贝塞尔曲线一定是这条线自己。</p>
+<p>秃包：能包围给定的几何形体的最小的凸多边形</p>
+<p>想象有一堆钉子，在最外层的钉子上绑一个橡皮筋，橡皮筋围成的形状就是秃包</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203344-ge09mxp.png" alt="image">​</p>
+<h5 id="Piecewise-贝塞尔曲线"><a href="#Piecewise-贝塞尔曲线" class="headerlink" title="Piecewise 贝塞尔曲线"></a>Piecewise 贝塞尔曲线</h5><p>控制点多的时候不好控制，逐段定义贝塞尔曲线，再连起来。一般是每四个控制定义一条贝塞尔曲线。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203350-2lng0ud.png" alt="image">​</p>
+<p>几何上两条曲线都通过一个点，第一段的终点等于第二段的起点叫做 C0 连续</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203356-ut3s0bf.png" alt="image">​</p>
+<p>第一段终点控制点连线和第二段起点控制点的连线大小一致，方向相反，C1 连续（一阶导数连续）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203401-av7s8u8.png" alt="image">​</p>
+<h4 id="Spline-曲线（样条）"><a href="#Spline-曲线（样条）" class="headerlink" title="Spline 曲线（样条）"></a><strong>Spline 曲线（样条）</strong></h4><p>由一组控制点控制的曲线，能满足一定的连续性</p>
+<p>B-Spline basis splines（奇函数样条，由于不同的函数组合起来形成新的函数）</p>
+<ul>
+<li>用 Bernstein 多项式在时间 t 几个不同的项对不同的控制点做加权平均</li>
+<li>用控制点的位置对 Bernstein 多项式进行加权</li>
+</ul>
+<p>B-Spline 是对贝塞尔曲线的扩展，可以实现局部性，比如改变一个控制点，只影响一定范围内的曲线。</p>
+<p>本节课不深入学习 B 样条</p>
+<h4 id="贝塞尔曲面"><a href="#贝塞尔曲面" class="headerlink" title="贝塞尔曲面"></a><strong>贝塞尔曲面</strong></h4><p>贝塞尔曲线得到贝塞尔曲面</p>
+<p>4✖️4 控制点，双线性插值</p>
+<p>用时间 u 先确定一个方向的四个控制点，再用时间 v 确定曲面上的一个点</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203417-66viato.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203423-cxzrqk0.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203428-zjyszxx.png" alt="image">​</p>
+<p>Mesh Operations：几何处理</p>
+<ul>
+<li><p>网格细分</p>
+</li>
+<li><p>网格简化</p>
+</li>
+<li><p>网格正规化（让三角形不要出现特别尖的三角形）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203436-wy6whsg.png" alt="image">​</p>
+</li>
+</ul>
+<p>‍</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第十七章：材质与外观</title>
+    <url>/blog/%E7%AC%AC%E5%8D%81%E4%B8%83%E7%AB%A0%EF%BC%9A%E6%9D%90%E8%B4%A8%E4%B8%8E%E5%A4%96%E8%A7%82/</url>
+    <content><![CDATA[<h1 id="第十七章：材质与外观"><a href="#第十七章：材质与外观" class="headerlink" title="第十七章：材质与外观"></a>第十七章：材质与外观</h1><p>Materials and Apperances （材质与外观）</p>
+<p>外观是不同材质与光线共同作用的结果</p>
+<p>光打进去后在物体内部反射多次变成一大片再出来——次表面散射</p>
+<p>自然界中有无数的材质，但渲染器中支持的材质很少（比如维塔数码的 Manuka 渲染器，只支持 40 种材质），要呈现自然界中的材质，需要各种纹理贴图。</p>
+<p>在渲染方程中，BRDF 是和材质相关的，它决定了光怎么被反射</p>
+<p>Material &#x3D;&#x3D; BRDF</p>
+<h4 id="对于漫反射："><a href="#对于漫反射：" class="headerlink" title="对于漫反射："></a>对于漫反射：</h4><p>假设空间中任何一个方向进来的光的 radiance 的一样的，它反射的光也是一样的。根据能量守恒，如果一个点不发光也不吸收光，那么进来多少就应该反射多少。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210024-1xry8mn.png" alt="image">​</p>
+<p>定义一个反射率 albedo，它的值在 0-1 之间，可以引入不同颜色的 albedo。</p>
+<p>对于 Glossy 的材质，一部分反射，一部分折射</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210030-s9lod8b.png" alt="image">​</p>
+<p>光线折射过后会有部分被吸收</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210035-nubt5cn.png" alt="image">​</p>
+<p>镜面反射计算出射角，可以把它转换到 φ 平面上：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210041-4qd0k79.png" alt="image">​</p>
+<p>镜面发射也可以写出 BRDF，但是出射方向只集中在镜面反射的方向，因此写出正确的 BRDF 不那么容易。</p>
+<h4 id="对于折射："><a href="#对于折射：" class="headerlink" title="对于折射："></a>对于折射：</h4><p>折射定律</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210046-st4zygq.png" alt="image">​</p>
+<p>当出射的折射率大于入射的折射率时，可能出现无法折射的现象：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210051-hfsbjfk.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210055-3gamr9a.png" alt="image">​</p>
+<p>折射的 BRDF 就叫做 BTDF，T 表示 transmission。BRDF 和 BTDF 统称 BSDF，S（scaterring）表示散射。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210100-ifhya3o.png" alt="image">​</p>
+<p>菲涅尔项表示有多少光线被反射、多少被折射。<br>图中的虚线表示极化现象下的光，极化现象即光只沿某一个方向振动。</p>
+<h4 id="对于绝缘体："><a href="#对于绝缘体：" class="headerlink" title="对于绝缘体："></a>对于绝缘体：</h4><p>入射光线的入射角与物体表面越平行，反射的越多。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210106-z0r0kul.png" alt="image">​</p>
+<h4 id="对于导体："><a href="#对于导体：" class="headerlink" title="对于导体："></a>对于导体：</h4><p>任何情况下反射都很多。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210111-gri140d.png" alt="image">​</p>
+<h4 id="菲涅尔项的计算："><a href="#菲涅尔项的计算：" class="headerlink" title="菲涅尔项的计算："></a>菲涅尔项的计算：</h4><p>用 Schlick 近似进行拟合，不管曲线的真实趋势，认为 θ 为 0 时为 R₀，θ 为 90 度时为 1。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210117-j82wjuy.png" alt="image">​</p>
+<h5 id="微表面模型："><a href="#微表面模型：" class="headerlink" title="微表面模型："></a>微表面模型：</h5><p>当我们离的够远，我们看不到表面上的细节， 只能看到总体对光形成的一个效应。<br />从远处看，看到的是材质和外观，从近处看，看到的是几何。<br />每一个微表面，都看作是镜面。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210122-wppkyqt.png" alt="image">​</p>
+<p>一个物体表面的粗糙程度可以用微表面的法线分布来表示：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210127-x62l2q1.png" alt="image">​</p>
+<h5 id="微表面的-BRDF："><a href="#微表面的-BRDF：" class="headerlink" title="微表面的 BRDF："></a>微表面的 BRDF：</h5><p>G（shadowing-masking term）表示微表面被遮挡的修正。当光线越平行于表面（grazing angle）时，越容易发生遮挡。D 表示法线分布。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210132-6wj19bj.png" alt="image"><br /><br /><strong>各向同性&#x2F;各向异性材质</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210144-8f2vzc9.png" alt="image">​</p>
+<p><strong>各向同性的材质发现分布也很均匀</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210150-84x9cl6.png" alt="image">​</p>
+<p><strong>各向异性用 BRDF 来解释就是方向角是绝对的，不是相对的。</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210157-lk44knp.png" alt="image">​</p>
+<p><strong>总结 BRDF 的属性：</strong></p>
+<p>1.BRDF 的值一定是非负的</p>
+<p>2.线性性质</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210205-fex4vfm.png" alt="image">​</p>
+<p>3.可逆性。交换入射和出射方向的角色，得到的 BRDF 是一样的</p>
+<p>4.能量守恒</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210212-oloyznz.png" alt="image">​</p>
+<p>5.各向同性和各向异性</p>
+<p>各向同性时，BRDF 只和相对方位角有关，即和 φ 的差值有关，即四维的方程可以转为三维的</p>
+<p>且由于可逆性，φ 的差值不需要考虑正负</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210218-4fiwd6v.png" alt="image">​</p>
+<h5 id="测量-BRDF"><a href="#测量-BRDF" class="headerlink" title="测量 BRDF"></a>测量 BRDF</h5><ul>
+<li>如果能直接测量，就不需要用到模型去计算</li>
+<li>测量能够用真实世界的材质做到更精确的渲染​</li>
+</ul>
+<p>‍</p>
+<p><img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210236-a7sm6d4.png" alt="image">​</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210334-aeu3ziu.png" alt="image">​</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210338-3t62iua.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210344-fznpazc.png" alt="image">​</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210347-3oxflxk.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第十三章：Ray tracing 1 基础光线追踪算法</title>
+    <url>/blog/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%EF%BC%9ARay%20tracing%201%20%E5%9F%BA%E7%A1%80%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="第十三章：Ray-tracing-1-基础光线追踪算法"><a href="#第十三章：Ray-tracing-1-基础光线追踪算法" class="headerlink" title="第十三章：Ray tracing 1 基础光线追踪算法"></a>第十三章：Ray tracing 1 基础光线追踪算法</h1><h3 id="Ray-Tracing（光线追踪）"><a href="#Ray-Tracing（光线追踪）" class="headerlink" title="Ray Tracing（光线追踪）"></a>Ray Tracing（光线追踪）</h3><p>光栅化的问题</p>
+<p>不能很好地处理全局效果，比如：</p>
+<p>1.软阴影</p>
+<p>2.光线多次弹射（毛玻璃反射、间接反射）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204242-i9pwn8h.png" alt="image">​</p>
+<p>光栅化速度快，但是质量低；光线追踪准确但是速度慢。所以一般光栅化用于实时、光线追踪用于离线。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204247-44w81g6.png" alt="image">​</p>
+<h3 id="基础的光线追踪算法"><a href="#基础的光线追踪算法" class="headerlink" title="基础的光线追踪算法"></a>基础的光线追踪算法</h3><p>光线的三种假设：</p>
+<ol>
+<li><p>光沿直线传播（实际并不是</p>
+</li>
+<li><p>光线相交时不会碰撞（实际并不是</p>
+</li>
+<li><p>光线从光源传播到眼睛（根据光的可逆性，光线以不变的光路从眼睛传播到光源</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204252-rq5ma55.png" alt="image">​</p>
+</li>
+</ol>
+<h4 id="光线投射"><a href="#光线投射" class="headerlink" title="光线投射"></a>光线投射</h4><p>从摄像机到成像平面中的一个像素连成一条射线，这个射线会和一个物体相交。再把这个交点和光源做连线，判定他是不是在阴影内。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204310-a4f3y6w.png" alt="image">​</p>
+<p>假设眼睛是一个点（针孔摄像机），同时光源也是点光源。光线打到场景中的物体会发生完美的折射和反射。</p>
+<p>考虑光线和场景中的物体最近的交点，交点再与光源做连线，如果没有遮挡说明没有阴影。求出交点后再对交点做着色。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204315-s1c6ju9.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204318-s2voec6.png" alt="image">​</p>
+<h4 id="recursive-Whitted-styled-ray-tracing"><a href="#recursive-Whitted-styled-ray-tracing" class="headerlink" title="recursive Whitted-styled ray tracing"></a>recursive Whitted-styled ray tracing</h4><p>光线可以不断弹射。每个弹射点可画出一条 shadow ray，计算是不是在阴影里，光源弹射后能照到的点的着色值最后都加到一个像素里面去。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204323-6as49bq.png" alt="image">​</p>
+<p>求光线和物体表面的交点</p>
+<p>光线的定义：</p>
+<p>点光源：起点 + 方向</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204331-pl418gg.png" alt="image">​</p>
+<p>判断光线与球体是否相交：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204335-tljx4px.png" alt="image">​</p>
+<p>点即在光线上，又在球上。求解一元二次方程：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204341-vxbltr2.png" alt="image">​</p>
+<p>对于一般面</p>
+<p>隐式表示：列出 surface 的隐式表达式，带入求解：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204347-seawpb6.png" alt="image">​</p>
+<p>显式表示：求光线与三角面的交点</p>
+<p>一个封闭的图形，从图形内部发出一条射线，与图形的边的交点数量一定是奇数</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204352-8swig07.png" alt="image">​</p>
+<p>简单做法：一个一个三角形求解是否与射线相交</p>
+<p>先光线与平面求交，再判断一个点是不是在三角形内部</p>
+<p>用一个法线和一个平面上的点可以确定一个平面</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204358-d9252z6.png" alt="image">​</p>
+<p>Möller Trumbore Algorithm</p>
+<p>快速求交点（重心坐标表示平面上的点）</p>
+<p>解线性方程组</p>
+<p>b1 和 b2 必须是非负的</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204403-w9iwkuw.png" alt="image">​</p>
+<p>加速光线和表面求交</p>
+<p>如果每个三角形都求一次交点很花时间</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204408-5knulr8.png" alt="image">​</p>
+<p>用包围盒进行加速<br />如果一个光线碰不到包围盒，那就不可能碰到包围和里的物体</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204414-yjgij4p.png" alt="image">​</p>
+<p>三个对面形成的交集</p>
+<p>通常用 AABB 包围盒（和坐标轴平行的包围盒）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204421-i2ydbcm.png" alt="image">​</p>
+<p>2D 求交：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204426-nic5gz7.png" alt="image">​</p>
+<p>3D 求交：<br>3D 下有三组对面，光线要进入所有面才算进入盒子，只要出了一个面就认为出了盒子</p>
+<p>3D 对三组对面分别计算进入的最大时间和出来的最小时间</p>
+<p>如果出来时间小于进入时间，说明光线在盒子里待了一段时间</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204432-5woyi5w.png" alt="image">​</p>
+<p>离开时间小于 0，说明盒子在光线背后</p>
+<p>如果进入时间小于 0，说明起点在盒子里</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204437-seo5rd8.png" alt="image">​</p>
+<p>用 AABB 包围盒更好计算</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204441-g7rxglt.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第十九章：相机、透镜、光场</title>
+    <url>/blog/%E7%AC%AC%E5%8D%81%E4%B9%9D%E7%AB%A0%EF%BC%9A%E7%9B%B8%E6%9C%BA%E3%80%81%E9%80%8F%E9%95%9C%E3%80%81%E5%85%89%E5%9C%BA/</url>
+    <content><![CDATA[<h1 id="第十九章：相机、透镜、光场"><a href="#第十九章：相机、透镜、光场" class="headerlink" title="第十九章：相机、透镜、光场"></a>第十九章：相机、透镜、光场</h1><p> Cameras, Lenses and Light Fields (相机、透镜、光场)</p>
+<p>成像（Image） &#x3D; 合成（Synthesis） + 捕捉（Capture）</p>
+<p>transient image：研究光在极短时间内传播会看到什么。</p>
+<p>整个 Imgae 更多的是在 computational photography 里面的研究。</p>
+<p>回到图形学里面：</p>
+<h4 id="捕捉"><a href="#捕捉" class="headerlink" title="捕捉"></a><strong>捕捉</strong></h4><h5 id="相机"><a href="#相机" class="headerlink" title="相机"></a>相机</h5><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211721-jdntact.png" alt="image">​</p>
+<h5 id="小孔成像"><a href="#小孔成像" class="headerlink" title="小孔成像"></a>小孔成像</h5><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211730-ub76db3.png" alt="image">​</p>
+<p>快门控制光进入相机</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211736-9qblx1h.png" alt="image">​</p>
+<p>传感器（记录 irradiance）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211740-f77po2b.png" alt="image">​</p>
+<p>如果没有透镜，一个点可能接受各个方向传播过来的光，成的像就是糊的</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211744-b6dit7w.png" alt="image">​</p>
+<p>有一些研究在研究一些传感器，可以分开不同的方向记录</p>
+<h5 id="针孔相机"><a href="#针孔相机" class="headerlink" title="针孔相机"></a><strong>针孔相机</strong></h5><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211749-w3368cy.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211757-huath5x.png" alt="image">​</p>
+<p>针孔相机拍出的像没有景深，各个方向都不会虚化。做光线追踪的时候也是用的针孔相机的模型。模拟光线和透镜作用，也可以做出景深的效果。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211801-thidn4r.png" alt="image">​</p>
+<p>视场（Field of View）</p>
+<p>能看到多大的范围，h：传感器的高度，f：焦距（传感器离小孔的距离）。焦距越小，视场越大。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211806-5nwla8i.png" alt="image">​</p>
+<p>一般定义视场都是认为以 35mm 的胶片（传感器）为基准，通过定义焦距来定义 FOV。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211812-33sajcf.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211816-wuq8s3p.png" alt="image">​</p>
+<p>传感器越小，FOV 也越小</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211820-ar7anrv.png" alt="image">​</p>
+<p>传感器（Sensor）和胶片（Film）不完全等价，传感器负责记录每个像素收到的 irradiance 有多大，胶片决定存成什么样的图片格式。</p>
+<p>大的相机有大的传感器，所以有更大的分辨率</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211825-rsbp4zy.png" alt="image">​</p>
+<h4 id="曝光（Exposure）"><a href="#曝光（Exposure）" class="headerlink" title="曝光（Exposure）"></a><strong>曝光（Exposure）</strong></h4><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211836-2f8juf4.png" alt="image">​</p>
+<p>相机里面影响照片拍出来亮度的因素：</p>
+<p>光圈（aperture）大小<br>相机可以控制光圈大小，由 f-stop 来控制。光圈大小会影响 senser 上的任意一个点接收到的 irradiance 的大小。</p>
+<p>快门（Shutter）速度</p>
+<p>快门速度越快，开放时间越短，越少的光进来</p>
+<p>ISO gain（增益）感光度</p>
+<p>后期处理，接收到光后乘上一个数。这个处理可以在任何一个地方，比如说调节感光器的灵敏度，或者生成照片后，在照片的数字信号上去调节。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211846-kx5cvep.png" alt="image">​</p>
+<p>F 越小，光圈越大，周围越虚化</p>
+<p>速度慢，曝光时间越长，图片越模糊</p>
+<p>ISO 乘的数字越大，噪声越明显</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211850-bo2pzuj.png" alt="image">​</p>
+<p>ISO</p>
+<p>简单的线性的乘</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211855-8hxbixn.png" alt="image">​</p>
+<p>ISO 能提高曝光度，但是会造成噪声放大的问题</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211901-02hmz5l.png" alt="image">​</p>
+<p>描述光圈大小的数：F-Number（F-Stop）</p>
+<p>非正式理解：F 是 1&#x2F;光圈直径</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211907-62ykgl5.png" alt="image">​</p>
+<p><strong>快门</strong></p>
+<p>快门用来调节曝光度，对于机械快门来说，无论速度多块，它的打开都有一个过程</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211912-lbxj9qn.png" alt="image">​</p>
+<p>快门的速度对最后的成像会造成影响。</p>
+<p>高速运动的物体在快门曝光时间长会出现运动模糊，因为快门打开和关闭时，物体的位置不一样，最后得到的是平均之后的效果，所以会产生模糊。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211917-ocock1a.png" alt="image">​</p>
+<p>提高快门速度，可以减少运动模糊。但是曝光度也减少了，所以要保证亮度，还得调光圈和 ISO。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211922-bmwdfdy.png" alt="image">​</p>
+<p>如果物体的运动比快门速度更快或差不多，会造成对于非常高速运动的物体的扭曲，因为不同位置的图像可能记录的是不同时刻进来的光。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211927-53bdtkr.png" alt="image">​</p>
+<h4 id="快门和光圈"><a href="#快门和光圈" class="headerlink" title="快门和光圈"></a>快门和光圈</h4><p>要保证曝光度，快门速度快，就要提高光圈大小</p>
+<p>F-Stop 是 1&#x2F;直径，考虑光进来要用面积来算</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211936-4pzj3rh.png" alt="image">​</p>
+<p>高速摄影</p>
+<p>非常短的快门时间，大的光圈</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211942-fr0jwkt.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211947-0awm7cy.png" alt="image">​</p>
+<p>超低速摄影</p>
+<p>延迟摄影，延长曝光时间，调小光圈</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211953-dezbeh1.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212000-7r04ove.png" alt="image">​</p>
+<p>薄透镜近似</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212004-cxcrxym.png" alt="image">​</p>
+<p>一面凸一面平的透镜无法把光聚到一点上：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212008-jufrfq0.png" alt="image">​</p>
+<p>理想化的薄透镜</p>
+<p>平行的光打进来可以折射到一个焦点上，焦点到透镜中心的距离叫做焦距</p>
+<p>根据光路的可逆性，光从焦点打到透镜上，会折射成平行光</p>
+<p>薄透镜可以任意改变它的焦距（透镜组）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212013-1olg3xh.png" alt="image">​</p>
+<p>透镜满足基本的物理规律：<br>从任何一个方向穿过透镜的中心都不会改变方向。</p>
+<p>z₀：物距</p>
+<p>z_(i)：相距</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212020-mig1p7g.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212024-czodgda.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212028-m9h24m0.png" alt="image">​</p>
+<p>Defocus Blur</p>
+<p>CoC：物体成像的点离感光元件还有一段距离时，光线会继续传播，到达感光元件上的时候会是一个圆，这个圆就叫做 CoC。CoC 的大小和光圈大小成正比。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212034-hzeubvv.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212037-i0kq776.png" alt="image">​</p>
+<p>重新定义 F-Number</p>
+<p>F-Number：焦距&#x2F;光圈的直径</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212042-cppgy9t.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212045-ar7kcz2.png" alt="image">​</p>
+<p>拍更清楚的照片要用小光圈</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212050-lxsdulq.png" alt="image">​</p>
+<p>模拟薄透镜做光线追踪</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212055-y4y2nws.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212059-f80jcts.png" alt="image">​</p>
+<p>景深（Depth of Field）</p>
+<p>用不同大小的光圈会影响景深的范围</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212102-fdm5pap.png" alt="image">​</p>
+<p>景深就是指成像清晰的一段范围：在实际场景中有一段深度，这段深度经过透镜后会在成像屏幕附近有一段区域，这段区域的 CoC 都是足够小的。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212107-6aqkz1z.png" alt="image">​</p>
+<p>景深的最远处穿过透镜和最近处穿过透镜会得到一段范围 Depth of focus：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212112-4gc8rlq.png" alt="image">​</p>
+<p>光场&#x2F;Lumigraph（to be continue）</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第十二章：Mesh细分、光线追踪</title>
+    <url>/blog/%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9AMesh%E7%BB%86%E5%88%86%E3%80%81%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/</url>
+    <content><![CDATA[<h1 id="第十二章：Mesh细分、光线追踪"><a href="#第十二章：Mesh细分、光线追踪" class="headerlink" title="第十二章：Mesh细分、光线追踪"></a>第十二章：Mesh细分、光线追踪</h1><h3 id="网格操作：细分、简化、规则化"><a href="#网格操作：细分、简化、规则化" class="headerlink" title="网格操作：细分、简化、规则化"></a>网格操作：细分、简化、规则化</h3><p>Mesh 细分（引入更多的三角形，让三角形的位置发生变化，使得原来的模型变得更光滑）</p>
+<p>Loop Subdivision（Loop 不是循环的意思，是发明者的 familyname 是 Loop）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203741-vrjiai4.png" alt="image">​</p>
+<p>1.把三角形分成更多的三角形：连接边的中点</p>
+<p>2.调整三角形的位置（把三角形的顶点区分成新的顶点和老的顶点，分别应用不同的规则改变顶点的位置）</p>
+<p>度：一个点相邻的边数。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203748-jh7r0of.png" alt="image">​</p>
+<p>新的顶点用四周的老顶点做加权平均</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203753-n5c1ivn.png" alt="image">​</p>
+<p>老的点用原本的点位置和相连三角形的顶点位置再加上度做加权平均。</p>
+<p>Catmull-Clark Subdivision（General Mesh）</p>
+<p>Loop Subdivision 只能处理三角形的情况，Catmull-Clark 可以处理任何面</p>
+<p>两个概念：</p>
+<p>1.非四边形面</p>
+<p>2.奇艺点（度不为 4 的点）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203759-efb66dj.png" alt="image">​</p>
+<h4 id="细分："><a href="#细分：" class="headerlink" title="细分："></a>细分：</h4><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203759-efb66dj.png" alt="image">​</p>
+<p>每一条边都选它的中点，每一个面都选中间的一个点。把边上的中点和面的中点连起来。</p>
+<p>只要是非四边形面，就一定会引入新的奇艺点。经过一次细分后，非四边形都会消失，也即不会再增加新的奇艺点。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203835-vn53o33.png" alt="image">​</p>
+<p>新的点考虑在面中心的点和边中心的点两种情况。</p>
+<p>老的点用它原本的位置和新的面中心点、边中心点做加权平均。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203840-gizxki9.png" alt="image">​</p>
+<h4 id="Mesh-简化"><a href="#Mesh-简化" class="headerlink" title="Mesh 简化"></a>Mesh 简化</h4><p>不同情况下选用不同复杂度的模型，比如离得远的时候用简化模型</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203915-3xed1sl.png" alt="image">​</p>
+<p>但是几何的层级结构不好处理，从 300 个网格到 3000 个网格时平滑过渡怎么处理</p>
+<h5 id="简化怎么计算？"><a href="#简化怎么计算？" class="headerlink" title="简化怎么计算？"></a>简化怎么计算？</h5><p>一种方法：边坍缩</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203915-3xed1sl.png" alt="image">​</p>
+<p>坍缩即找到一条边的两个顶点，捏成一个顶点，重点是找到要坍缩哪些点。</p>
+<p>用到一种叫做二次（平方）误差度量（Quadric Error Metrics）的方法</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203925-xsk1ax6.png" alt="image">​</p>
+<p>找到一个最优位置，使得它到原本相关联的各个面的平方和达到最小。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203930-kcxeki3.png" alt="image">​</p>
+<p>选坍缩的边的时候，给每个边一个分数表示坍缩后最优位置计算出来的平方和，选择平方和最小的边。但是坍缩一条边后，会影响其他相邻的边。所以需要一边求最小，一边动态更新任一点的值，需要用到优先队列（堆）的数据结构。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203937-ge7wdte.png" alt="image">​</p>
+<p>局部取最小，更新受影响的边的二次度量误差，再取最小，再更新…</p>
+<p>用局部最优解找全局最优解（贪心算法）</p>
+<p>越简单越接近平面的面坍缩得越多（计算出来的二次度量误差越小），比如下图中的小奶牛的面部坍缩的多，但是颈部坍缩的少</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203942-g2sko9n.png" alt="image">​</p>
+<h3 id="光线追踪"><a href="#光线追踪" class="headerlink" title="光线追踪"></a><strong>光线追踪</strong></h3><p>光栅化怎么绘制阴影？</p>
+<p>着色是一种局部行为，仅考虑自己、光源和摄像机，不考虑其他物体，因此无法解决阴影的问题</p>
+<p>于是发明了<strong>阴影映射（shadow mapping）。</strong></p>
+<ul>
+<li><p>图像空间算法</p>
+</li>
+<li><ul>
+<li>在生成阴影的时候不需要知道场景的几何信息</li>
+<li>会产生走样现象</li>
+</ul>
+</li>
+<li><p>主要思想</p>
+<ul>
+<li>如果一个点不在阴影里面，说明可以从照相机看到这个点，也可以从光源看到这个点</li>
+<li>如果一个点在阴影里，说明相机可以看到这个点，但是光看不到这个点</li>
+</ul>
+</li>
+</ul>
+<p>经典的 shadow mappding 只能处理点光源，这种阴影是非 0 即 1 的阴影，叫做硬阴影</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203952-o4xzfvk.png" alt="image">​</p>
+<p>从光源看向物体，生成一幅图，把不同位置看到的点的深度记录下来</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203958-kxh4gvc.png" alt="image">​</p>
+<p>再从摄像机出发看向场景。把看到的点投影回光源，就知道之前记录到深度图上的深度。把记录的深度图深度和眼睛看到的点到光源的实际深度比较，如果二者一致，说明这个点一定即可以被光源看到，又可以被摄像机看到。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204010-1qz8hu3.png" alt="image">​</p>
+<p>如果深度不一致，说明这个点被挡住了。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204014-gt5m7zx.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204019-nkz2q3v.png" alt="image">​</p>
+<p>shadowMapping 会有各种问题：<br>判断深度是否相等，需要判断两个浮点数相等，实际一定会有误差，有精度问题。</p>
+<p>另外 shadowMap 自己有分辨率，如果这个分辨率很低，但是渲染场景的分辨率很高，那么阴影信息是走样的</p>
+<p>另外要做两遍渲染，从光源看过去做一遍，从相机看过去做一遍，性能开销大</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204025-oor2frq.png" alt="image">​</p>
+<h4 id="硬阴影-VS-软阴影"><a href="#硬阴影-VS-软阴影" class="headerlink" title="硬阴影 VS 软阴影"></a>硬阴影 VS 软阴影</h4><p>硬阴影要么可见要么不可见，边缘很锐利</p>
+<p>软光源边缘是慢慢过渡的，越靠近物体根部阴影越硬</p>
+<p>软硬指的是物理上的半影。如果一个地方完全看不到光源，则这个地方叫做本影区域，如果看得到部分光源就叫做半影，如果完全能看到则没有阴影。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204032-beag1cr.png" alt="image">​</p>
+<p>阴影程度取决于可以看到多大的光源。</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第十五章：Ray tracing 3 光线传播和全局光照</title>
+    <url>/blog/%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0%EF%BC%9ARay%20tracing%203%20%E5%85%89%E7%BA%BF%E4%BC%A0%E6%92%AD%E5%92%8C%E5%85%A8%E5%B1%80%E5%85%89%E7%85%A7/</url>
+    <content><![CDATA[<h1 id="第十五章：Ray-tracing-3-光线传播和全局光照"><a href="#第十五章：Ray-tracing-3-光线传播和全局光照" class="headerlink" title="第十五章：Ray tracing 3 光线传播和全局光照"></a>第十五章：Ray tracing 3 光线传播和全局光照</h1><p>RayTracing 3 光线传播和全局光照</p>
+<p>回顾上节课</p>
+<ul>
+<li><p>基础的光线追踪</p>
+<ul>
+<li>光线生成</li>
+<li>光线和对象求交</li>
+</ul>
+</li>
+<li><p>加速</p>
+<ul>
+<li>光线和 AABB 盒求交</li>
+<li>空间划分 VS 物体划分</li>
+<li>BVH 遍历</li>
+</ul>
+</li>
+<li><p>辐射度量学</p>
+</li>
+</ul>
+<p>本节课</p>
+<ul>
+<li><p>继续辐射度量学</p>
+</li>
+<li><p>光线传播</p>
+<ul>
+<li>反射方程</li>
+<li>渲染方程</li>
+</ul>
+</li>
+<li><p>全局光照</p>
+</li>
+<li><p>概率论</p>
+</li>
+</ul>
+<p>回顾上节课的概念</p>
+<p>Radiant energy Q </p>
+<p>Radiant flux（power）（单位时间的能量）</p>
+<p>Radiant intensity （单位立体角的能量）</p>
+<h4 id="Solid-Angle（立体角）"><a href="#Solid-Angle（立体角）" class="headerlink" title="Solid Angle（立体角）"></a>Solid Angle（立体角）</h4><p>我们考虑光照都是用瞬时量，因为物体一般接受能量一边也在辐射能量，有一些荧光的材质可能收到光线时间长短影响有不同的颜色，这种情况先不考虑。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205113-x9s6j1d.png" alt="image">​</p>
+<h5 id="微分立体角"><a href="#微分立体角" class="headerlink" title="微分立体角"></a>微分立体角</h5><p>（θ，Φ）不是均匀的划分球体面积，靠近顶（底）部，sinθ 小，微分立体角小，靠近球中间，sinθ 大。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205118-m4jv0v0.png" alt="image">​</p>
+<h5 id="Irradiance（power-per-unit-area）"><a href="#Irradiance（power-per-unit-area）" class="headerlink" title="Irradiance（power per unit area）"></a>Irradiance（power per unit area）</h5><p>单位面积垂直方向上的光线的能量，光如果不是垂直的，需要计算垂直方向的投影</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205125-klu2c8j.png" alt="image">​</p>
+<p>夏天太阳垂直照射，冬天有一个倾斜角度</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205130-byl9p9q.png" alt="image">​</p>
+<h5 id="Irradiance-Fallof"><a href="#Irradiance-Fallof" class="headerlink" title="Irradiance Fallof"></a>Irradiance Fallof</h5><p>单位立体角的能量不会衰减（r 越大辐射面积越大，单位体积角始终不变），单位面积能量会衰减。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205136-q8atzv3.png" alt="image">​</p>
+<h5 id="Radiance"><a href="#Radiance" class="headerlink" title="Radiance"></a>Radiance</h5><p>光线传播过程中带的能量。单位立体角、单位投影面积上的能量。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205141-jvr3dyt.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205149-8daktbu.png" alt="image">​</p>
+<p>irradiance 和 radiance 的区别：是否有方向性。radiance 可以理解为单位面积上某个方向接受到的能量。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205207-3le02ac.png" alt="image">​</p>
+<p>也可以用 intensity 来理解，即一个单位面积上往一个方向辐射出去的能量。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205212-ougl2it.png" alt="image">​</p>
+<p>对各个方向的 radiance 积分得到 irradiance。H 平方表示半球。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205218-v4bk3vm.png" alt="image">​</p>
+<h4 id="反射方程："><a href="#反射方程：" class="headerlink" title="反射方程："></a>反射方程：</h4><p>Bidirectional Reflectance Distribution Function （BRDF， 双向反射分布函数）</p>
+<p>理解反射：<br />可以理解为光线发射到一个物体表面，被吸收了，再从某一个角度发出去</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205224-qudzrqa.png" alt="image">​</p>
+<p>dE(ω_(i))表示 dA 在一个方向上的单位立体角接收到的能量，dL_(r)(ω_(i))表示一个比率：dA 上任何一个出射方向算出来的 radiance 除以 dA 接收到的 irradiance。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205318-uqhg02p.png" alt="image">​</p>
+<p>BRDF 定义了光线和物体是怎么作用的，定义了不同的材质</p>
+<p>任何一个输入方向对观测方向的贡献加起来得到最终的光照</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205323-ekculy6.png" alt="image">​</p>
+<p>光线会弹射多次，任何出射的 radiance 都有可能成为入射的 radiance，所以是一个递归的问题。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205328-n4taoy5.png" alt="image">​</p>
+<h4 id="渲染方程（绘制方程）"><a href="#渲染方程（绘制方程）" class="headerlink" title="渲染方程（绘制方程）"></a>渲染方程（绘制方程）</h4><p>假如物体自己会发光，出射的光线包含两部分。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205333-zxc17qd.png" alt="image">​</p>
+<p>方程中假设所有方向都是向外的。</p>
+<p>一个点光源：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205338-iu0rf82.png" alt="image">​</p>
+<p>如果有很多点光源，就把每个点光源的反射加起来：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205344-kwfp0lb.png" alt="image">​</p>
+<p>如果是一个面光源，就把面光源上每个点的反射积分：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205348-abgm9qo.png" alt="image">​</p>
+<p>radiance 不只是从光源发出的，也有可能是其他点反射的 radiance。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205355-bygbgw8.png" alt="image">​</p>
+<p>简写渲染方程：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205359-amjmbla.png" alt="image">​</p>
+<p>写成算子的形式：<br />E：光源发出的能量，K：反射操作符，KL：反射的能量</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205405-8pgh610.png" alt="image">​</p>
+<p>求解 L，下图 I 表示单位矩阵，最后 L 可以写成一种泰勒展开的形式：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205410-d8we07n.png" alt="image">​</p>
+<p>L 表示为一种弹射次数的分解：</p>
+<p>弹射 0 次：光源自己</p>
+<p>弹射一次：直接光照</p>
+<p>弹射两次及以上：间接光照</p>
+<p>全局光照：直接和间接光照的集合</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205417-9qmdapy.png" alt="image">​</p>
+<p>光栅化做的部分：弹射 0 次和 1 次，后面的部分光栅化很难处理，因此用光线追踪来处理</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205423-8seoqud.png" alt="image">​</p>
+<p>接下来求解渲染方程。</p>
+<p>需要一些前置的概率论知识：</p>
+<p>X：随机变量</p>
+<p>p(x)：随机变量的概率分布</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205428-314odlg.png" alt="image">​</p>
+<p>概率：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205433-qhqm29n.png" alt="image">​</p>
+<p>期望（平均）：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205437-mm3719d.png" alt="image">​</p>
+<p>连续情况下描述变量和分布（概率密度函数）：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205442-0dhlbe4.png" alt="image">​</p>
+<p>如果有一个随机变量的函数，函数的期望等于函数在某个变量的值乘以对应的概率密度再积分。</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第十八章：高级光线传播</title>
+    <url>/blog/%E7%AC%AC%E5%8D%81%E5%85%AB%E7%AB%A0%EF%BC%9A%E9%AB%98%E7%BA%A7%E5%85%89%E7%BA%BF%E4%BC%A0%E6%92%AD/</url>
+    <content><![CDATA[<h1 id="第十八章：高级光线传播"><a href="#第十八章：高级光线传播" class="headerlink" title="第十八章：高级光线传播"></a>第十八章：高级光线传播</h1><h3 id="高级光线传播"><a href="#高级光线传播" class="headerlink" title="高级光线传播"></a><strong>高级光线传播</strong></h3><ul>
+<li>无偏的光线传播方法<ul>
+<li>双向路径追踪（BDPT）</li>
+<li>Metropolis 光线传播（MLT）</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>有偏的光线追踪方法</p>
+<ul>
+<li>光子映射（Photon mapping）</li>
+<li>Vertex connection and merging（VCM，结合了光子映射和双向映射追踪）</li>
+</ul>
+</li>
+<li><p>实时辐射度算法（把间接光表示成很多很小的光源）</p>
+</li>
+<li><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210449-rafge05.png" alt="image">​</p>
+</li>
+</ul>
+<h4 id="无偏和有偏"><a href="#无偏和有偏" class="headerlink" title="无偏和有偏"></a><strong>无偏和有偏</strong></h4><p>蒙特卡罗不管用多少样本，期望永远是对的，被称为无偏的；其他情况就是有偏的，但如果取的样本非常多，多到无穷多，最后期望值会收敛到正确值。这个时候就称为一致的。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210458-j95kajg.png" alt="image">​</p>
+<h4 id="双向路径追踪"><a href="#双向路径追踪" class="headerlink" title="双向路径追踪"></a><strong>双向路径追踪</strong></h4><p>路径追踪是利用光路可逆性，从相机开始打出的路径，连接相机和光源</p>
+<p>双向路径追踪分别从光源和相机出发，生成两条半（子）路径，再把半路径的端点连接起来，就形成了整个路径。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210503-otznwgf.png" alt="image">​</p>
+<p>双线路径追踪适合光源在一侧的复杂传输，但是实现起来比较困难，且运行速度很慢</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210508-mvlce8c.png" alt="image">​</p>
+<h4 id="Metropolis-光线传播"><a href="#Metropolis-光线传播" class="headerlink" title="Metropolis 光线传播"></a><strong>Metropolis 光线传播</strong></h4><p>用一个统计学上的采样工具马尔可夫链，通过当前的样本，生成和他靠近的下一个样本。可以做到只要给足够的时间，可以生成以任意的函数的形状为 PDF 的样本。</p>
+<p>而当采样的函数 p(x)和积分的函数 f(x)的形状一致的时候，得到的偏差是最小的。</p>
+<p>给定一条路径，可以生成周围更多和他相似的路径。因此是一个局部的方法。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210513-m3kjpoa.png" alt="image">​</p>
+<p>Metropolis 特别适合做复杂的光路传播，因为只要找到一条正确的，就能不断在它周围找到更多。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210518-yr7m9na.png" alt="image">​</p>
+<p>缺点是：<br>1.很难在理论上分析它收敛的速度（给一幅图，无法分析渲染多长时间才会收敛）</p>
+<p>2.所有操作都是局部的，有一些像素收敛的快，有一些收敛的慢，得到的图像比较“脏“</p>
+<p>3.因为不同像素收敛速度不一样，所以不能渲染动画。因为两帧之间会差距很大。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210524-yzpjvr2.png" alt="image">​</p>
+<h4 id="光子映射"><a href="#光子映射" class="headerlink" title="光子映射"></a><strong>光子映射</strong></h4><p>光子映射是一个有偏的估计，很适合用来渲染 caustic（caustic 是由于光线聚焦产生的一些图案）。同时适合用来处理 SDS 路径。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210529-xpgewj2.png" alt="image">​</p>
+<p>一种光子映射的方法：<br>第一步：光子从光源出发，不断的反射和折射，直到光子打到 diffuse 的物体，就停下来。然后把所有的光子都记录下来</p>
+<p>第二步：从相机开始打出多条路径，直到打到 diffuse 的物体上就停下来</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210534-bqsftuw.png" alt="image">​</p>
+<p>接下来做局部的密度估计：</p>
+<p>对任何一个着色点，选择离他最近的 n 个光子，再找这 n 的光子占据的面的面积，计算光子的密度。光子分布的越集中的地方越亮。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210539-ncxmjrb.png" alt="image">​</p>
+<p>为什么是有偏的：<br />正常计算密度应该用很小的 n 除以很小的面积，当实际的覆盖面积足够小（光子打出去的面积足够多）的时候，就接近真实的密度，这种情况被称为是一致的。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210544-m04arg7.png" alt="image">​</p>
+<p>在渲染里简单的理解有偏或无偏：<br>有偏：只要结果有一点模糊，就认为是有偏的。</p>
+<p>一致的：虽然有模糊的，但是样本足够多，就能收敛到正确的结果。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210549-gtjdxe6.png" alt="image">​</p>
+<h4 id="Vertex-Connection-and-Merging"><a href="#Vertex-Connection-and-Merging" class="headerlink" title="Vertex Connection and Merging"></a><strong>Vertex Connection and Merging</strong></h4><p>双向路径追踪和光子映射的结合</p>
+<p>主要思想是：对于两个 subpath，最后他们的交点非常接近的时候，用光子映射把两个 subpath 结合到一起。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210555-7ryptvn.png" alt="image">​</p>
+<h5 id="Instant-Radiosity-实时辐射度"><a href="#Instant-Radiosity-实时辐射度" class="headerlink" title="Instant Radiosity 实时辐射度"></a><strong>Instant Radiosity 实时辐射度</strong></h5><p>认为已经被照亮的地方就是光源，可以继续照射别的地方。</p>
+<p>假设从光源射出来的光线最后会停在某个地方，这个地方就变成了一个虚拟的点光源，然后用这些虚拟的点光源照亮着色点。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210601-mwl9t0z.png" alt="image">​</p>
+<p>缺点：</p>
+<p>1.在一些接缝会出现一些光点</p>
+<p>2.做不了镜面的材质</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210606-nird8z3.png" alt="image">​</p>
+<p>出现光点的原因是：做 light sampling 的时候，对积分域转换，把对立体角的采样转换成对面积的采样。此处分母出现了一个距离的平方，当距离很近，接近 0 点时候会出现一个很大的结果。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205831-kbeuy6l.png" alt="image">​</p>
+<p>工业界现在主要在用 path tracing 的方法。</p>
+<h4 id="Advanced-Appearance-Modeling-外观建模"><a href="#Advanced-Appearance-Modeling-外观建模" class="headerlink" title="Advanced Appearance Modeling 外观建模"></a><strong>Advanced Appearance Modeling 外观建模</strong></h4><ul>
+<li><p>非表面模型</p>
+<ul>
+<li>散射介质</li>
+<li>头发、毛发、纤维</li>
+<li>粒状材质（沙子）</li>
+</ul>
+</li>
+<li><p>表面模型</p>
+<ul>
+<li>半透明材质</li>
+<li>布料</li>
+<li>有细节度的模型</li>
+</ul>
+</li>
+<li><p>程序化生成的模型</p>
+</li>
+<li><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210635-ey35l8m.png" alt="image">​</p>
+</li>
+</ul>
+<h5 id="非表面模型"><a href="#非表面模型" class="headerlink" title="非表面模型"></a><strong>非表面模型</strong></h5><p><strong>散射介质</strong>：雾、云</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210642-hkzfvub.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210646-m8q1772.png" alt="image">​</p>
+<p>光线的传播过程中会：1.被吸收 2.被散射</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210651-7dgv07t.png" alt="image">​</p>
+<p>由 Phase Function（相位函数）来定义在每个点怎么散射</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210656-t4ld57w.png" alt="image">​</p>
+<h5 id="散射介质的渲染"><a href="#散射介质的渲染" class="headerlink" title="散射介质的渲染"></a>散射介质的渲染</h5><p>随机地找到一个方向发生弹射，随机地往一个方向前进，找到一个 path 把各个弹射的位置相连。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210700-ipm9m0r.png" alt="image">​</p>
+<p>participanting media 有很多应用：<br />超能特工队</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210705-whu0gey.png" alt="image">​</p>
+<p>刺客信条：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210710-9pnih2p.png" alt="image">​</p>
+<p>巧克力也是一种散射介质，只是光进去了以后很快就会消失</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210715-fn5elqm.png" alt="image">​</p>
+<h6 id="头发（光线和一根曲线作用）"><a href="#头发（光线和一根曲线作用）" class="headerlink" title="头发（光线和一根曲线作用）"></a><strong>头发（</strong>光线和一根曲线作用）</h6><p>有两种类型的高光：有色的高光和无色的高光。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210719-maoriyz.png" alt="image">​</p>
+<p>Kajiya-Kay<br />把头发当成一个圆柱，光线打到上面会散射出一个圆锥。同时，有一些光线会被散射到四面八光（有点类似于 Diffuse 和 Specular 加起来）。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210724-zy065l5.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210728-2hx9ny0.png" alt="image">​​</p>
+<p>Marschner Model</p>
+<p>考虑光线打到头发上，有一部会直接反射，记为 R</p>
+<p>一部分会打进去，发生折射，再打出来，记为 TT</p>
+<p>还有一部分进到头发里面，走到内壁，发生一次内部的反射，再发生一次穿透，记 TRT</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210738-aa1240r.png" alt="image">​</p>
+<p>把头发当成一个玻璃材质的圆柱，有表皮（cuticle）和皮层（cortex）。头发内部有色素，光线传播进去会有部分被吸收。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210743-3vk9pzv.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210746-r444iza.png" alt="image">​</p>
+<p>光线打到多根头发，就会从一根头发弹射到另一根头发，所以计算量巨大。</p>
+<p>头发模型的应用：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210751-fycq4ef.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210755-qa328qe.png" alt="image">​</p>
+<p>人的头发模型不足以描述光线和动物毛发的作用</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210804-lqruv79.png" alt="image">​</p>
+<p>毛发除了之前提到的表皮和皮质层，还有中间的髓质层，光线进入髓质层会被反射到四面八方。而动物毛发的髓质层比人要粗很多。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210809-uei58uw.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210813-7m0ratb.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210816-b3cvtyb.png" alt="image">​</p>
+<p>Double Cylinder Model（双层圆柱模型）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210821-7zce8xa.png" alt="image">​</p>
+<p>相比之前增加了光线穿过髓质折射出来的分量 TTs 和光线穿过髓质，发生反射再穿出来的分量 TRTs</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210825-h1yddpz.png" alt="image">​</p>
+<p>最后头发的颜色由五个分量结合而成：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210830-0lq5865.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210834-v67bpqe.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210837-efkz5gm.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210841-jfe5ugl.png" alt="image">​</p>
+<p><strong>Granular Material（颗粒材料）</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210847-7y4bt6a.png" alt="image">​</p>
+<p>可以做一些简化，不去计算每一个颗粒。</p>
+<p>比如下图中，把整个模型分成很多个单元，每个单元中由不同的材质按不同的比例来构成。用这种单元模型去做渲染。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210852-pz6cfqi.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210855-yjgauem.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210858-y825oep.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210902-f219ixi.png" alt="image">​</p>
+<h5 id="非表面模型-translucent-material-（半透明材质）"><a href="#非表面模型-translucent-material-（半透明材质）" class="headerlink" title="非表面模型 translucent material （半透明材质）"></a><strong>非表面模型</strong> translucent material （半透明材质）</h5><p>光线可以从某个地方进去材质表面，从另外一个面穿出来。</p>
+<p>​​玉石：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210907-9xfh6bg.png" alt="image">​</p>
+<p>水母：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210914-557rp6k.png" alt="image">​</p>
+<p>次表面散射：光线从一个点进入物体表现，发生了很多次反射，再从另一个表面出来。]</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210926-39bmn2y.png" alt="image">​</p>
+<p>次表面反射是对 BRDF 的延伸，BSSRDF，中间加了 SS（次表面反射）。即计算一个点的反射，除了考虑各个方向对这个点的影响，还要考虑其他点反射过来的光，既要对方向做积分，又要对面积做积分。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210931-iao0nml.png" alt="image">​</p>
+<p>Dipole Approximation<br />次表面反射可以近似为物体内部的一个光源加上外部的一个光源共同照射的结果：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210936-50h97zo.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210941-cg3xvfh.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210945-pvhguml.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210950-rsxgkci.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210953-l34aj56.png" alt="image">​</p>
+<p>BSSRDF 的应用：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210958-2fizy28.png" alt="image">​</p>
+<p><strong>Cloth 材质</strong></p>
+<p>很多纤维缠绕形成股，很多股缠绕形成线，最后织成布。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211003-utxm1ek.png" alt="image">​</p>
+<p>有三种方法进行渲染：</p>
+<p>1.把布当作表面，用 BRDF 模型进行渲染。根据不同的织法、形状得到不同的渲染结果。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211013-nznj6he.png" alt="image">​</p>
+<p>但是明显布的材质不一定是一个表面，比如天鹅绒材质。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211017-dmw1ob6.png" alt="image">​</p>
+<p>2.像散射介质一样渲染：把空间分成很小的格子，知道每个格子的纤维朝向分布、复杂程度。把这些性质转换为光线的吸收和散射，就像是渲染散射介质。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211023-e4t83ap.png" alt="image">​</p>
+<p>3.把每一根纤维都渲染出来，当头发一样渲染。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211027-wxa0g03.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211031-f9ovxu5.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211035-2szkdrt.png" alt="image">​</p>
+<p><strong>有细节的复杂材质</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211042-rn6ehn7.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211046-bvl8m2z.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211050-13rjg79.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211053-70ppxx2.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211057-agkm8oc.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211100-64a767r.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211104-32jgmlo.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211108-2wr6ccu.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211112-8bn8rgt.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211116-r0dg6g3.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211120-pgov3tv.png" alt="image">​</p>
+<p>我们认为每一个微表面都是镜面，很难通过反射的方式让光线打到光源或者摄像机上。所以用一个像素覆盖很多微表面，在一个小的范围内把微表面的法线分布算出来，替代之前光滑的分布。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211127-535rwg7.png" alt="image">​</p>
+<p>不同的范围选择会得到不同的微表面法线分布结果：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211134-g6gysfn.png" alt="image">​</p>
+<p>不同性质的材质会得到不同形状的微表面分布：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211139-pvrkpls.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211145-ppe0chi.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211150-i4yk4fi.png" alt="image">​</p>
+<p>细节材质的应用</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211154-6tvipfw.png" alt="image">​</p>
+<p>在微型的细节上，比如物体很小，小到和光的波长相当，此时不能从几何光学的角度去分析，要考虑光的振动，需要用到波动光学。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211159-sld6fjy.png" alt="image">​</p>
+<p>在一个黑暗的房间里用点光源打出一道光，会看到材质表面有很多颜色：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211203-ev3uyyp.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211208-d3j0mo9.png" alt="image">​</p>
+<p>波动光学下的 BRDF：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211211-mmusp3p.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211215-bd78kjn.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211218-th5itfy.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211223-3yq66jl.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211227-xwalx32.png" alt="image">​</p>
+<p><strong>程序化生成的表面（Procedural Appearance）</strong></p>
+<p>用三维空间中的噪声函数生成材质外观，procedural 表示不提前生成，随用随取，用的时候去查询。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211232-uurjwpl.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211237-blf0c0h.png" alt="image">​​</p>
+<p>对噪声函数可以做一些处理得到不同的效果，比如车上的锈，可以做二值化，有些地方有，有些地方没有。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211249-v7g4u40.png" alt="image">​</p>
+<h5 id="噪声函数的应用"><a href="#噪声函数的应用" class="headerlink" title="噪声函数的应用"></a>噪声函数的应用</h5><p>生成地形</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211254-h8580kh.png" alt="image">​</p>
+<p>生成水面</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211259-o0afr75.png" alt="image">​</p>
+<p>生成三维的木头，任意切割可以得到内部的外观</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211303-7hxibix.png" alt="image">​</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817211306-ei5l4ua.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第十六章：Ray tracing4 蒙特卡洛路径追踪</title>
+    <url>/blog/%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0%EF%BC%9ARay%20tracing4%20%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E8%B7%AF%E5%BE%84%E8%BF%BD%E8%B8%AA/</url>
+    <content><![CDATA[<h1 id="第十六章：Ray-tracing4-蒙特卡洛路径追踪"><a href="#第十六章：Ray-tracing4-蒙特卡洛路径追踪" class="headerlink" title="第十六章：Ray tracing4 蒙特卡洛路径追踪"></a>第十六章：Ray tracing4 蒙特卡洛路径追踪</h1><p>Ray tracing4 蒙特卡洛路径追踪</p>
+<p>回顾上节课</p>
+<ul>
+<li><p>辐射度量学</p>
+</li>
+<li><p>光线传播</p>
+<ul>
+<li>反射方程</li>
+<li>渲染方程</li>
+</ul>
+</li>
+<li><p>全局光照</p>
+</li>
+<li><p>概率论复习</p>
+</li>
+</ul>
+<p>本节课：</p>
+<ul>
+<li>简短的 review</li>
+<li>蒙特卡洛积分</li>
+<li>路径追踪</li>
+</ul>
+<p>review</p>
+<p><strong>渲染方程</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205531-83rv7sy.png" alt="image">​</p>
+<p><strong>概率论</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205535-nn8mt4j.png" alt="image">​</p>
+<h4 id="蒙特卡洛积分"><a href="#蒙特卡洛积分" class="headerlink" title="蒙特卡洛积分"></a><strong>蒙特卡洛积分</strong></h4><p>在 a、b 随机采样，找到一个 x 对应的 f(x)，用 f(x)从 a 到 b 围出一个矩形。做多次采样，平均采样的结果，得到一个定积分的值。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205540-t4ojzq6.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205550-00utws4.png" alt="image">​</p>
+<p>如果是均匀的采样，采样的 PDF 是一个常数：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205555-9eais6i.png" alt="image">​</p>
+<p>对于均匀的采样，蒙特卡洛的积分结果是：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205559-tliff6d.png" alt="image">​</p>
+<p>更通用的情况，不是均匀采样，即 x 的概率密度不是常数，可以通用的表示为：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205607-vnbr1ms.png" alt="image">​</p>
+<p>越多的采样，得到的结果越准。</p>
+<p>在 x 上积分，就得在 x 上采样。</p>
+<h4 id="Path-Tracing"><a href="#Path-Tracing" class="headerlink" title="Path Tracing"></a><strong>Path Tracing</strong></h4><p>使用 Path Tracing 的原因是 whitted-style ray tracing 有一些不符合真实物理，需要提升这种算法。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205617-c2ktegr.png" alt="image">​</p>
+<p>1.whitted-style ray tracing 无法处理磨砂材质的反射，他会认为反射光还朝着镜面反射的方向，而这是不对的：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205622-knaufp2.png" alt="image">​<br />2.whitted-style ray tracing 认为光线打到漫反射到物体就停下来了，但真实的光线还会继续传播</p>
+<p>color-bleeding 一个面反射的光到了另一个漫反射的面上，反射面的颜色流到了被反射的面上</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205628-bm6typt.png" alt="image">​</p>
+<p>whitted-style ray tracing 是错的，但是渲染方程是对的。渲染方程包含了两个问题：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205638-gfyefht.png" alt="image">​</p>
+<p>1.对一个半球求解积分</p>
+<p>2.递归的问题</p>
+<p>可以用蒙特卡洛积分解渲染方程。<br />考虑一个像素点在直接光照下：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205648-r38amiu.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205652-iip2l0f.png" alt="image">​</p>
+<p>简单的做一个均匀的采样</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205658-5yq8i2l.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205702-0ffxy3l.png" alt="image">​</p>
+<p>只考虑直接光照：随机选择一个方向从着色点发出一条射线，如果打到了光源，就把光源的贡献算出来，没打到光源的就不算</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205711-d1r1f2z.png" alt="image">​</p>
+<p>如果是间接光照，Q 点打到 P 点的光照，就相当于 P 点有一个相机看向 Q 点，在 Q 点算出来的直接光照。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205715-8dbw019.png" alt="image">​</p>
+<p>这样可以写出一个递归的算法：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205720-wx6na2p.png" alt="image">​</p>
+<p>但这样会有一些问题<br />1.光线的弹射数量会爆炸</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205724-i7iaqsi.png" alt="image">​</p>
+<p>N&#x3D;1，弹射的数量才不会爆炸。所以，每次只选择一个方向进行采样，这个就叫做路径追踪：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205731-qxnsgdr.png" alt="image">​</p>
+<p>每个像素会有 n 条路径，把 n 条路径的着色结果加起来求平均：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205735-6m6z6ga.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205739-lfzqw6u.png" alt="image">​</p>
+<p>2.递归不会停下来</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205744-7h52x56.png" alt="image">​</p>
+<p>如果限制弹射次数，又会有能量损失。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205749-z4fnpg5.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205754-chsottt.png" alt="image">​​</p>
+<p>于是引入了俄罗斯轮盘赌，以一定的概率决定是不是要停止追踪</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205801-6chp5iw.png" alt="image">​</p>
+<p>最终期望的结果就是正确的结果：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205805-03knfxn.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205809-9y2hisg.png" alt="image">​</p>
+<p>现在可以得到正确的结果，但不够高效：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205813-hnjhhaa.png" alt="image">​</p>
+<p>光源小的情况下，很多 ray 会被浪费：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205817-u9fk3ck.png" alt="image">​</p>
+<p>因此我们考虑对光源采样，从光源随机打出一条射线到着色点。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205822-f9m6prp.png" alt="image">​<br />但前面提过蒙特卡洛在 x 上采样就得在 x 上积分，但是渲染方程是对立体角积分，但采样是在光源上采样。</p>
+<p>因此，需要把渲染方程写成对光源积分的形式。</p>
+<p>先找到 dA 和 dω 的关系：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205827-c82ijcq.png" alt="image">​</p>
+<p>均匀地对光源采样：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205831-kbeuy6l.png" alt="image">​</p>
+<p>最后把这个光照分为两部分：光源直接照射的部分和其他反射的部分</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205835-ucrghfd.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205843-1o6qtbp.png" alt="image">​</p>
+<p>还有一个问题，需要计算光源被挡住的情况：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205848-1f26j0x.png" alt="image">​</p>
+<p>比较过去和现代的 raytracing<br />过去特指 whitted-style ray tracing，现在是指光线传播问题的一些解决方法的大集合：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205856-2ebebql.png" alt="image">​</p>
+<p>还有一些没提到的问题：</p>
+<p>怎么对半球均匀采样</p>
+<p>怎么选择采样的 pdf（重要采样）</p>
+<p>怎么生成真正均匀的随机数</p>
+<p>能不能把光源采样和半球采样结合起来</p>
+<p>把经过像素的每条光线的采样结果做平均时是怎么做平均，是否需要加权</p>
+<p>算出来的 radiance 是怎么转换为颜色的</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205907-g9han7u.png" alt="image">​</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205912-hurhd9o.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205924-czqjir5.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第十四章：Ray tracing2 加速结构、辐射度量学</title>
+    <url>/blog/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%EF%BC%9ARay%20tracing2%20%E5%8A%A0%E9%80%9F%E7%BB%93%E6%9E%84%E3%80%81%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/</url>
+    <content><![CDATA[<h1 id="第十四章：Ray-tracing2-加速结构、辐射度量学"><a href="#第十四章：Ray-tracing2-加速结构、辐射度量学" class="headerlink" title="第十四章：Ray tracing2 加速结构、辐射度量学"></a>第十四章：Ray tracing2 加速结构、辐射度量学</h1><p>Ray Tracing 2</p>
+<ul>
+<li>加速结构</li>
+<li>辐射度量学</li>
+</ul>
+<p>题外话：</p>
+<p>GTC（GPU Technology Conference）：</p>
+<ul>
+<li><p>DLSS（Deep Learning Super Sampling）2.0 <a href="https://zhuanlan.zhihu.com/p/116211994">https://zhuanlan.zhihu.com/p/116211994</a></p>
+<ul>
+<li>光栅化生成一个 1080p 的图，把它拉大成一张 4K 的图，结果不损失太多性能，同时看上去依然清晰</li>
+</ul>
+</li>
+<li><p>RTXGI（全局光照）<a href="https://developer.nvidia.com/rtxgi">https://developer.nvidia.com/rtxgi</a></p>
+</li>
+</ul>
+<p>回顾上节课：</p>
+<ul>
+<li><p>为什么要做光线追踪</p>
+</li>
+<li><p>Whitted-style ray tracing（递归的光线追踪，光线弹射到多个地方，在每个交点计算着色和阴影）</p>
+</li>
+<li><p>光线和物体求交</p>
+<ul>
+<li>光线和隐式表面求交</li>
+<li>光线和三角形求交</li>
+</ul>
+</li>
+<li><p>AABB 包围盒</p>
+<ul>
+<li>理解包围盒：坐标轴上三对相对的平板</li>
+<li>光线和 AABB 盒求交</li>
+</ul>
+</li>
+</ul>
+<p>本节课：</p>
+<ul>
+<li><p>AABB 盒怎么加速光线追踪？</p>
+<ul>
+<li>均匀的网格（Uniform grids）</li>
+<li>空间划分 （spatial partitions）</li>
+</ul>
+</li>
+<li><p>辐射度量学</p>
+</li>
+</ul>
+<h4 id="AABB-加速光线追踪"><a href="#AABB-加速光线追踪" class="headerlink" title="AABB 加速光线追踪"></a>AABB 加速光线追踪</h4><p><strong>均匀的网格：Uniform Spatial Partitions（Grids）</strong></p>
+<p>先让光线和盒子求交，再进一步和盒子里的物体求交</p>
+<p>预处理：</p>
+<p>1.先找到场景里的一个包围盒</p>
+<p>2.把盒子分成一堆格子</p>
+<p>3.标记与物体表面相交的格子</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204558-karsvo5.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204602-xjyn2a4.png" alt="image">​</p>
+<p>怎么判断光线继续往后传播时要和哪个盒子求交，不能每个格子都求一遍。有一个简单的思路是：如果光线往右上传播，就只看当前格子右边和上面的格子，判断光线与哪个格子有交点，再把光线移动一格。光栅化一条线:<a href="https://zhuanlan.zhihu.com/p/20213658">https://zhuanlan.zhihu.com/p/20213658</a>。</p>
+<p>加速效果：<br />一个格子（格子很稀疏），基本没有加速效果</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204609-qqu5bmx.png" alt="image">​</p>
+<p>格子太密，要做很多次光线和格子的求交，效率很低</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204615-miu4wws.png" alt="image">​</p>
+<p>需要找一个平衡</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204619-otjwusd.png" alt="image">​</p>
+<p>当几何物体在场景中分布比较均匀时，格子加速的效果比较好</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204624-l67m3mz.png" alt="image">​</p>
+<p>物体在场景中分布不均匀的时候，加速的效果不好</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204632-ohvjn97.png" alt="image">​</p>
+<h4 id="空间划分-Spatial-Partitions"><a href="#空间划分-Spatial-Partitions" class="headerlink" title="空间划分 Spatial Partitions"></a><strong>空间划分 Spatial Partitions</strong></h4><p>三种空间划分的结构：<br />Oct-Tree：8 叉树，把空间分成 8 个小方块，小方块继续分割，当格子里是空的，或物体足够少，就停止分割（平面是 4 叉树，即分成几份和维度有关系）</p>
+<p>KD-Tree：2 叉树，每次一个格子只砍一刀（水平竖直沿着坐标轴交替划分，基本保证划分的空间是均匀的）</p>
+<p>BSP-Tree：选一个方向砍一刀</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204649-cee1sju.png" alt="image">​</p>
+<h5 id="KD-Tree-预处理，建立加速结构"><a href="#KD-Tree-预处理，建立加速结构" class="headerlink" title="KD-Tree 预处理，建立加速结构"></a>KD-Tree 预处理，建立加速结构</h5><p>把空间划分为二叉树：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204658-s0bi29g.png" alt="image">​</p>
+<p>数据结构：</p>
+<p>中间节点需要存储：</p>
+<ul>
+<li>当前节点沿着哪个坐标轴划分</li>
+<li>划分在哪个位置（不一定划分在中间）</li>
+<li>2 个子节点</li>
+</ul>
+<p>叶子节点需要存储：</p>
+<ul>
+<li>和格子相交的几何物体</li>
+<li>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204705-wgytx09.png" alt="image">​</li>
+</ul>
+<p>判断光线和当前节点是不是有交点，如果有交点，继续判断和当前节点的子节点是不是有交点，一直到叶子节点，如果光线和叶子节点有交点，就求光线和叶子节点里面所有物体的交点；如果光线和当前节点没有交点就不需要继续往下找。<br />如果是求最近的交点就一边找一边记录最近的。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204714-42teely.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204718-bz5cned.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204722-s8wc8ov.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204726-qsnpo7h.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204736-aedp5yz.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204740-rxxh5k1.png" alt="image">​</p>
+<p>KD-Tree 的问题：</p>
+<p>1.不好判断几何对象（三角形）和盒子是否有交集</p>
+<p>2.1 个对象可能和不同的盒子都有交集，即同一个物体会被多个叶子节点存储</p>
+<h5 id="Object-Partitions-Bounding-Volumn-Hierarchy（BVH）"><a href="#Object-Partitions-Bounding-Volumn-Hierarchy（BVH）" class="headerlink" title="Object Partitions &amp; Bounding Volumn Hierarchy（BVH）"></a><strong>Object Partitions &amp; Bounding Volumn Hierarchy（BVH）</strong></h5><p>划分物体：把一个盒子里的三角形分为两部分，把两部分的三角形再重新求包围盒，然后每个包围盒继续划分，直到一个包围盒里包含的节点数够少就停止划分。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204752-vsj137t.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204802-dw9fna8.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204806-e07iour.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204812-1n2czdl.png" alt="image">​</p>
+<p>BVH 的好处是：一个物体只可能出现在一个盒子里，且无需求三角形和包围盒的交点，避免了 KD-Tree 的问题。</p>
+<p>但 BVH 也有一个问题：BVH 对空间的划分不是很严格的划分开，BoundingBox 可以相交，所以需要在划分几何形体的时候尽量减少重叠。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204818-9pfar63.png" alt="image">​</p>
+<p>总结构造 BVH 加速结构的过程：</p>
+<p>1.找到一个包围盒</p>
+<p>2.递归地把包围盒中的物体拆成两部分</p>
+<p>3.重新计算包围盒</p>
+<p>4.当包围盒的物体足够少的时候停止递归</p>
+<p>5.把物体信息存储在叶子节点里</p>
+<p><strong>怎么做节点的划分？</strong></p>
+<ul>
+<li><p>选一个维度</p>
+</li>
+<li><p>方式 1：每次选一个最长的轴把节点分成两半，使得节点最后分布比较均匀</p>
+</li>
+<li><p>方式 2：取中间的三角形的位置把节点分为两半，是的分割后节点的三角形数量差不多，让这个树形结构两边保持平衡（深度小，平均搜索次数小）</p>
+<ul>
+<li>取中间的三角形涉及到排序：所有三角形取重心，沿一个轴排个序，找到中间的那个三角形。（也可以不用排序找中位数，快速选择算法，可以达到 O(n)的时间复杂度）</li>
+</ul>
+</li>
+<li><p>如果场景是动态的，三角形数量会变化，就需要每次变化都重新算一下 BVH。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204830-voj0qcl.png" alt="image">​</p>
+</li>
+</ul>
+<p>BVH 的数据结构：<br>中间节点存储：</p>
+<ul>
+<li>包围盒</li>
+<li>子节点的指针</li>
+</ul>
+<p>叶子节点存储：</p>
+<ul>
+<li>包围盒</li>
+<li>实际的物体</li>
+<li>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204841-zo7ev8y.png" alt="image">​</li>
+</ul>
+<p>BVH 算法伪代码：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204847-q8eypig.png" alt="image">​</p>
+<p>空间划分和物体划分的区别：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204852-d3um7bh.png" alt="image">​</p>
+<p>以上是 Whitted-style 光线追踪的内容。</p>
+<h4 id="辐射度量学-Basic-radiometry"><a href="#辐射度量学-Basic-radiometry" class="headerlink" title="辐射度量学 Basic radiometry"></a>辐射度量学 Basic radiometry</h4><p>为什么要学习辐射度量学？</p>
+<p>之间的 Blinn-Phong 模型里提到光的强度 I 是怎么得到的，他的物理意义是什么？</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204902-rtdzgu2.png" alt="image">​</p>
+<p>Whitted-style 光线追踪给的结果是正确的吗？</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204923-ev1qs1a.png" alt="image">​</p>
+<p>辐射度量学给了一种精准定义光照的物理量的方法。</p>
+<p>辐射度量学学习的内容：<br>为如何描述光照定义了一系列的方法和单位</p>
+<p>给光定义了各种空间中的属性（仍然是基于几何光学，认为光线沿直线传播）：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204928-25ee893.png" alt="image">​</p>
+<ul>
+<li>Radiant flux，intensity，irradiance，radiance</li>
+</ul>
+<p>Radiant Energy and Flux</p>
+<p>Radiant energy 是电磁辐射的能量，单位是焦耳，用符号 Q 表示。</p>
+<p>Radiant Flux 是单位时间的能量。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204935-zhh77mo.png" alt="image">​</p>
+<p>另一种理解：单位时间通过感光平面的光子的数量</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204941-3lo9p1g.png" alt="image">​</p>
+<p>光源辐射的能量：radiant Intensity，定义了方向性和能量相关的概念</p>
+<p>物体表面接受到了多少能量：Irradiance</p>
+<p>光线传播中的能量怎么度量：Radiance</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204947-ch8k18p.png" alt="image">​</p>
+<p><strong>Radiant Intensity</strong></p>
+<p>单位立体角上点光源辐射出的单位能量</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204952-czaovps.png" alt="image">​</p>
+<p>立体角：<br>角度：弧长&#x2F;半径</p>
+<p>立体角：角度在三维的延伸。锥体对应的面积&#x2F;求面的面积。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204957-l8s8bw3.png" alt="image">​</p>
+<p>单位立体角（微分立体角）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205002-ikor5vv.png" alt="image">​</p>
+<p>对单位立体角做积分可以得到整个球面</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205007-7f67wjp.png" alt="image">​</p>
+<p>在辐射度量里面通常用 ω 表示方向，ω 可以用 θ 和 φ 来定义位置，并通过 sinθdθdφ 算出单位立体角。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205012-k9khbxq.png" alt="image">​</p>
+<p>对一个点光源，radiant intensity 是单位立体角的能量，把所有方向上的单位立体角的 intensity 积分，就可以得到它的 power，反之任何一个方向的 Intensity 就是 power&#x2F;4π。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205018-foe19s0.png" alt="image">​</p>
+<p>小知识：现代 LED 灯上标注的瓦数不是真实的，而是对应于白炽灯的瓦数，LED 实际瓦数更低。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205022-d5s39qt.png" alt="image">​</p>
 ]]></content>
       <categories>
         <category>图形学</category>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=LXGW+WenKai:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.20/fancybox/fancybox.css" integrity="sha256-RvRHGSuWAxZpXKV9lLDt2e+rZ+btzn48Wp4ueS3NZKs=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":400},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":true,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9AMesh%E7%BB%86%E5%88%86%E3%80%81%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9AMesh%E7%BB%86%E5%88%86%E3%80%81%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/","path":"第十二章：Mesh细分、光线追踪/","title":"第十二章：Mesh细分、光线追踪"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>第十二章：Mesh细分、光线追踪 | 我曾七次鄙视自己的灵魂</title>
+  
+
+
+
+
+
+
+
+
+
+    
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css" />
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">我曾七次鄙视自己的灵魂</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">38</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9AMesh%E7%BB%86%E5%88%86%E3%80%81%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA"><span class="nav-number">1.</span> <span class="nav-text">第十二章：Mesh细分、光线追踪</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E6%A0%BC%E6%93%8D%E4%BD%9C%EF%BC%9A%E7%BB%86%E5%88%86%E3%80%81%E7%AE%80%E5%8C%96%E3%80%81%E8%A7%84%E5%88%99%E5%8C%96"><span class="nav-number">1.0.1.</span> <span class="nav-text">网格操作：细分、简化、规则化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%86%E5%88%86%EF%BC%9A"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">细分：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mesh-%E7%AE%80%E5%8C%96"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">Mesh 简化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%80%E5%8C%96%E6%80%8E%E4%B9%88%E8%AE%A1%E7%AE%97%EF%BC%9F"><span class="nav-number">1.0.1.2.1.</span> <span class="nav-text">简化怎么计算？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA"><span class="nav-number">1.0.2.</span> <span class="nav-text">光线追踪</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A1%AC%E9%98%B4%E5%BD%B1-VS-%E8%BD%AF%E9%98%B4%E5%BD%B1"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">硬阴影 VS 软阴影</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="afetmin"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">afetmin</p>
+  <div class="site-description" itemprop="description">瞎写一气，乱编一通</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/afetmin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:kingpenguins@163.com" title="E-Mail → mailto:kingpenguins@163.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9AMesh%E7%BB%86%E5%88%86%E3%80%81%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="afetmin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我曾七次鄙视自己的灵魂">
+      <meta itemprop="description" content="瞎写一气，乱编一通">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="第十二章：Mesh细分、光线追踪 | 我曾七次鄙视自己的灵魂">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第十二章：Mesh细分、光线追踪
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-08-17 19:51:18" itemprop="dateCreated datePublished" datetime="2023-08-17T19:51:18+00:00">2023-08-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">图形学</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="第十二章：Mesh细分、光线追踪"><a href="#第十二章：Mesh细分、光线追踪" class="headerlink" title="第十二章：Mesh细分、光线追踪"></a>第十二章：Mesh细分、光线追踪</h1><h3 id="网格操作：细分、简化、规则化"><a href="#网格操作：细分、简化、规则化" class="headerlink" title="网格操作：细分、简化、规则化"></a>网格操作：细分、简化、规则化</h3><p>Mesh 细分（引入更多的三角形，让三角形的位置发生变化，使得原来的模型变得更光滑）</p>
+<p>Loop Subdivision（Loop 不是循环的意思，是发明者的 familyname 是 Loop）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203741-vrjiai4.png" alt="image">​</p>
+<p>1.把三角形分成更多的三角形：连接边的中点</p>
+<p>2.调整三角形的位置（把三角形的顶点区分成新的顶点和老的顶点，分别应用不同的规则改变顶点的位置）</p>
+<p>度：一个点相邻的边数。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203748-jh7r0of.png" alt="image">​</p>
+<p>新的顶点用四周的老顶点做加权平均</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203753-n5c1ivn.png" alt="image">​</p>
+<p>老的点用原本的点位置和相连三角形的顶点位置再加上度做加权平均。</p>
+<p>Catmull-Clark Subdivision（General Mesh）</p>
+<p>Loop Subdivision 只能处理三角形的情况，Catmull-Clark 可以处理任何面</p>
+<p>两个概念：</p>
+<p>1.非四边形面</p>
+<p>2.奇艺点（度不为 4 的点）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203759-efb66dj.png" alt="image">​</p>
+<h4 id="细分："><a href="#细分：" class="headerlink" title="细分："></a>细分：</h4><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203759-efb66dj.png" alt="image">​</p>
+<p>每一条边都选它的中点，每一个面都选中间的一个点。把边上的中点和面的中点连起来。</p>
+<p>只要是非四边形面，就一定会引入新的奇艺点。经过一次细分后，非四边形都会消失，也即不会再增加新的奇艺点。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203835-vn53o33.png" alt="image">​</p>
+<p>新的点考虑在面中心的点和边中心的点两种情况。</p>
+<p>老的点用它原本的位置和新的面中心点、边中心点做加权平均。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203840-gizxki9.png" alt="image">​</p>
+<h4 id="Mesh-简化"><a href="#Mesh-简化" class="headerlink" title="Mesh 简化"></a>Mesh 简化</h4><p>不同情况下选用不同复杂度的模型，比如离得远的时候用简化模型</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203915-3xed1sl.png" alt="image">​</p>
+<p>但是几何的层级结构不好处理，从 300 个网格到 3000 个网格时平滑过渡怎么处理</p>
+<h5 id="简化怎么计算？"><a href="#简化怎么计算？" class="headerlink" title="简化怎么计算？"></a>简化怎么计算？</h5><p>一种方法：边坍缩</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203915-3xed1sl.png" alt="image">​</p>
+<p>坍缩即找到一条边的两个顶点，捏成一个顶点，重点是找到要坍缩哪些点。</p>
+<p>用到一种叫做二次（平方）误差度量（Quadric Error Metrics）的方法</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203925-xsk1ax6.png" alt="image">​</p>
+<p>找到一个最优位置，使得它到原本相关联的各个面的平方和达到最小。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203930-kcxeki3.png" alt="image">​</p>
+<p>选坍缩的边的时候，给每个边一个分数表示坍缩后最优位置计算出来的平方和，选择平方和最小的边。但是坍缩一条边后，会影响其他相邻的边。所以需要一边求最小，一边动态更新任一点的值，需要用到优先队列（堆）的数据结构。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203937-ge7wdte.png" alt="image">​</p>
+<p>局部取最小，更新受影响的边的二次度量误差，再取最小，再更新…</p>
+<p>用局部最优解找全局最优解（贪心算法）</p>
+<p>越简单越接近平面的面坍缩得越多（计算出来的二次度量误差越小），比如下图中的小奶牛的面部坍缩的多，但是颈部坍缩的少</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203942-g2sko9n.png" alt="image">​</p>
+<h3 id="光线追踪"><a href="#光线追踪" class="headerlink" title="光线追踪"></a><strong>光线追踪</strong></h3><p>光栅化怎么绘制阴影？</p>
+<p>着色是一种局部行为，仅考虑自己、光源和摄像机，不考虑其他物体，因此无法解决阴影的问题</p>
+<p>于是发明了<strong>阴影映射（shadow mapping）。</strong></p>
+<ul>
+<li><p>图像空间算法</p>
+</li>
+<li><ul>
+<li>在生成阴影的时候不需要知道场景的几何信息</li>
+<li>会产生走样现象</li>
+</ul>
+</li>
+<li><p>主要思想</p>
+<ul>
+<li>如果一个点不在阴影里面，说明可以从照相机看到这个点，也可以从光源看到这个点</li>
+<li>如果一个点在阴影里，说明相机可以看到这个点，但是光看不到这个点</li>
+</ul>
+</li>
+</ul>
+<p>经典的 shadow mappding 只能处理点光源，这种阴影是非 0 即 1 的阴影，叫做硬阴影</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203952-o4xzfvk.png" alt="image">​</p>
+<p>从光源看向物体，生成一幅图，把不同位置看到的点的深度记录下来</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203958-kxh4gvc.png" alt="image">​</p>
+<p>再从摄像机出发看向场景。把看到的点投影回光源，就知道之前记录到深度图上的深度。把记录的深度图深度和眼睛看到的点到光源的实际深度比较，如果二者一致，说明这个点一定即可以被光源看到，又可以被摄像机看到。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204010-1qz8hu3.png" alt="image">​</p>
+<p>如果深度不一致，说明这个点被挡住了。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204014-gt5m7zx.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204019-nkz2q3v.png" alt="image">​</p>
+<p>shadowMapping 会有各种问题：<br>判断深度是否相等，需要判断两个浮点数相等，实际一定会有误差，有精度问题。</p>
+<p>另外 shadowMap 自己有分辨率，如果这个分辨率很低，但是渲染场景的分辨率很高，那么阴影信息是走样的</p>
+<p>另外要做两遍渲染，从光源看过去做一遍，从相机看过去做一遍，性能开销大</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204025-oor2frq.png" alt="image">​</p>
+<h4 id="硬阴影-VS-软阴影"><a href="#硬阴影-VS-软阴影" class="headerlink" title="硬阴影 VS 软阴影"></a>硬阴影 VS 软阴影</h4><p>硬阴影要么可见要么不可见，边缘很锐利</p>
+<p>软光源边缘是慢慢过渡的，越靠近物体根部阴影越硬</p>
+<p>软硬指的是物理上的半影。如果一个地方完全看不到光源，则这个地方叫做本影区域，如果看得到部分光源就叫做半影，如果完全能看到则没有阴影。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204032-beag1cr.png" alt="image">​</p>
+<p>阴影程度取决于可以看到多大的光源。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0%EF%BC%9ARay%20tracing%203%20%E5%85%89%E7%BA%BF%E4%BC%A0%E6%92%AD%E5%92%8C%E5%85%A8%E5%B1%80%E5%85%89%E7%85%A7/" rel="prev" title="第十五章：Ray tracing 3 光线传播和全局光照">
+                  <i class="fa fa-angle-left"></i> 第十五章：Ray tracing 3 光线传播和全局光照
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/%E7%AC%AC%E5%8D%81%E4%B9%9D%E7%AB%A0%EF%BC%9A%E7%9B%B8%E6%9C%BA%E3%80%81%E9%80%8F%E9%95%9C%E3%80%81%E5%85%89%E5%9C%BA/" rel="next" title="第十九章：相机、透镜、光场">
+                  第十九章：相机、透镜、光场 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">afetmin</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">43k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:38</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.20/fancybox/fancybox.umd.js" integrity="sha256-q8XkJ6dj5VwSvzI8+nATCHHQG+Xv/dAZBCgqmu93zOY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script><script src="/blog/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js"></script>
+
+  <script src="/blog/js/third-party/pace.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://afetmin.github.io/blog/%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9AMesh%E7%BB%86%E5%88%86%E3%80%81%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/"}</script>
+  <script src="/blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

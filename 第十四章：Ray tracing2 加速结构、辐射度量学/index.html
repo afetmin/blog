@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=LXGW+WenKai:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.20/fancybox/fancybox.css" integrity="sha256-RvRHGSuWAxZpXKV9lLDt2e+rZ+btzn48Wp4ueS3NZKs=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":400},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":true,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/blog/js/config.js"></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%EF%BC%9ARay%20tracing2%20%E5%8A%A0%E9%80%9F%E7%BB%93%E6%9E%84%E3%80%81%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%EF%BC%9ARay%20tracing2%20%E5%8A%A0%E9%80%9F%E7%BB%93%E6%9E%84%E3%80%81%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/","path":"第十四章：Ray tracing2 加速结构、辐射度量学/","title":"第十四章：Ray tracing2 加速结构、辐射度量学"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>第十四章：Ray tracing2 加速结构、辐射度量学 | 我曾七次鄙视自己的灵魂</title>
+  
+
+
+
+
+
+
+
+
+
+    
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css" />
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">我曾七次鄙视自己的灵魂</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">38</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%EF%BC%9ARay-tracing2-%E5%8A%A0%E9%80%9F%E7%BB%93%E6%9E%84%E3%80%81%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6"><span class="nav-number">1.</span> <span class="nav-text">第十四章：Ray tracing2 加速结构、辐射度量学</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AABB-%E5%8A%A0%E9%80%9F%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">AABB 加速光线追踪</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E5%88%92%E5%88%86-Spatial-Partitions"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">空间划分 Spatial Partitions</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#KD-Tree-%E9%A2%84%E5%A4%84%E7%90%86%EF%BC%8C%E5%BB%BA%E7%AB%8B%E5%8A%A0%E9%80%9F%E7%BB%93%E6%9E%84"><span class="nav-number">1.0.0.2.1.</span> <span class="nav-text">KD-Tree 预处理，建立加速结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Object-Partitions-Bounding-Volumn-Hierarchy%EF%BC%88BVH%EF%BC%89"><span class="nav-number">1.0.0.2.2.</span> <span class="nav-text">Object Partitions &amp; Bounding Volumn Hierarchy（BVH）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6-Basic-radiometry"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">辐射度量学 Basic radiometry</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="afetmin"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">afetmin</p>
+  <div class="site-description" itemprop="description">瞎写一气，乱编一通</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/afetmin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:kingpenguins@163.com" title="E-Mail → mailto:kingpenguins@163.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%EF%BC%9ARay%20tracing2%20%E5%8A%A0%E9%80%9F%E7%BB%93%E6%9E%84%E3%80%81%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="afetmin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我曾七次鄙视自己的灵魂">
+      <meta itemprop="description" content="瞎写一气，乱编一通">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="第十四章：Ray tracing2 加速结构、辐射度量学 | 我曾七次鄙视自己的灵魂">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第十四章：Ray tracing2 加速结构、辐射度量学
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-08-17 19:51:18" itemprop="dateCreated datePublished" datetime="2023-08-17T19:51:18+00:00">2023-08-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">图形学</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="第十四章：Ray-tracing2-加速结构、辐射度量学"><a href="#第十四章：Ray-tracing2-加速结构、辐射度量学" class="headerlink" title="第十四章：Ray tracing2 加速结构、辐射度量学"></a>第十四章：Ray tracing2 加速结构、辐射度量学</h1><p>Ray Tracing 2</p>
+<ul>
+<li>加速结构</li>
+<li>辐射度量学</li>
+</ul>
+<p>题外话：</p>
+<p>GTC（GPU Technology Conference）：</p>
+<ul>
+<li><p>DLSS（Deep Learning Super Sampling）2.0 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/116211994">https://zhuanlan.zhihu.com/p/116211994</a></p>
+<ul>
+<li>光栅化生成一个 1080p 的图，把它拉大成一张 4K 的图，结果不损失太多性能，同时看上去依然清晰</li>
+</ul>
+</li>
+<li><p>RTXGI（全局光照）<a target="_blank" rel="noopener" href="https://developer.nvidia.com/rtxgi">https://developer.nvidia.com/rtxgi</a></p>
+</li>
+</ul>
+<p>回顾上节课：</p>
+<ul>
+<li><p>为什么要做光线追踪</p>
+</li>
+<li><p>Whitted-style ray tracing（递归的光线追踪，光线弹射到多个地方，在每个交点计算着色和阴影）</p>
+</li>
+<li><p>光线和物体求交</p>
+<ul>
+<li>光线和隐式表面求交</li>
+<li>光线和三角形求交</li>
+</ul>
+</li>
+<li><p>AABB 包围盒</p>
+<ul>
+<li>理解包围盒：坐标轴上三对相对的平板</li>
+<li>光线和 AABB 盒求交</li>
+</ul>
+</li>
+</ul>
+<p>本节课：</p>
+<ul>
+<li><p>AABB 盒怎么加速光线追踪？</p>
+<ul>
+<li>均匀的网格（Uniform grids）</li>
+<li>空间划分 （spatial partitions）</li>
+</ul>
+</li>
+<li><p>辐射度量学</p>
+</li>
+</ul>
+<h4 id="AABB-加速光线追踪"><a href="#AABB-加速光线追踪" class="headerlink" title="AABB 加速光线追踪"></a>AABB 加速光线追踪</h4><p><strong>均匀的网格：Uniform Spatial Partitions（Grids）</strong></p>
+<p>先让光线和盒子求交，再进一步和盒子里的物体求交</p>
+<p>预处理：</p>
+<p>1.先找到场景里的一个包围盒</p>
+<p>2.把盒子分成一堆格子</p>
+<p>3.标记与物体表面相交的格子</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204558-karsvo5.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204602-xjyn2a4.png" alt="image">​</p>
+<p>怎么判断光线继续往后传播时要和哪个盒子求交，不能每个格子都求一遍。有一个简单的思路是：如果光线往右上传播，就只看当前格子右边和上面的格子，判断光线与哪个格子有交点，再把光线移动一格。光栅化一条线:<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/20213658">https://zhuanlan.zhihu.com/p/20213658</a>。</p>
+<p>加速效果：<br />一个格子（格子很稀疏），基本没有加速效果</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204609-qqu5bmx.png" alt="image">​</p>
+<p>格子太密，要做很多次光线和格子的求交，效率很低</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204615-miu4wws.png" alt="image">​</p>
+<p>需要找一个平衡</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204619-otjwusd.png" alt="image">​</p>
+<p>当几何物体在场景中分布比较均匀时，格子加速的效果比较好</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204624-l67m3mz.png" alt="image">​</p>
+<p>物体在场景中分布不均匀的时候，加速的效果不好</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204632-ohvjn97.png" alt="image">​</p>
+<h4 id="空间划分-Spatial-Partitions"><a href="#空间划分-Spatial-Partitions" class="headerlink" title="空间划分 Spatial Partitions"></a><strong>空间划分 Spatial Partitions</strong></h4><p>三种空间划分的结构：<br />Oct-Tree：8 叉树，把空间分成 8 个小方块，小方块继续分割，当格子里是空的，或物体足够少，就停止分割（平面是 4 叉树，即分成几份和维度有关系）</p>
+<p>KD-Tree：2 叉树，每次一个格子只砍一刀（水平竖直沿着坐标轴交替划分，基本保证划分的空间是均匀的）</p>
+<p>BSP-Tree：选一个方向砍一刀</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204649-cee1sju.png" alt="image">​</p>
+<h5 id="KD-Tree-预处理，建立加速结构"><a href="#KD-Tree-预处理，建立加速结构" class="headerlink" title="KD-Tree 预处理，建立加速结构"></a>KD-Tree 预处理，建立加速结构</h5><p>把空间划分为二叉树：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204658-s0bi29g.png" alt="image">​</p>
+<p>数据结构：</p>
+<p>中间节点需要存储：</p>
+<ul>
+<li>当前节点沿着哪个坐标轴划分</li>
+<li>划分在哪个位置（不一定划分在中间）</li>
+<li>2 个子节点</li>
+</ul>
+<p>叶子节点需要存储：</p>
+<ul>
+<li>和格子相交的几何物体</li>
+<li>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204705-wgytx09.png" alt="image">​</li>
+</ul>
+<p>判断光线和当前节点是不是有交点，如果有交点，继续判断和当前节点的子节点是不是有交点，一直到叶子节点，如果光线和叶子节点有交点，就求光线和叶子节点里面所有物体的交点；如果光线和当前节点没有交点就不需要继续往下找。<br />如果是求最近的交点就一边找一边记录最近的。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204714-42teely.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204718-bz5cned.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204722-s8wc8ov.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204726-qsnpo7h.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204736-aedp5yz.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204740-rxxh5k1.png" alt="image">​</p>
+<p>KD-Tree 的问题：</p>
+<p>1.不好判断几何对象（三角形）和盒子是否有交集</p>
+<p>2.1 个对象可能和不同的盒子都有交集，即同一个物体会被多个叶子节点存储</p>
+<h5 id="Object-Partitions-Bounding-Volumn-Hierarchy（BVH）"><a href="#Object-Partitions-Bounding-Volumn-Hierarchy（BVH）" class="headerlink" title="Object Partitions &amp; Bounding Volumn Hierarchy（BVH）"></a><strong>Object Partitions &amp; Bounding Volumn Hierarchy（BVH）</strong></h5><p>划分物体：把一个盒子里的三角形分为两部分，把两部分的三角形再重新求包围盒，然后每个包围盒继续划分，直到一个包围盒里包含的节点数够少就停止划分。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204752-vsj137t.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204802-dw9fna8.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204806-e07iour.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204812-1n2czdl.png" alt="image">​</p>
+<p>BVH 的好处是：一个物体只可能出现在一个盒子里，且无需求三角形和包围盒的交点，避免了 KD-Tree 的问题。</p>
+<p>但 BVH 也有一个问题：BVH 对空间的划分不是很严格的划分开，BoundingBox 可以相交，所以需要在划分几何形体的时候尽量减少重叠。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204818-9pfar63.png" alt="image">​</p>
+<p>总结构造 BVH 加速结构的过程：</p>
+<p>1.找到一个包围盒</p>
+<p>2.递归地把包围盒中的物体拆成两部分</p>
+<p>3.重新计算包围盒</p>
+<p>4.当包围盒的物体足够少的时候停止递归</p>
+<p>5.把物体信息存储在叶子节点里</p>
+<p><strong>怎么做节点的划分？</strong></p>
+<ul>
+<li><p>选一个维度</p>
+</li>
+<li><p>方式 1：每次选一个最长的轴把节点分成两半，使得节点最后分布比较均匀</p>
+</li>
+<li><p>方式 2：取中间的三角形的位置把节点分为两半，是的分割后节点的三角形数量差不多，让这个树形结构两边保持平衡（深度小，平均搜索次数小）</p>
+<ul>
+<li>取中间的三角形涉及到排序：所有三角形取重心，沿一个轴排个序，找到中间的那个三角形。（也可以不用排序找中位数，快速选择算法，可以达到 O(n)的时间复杂度）</li>
+</ul>
+</li>
+<li><p>如果场景是动态的，三角形数量会变化，就需要每次变化都重新算一下 BVH。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204830-voj0qcl.png" alt="image">​</p>
+</li>
+</ul>
+<p>BVH 的数据结构：<br>中间节点存储：</p>
+<ul>
+<li>包围盒</li>
+<li>子节点的指针</li>
+</ul>
+<p>叶子节点存储：</p>
+<ul>
+<li>包围盒</li>
+<li>实际的物体</li>
+<li>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204841-zo7ev8y.png" alt="image">​</li>
+</ul>
+<p>BVH 算法伪代码：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204847-q8eypig.png" alt="image">​</p>
+<p>空间划分和物体划分的区别：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204852-d3um7bh.png" alt="image">​</p>
+<p>以上是 Whitted-style 光线追踪的内容。</p>
+<h4 id="辐射度量学-Basic-radiometry"><a href="#辐射度量学-Basic-radiometry" class="headerlink" title="辐射度量学 Basic radiometry"></a>辐射度量学 Basic radiometry</h4><p>为什么要学习辐射度量学？</p>
+<p>之间的 Blinn-Phong 模型里提到光的强度 I 是怎么得到的，他的物理意义是什么？</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204902-rtdzgu2.png" alt="image">​</p>
+<p>Whitted-style 光线追踪给的结果是正确的吗？</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204923-ev1qs1a.png" alt="image">​</p>
+<p>辐射度量学给了一种精准定义光照的物理量的方法。</p>
+<p>辐射度量学学习的内容：<br>为如何描述光照定义了一系列的方法和单位</p>
+<p>给光定义了各种空间中的属性（仍然是基于几何光学，认为光线沿直线传播）：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204928-25ee893.png" alt="image">​</p>
+<ul>
+<li>Radiant flux，intensity，irradiance，radiance</li>
+</ul>
+<p>Radiant Energy and Flux</p>
+<p>Radiant energy 是电磁辐射的能量，单位是焦耳，用符号 Q 表示。</p>
+<p>Radiant Flux 是单位时间的能量。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204935-zhh77mo.png" alt="image">​</p>
+<p>另一种理解：单位时间通过感光平面的光子的数量</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204941-3lo9p1g.png" alt="image">​</p>
+<p>光源辐射的能量：radiant Intensity，定义了方向性和能量相关的概念</p>
+<p>物体表面接受到了多少能量：Irradiance</p>
+<p>光线传播中的能量怎么度量：Radiance</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204947-ch8k18p.png" alt="image">​</p>
+<p><strong>Radiant Intensity</strong></p>
+<p>单位立体角上点光源辐射出的单位能量</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204952-czaovps.png" alt="image">​</p>
+<p>立体角：<br>角度：弧长&#x2F;半径</p>
+<p>立体角：角度在三维的延伸。锥体对应的面积&#x2F;求面的面积。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204957-l8s8bw3.png" alt="image">​</p>
+<p>单位立体角（微分立体角）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205002-ikor5vv.png" alt="image">​</p>
+<p>对单位立体角做积分可以得到整个球面</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205007-7f67wjp.png" alt="image">​</p>
+<p>在辐射度量里面通常用 ω 表示方向，ω 可以用 θ 和 φ 来定义位置，并通过 sinθdθdφ 算出单位立体角。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205012-k9khbxq.png" alt="image">​</p>
+<p>对一个点光源，radiant intensity 是单位立体角的能量，把所有方向上的单位立体角的 intensity 积分，就可以得到它的 power，反之任何一个方向的 Intensity 就是 power&#x2F;4π。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205018-foe19s0.png" alt="image">​</p>
+<p>小知识：现代 LED 灯上标注的瓦数不是真实的，而是对应于白炽灯的瓦数，LED 实际瓦数更低。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205022-d5s39qt.png" alt="image">​</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E7%AC%AC%E5%8D%81%E7%AB%A0%EF%BC%9A%E7%BA%B9%E7%90%86%E5%BA%94%E7%94%A8%E3%80%81%E5%87%A0%E4%BD%95/" rel="prev" title="第十章：纹理应用、几何">
+                  <i class="fa fa-angle-left"></i> 第十章：纹理应用、几何
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0%EF%BC%9ARay%20tracing4%20%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E8%B7%AF%E5%BE%84%E8%BF%BD%E8%B8%AA/" rel="next" title="第十六章：Ray tracing4 蒙特卡洛路径追踪">
+                  第十六章：Ray tracing4 蒙特卡洛路径追踪 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">afetmin</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">43k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:38</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.20/fancybox/fancybox.umd.js" integrity="sha256-q8XkJ6dj5VwSvzI8+nATCHHQG+Xv/dAZBCgqmu93zOY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script><script src="/blog/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js"></script>
+
+  <script src="/blog/js/third-party/pace.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://afetmin.github.io/blog/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%EF%BC%9ARay%20tracing2%20%E5%8A%A0%E9%80%9F%E7%BB%93%E6%9E%84%E3%80%81%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/"}</script>
+  <script src="/blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>
