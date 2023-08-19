@@ -2975,4 +2975,25 @@
         <category>算法</category>
       </categories>
   </entry>
+  <entry>
+    <title>齐次坐标到底是什么</title>
+    <url>/blog/%E9%BD%90%E6%AC%A1%E5%9D%90%E6%A0%87%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88/</url>
+    <content><![CDATA[<h1 id="齐次坐标"><a href="#齐次坐标" class="headerlink" title="齐次坐标"></a>齐次坐标</h1><p>齐次坐标可以用来区分 (X,Y) 到底是个向量还是个坐标，它不是一个新的坐标系，不是说把二维的变成三维的，它是一种记法。</p>
+<p>（x,y,0) 表示一个向量， (x,y,1)表示一个坐标。</p>
+<p><strong>点+点&#x3D;点，点加向量&#x3D;点，向量+向量&#x3D;向量，点-点&#x3D;向量。</strong></p>
+<p>引入齐次坐标是为了在发生变换时，其几何意义依然准确。</p>
+<p><strong>一个向量平移之后，其结果仍然是这个向量</strong>，<strong>而一个点平移之后，其值就会发生变化但仍然是一个点</strong>。</p>
+<p>对于平移来说：</p>
+<p>$$<br>\left(\begin{array}{cccc}<br>1 &amp; 0 &amp; 0 &amp; t_{x} \\<br>0 &amp; 1 &amp; 0 &amp; t_{y} \\<br>0 &amp; 0 &amp; 1 &amp; t_{z} \\<br>0 &amp; 0 &amp; 0 &amp; 1<br>\end{array}\right) \cdot\left(\begin{array}{c}<br>x_{0} \\<br>y_{0} \\<br>z_{0} \\<br>w_{0}<br>\end{array}\right)&#x3D;\left(\begin{array}{c}<br>x_{0}+w_{0} * t_{x} \\<br>y_{0}+w_{0} * t_{y} \\<br>z_{0}+w_{0} * t_{z} \\<br>w_{0}<br>\end{array}\right)<br>$$</p>
+<p>如果$w_{0}$是0，那这个结果就是$\left(x_{0}, y_{0}, z_{0}\right)$，与向量的定义相符。</p>
+<p>如果$w_{0}$是1，结果仍是一个点，与点的定义相符。</p>
+<p>‍</p>
+<p>对于平移、旋转、缩放这3个最常见的仿射变换，平移变换只对点有意义，因为向量没有位置概念。</p>
+<p>而旋转和缩放对于向量和点都有意义。</p>
+<p>‍</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
 </search>
