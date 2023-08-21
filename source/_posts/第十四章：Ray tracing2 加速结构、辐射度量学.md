@@ -5,8 +5,6 @@ categories: 图形学
 ---
 
 
-# 第十四章：Ray tracing2 加速结构、辐射度量学
-
 Ray Tracing 2
 
 - 加速结构

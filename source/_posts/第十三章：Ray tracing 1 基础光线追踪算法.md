@@ -4,8 +4,6 @@ date: 2023-08-17 19:51:18
 categories: 图形学
 ---
 
-# 第十三章：Ray tracing 1 基础光线追踪算法
-
 ### Ray Tracing（光线追踪）
 
 光栅化的问题

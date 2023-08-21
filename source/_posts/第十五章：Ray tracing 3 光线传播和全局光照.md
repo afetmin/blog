@@ -5,8 +5,6 @@ categories: 图形学
 ---
 
 
-# 第十五章：Ray tracing 3 光线传播和全局光照
-
 RayTracing 3 光线传播和全局光照
 
 回顾上节课

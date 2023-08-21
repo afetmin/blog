@@ -4,8 +4,6 @@ date: 2023-08-17 19:51:18
 categories: 图形学
 ---
 
-# 第十六章：Ray tracing4 蒙特卡洛路径追踪
-
 Ray tracing4 蒙特卡洛路径追踪
 
 回顾上节课

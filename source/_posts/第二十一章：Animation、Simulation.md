@@ -4,8 +4,6 @@ date: 2023-08-17 19:51:18
 categories: 图形学
 ---
 
-# 第二十一章：Animation、Simulation
-
 Animation/Simulation
 
 计算机动画介绍：
