@@ -1,8 +1,7 @@
 ---
 title: React “Key”
 date: 2023-08-24 06:51:02
-categories:
-tags:
+categories: React
 ---
 
 ### 什么是key属性以及为什么React需要它？
