@@ -26,14 +26,14 @@
 
 
 
-<link rel="canonical" href="https://afetmin.github.io/blog/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">
+<link rel="canonical" href="https://afetmin.github.io/blog/React-Hooks/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"categories/图形学/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/React-Hooks/","path":"React-Hooks/","title":"React Hooks"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>分类: 图形学 | 我曾七次鄙视自己的灵魂</title>
+<title>React Hooks | 我曾七次鄙视自己的灵魂</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false}</script>
@@ -128,7 +128,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -141,6 +141,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#useState"><span class="nav-number">1.</span> <span class="nav-text">useState</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E6%9B%B4%E6%96%B0"><span class="nav-number">1.1.</span> <span class="nav-text">函数式更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%83%B0%E6%80%A7%E5%88%9D%E5%A7%8B-state"><span class="nav-number">1.2.</span> <span class="nav-text">惰性初始 state</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useEffect"><span class="nav-number">2.</span> <span class="nav-text">useEffect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useReducer"><span class="nav-number">3.</span> <span class="nav-text">useReducer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useCallback"><span class="nav-number">4.</span> <span class="nav-text">useCallback</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useMemo"><span class="nav-number">5.</span> <span class="nav-text">useMemo</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -193,240 +194,188 @@
 
     
         <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/React-memo-lazy/" rel="bookmark">
+        <time class="popular-posts-time">2021-09-09</time>
+        <br>
+      React memo lazy
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/React-element%EF%BC%8Cchildren%EF%BC%8Cparents-and-re-renders/" rel="bookmark">
+        <time class="popular-posts-time">2023-08-22</time>
+        <br>
+      React element，children，parents and re-renders
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/React-%E2%80%9CKey%E2%80%9D/" rel="bookmark">
+        <time class="popular-posts-time">2023-08-24</time>
+        <br>
+      React “Key”
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
         </div>
   </aside>
 
 
     </div>
 
-    <div class="main-inner category posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
+
+
+<div class="post-block">
   
   
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h1 class="collection-header">图形学
-          <small>分类</small>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/React-Hooks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="afetmin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我曾七次鄙视自己的灵魂">
+      <meta itemprop="description" content="瞎写一气，乱编一通">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="React Hooks | 我曾七次鄙视自己的灵魂">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React Hooks
         </h1>
-      </div>
 
-      
-    <div class="collection-year">
-      <span class="collection-header">2023</span>
-    </div>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-08-21T19:45:54+00:00"
-              content="2023-08-21">
-          08-21
-        </time>
-      </div>
+      <time title="创建时间：2023-08-25 19:43:00" itemprop="dateCreated datePublished" datetime="2023-08-25T19:43:00+00:00">2023-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
+        </span>
+    </span>
 
-      <div class="post-title">
-        <a class="post-title-link" href="/blog/%E6%9D%90%E8%B4%A8%E8%B4%B4%E5%9B%BE%E5%B1%9E%E6%80%A7%E4%BB%8B%E7%BB%8D/" itemprop="url">
-          <span itemprop="name">材质贴图属性介绍</span>
-        </a>
-      </div>
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>477</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
 
-      
-    </header>
-  </article>
+        </div>
+      </header>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-08-19T08:00:39+00:00"
-              content="2023-08-19">
-          08-19
-        </time>
-      </div>
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h2><p>返回一个 state，和一个更新 state 的函数</p>
+<h3 id="函数式更新"><a href="#函数式更新" class="headerlink" title="函数式更新"></a>函数式更新</h3><p>如果新的 state 需要通过先前的 state 计算得出，可以传递一个函数给 setState，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">setState</span>(<span class="function">(<span class="params">prev</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> prev + <span class="number">1</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
-      <div class="post-title">
-        <a class="post-title-link" href="/blog/%E9%BD%90%E6%AC%A1%E5%9D%90%E6%A0%87%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88/" itemprop="url">
-          <span itemprop="name">齐次坐标到底是什么</span>
-        </a>
-      </div>
+<h3 id="惰性初始-state"><a href="#惰性初始-state" class="headerlink" title="惰性初始 state"></a>惰性初始 state</h3><p>如果初始 state 需要通过复杂计算获得，则可以传入一个函数，在函数中计算并返回初始的 state，此函数只在<strong>初始渲染</strong>时被调用：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> [state, setState] = <span class="title function_">useState</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> initialState = <span class="title function_">someExpensiveComputation</span>(props);</span><br><span class="line">  <span class="keyword">return</span> initialState;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
-      
-    </header>
-  </article>
+<p><strong>第一个常见的使用场景是当创建初始 state 很昂贵时：</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Table</span>(<span class="params">props</span>) &#123;</span><br><span class="line">  <span class="comment">// ⚠️ createRows() 每次渲染都会被调用</span></span><br><span class="line">  <span class="keyword">const</span> [rows, setRows] = <span class="title function_">useState</span>(<span class="title function_">createRows</span>(props.<span class="property">count</span>));</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Table</span>(<span class="params">props</span>) &#123;</span><br><span class="line">  <span class="comment">// ✅ createRows() 只会被调用一次</span></span><br><span class="line">  <span class="keyword">const</span> [rows, setRows] = <span class="title function_">useState</span>(<span class="function">() =&gt;</span> <span class="title function_">createRows</span>(props.<span class="property">count</span>));</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-08-17T19:51:18+00:00"
-              content="2023-08-17">
-          08-17
-        </time>
-      </div>
+<h2 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a>useEffect</h2><p>使用 <code>useEffect</code> 完成副作用操作。赋值给 <code>useEffect</code> 的函数会在<strong>组件渲染到屏幕之后</strong>执行。<br />如果想执行只运行一次的 effect（仅在组件挂载和卸载时执行），可以传递一个空数组（<code>[]</code>）作为第二个参数。这就告诉 React 你的 effect 不依赖于 props 或 state 中的任何值，所以它永远都不需要重复执行。</p>
+<h2 id="useReducer"><a href="#useReducer" class="headerlink" title="useReducer"></a>useReducer</h2><p><a href=""><code>useState</code></a> 的替代方案。它接收一个形如 <code>(state, action) =&gt; newState</code> 的 reducer，并返回当前的 state 以及与其配套的 <code>dispatch</code> 方法。在某些场景下，<code>useReducer</code> 会比 <code>useState</code> 更适用，例如 state 逻辑较复杂且包含多个子值，或者下一个 state 依赖于之前的 state 等。</p>
+<h2 id="useCallback"><a href="#useCallback" class="headerlink" title="useCallback"></a>useCallback</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> memoizedCallback = <span class="title function_">useCallback</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">doSomething</span>(a, b);</span><br><span class="line">&#125;, [a, b]);</span><br></pre></td></tr></table></figure>
 
-      <div class="post-title">
-        <a class="post-title-link" href="/blog/%E7%AC%AC%E4%BA%8C%E5%8D%81%E4%B8%80%E7%AB%A0%EF%BC%9AAnimation%E3%80%81Simulation/" itemprop="url">
-          <span itemprop="name">第二十一章：Animation、Simulation</span>
-        </a>
-      </div>
+<p>返回一个 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Memoization">memoized</a> 回调函数。该回调函数仅在某个依赖项改变时才会更新。</p>
+<h2 id="useMemo"><a href="#useMemo" class="headerlink" title="useMemo"></a>useMemo</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> memoizedValue = <span class="title function_">useMemo</span>(<span class="function">() =&gt;</span> <span class="title function_">computeExpensiveValue</span>(a, b), [a, b]);</span><br></pre></td></tr></table></figure>
 
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-08-17T19:51:18+00:00"
-              content="2023-08-17">
-          08-17
-        </time>
-      </div>
-
-      <div class="post-title">
-        <a class="post-title-link" href="/blog/%E7%AC%AC%E4%BA%8C%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9A%E5%8A%A8%E7%94%BB%E5%92%8C%E4%BB%BF%E7%9C%9F/" itemprop="url">
-          <span itemprop="name">第二十二章：动画和仿真</span>
-        </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-08-17T19:51:18+00:00"
-              content="2023-08-17">
-          08-17
-        </time>
-      </div>
-
-      <div class="post-title">
-        <a class="post-title-link" href="/blog/%E7%AC%AC%E4%BA%8C%E5%8D%81%E7%AB%A0%EF%BC%9A%E9%A2%9C%E8%89%B2%E5%92%8C%E6%84%9F%E7%9F%A5/" itemprop="url">
-          <span itemprop="name">第二十章：颜色和感知</span>
-        </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-08-17T19:51:18+00:00"
-              content="2023-08-17">
-          08-17
-        </time>
-      </div>
-
-      <div class="post-title">
-        <a class="post-title-link" href="/blog/%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%EF%BC%9A%E6%98%BE%E7%A4%BA%E5%87%A0%E4%BD%95%EF%BC%8C%E6%9B%B2%E7%BA%BF%E3%80%81%E6%9B%B2%E9%9D%A2/" itemprop="url">
-          <span itemprop="name">第十一章：显示几何，曲线、曲面</span>
-        </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-08-17T19:51:18+00:00"
-              content="2023-08-17">
-          08-17
-        </time>
-      </div>
-
-      <div class="post-title">
-        <a class="post-title-link" href="/blog/%E7%AC%AC%E5%8D%81%E4%B8%83%E7%AB%A0%EF%BC%9A%E6%9D%90%E8%B4%A8%E4%B8%8E%E5%A4%96%E8%A7%82/" itemprop="url">
-          <span itemprop="name">第十七章：材质与外观</span>
-        </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-08-17T19:51:18+00:00"
-              content="2023-08-17">
-          08-17
-        </time>
-      </div>
-
-      <div class="post-title">
-        <a class="post-title-link" href="/blog/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%EF%BC%9ARay%20tracing%201%20%E5%9F%BA%E7%A1%80%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA%E7%AE%97%E6%B3%95/" itemprop="url">
-          <span itemprop="name">第十三章：Ray tracing 1 基础光线追踪算法</span>
-        </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-08-17T19:51:18+00:00"
-              content="2023-08-17">
-          08-17
-        </time>
-      </div>
-
-      <div class="post-title">
-        <a class="post-title-link" href="/blog/%E7%AC%AC%E5%8D%81%E4%B9%9D%E7%AB%A0%EF%BC%9A%E7%9B%B8%E6%9C%BA%E3%80%81%E9%80%8F%E9%95%9C%E3%80%81%E5%85%89%E5%9C%BA/" itemprop="url">
-          <span itemprop="name">第十九章：相机、透镜、光场</span>
-        </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-08-17T19:51:18+00:00"
-              content="2023-08-17">
-          08-17
-        </time>
-      </div>
-
-      <div class="post-title">
-        <a class="post-title-link" href="/blog/%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9AMesh%E7%BB%86%E5%88%86%E3%80%81%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/" itemprop="url">
-          <span itemprop="name">第十二章：Mesh细分、光线追踪</span>
-        </a>
-      </div>
-
-      
-    </header>
-  </article>
+<p>返回一个 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Memoization">memoized</a> 值。把“创建”函数和依赖项数组作为参数传入 <code>useMemo</code>，它仅会在某个依赖项改变时才重新计算 memoized 值。这种优化有助于避免在每次渲染时都进行高开销的计算。</p>
 
     </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/blog/images/wechatpay.jpg" alt="afetmin 微信">
+        <span>微信</span>
+      </div>
+
   </div>
-  
-  
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/blog/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/page/2/">2</a><a class="page-number" href="/blog/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/page/3/">3</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/blog/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+</div>
 
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/Higher-order-component/" rel="prev" title="Higher-order component">
+                  <i class="fa fa-angle-left"></i> Higher-order component
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
 </div>
   </main>
 
@@ -519,7 +468,7 @@
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
-  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://afetmin.github.io/blog/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"}</script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://afetmin.github.io/blog/React-Hooks/"}</script>
   <script src="/blog/js/third-party/quicklink.js"></script>
 <script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
 <script src="/blog/js/third-party/comments/utterances.js"></script>
