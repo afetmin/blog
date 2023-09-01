@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=LXGW+WenKai:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.20/fancybox/fancybox.css" integrity="sha256-RvRHGSuWAxZpXKV9lLDt2e+rZ+btzn48Wp4ueS3NZKs=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":400},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/blog/js/config.js"></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/post/pre-end-performance-optimization-method-2fem1c">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/post/pre-end-performance-optimization-method-2fem1c.html","path":"/post/pre-end-performance-optimization-method-2fem1c.html","title":"前端性能优化方法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>前端性能优化方法 | 花满渚，酒满瓯</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+
+    
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css" />
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">花满渚，酒满瓯</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">6</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">51</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">前端性能优化方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">2.</span> <span class="nav-text">最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%89%E9%9C%80%E5%81%9A%E4%BA%8B-%E4%B8%8D%E6%8F%90%E5%89%8D%E5%81%9A"><span class="nav-number">2.1.</span> <span class="nav-text">按需做事-不提前做</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#V8-%E4%BC%98%E5%8C%96%E6%9C%BA%E5%88%B6"><span class="nav-number">2.1.1.</span> <span class="nav-text">V8 优化机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90%E4%BC%98%E5%8C%96"><span class="nav-number">2.1.2.</span> <span class="nav-text">函数解析优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E4%BC%98%E5%8C%96"><span class="nav-number">2.1.3.</span> <span class="nav-text">对象优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML-%E4%BC%98%E5%8C%96"><span class="nav-number">2.1.4.</span> <span class="nav-text">HTML 优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS-%E4%BC%98%E5%8C%96"><span class="nav-number">2.1.5.</span> <span class="nav-text">CSS 优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-%E6%9E%84%E5%BB%BA%E4%BC%98%E5%8C%96"><span class="nav-number">2.2.</span> <span class="nav-text">webpack 构建优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tree-shaking"><span class="nav-number">2.2.1.</span> <span class="nav-text">Tree-shaking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS-%E5%8E%8B%E7%BC%A9"><span class="nav-number">2.2.2.</span> <span class="nav-text">JS 压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%8F%90%E5%8D%87%EF%BC%88scope-hoisting%EF%BC%89"><span class="nav-number">2.2.3.</span> <span class="nav-text">作用域提升（scope hoisting）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Babel7-%E4%BC%98%E5%8C%96%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.4.</span> <span class="nav-text">Babel7 优化配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Webpack-%E4%BE%9D%E8%B5%96%E4%BC%98%E5%8C%96"><span class="nav-number">2.2.5.</span> <span class="nav-text">Webpack 依赖优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#noParse"><span class="nav-number">2.2.5.1.</span> <span class="nav-text">noParse</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DllPlugin-%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93"><span class="nav-number">2.2.5.2.</span> <span class="nav-text">DllPlugin- 动态链接库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%8B%86%E5%88%86-%EF%BC%88code-splitting"><span class="nav-number">2.2.6.</span> <span class="nav-text">代码拆分 （code splitting)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E-webpack-%E7%9A%84%E8%B5%84%E6%BA%90%E5%8E%8B%E7%BC%A9%EF%BC%88minification%EF%BC%89"><span class="nav-number">2.2.7.</span> <span class="nav-text">基于 webpack 的资源压缩（minification）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E-webpack-%E7%9A%84%E8%B5%84%E6%BA%90%E6%8C%81%E4%B9%85%E5%8C%96%E7%BC%93%E5%AD%98"><span class="nav-number">2.2.8.</span> <span class="nav-text">基于 webpack 的资源持久化缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E-webpack-%E5%BA%94%E7%94%A8%E5%A4%A7%E5%B0%8F%E7%9B%91%E6%B5%8B%E4%B8%8E%E5%88%86%E6%9E%90"><span class="nav-number">2.2.9.</span> <span class="nav-text">基于 webpack 应用大小监测与分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD"><span class="nav-number">2.2.10.</span> <span class="nav-text">React 按需加载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%A0%E8%BE%93%E4%BC%98%E5%8C%96"><span class="nav-number">2.3.</span> <span class="nav-text">传输优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gzip"><span class="nav-number">2.3.1.</span> <span class="nav-text">Gzip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Keep-Alive"><span class="nav-number">2.3.2.</span> <span class="nav-text">Keep Alive</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Http-%E7%BC%93%E5%AD%98"><span class="nav-number">2.3.3.</span> <span class="nav-text">Http 缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service-Workers"><span class="nav-number">2.3.4.</span> <span class="nav-text">Service Workers</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">2.3.4.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-number">2.3.4.2.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Http2"><span class="nav-number">2.3.5.</span> <span class="nav-text">Http2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93-SSR"><span class="nav-number">2.4.</span> <span class="nav-text">服务端渲染 SSR</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%94%A8-SSR"><span class="nav-number">2.4.0.1.</span> <span class="nav-text">什么时候用 SSR</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="afetmin"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">afetmin</p>
+  <div class="site-description" itemprop="description">瞎写一气，乱编一通</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/afetmin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:kingpenguins@163.com" title="E-Mail → mailto:kingpenguins@163.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/post/pre-end-performance-optimization-method-2fem1c.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="afetmin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="花满渚，酒满瓯">
+      <meta itemprop="description" content="瞎写一气，乱编一通">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="前端性能优化方法 | 花满渚，酒满瓯">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端性能优化方法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-03-05 11:27:58" itemprop="dateCreated datePublished" datetime="2023-03-05T11:27:58+00:00">2023-03-05</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="前端性能优化方法"><a href="#前端性能优化方法" class="headerlink" title="前端性能优化方法"></a>前端性能优化方法</h1><h1 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h1><h2 id="按需做事-不提前做"><a href="#按需做事-不提前做" class="headerlink" title="按需做事-不提前做"></a>按需做事-不提前做</h2><p>按需做事，即在代码中计算和取值应该在需要的地方进行，而不是提前进行。这是因为如果在逻辑判断之前就进行计算，而后面的逻辑判断没有进入，那么这段代码就会白白消耗时间，从而降低了代码的效率。因此，按需做事是一种更加高效的编程方式。</p>
+<p>比如这里：<a target="_blank" rel="noopener" href="https://gitlab.qunhequnhe.com/tool-frontend/custom/dw-kaf-plugin/-/blob/master/src/app/view/Document/ViewPlan/ElementList/index.tsx#L323">https://gitlab.qunhequnhe.com/tool-frontend/custom/dw-kaf-plugin/-/blob/master/src/app/view/Document/ViewPlan/ElementList/index.tsx#L323</a></p>
+<p>​<img data-src="http://127.0.0.1:5709/assets/image-20230410070140-q8wol3n.png" alt="image">​</p>
+<p>这个信息是给教学模式用的，却在每个 state 更新时拿了 body 的 clientWidth，强制触发了浏览器的重排。</p>
+<p>在函数中，有时我们会提前获取或计算所有属性，但是如果后面的逻辑判断没有用到这些属性，那么这部分计算就是无效的，浪费了时间和资源。因此，我们应该尽可能地按需获取和计算属性，以提高代码的效率和性能。此外，我们还可以通过使用缓存等技术来避免重复计算，从而进一步提高代码的效率。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> a = obj.<span class="property">a</span>;</span><br><span class="line"><span class="keyword">const</span> b = <span class="title function_">slowFn</span>();</span><br><span class="line"><span class="keyword">if</span> (xxxx) &#123;</span><br><span class="line">  <span class="keyword">return</span> a;</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (xxx) &#123;</span><br><span class="line">  <span class="keyword">return</span> b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="V8-优化机制"><a href="#V8-优化机制" class="headerlink" title="V8 优化机制"></a>V8 优化机制</h3><ol>
+<li>脚本流 边加载边解析</li>
+<li>字节码缓存 多个页面使用相同解析后的字节码会缓存</li>
+<li>懒解析 函数不用会先不解析</li>
+</ol>
+<h3 id="函数解析优化"><a href="#函数解析优化" class="headerlink" title="函数解析优化"></a>函数解析优化</h3><p>懒解析 vs 饥饿解析</p>
+<p>饥饿解析 使用 一对 ‘()’ .</p>
+<h3 id="对象优化"><a href="#对象优化" class="headerlink" title="对象优化"></a>对象优化</h3><ol>
+<li>以相同顺序初始化对象成员，避免隐藏类的调整</li>
+<li>实例化后避免添加新的属性  像这样 person.age &#x3D; 17</li>
+<li>尽量使用 Array 代替 array-like 对象</li>
+<li>避免读取超过数组的长度</li>
+<li>避免元素类型的转换</li>
+</ol>
+<h3 id="HTML-优化"><a href="#HTML-优化" class="headerlink" title="HTML 优化"></a>HTML 优化</h3><ol>
+<li>减少 iframes 的使用</li>
+<li>压缩空白符</li>
+<li>避免节点深层级嵌套</li>
+<li>CSS&amp;Javascript 尽量使用外链</li>
+<li>删除元素默认属性</li>
+</ol>
+<p>ul &gt; li 可以不写闭合</p>
+<h3 id="CSS-优化"><a href="#CSS-优化" class="headerlink" title="CSS 优化"></a>CSS 优化</h3><ol>
+<li>降低 CSS 对渲染的阻塞</li>
+<li>利用 GPU 完成动画</li>
+<li>contain：layout 开发者和浏览器沟通的一个属性，告诉浏览器只影响当前盒子</li>
+<li>使用 font-display 属性</li>
+</ol>
+<h2 id="webpack-构建优化"><a href="#webpack-构建优化" class="headerlink" title="webpack 构建优化"></a>webpack 构建优化</h2><h3 id="Tree-shaking"><a href="#Tree-shaking" class="headerlink" title="Tree-shaking"></a>Tree-shaking</h3><ul>
+<li>上下文未用到的代码（dead code）</li>
+<li>基于 ES6 import export</li>
+<li>package.json 中配置 sideEffects ：有些代码有副作用可能不想打包时去掉，可以配置这个属性</li>
+<li>注意 Babel 默认配置的影响 会转换 ES6 的语法，可能导致上面基于 ES6 的 shaking 失效，可以配置 modules: false</li>
+</ul>
+<h3 id="JS-压缩"><a href="#JS-压缩" class="headerlink" title="JS 压缩"></a>JS 压缩</h3><ul>
+<li>webpack4 引入的 uglifyjs-webpack-plugin</li>
+<li>支持 ES6 的 terser-webpack-plugin</li>
+</ul>
+<h3 id="作用域提升（scope-hoisting）"><a href="#作用域提升（scope-hoisting）" class="headerlink" title="作用域提升（scope hoisting）"></a>作用域提升（scope hoisting）</h3><p>​<img data-src="http://127.0.0.1:5709/assets/image-20230409213104-9e2sy24.png" alt="image">默认是开启的</p>
+<ul>
+<li>代码体积减小</li>
+<li>提高执行效率</li>
+<li>Babel 的 modules 也要设置成 hoist</li>
+</ul>
+<h3 id="Babel7-优化配置"><a href="#Babel7-优化配置" class="headerlink" title="Babel7 优化配置"></a>Babel7 优化配置</h3><ul>
+<li>在需要的地方引入 polyfill</li>
+<li>辅助函数按需引入 useBuiltIns: usage</li>
+<li>根据目标浏览器按需转换代码</li>
+</ul>
+<h3 id="Webpack-依赖优化"><a href="#Webpack-依赖优化" class="headerlink" title="Webpack 依赖优化"></a>Webpack 依赖优化</h3><h4 id="noParse"><a href="#noParse" class="headerlink" title="noParse"></a><a target="_blank" rel="noopener" href="https://www.webpackjs.com/configuration/module/#modulenoparse">noParse</a></h4><ul>
+<li>提高构建速度</li>
+<li>直接通知 webpack 忽略较大的库</li>
+<li>被忽略的库不能有 import、require、define 的引入方式，就是不能是模块化的</li>
+</ul>
+<h4 id="DllPlugin-动态链接库"><a href="#DllPlugin-动态链接库" class="headerlink" title="DllPlugin- 动态链接库"></a>DllPlugin- 动态链接库</h4><ul>
+<li>避免打包时对不变的库重复构建</li>
+<li>提高构建速度</li>
+<li>针对开发环境</li>
+</ul>
+<p>‍</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.dll.config.js</span></span><br><span class="line"><span class="attr">output</span>: &#123;</span><br><span class="line">    <span class="attr">filename</span>: <span class="string">&quot;[name].dll.js&quot;</span>,</span><br><span class="line">    <span class="attr">path</span>: <span class="title function_">resolve</span>(__dirname, <span class="string">&quot;dll&quot;</span>),</span><br><span class="line">    <span class="attr">library</span>: <span class="string">&quot;[name]&quot;</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="attr">plugin</span>: [</span><br><span class="line">    <span class="keyword">new</span> webpack.<span class="title class_">DllPlugin</span>(&#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&quot;[name]&quot;</span>,</span><br><span class="line">        <span class="attr">path</span>: <span class="title function_">resolve</span>(__dirname, <span class="string">&quot;dll/[name].manifest.json&quot;</span>) <span class="comment">// 描述文件</span></span><br><span class="line">    &#125;)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>在 config 文件直接引用描述文件</p>
+<h3 id="代码拆分-（code-splitting"><a href="#代码拆分-（code-splitting" class="headerlink" title="代码拆分 （code splitting)"></a>代码拆分 （code splitting)</h3><ul>
+<li>把单个 bundle 文件拆分成几个小的 bundles&#x2F;chunks</li>
+<li>缩短首屏加载时间</li>
+<li>手工定义入口</li>
+<li>splitChunks 提取公共代码，拆分业务代码和第三方库</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">optimization</span>: &#123;</span><br><span class="line">    <span class="attr">splitChunks</span>: &#123;</span><br><span class="line">        <span class="attr">cacheGroups</span>: &#123;</span><br><span class="line">            <span class="attr">vendor</span>: &#123;</span><br><span class="line">                <span class="attr">name</span>: <span class="string">&#x27;vendor&#x27;</span>,</span><br><span class="line">                <span class="attr">test</span>: <span class="regexp">/[\\/]node_modules[\\/]/</span>,</span><br><span class="line">                <span class="attr">minSize</span>: <span class="number">0</span>,</span><br><span class="line">                <span class="attr">minChunks</span>: <span class="number">1</span>,</span><br><span class="line">                <span class="attr">priority</span>: <span class="number">10</span>,</span><br><span class="line">                <span class="attr">chunks</span>: <span class="string">&#x27;initial&#x27;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">common</span>: &#123;</span><br><span class="line">                <span class="attr">name</span>: <span class="string">&#x27;common&#x27;</span>,</span><br><span class="line">                <span class="attr">test</span>: <span class="regexp">/[\\/]src[\\/]/</span>,</span><br><span class="line">                <span class="attr">chunks</span>: <span class="string">&#x27;all&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>动态加载</li>
+</ul>
+<h3 id="基于-webpack-的资源压缩（minification）"><a href="#基于-webpack-的资源压缩（minification）" class="headerlink" title="基于 webpack 的资源压缩（minification）"></a>基于 webpack 的资源压缩（minification）</h3><ul>
+<li>Terser</li>
+<li>mini-css-extract-plugin 压缩 css</li>
+<li>HtmlWebpackPlugin- 压缩 html</li>
+</ul>
+<h3 id="基于-webpack-的资源持久化缓存"><a href="#基于-webpack-的资源持久化缓存" class="headerlink" title="基于 webpack 的资源持久化缓存"></a>基于 webpack 的资源持久化缓存</h3><ul>
+<li>每个打包的资源文件有唯一的 hash 值</li>
+<li>修改后只有受影响的文件 hash 变化</li>
+<li>充分利用浏览器缓存</li>
+</ul>
+<h3 id="基于-webpack-应用大小监测与分析"><a href="#基于-webpack-应用大小监测与分析" class="headerlink" title="基于 webpack 应用大小监测与分析"></a>基于 webpack 应用大小监测与分析</h3><ul>
+<li>stats 分析与可视化图</li>
+<li>webpack-bundle-analyzer 体积分析 或者 <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/source-map-explorer">source-map-explorer</a> 可以直接显示大小和占比，需要生成 sourcemap</li>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/speed-measure-webpack-plugin">speed-measure-webpack-plugin</a> 速度分析，可以检测使用的插件效率如何</li>
+</ul>
+<h3 id="React-按需加载"><a href="#React-按需加载" class="headerlink" title="React 按需加载"></a>React 按需加载</h3><ul>
+<li>React Router 基于 webpack 动态引入</li>
+<li>使用 Reloadable 高级组件</li>
+</ul>
+<h2 id="传输优化"><a href="#传输优化" class="headerlink" title="传输优化"></a>传输优化</h2><h3 id="Gzip"><a href="#Gzip" class="headerlink" title="Gzip"></a>Gzip</h3><ul>
+<li><p>gzip_comp_level 压缩级别，越高压缩比越大也越耗性能</p>
+</li>
+<li><p>gzip_min_length 当返回内容大于此值时才会使用 gzip 进行压缩</p>
+</li>
+<li><p>gzip_types 设置需要压缩的 MIME 类型,如果不在设置类型范围内的请求不进行压缩</p>
+</li>
+<li><p>对传输资源进行体积压缩，可达 90%</p>
+</li>
+</ul>
+<h3 id="Keep-Alive"><a href="#Keep-Alive" class="headerlink" title="Keep Alive"></a>Keep Alive</h3><ul>
+<li>keeplive_timeout 0 不启用</li>
+<li>keepalive_requests 设置一个 keep-alive 连接上可以服务的请求的最大数量，当最大请求数量达到时，连接被关闭。默认是 100</li>
+</ul>
+<h3 id="Http-缓存"><a href="#Http-缓存" class="headerlink" title="Http 缓存"></a>Http 缓存</h3><ul>
+<li>Cache-Control&#x2F;Expires</li>
+<li>Last-Modified + If-Modified-Since</li>
+<li>Etag+ If-None-Match</li>
+</ul>
+<h3 id="Service-Workers"><a href="#Service-Workers" class="headerlink" title="Service Workers"></a>Service Workers</h3><ul>
+<li>加速重复访问</li>
+<li>离线支持</li>
+</ul>
+<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>​<img data-src="http://127.0.0.1:5709/assets/image-20230416194918-2ptbcri.png" alt="image">​</p>
+<p>离线的时候是从 service worker 拿资源</p>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><ul>
+<li>延长了首屏时间，但是页面总加载时间减少</li>
+<li>兼容性</li>
+<li>只能在 localhost 或 https 下使用</li>
+</ul>
+<h3 id="Http2"><a href="#Http2" class="headerlink" title="Http2"></a>Http2</h3><ul>
+<li>二进制传输</li>
+<li>请求响应多路复用</li>
+<li>Server push</li>
+<li>适合较高请求量</li>
+</ul>
+<p>本地开发时，如果提示不安全网站，可以直接键盘输入 “thisisunsafe”</p>
+<p>​<img data-src="http://127.0.0.1:5709/assets/image-20230416195645-atmbi6v.png" alt="image">​</p>
+<h2 id="服务端渲染-SSR"><a href="#服务端渲染-SSR" class="headerlink" title="服务端渲染 SSR"></a>服务端渲染 SSR</h2><ul>
+<li>加速首屏加载</li>
+<li>更好的 SEO</li>
+</ul>
+<h4 id="什么时候用-SSR"><a href="#什么时候用-SSR" class="headerlink" title="什么时候用 SSR"></a>什么时候用 SSR</h4><ul>
+<li>架构- 大型、动态页面、面向公众</li>
+<li>搜索引擎排名很重要</li>
+</ul>
+<p>‍</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/blog/images/wechatpay.jpg" alt="afetmin 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E5%85%B3%E4%BA%8E%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="prev" title="关于中间件">
+                  <i class="fa fa-angle-left"></i> 关于中间件
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/%E7%AC%AC%E4%B8%80%E3%80%81%E4%BA%8C%E7%AB%A0%EF%BC%9A%E5%9B%BE%E5%BD%A2%E5%AD%A6%E6%A6%82%E8%BF%B0%E3%80%81%E5%90%91%E9%87%8F%E4%B8%8E%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" rel="next" title="第一、二章：图形学概述、向量与线性代数">
+                  第一、二章：图形学概述、向量与线性代数 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">afetmin</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">61k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:41</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.20/fancybox/fancybox.umd.js" integrity="sha256-q8XkJ6dj5VwSvzI8+nATCHHQG+Xv/dAZBCgqmu93zOY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script><script src="/blog/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js"></script>
+
+  <script src="/blog/js/third-party/pace.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://afetmin.github.io/blog/post/pre-end-performance-optimization-method-2fem1c.html"}</script>
+  <script src="/blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>
