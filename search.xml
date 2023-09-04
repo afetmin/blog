@@ -608,158 +608,6 @@
       </categories>
   </entry>
   <entry>
-    <title>前端性能优化方法</title>
-    <url>/blog//post/pre-end-performance-optimization-method-2fem1c.html</url>
-    <content><![CDATA[<h1 id="前端性能优化方法"><a href="#前端性能优化方法" class="headerlink" title="前端性能优化方法"></a>前端性能优化方法</h1><h1 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h1><h2 id="按需做事-不提前做"><a href="#按需做事-不提前做" class="headerlink" title="按需做事-不提前做"></a>按需做事-不提前做</h2><p>按需做事，即在代码中计算和取值应该在需要的地方进行，而不是提前进行。这是因为如果在逻辑判断之前就进行计算，而后面的逻辑判断没有进入，那么这段代码就会白白消耗时间，从而降低了代码的效率。因此，按需做事是一种更加高效的编程方式。</p>
-<p>比如这里：<a href="https://gitlab.qunhequnhe.com/tool-frontend/custom/dw-kaf-plugin/-/blob/master/src/app/view/Document/ViewPlan/ElementList/index.tsx#L323">https://gitlab.qunhequnhe.com/tool-frontend/custom/dw-kaf-plugin/-/blob/master/src/app/view/Document/ViewPlan/ElementList/index.tsx#L323</a></p>
-<p>​<img data-src="http://127.0.0.1:5709/assets/image-20230410070140-q8wol3n.png" alt="image">​</p>
-<p>这个信息是给教学模式用的，却在每个 state 更新时拿了 body 的 clientWidth，强制触发了浏览器的重排。</p>
-<p>在函数中，有时我们会提前获取或计算所有属性，但是如果后面的逻辑判断没有用到这些属性，那么这部分计算就是无效的，浪费了时间和资源。因此，我们应该尽可能地按需获取和计算属性，以提高代码的效率和性能。此外，我们还可以通过使用缓存等技术来避免重复计算，从而进一步提高代码的效率。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> a = obj.<span class="property">a</span>;</span><br><span class="line"><span class="keyword">const</span> b = <span class="title function_">slowFn</span>();</span><br><span class="line"><span class="keyword">if</span> (xxxx) &#123;</span><br><span class="line">  <span class="keyword">return</span> a;</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (xxx) &#123;</span><br><span class="line">  <span class="keyword">return</span> b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="V8-优化机制"><a href="#V8-优化机制" class="headerlink" title="V8 优化机制"></a>V8 优化机制</h3><ol>
-<li>脚本流 边加载边解析</li>
-<li>字节码缓存 多个页面使用相同解析后的字节码会缓存</li>
-<li>懒解析 函数不用会先不解析</li>
-</ol>
-<h3 id="函数解析优化"><a href="#函数解析优化" class="headerlink" title="函数解析优化"></a>函数解析优化</h3><p>懒解析 vs 饥饿解析</p>
-<p>饥饿解析 使用 一对 ‘()’ .</p>
-<h3 id="对象优化"><a href="#对象优化" class="headerlink" title="对象优化"></a>对象优化</h3><ol>
-<li>以相同顺序初始化对象成员，避免隐藏类的调整</li>
-<li>实例化后避免添加新的属性  像这样 person.age &#x3D; 17</li>
-<li>尽量使用 Array 代替 array-like 对象</li>
-<li>避免读取超过数组的长度</li>
-<li>避免元素类型的转换</li>
-</ol>
-<h3 id="HTML-优化"><a href="#HTML-优化" class="headerlink" title="HTML 优化"></a>HTML 优化</h3><ol>
-<li>减少 iframes 的使用</li>
-<li>压缩空白符</li>
-<li>避免节点深层级嵌套</li>
-<li>CSS&amp;Javascript 尽量使用外链</li>
-<li>删除元素默认属性</li>
-</ol>
-<p>ul &gt; li 可以不写闭合</p>
-<h3 id="CSS-优化"><a href="#CSS-优化" class="headerlink" title="CSS 优化"></a>CSS 优化</h3><ol>
-<li>降低 CSS 对渲染的阻塞</li>
-<li>利用 GPU 完成动画</li>
-<li>contain：layout 开发者和浏览器沟通的一个属性，告诉浏览器只影响当前盒子</li>
-<li>使用 font-display 属性</li>
-</ol>
-<h2 id="webpack-构建优化"><a href="#webpack-构建优化" class="headerlink" title="webpack 构建优化"></a>webpack 构建优化</h2><h3 id="Tree-shaking"><a href="#Tree-shaking" class="headerlink" title="Tree-shaking"></a>Tree-shaking</h3><ul>
-<li>上下文未用到的代码（dead code）</li>
-<li>基于 ES6 import export</li>
-<li>package.json 中配置 sideEffects ：有些代码有副作用可能不想打包时去掉，可以配置这个属性</li>
-<li>注意 Babel 默认配置的影响 会转换 ES6 的语法，可能导致上面基于 ES6 的 shaking 失效，可以配置 modules: false</li>
-</ul>
-<h3 id="JS-压缩"><a href="#JS-压缩" class="headerlink" title="JS 压缩"></a>JS 压缩</h3><ul>
-<li>webpack4 引入的 uglifyjs-webpack-plugin</li>
-<li>支持 ES6 的 terser-webpack-plugin</li>
-</ul>
-<h3 id="作用域提升（scope-hoisting）"><a href="#作用域提升（scope-hoisting）" class="headerlink" title="作用域提升（scope hoisting）"></a>作用域提升（scope hoisting）</h3><p>​<img data-src="http://127.0.0.1:5709/assets/image-20230409213104-9e2sy24.png" alt="image">默认是开启的</p>
-<ul>
-<li>代码体积减小</li>
-<li>提高执行效率</li>
-<li>Babel 的 modules 也要设置成 hoist</li>
-</ul>
-<h3 id="Babel7-优化配置"><a href="#Babel7-优化配置" class="headerlink" title="Babel7 优化配置"></a>Babel7 优化配置</h3><ul>
-<li>在需要的地方引入 polyfill</li>
-<li>辅助函数按需引入 useBuiltIns: usage</li>
-<li>根据目标浏览器按需转换代码</li>
-</ul>
-<h3 id="Webpack-依赖优化"><a href="#Webpack-依赖优化" class="headerlink" title="Webpack 依赖优化"></a>Webpack 依赖优化</h3><h4 id="noParse"><a href="#noParse" class="headerlink" title="noParse"></a><a href="https://www.webpackjs.com/configuration/module/#modulenoparse">noParse</a></h4><ul>
-<li>提高构建速度</li>
-<li>直接通知 webpack 忽略较大的库</li>
-<li>被忽略的库不能有 import、require、define 的引入方式，就是不能是模块化的</li>
-</ul>
-<h4 id="DllPlugin-动态链接库"><a href="#DllPlugin-动态链接库" class="headerlink" title="DllPlugin- 动态链接库"></a>DllPlugin- 动态链接库</h4><ul>
-<li>避免打包时对不变的库重复构建</li>
-<li>提高构建速度</li>
-<li>针对开发环境</li>
-</ul>
-<p>‍</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.dll.config.js</span></span><br><span class="line"><span class="attr">output</span>: &#123;</span><br><span class="line">    <span class="attr">filename</span>: <span class="string">&quot;[name].dll.js&quot;</span>,</span><br><span class="line">    <span class="attr">path</span>: <span class="title function_">resolve</span>(__dirname, <span class="string">&quot;dll&quot;</span>),</span><br><span class="line">    <span class="attr">library</span>: <span class="string">&quot;[name]&quot;</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="attr">plugin</span>: [</span><br><span class="line">    <span class="keyword">new</span> webpack.<span class="title class_">DllPlugin</span>(&#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&quot;[name]&quot;</span>,</span><br><span class="line">        <span class="attr">path</span>: <span class="title function_">resolve</span>(__dirname, <span class="string">&quot;dll/[name].manifest.json&quot;</span>) <span class="comment">// 描述文件</span></span><br><span class="line">    &#125;)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p>在 config 文件直接引用描述文件</p>
-<h3 id="代码拆分-（code-splitting"><a href="#代码拆分-（code-splitting" class="headerlink" title="代码拆分 （code splitting)"></a>代码拆分 （code splitting)</h3><ul>
-<li>把单个 bundle 文件拆分成几个小的 bundles&#x2F;chunks</li>
-<li>缩短首屏加载时间</li>
-<li>手工定义入口</li>
-<li>splitChunks 提取公共代码，拆分业务代码和第三方库</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">optimization</span>: &#123;</span><br><span class="line">    <span class="attr">splitChunks</span>: &#123;</span><br><span class="line">        <span class="attr">cacheGroups</span>: &#123;</span><br><span class="line">            <span class="attr">vendor</span>: &#123;</span><br><span class="line">                <span class="attr">name</span>: <span class="string">&#x27;vendor&#x27;</span>,</span><br><span class="line">                <span class="attr">test</span>: <span class="regexp">/[\\/]node_modules[\\/]/</span>,</span><br><span class="line">                <span class="attr">minSize</span>: <span class="number">0</span>,</span><br><span class="line">                <span class="attr">minChunks</span>: <span class="number">1</span>,</span><br><span class="line">                <span class="attr">priority</span>: <span class="number">10</span>,</span><br><span class="line">                <span class="attr">chunks</span>: <span class="string">&#x27;initial&#x27;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">common</span>: &#123;</span><br><span class="line">                <span class="attr">name</span>: <span class="string">&#x27;common&#x27;</span>,</span><br><span class="line">                <span class="attr">test</span>: <span class="regexp">/[\\/]src[\\/]/</span>,</span><br><span class="line">                <span class="attr">chunks</span>: <span class="string">&#x27;all&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>动态加载</li>
-</ul>
-<h3 id="基于-webpack-的资源压缩（minification）"><a href="#基于-webpack-的资源压缩（minification）" class="headerlink" title="基于 webpack 的资源压缩（minification）"></a>基于 webpack 的资源压缩（minification）</h3><ul>
-<li>Terser</li>
-<li>mini-css-extract-plugin 压缩 css</li>
-<li>HtmlWebpackPlugin- 压缩 html</li>
-</ul>
-<h3 id="基于-webpack-的资源持久化缓存"><a href="#基于-webpack-的资源持久化缓存" class="headerlink" title="基于 webpack 的资源持久化缓存"></a>基于 webpack 的资源持久化缓存</h3><ul>
-<li>每个打包的资源文件有唯一的 hash 值</li>
-<li>修改后只有受影响的文件 hash 变化</li>
-<li>充分利用浏览器缓存</li>
-</ul>
-<h3 id="基于-webpack-应用大小监测与分析"><a href="#基于-webpack-应用大小监测与分析" class="headerlink" title="基于 webpack 应用大小监测与分析"></a>基于 webpack 应用大小监测与分析</h3><ul>
-<li>stats 分析与可视化图</li>
-<li>webpack-bundle-analyzer 体积分析 或者 <a href="https://www.npmjs.com/package/source-map-explorer">source-map-explorer</a> 可以直接显示大小和占比，需要生成 sourcemap</li>
-<li><a href="https://www.npmjs.com/package/speed-measure-webpack-plugin">speed-measure-webpack-plugin</a> 速度分析，可以检测使用的插件效率如何</li>
-</ul>
-<h3 id="React-按需加载"><a href="#React-按需加载" class="headerlink" title="React 按需加载"></a>React 按需加载</h3><ul>
-<li>React Router 基于 webpack 动态引入</li>
-<li>使用 Reloadable 高级组件</li>
-</ul>
-<h2 id="传输优化"><a href="#传输优化" class="headerlink" title="传输优化"></a>传输优化</h2><h3 id="Gzip"><a href="#Gzip" class="headerlink" title="Gzip"></a>Gzip</h3><ul>
-<li><p>gzip_comp_level 压缩级别，越高压缩比越大也越耗性能</p>
-</li>
-<li><p>gzip_min_length 当返回内容大于此值时才会使用 gzip 进行压缩</p>
-</li>
-<li><p>gzip_types 设置需要压缩的 MIME 类型,如果不在设置类型范围内的请求不进行压缩</p>
-</li>
-<li><p>对传输资源进行体积压缩，可达 90%</p>
-</li>
-</ul>
-<h3 id="Keep-Alive"><a href="#Keep-Alive" class="headerlink" title="Keep Alive"></a>Keep Alive</h3><ul>
-<li>keeplive_timeout 0 不启用</li>
-<li>keepalive_requests 设置一个 keep-alive 连接上可以服务的请求的最大数量，当最大请求数量达到时，连接被关闭。默认是 100</li>
-</ul>
-<h3 id="Http-缓存"><a href="#Http-缓存" class="headerlink" title="Http 缓存"></a>Http 缓存</h3><ul>
-<li>Cache-Control&#x2F;Expires</li>
-<li>Last-Modified + If-Modified-Since</li>
-<li>Etag+ If-None-Match</li>
-</ul>
-<h3 id="Service-Workers"><a href="#Service-Workers" class="headerlink" title="Service Workers"></a>Service Workers</h3><ul>
-<li>加速重复访问</li>
-<li>离线支持</li>
-</ul>
-<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>​<img data-src="http://127.0.0.1:5709/assets/image-20230416194918-2ptbcri.png" alt="image">​</p>
-<p>离线的时候是从 service worker 拿资源</p>
-<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><ul>
-<li>延长了首屏时间，但是页面总加载时间减少</li>
-<li>兼容性</li>
-<li>只能在 localhost 或 https 下使用</li>
-</ul>
-<h3 id="Http2"><a href="#Http2" class="headerlink" title="Http2"></a>Http2</h3><ul>
-<li>二进制传输</li>
-<li>请求响应多路复用</li>
-<li>Server push</li>
-<li>适合较高请求量</li>
-</ul>
-<p>本地开发时，如果提示不安全网站，可以直接键盘输入 “thisisunsafe”</p>
-<p>​<img data-src="http://127.0.0.1:5709/assets/image-20230416195645-atmbi6v.png" alt="image">​</p>
-<h2 id="服务端渲染-SSR"><a href="#服务端渲染-SSR" class="headerlink" title="服务端渲染 SSR"></a>服务端渲染 SSR</h2><ul>
-<li>加速首屏加载</li>
-<li>更好的 SEO</li>
-</ul>
-<h4 id="什么时候用-SSR"><a href="#什么时候用-SSR" class="headerlink" title="什么时候用 SSR"></a>什么时候用 SSR</h4><ul>
-<li>架构- 大型、动态页面、面向公众</li>
-<li>搜索引擎排名很重要</li>
-</ul>
-<p>‍</p>
-]]></content>
-  </entry>
-  <entry>
     <title>requestAnimationFrame思考</title>
     <url>/blog/requestAnimationFrame%E6%80%9D%E8%80%83/</url>
     <content><![CDATA[<h2 id="关于setTimeout"><a href="#关于setTimeout" class="headerlink" title="关于setTimeout"></a>关于setTimeout</h2><p>首先要明白，setTimeout 的执行只是在内存中对元素属性进行改变，这个变化必须要等到屏幕下次绘制时才会被更新到屏幕上。如果两者的步调不一致，就可能会导致中间某一帧的操作被跨越过去，而直接更新下一帧的元素。假设屏幕每隔16.7ms刷新一次，而setTimeout 每隔10ms设置图像向左移动1px， 就会出现如下绘制过程（表格）：</p>
@@ -945,6 +793,262 @@
       <tags>
         <tag>进阶</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>前端性能优化方法</title>
+    <url>/blog/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h1><h2 id="按需做事-不提前做"><a href="#按需做事-不提前做" class="headerlink" title="按需做事-不提前做"></a>按需做事-不提前做</h2><p>按需做事，即在代码中计算和取值应该在需要的地方进行，而不是提前进行。这是因为如果在逻辑判断之前就进行计算，而后面的逻辑判断没有进入，那么这段代码就会白白消耗时间，从而降低了代码的效率。因此，按需做事是一种更加高效的编程方式。</p>
+<p>比如这里：<a href="https://gitlab.qunhequnhe.com/tool-frontend/custom/dw-kaf-plugin/-/blob/master/src/app/view/Document/ViewPlan/ElementList/index.tsx#L323">https://gitlab.qunhequnhe.com/tool-frontend/custom/dw-kaf-plugin/-/blob/master/src/app/view/Document/ViewPlan/ElementList/index.tsx#L323</a></p>
+<p>​<img data-src="/blog/./assets/image-20230410070140-q8wol3n.png" alt="image">​</p>
+<p>这个信息是给教学模式用的，却在每个 state 更新时拿了 body 的 clientWidth，强制触发了浏览器的重排。</p>
+<p>在函数中，有时我们会提前获取或计算所有属性，但是如果后面的逻辑判断没有用到这些属性，那么这部分计算就是无效的，浪费了时间和资源。因此，我们应该尽可能地按需获取和计算属性，以提高代码的效率和性能。此外，我们还可以通过使用缓存等技术来避免重复计算，从而进一步提高代码的效率。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> a = obj.<span class="property">a</span>;</span><br><span class="line"><span class="keyword">const</span> b = <span class="title function_">slowFn</span>();</span><br><span class="line"><span class="keyword">if</span> (xxxx) &#123;</span><br><span class="line">  <span class="keyword">return</span> a;</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (xxx) &#123;</span><br><span class="line">  <span class="keyword">return</span> b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="V8-优化机制"><a href="#V8-优化机制" class="headerlink" title="V8 优化机制"></a>V8 优化机制</h3><ol>
+<li>脚本流 边加载边解析</li>
+<li>字节码缓存 多个页面使用相同解析后的字节码会缓存</li>
+<li>懒解析 函数不用会先不解析</li>
+</ol>
+<h3 id="函数解析优化"><a href="#函数解析优化" class="headerlink" title="函数解析优化"></a>函数解析优化</h3><p>懒解析 vs 饥饿解析</p>
+<p>饥饿解析 使用 一对 ‘()’ .</p>
+<h3 id="对象优化"><a href="#对象优化" class="headerlink" title="对象优化"></a>对象优化</h3><ol>
+<li>以相同顺序初始化对象成员，避免隐藏类的调整</li>
+<li>实例化后避免添加新的属性 像这样 person.age &#x3D; 17</li>
+<li>尽量使用 Array 代替 array-like 对象</li>
+<li>避免读取超过数组的长度</li>
+<li>避免元素类型的转换</li>
+</ol>
+<h3 id="HTML-优化"><a href="#HTML-优化" class="headerlink" title="HTML 优化"></a>HTML 优化</h3><ol>
+<li>减少 iframes 的使用</li>
+<li>压缩空白符</li>
+<li>避免节点深层级嵌套</li>
+<li>CSS&amp;Javascript 尽量使用外链</li>
+<li>删除元素默认属性</li>
+</ol>
+<p>ul &gt; li 可以不写闭合</p>
+<h3 id="CSS-优化"><a href="#CSS-优化" class="headerlink" title="CSS 优化"></a>CSS 优化</h3><ol>
+<li>降低 CSS 对渲染的阻塞</li>
+<li>利用 GPU 完成动画</li>
+<li>contain：layout 开发者和浏览器沟通的一个属性，告诉浏览器只影响当前盒子</li>
+<li>使用 font-display 属性</li>
+</ol>
+<h2 id="webpack-构建优化"><a href="#webpack-构建优化" class="headerlink" title="webpack 构建优化"></a>webpack 构建优化</h2><h3 id="Tree-shaking"><a href="#Tree-shaking" class="headerlink" title="Tree-shaking"></a>Tree-shaking</h3><ul>
+<li>上下文未用到的代码（dead code）</li>
+<li>基于 ES6 import export</li>
+<li>package.json 中配置 sideEffects ：有些代码有副作用可能不想打包时去掉，可以配置这个属性</li>
+<li>注意 Babel 默认配置的影响 会转换 ES6 的语法，可能导致上面基于 ES6 的 shaking 失效，可以配置 modules: false</li>
+</ul>
+<h3 id="JS-压缩"><a href="#JS-压缩" class="headerlink" title="JS 压缩"></a>JS 压缩</h3><ul>
+<li>webpack4 引入的 uglifyjs-webpack-plugin</li>
+<li>支持 ES6 的 terser-webpack-plugin</li>
+</ul>
+<h3 id="作用域提升（scope-hoisting）"><a href="#作用域提升（scope-hoisting）" class="headerlink" title="作用域提升（scope hoisting）"></a>作用域提升（scope hoisting）</h3><p>​<img data-src="http://127.0.0.1:5709/assets/image-20230409213104-9e2sy24.png" alt="image">默认是开启的</p>
+<ul>
+<li>代码体积减小</li>
+<li>提高执行效率</li>
+<li>Babel 的 modules 也要设置成 hoist</li>
+</ul>
+<h3 id="Babel7-优化配置"><a href="#Babel7-优化配置" class="headerlink" title="Babel7 优化配置"></a>Babel7 优化配置</h3><ul>
+<li>在需要的地方引入 polyfill</li>
+<li>辅助函数按需引入 useBuiltIns: usage</li>
+<li>根据目标浏览器按需转换代码</li>
+</ul>
+<h3 id="Webpack-依赖优化"><a href="#Webpack-依赖优化" class="headerlink" title="Webpack 依赖优化"></a>Webpack 依赖优化</h3><h4 id="noParse"><a href="#noParse" class="headerlink" title="noParse"></a><a href="https://www.webpackjs.com/configuration/module/#modulenoparse">noParse</a></h4><ul>
+<li>提高构建速度</li>
+<li>直接通知 webpack 忽略较大的库</li>
+<li>被忽略的库不能有 import、require、define 的引入方式，就是不能是模块化的</li>
+</ul>
+<h4 id="DllPlugin-动态链接库"><a href="#DllPlugin-动态链接库" class="headerlink" title="DllPlugin- 动态链接库"></a>DllPlugin- 动态链接库</h4><ul>
+<li>避免打包时对不变的库重复构建</li>
+<li>提高构建速度</li>
+<li>针对开发环境</li>
+</ul>
+<p>‍</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.dll.config.js</span></span><br><span class="line"><span class="attr">output</span>: &#123;</span><br><span class="line">    <span class="attr">filename</span>: <span class="string">&quot;[name].dll.js&quot;</span>,</span><br><span class="line">    <span class="attr">path</span>: <span class="title function_">resolve</span>(__dirname, <span class="string">&quot;dll&quot;</span>),</span><br><span class="line">    <span class="attr">library</span>: <span class="string">&quot;[name]&quot;</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="attr">plugin</span>: [</span><br><span class="line">    <span class="keyword">new</span> webpack.<span class="title class_">DllPlugin</span>(&#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&quot;[name]&quot;</span>,</span><br><span class="line">        <span class="attr">path</span>: <span class="title function_">resolve</span>(__dirname, <span class="string">&quot;dll/[name].manifest.json&quot;</span>) <span class="comment">// 描述文件</span></span><br><span class="line">    &#125;)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>在 config 文件直接引用描述文件</p>
+<h3 id="代码拆分-（code-splitting"><a href="#代码拆分-（code-splitting" class="headerlink" title="代码拆分 （code splitting)"></a>代码拆分 （code splitting)</h3><ul>
+<li>把单个 bundle 文件拆分成几个小的 bundles&#x2F;chunks</li>
+<li>缩短首屏加载时间</li>
+<li>手工定义入口</li>
+<li>splitChunks 提取公共代码，拆分业务代码和第三方库</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">optimization</span>: &#123;</span><br><span class="line">    <span class="attr">splitChunks</span>: &#123;</span><br><span class="line">        <span class="attr">cacheGroups</span>: &#123;</span><br><span class="line">            <span class="attr">vendor</span>: &#123;</span><br><span class="line">                <span class="attr">name</span>: <span class="string">&#x27;vendor&#x27;</span>,</span><br><span class="line">                <span class="attr">test</span>: <span class="regexp">/[\\/]node_modules[\\/]/</span>,</span><br><span class="line">                <span class="attr">minSize</span>: <span class="number">0</span>,</span><br><span class="line">                <span class="attr">minChunks</span>: <span class="number">1</span>,</span><br><span class="line">                <span class="attr">priority</span>: <span class="number">10</span>,</span><br><span class="line">                <span class="attr">chunks</span>: <span class="string">&#x27;initial&#x27;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">common</span>: &#123;</span><br><span class="line">                <span class="attr">name</span>: <span class="string">&#x27;common&#x27;</span>,</span><br><span class="line">                <span class="attr">test</span>: <span class="regexp">/[\\/]src[\\/]/</span>,</span><br><span class="line">                <span class="attr">chunks</span>: <span class="string">&#x27;all&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>动态加载</li>
+</ul>
+<h3 id="基于-webpack-的资源压缩（minification）"><a href="#基于-webpack-的资源压缩（minification）" class="headerlink" title="基于 webpack 的资源压缩（minification）"></a>基于 webpack 的资源压缩（minification）</h3><ul>
+<li>Terser</li>
+<li>mini-css-extract-plugin 压缩 css</li>
+<li>HtmlWebpackPlugin- 压缩 html</li>
+</ul>
+<h3 id="基于-webpack-的资源持久化缓存"><a href="#基于-webpack-的资源持久化缓存" class="headerlink" title="基于 webpack 的资源持久化缓存"></a>基于 webpack 的资源持久化缓存</h3><ul>
+<li>每个打包的资源文件有唯一的 hash 值</li>
+<li>修改后只有受影响的文件 hash 变化</li>
+<li>充分利用浏览器缓存</li>
+</ul>
+<h3 id="基于-webpack-应用大小监测与分析"><a href="#基于-webpack-应用大小监测与分析" class="headerlink" title="基于 webpack 应用大小监测与分析"></a>基于 webpack 应用大小监测与分析</h3><ul>
+<li>stats 分析与可视化图</li>
+<li>webpack-bundle-analyzer 体积分析 或者 <a href="https://www.npmjs.com/package/source-map-explorer">source-map-explorer</a> 可以直接显示大小和占比，需要生成 sourcemap</li>
+<li><a href="https://www.npmjs.com/package/speed-measure-webpack-plugin">speed-measure-webpack-plugin</a> 速度分析，可以检测使用的插件效率如何</li>
+</ul>
+<h3 id="React-按需加载"><a href="#React-按需加载" class="headerlink" title="React 按需加载"></a>React 按需加载</h3><ul>
+<li>React Router 基于 webpack 动态引入</li>
+<li>使用 Reloadable 高级组件</li>
+</ul>
+<h2 id="传输优化"><a href="#传输优化" class="headerlink" title="传输优化"></a>传输优化</h2><h3 id="Gzip"><a href="#Gzip" class="headerlink" title="Gzip"></a>Gzip</h3><ul>
+<li><p>gzip_comp_level 压缩级别，越高压缩比越大也越耗性能</p>
+</li>
+<li><p>gzip_min_length 当返回内容大于此值时才会使用 gzip 进行压缩</p>
+</li>
+<li><p>gzip_types 设置需要压缩的 MIME 类型,如果不在设置类型范围内的请求不进行压缩</p>
+</li>
+<li><p>对传输资源进行体积压缩，可达 90%</p>
+</li>
+</ul>
+<h3 id="Keep-Alive"><a href="#Keep-Alive" class="headerlink" title="Keep Alive"></a>Keep Alive</h3><ul>
+<li>keeplive_timeout 0 不启用</li>
+<li>keepalive_requests 设置一个 keep-alive 连接上可以服务的请求的最大数量，当最大请求数量达到时，连接被关闭。默认是 100</li>
+</ul>
+<h3 id="Http-缓存"><a href="#Http-缓存" class="headerlink" title="Http 缓存"></a>Http 缓存</h3><ul>
+<li>Cache-Control&#x2F;Expires</li>
+<li>Last-Modified + If-Modified-Since</li>
+<li>Etag+ If-None-Match</li>
+</ul>
+<h3 id="Service-Workers"><a href="#Service-Workers" class="headerlink" title="Service Workers"></a>Service Workers</h3><ul>
+<li>加速重复访问</li>
+<li>离线支持</li>
+</ul>
+<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>​<img data-src="http://127.0.0.1:5709/assets/image-20230416194918-2ptbcri.png" alt="image">​</p>
+<p>离线的时候是从 service worker 拿资源</p>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><ul>
+<li>延长了首屏时间，但是页面总加载时间减少</li>
+<li>兼容性</li>
+<li>只能在 localhost 或 https 下使用</li>
+</ul>
+<h3 id="Http2"><a href="#Http2" class="headerlink" title="Http2"></a>Http2</h3><ul>
+<li>二进制传输</li>
+<li>请求响应多路复用</li>
+<li>Server push</li>
+<li>适合较高请求量</li>
+</ul>
+<p>本地开发时，如果提示不安全网站，可以直接键盘输入 “thisisunsafe”</p>
+<p>​<img data-src="http://127.0.0.1:5709/assets/image-20230416195645-atmbi6v.png" alt="image">​</p>
+<h2 id="服务端渲染-SSR"><a href="#服务端渲染-SSR" class="headerlink" title="服务端渲染 SSR"></a>服务端渲染 SSR</h2><ul>
+<li>加速首屏加载</li>
+<li>更好的 SEO</li>
+</ul>
+<h4 id="什么时候用-SSR"><a href="#什么时候用-SSR" class="headerlink" title="什么时候用 SSR"></a>什么时候用 SSR</h4><ul>
+<li>架构- 大型、动态页面、面向公众</li>
+<li>搜索引擎排名很重要</li>
+</ul>
+<p>‍</p>
+]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>前端调试通关</title>
+    <url>/blog/%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/</url>
+    <content><![CDATA[<h2 id="各类调试工具原理"><a href="#各类调试工具原理" class="headerlink" title="各类调试工具原理"></a>各类调试工具原理</h2><h3 id="Chrome-DevTools-原理"><a href="#Chrome-DevTools-原理" class="headerlink" title="Chrome DevTools 原理"></a>Chrome DevTools 原理</h3><p>Chrome DevTools 分为两部分，backend 和 frontend：</p>
+<ul>
+<li>backend 和 Chrome 集成，负责把 Chrome 的网页运行时状态通过调试协议暴露出来。</li>
+<li>frontend 是独立的，负责对接调试协议，做 UI 的展示和交互。</li>
+</ul>
+<p>两者之间的调试协议叫做 Chrome DevTools Protocol，简称 CDP。</p>
+<p>传输协议数据的方式叫做信道（message channel）。</p>
+<p>​<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20221128081629-khjm1ho.png" alt="image">​</p>
+<h3 id="VSCode-Debugger-原理"><a href="#VSCode-Debugger-原理" class="headerlink" title="VSCode Debugger 原理"></a>VSCode Debugger 原理</h3><p>VSCode Debugger 的原理和 Chrome DevTools 差不多，也是分为 frontend、backend、调试协议这几部分，只不过它多了一层适配器协议。</p>
+<p>​<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20221128081659-j79jxzk.png" alt="image">​</p>
+<p>因为 VSCode 不是 JS 专用编辑器呀，它可能用来调试 Python 代码、Rust 代码等等，自然不能和某一种语言的调试协议深度耦合，所以多了一个适配器层。</p>
+<p>​<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20221128081713-aj7ngpn.png" alt="image">​</p>
+<h3 id="Vue-React-DevTools"><a href="#Vue-React-DevTools" class="headerlink" title="Vue&#x2F;React DevTools"></a>Vue&#x2F;React DevTools</h3><p>Chrome 插件中可以访问网页的 DOM 的部分叫做 Content Script，随页面启动而生效，可以写一些操作 DOM 的逻辑。还有一部分是后台运行的，叫做 Background，浏览器启动就生效了，生命周期比较长，可以做一些常驻的逻辑。如果是扩展 DevTools 的 Chrome 插件，那还有一部分 DevTools Page，是在 DevTools 里显示的页面。</p>
+<p>​<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20221128081929-s9wfwba.png" alt="image">​</p>
+<p>Content Script 部分可以操作 DOM，可以监听 DOM Event。</p>
+<p>Backgroud 部分可以访问 extension api，可以和 Content Script 还有 DevTools Page 通信。</p>
+<p>DevTools Page 部分可以访问 devtools api，可以向当前 window 注入 JS 执行。</p>
+<p><strong>frontend、backend、调试协议、信道，这是调试工具的四要素。</strong></p>
+<p>不过，不同的调试工具都会有不同的设计，比如 VSCode Debugger 为了跨语言复用，多了一层 Debugger Adapter，React DevTools 有独立的 electron 应用，用自定义调试协议，可以调试 React Native 代码。</p>
+<p>‍</p>
+<h3 id="使用-vscode-调试-chrome"><a href="#使用-vscode-调试-chrome" class="headerlink" title="使用 vscode 调试 chrome"></a>使用 vscode 调试 chrome</h3><ol>
+<li><p>打开项目目录，创建 .vscode&#x2F;launch.json 文件：<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20221129075017-vwleyz3.png" alt="image">​</p>
+</li>
+<li><p>点击右下角的 Add Configuration… 按钮，选择 Chrome: Launch<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20221129075037-46nz4a3.png" alt="image">​</p>
+</li>
+<li><p>把访问的 url 改为开发服务器启动的地址：<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20221129075051-9q3k4vd.png" alt="image">​</p>
+</li>
+<li><p>然后进入 Debug 窗口，点击启动：<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20221129075112-qt6kf7w.png" alt="image">​</p>
+</li>
+<li><p>在代码打个断点，然后点击 <img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/net-img-437daa8d0a9d44fca3e3041ca0581725~tplv-k3u1fbpfcp-zoom-in-crop-ma-20221129075142-zv8q8sx.awebp">刷新：<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20221129075159-qvcbj6q.png" alt="image"></p>
+</li>
+<li><p><img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20221129075215-72053ta.png" alt="image">​</p>
+</li>
+<li><p>想访问 this 的某个属性，可以在 Debug Console 里输入 this 看下它的值，然后再来写代码：<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20221129075245-wsumjko.png" alt="image">​</p>
+</li>
+</ol>
+<p>‍</p>
+<p>‍</p>
+<p>‍</p>
+<p>‍</p>
+<h3 id="Vscode-Snippets"><a href="#Vscode-Snippets" class="headerlink" title="Vscode Snippets"></a>Vscode Snippets</h3><h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><ul>
+<li>指定光标位置：$x</li>
+<li>多光标编辑：$x $x</li>
+<li>指定 placeholder 文本：${x:placeholder}</li>
+<li>指定多选值：${x|aaa,bbb|}</li>
+<li>取变量：$VariableName <a href="https://code.visualstudio.com/docs/editor/userdefinedsnippets#_variables">vscode 变量</a></li>
+<li>对变量做转换：${VariableName&#x2F;正则&#x2F;替换的文本&#x2F;}</li>
+</ul>
+<p>‍</p>
+<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><p><a href="https://claudiopro.github.io/react-fiber-vs-stack-demo/fiber.html" title="fiber测试">fiber 测试页面</a></p>
+<h3 id="Main-主线程"><a href="#Main-主线程" class="headerlink" title="Main 主线程"></a>Main 主线程</h3><p>​<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20230212091321-e22i48e.png" alt="image">​</p>
+<p>灰色的是宏任务，橙色的是浏览器内部的 js，紫色的是 reflow、repaint， 绿色的是渲染。</p>
+<p>其它的是用户执行的 js。</p>
+<p>放大后可以看到先执行的 requestAnimationFrame 的回调，然后是回流重绘，最后是渲染。</p>
+<p>​​<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20230212092433-jf3bjj2.png" alt="image">​​</p>
+<p>而且这种任务是每 13.3ms 执行一次，因为我的电脑是 75hz 的刷新率，1000 &#x2F; 75 &#x3D; 13.3 ms。如果一个任务执行时间超长，比如 50 多 ms，那它就相当于垮了好几帧，就会发生卡顿掉帧，因为阻塞了渲染的宏任务执行。</p>
+<p><strong>性能优化就是为了优化长的宏任务</strong></p>
+<p>长任务会标红</p>
+<p>​<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20230212095258-35r8acm.png" alt="image">​</p>
+<ol>
+<li><p>requestIdleCallback 回调是宏任务</p>
+<p>​<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20230212093440-xhgyi0m.png" alt="image">​</p>
+</li>
+<li><p>垃圾回收也是</p>
+<p>​<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20230212093544-2xaapy4.png" alt="image"></p>
+</li>
+<li><p>定时器也是</p>
+<p>​<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20230212094337-eh1rw1p.png" alt="image"></p>
+</li>
+<li><p>执行 script</p>
+<p>​<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20230212094940-ihui8n2.png" alt="image">​</p>
+</li>
+<li><p>parse Html</p>
+<p>​<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20230212095153-wxunefm.png" alt="image"></p>
+</li>
+<li><p>micro tasks 是 task 的一部分</p>
+<p>​<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20230212095824-nq6fa83.png" alt="image">​</p>
+</li>
+</ol>
+<p>rAF 调用栈末尾还有个 requestAnimationFrame 的调用，是浏览器把下次 rAF 回调加入 Event Loop。</p>
+<p>​<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20230212093742-uxv12uk.png" alt="image"></p>
+<p>在一帧里面，先执行 rAF，然后再执行 rIC。</p>
+<p>​<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20230212094054-b0dlr1z.png" alt="image">​</p>
+<p>这种很长的看着像是递归</p>
+<p>​<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20230212100346-sasr3ti.png" alt="image">​<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20230212100525-ad0cpqt.png" alt="image">​​</p>
+<h3 id="Frames"><a href="#Frames" class="headerlink" title="Frames"></a>Frames</h3><p>​<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20230212100947-x5qyfdv.png" alt="image">​</p>
+<ul>
+<li>白色：没有变化</li>
+<li>绿色：按预期及时渲染</li>
+<li>黄色：浏览器尽最大努力及时呈现至少一些视觉更新，比如滚动了但主线程没空</li>
+<li>红色：掉帧，无法在合理的时间内渲染帧，比如：<code>scroll</code>​，<code>resize</code> ​ 事件触发过于频繁,浏览器来不及处理导致在下一个事件被触发之前无法完成</li>
+</ul>
+<p>‍</p>
+]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
   </entry>
   <entry>
     <title>前端错误监控</title>
