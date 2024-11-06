@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=LXGW+WenKai:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.21.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":400},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js"></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E6%B5%85%E8%B0%88SOLID%E5%8E%9F%E5%88%99%E5%9C%A8%E5%89%8D%E7%AB%AF%E7%9A%84%E4%BD%BF%E7%94%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E6%B5%85%E8%B0%88SOLID%E5%8E%9F%E5%88%99%E5%9C%A8%E5%89%8D%E7%AB%AF%E7%9A%84%E4%BD%BF%E7%94%A8/","path":"浅谈SOLID原则在前端的使用/","title":"浅谈SOLID原则在前端的使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>浅谈SOLID原则在前端的使用 | 花满渚，酒满瓯</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+
+    
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css" />
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">花满渚，酒满瓯</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">7</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">58</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%85%E8%B0%88SOLID%E5%8E%9F%E5%88%99%E5%9C%A8%E5%89%8D%E7%AB%AF%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">浅谈SOLID原则在前端的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81-%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99-SRP"><span class="nav-number">1.2.</span> <span class="nav-text">一、 单一职责原则 (SRP)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%88%99"><span class="nav-number">1.2.1.</span> <span class="nav-text">原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E4%BE%8B-js-react"><span class="nav-number">1.2.2.</span> <span class="nav-text">反例(js-react)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E6%9E%84%E5%90%8E%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.3.</span> <span class="nav-text">重构后代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E4%BE%8B-ts-angular"><span class="nav-number">1.2.4.</span> <span class="nav-text">反例(ts-angular)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E6%9E%84%E5%90%8E%E4%BB%A3%E7%A0%81-1"><span class="nav-number">1.2.5.</span> <span class="nav-text">重构后代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99%EF%BC%88OCP%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">二、开闭原则（OCP）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%88%99-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E4%BE%8B-js-react-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">反例(js-react)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E6%9E%84%E5%90%8E%E4%BB%A3%E7%A0%81-2"><span class="nav-number">1.3.3.</span> <span class="nav-text">重构后代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E4%BE%8B-ts-angular-1"><span class="nav-number">1.3.4.</span> <span class="nav-text">反例(ts-angular)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E6%9E%84%E5%90%8E%E4%BB%A3%E7%A0%81-3"><span class="nav-number">1.3.5.</span> <span class="nav-text">重构后代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81-%E9%87%8C%E6%B0%8F%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99-LSP"><span class="nav-number">1.4.</span> <span class="nav-text">三、 里氏替换原则 (LSP)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%88%99-2"><span class="nav-number">1.4.1.</span> <span class="nav-text">原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E4%BE%8B-js-react-2"><span class="nav-number">1.4.2.</span> <span class="nav-text">反例(js-react)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E6%9E%84%E5%90%8E%E4%BB%A3%E7%A0%81-4"><span class="nav-number">1.4.3.</span> <span class="nav-text">重构后代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E4%BE%8B-ts-angular-2"><span class="nav-number">1.4.4.</span> <span class="nav-text">反例(ts-angular)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E6%9E%84%E5%90%8E%E4%BB%A3%E7%A0%81-5"><span class="nav-number">1.4.5.</span> <span class="nav-text">重构后代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99-ISP"><span class="nav-number">1.5.</span> <span class="nav-text">四、接口隔离原则 (ISP)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%88%99-3"><span class="nav-number">1.5.1.</span> <span class="nav-text">原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E4%BE%8B-js-react-3"><span class="nav-number">1.5.2.</span> <span class="nav-text">反例(js-react)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E6%9E%84%E5%90%8E%E4%BB%A3%E7%A0%81-6"><span class="nav-number">1.5.3.</span> <span class="nav-text">重构后代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E4%BE%8B-ts-angular-3"><span class="nav-number">1.5.4.</span> <span class="nav-text">反例(ts-angular)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E6%9E%84%E5%90%8E%E4%BB%A3%E7%A0%81-7"><span class="nav-number">1.5.5.</span> <span class="nav-text">重构后代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99-DIP"><span class="nav-number">1.6.</span> <span class="nav-text">五、依赖倒置原则 (DIP)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%88%99-4"><span class="nav-number">1.6.1.</span> <span class="nav-text">原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E4%BE%8B-js-react-4"><span class="nav-number">1.6.2.</span> <span class="nav-text">反例(js-react)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E6%9E%84%E5%90%8E%E4%BB%A3%E7%A0%81-8"><span class="nav-number">1.6.3.</span> <span class="nav-text">重构后代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E4%BE%8B-ts-angular-4"><span class="nav-number">1.6.4.</span> <span class="nav-text">反例(ts-angular)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E6%9E%84%E5%90%8E%E4%BB%A3%E7%A0%81-9"><span class="nav-number">1.6.5.</span> <span class="nav-text">重构后代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.7.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="afetmin"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">afetmin</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/afetmin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:kingpenguins@163.com" title="E-Mail → mailto:kingpenguins@163.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/React-typescript-cheatsheet/" rel="bookmark">
+        <time class="popular-posts-time">2023-09-01</time>
+        <br>
+      React typescript cheatsheet
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/Higher-order-component/" rel="bookmark">
+        <time class="popular-posts-time">2023-08-25</time>
+        <br>
+      Higher-order component
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/React-%E2%80%9CKey%E2%80%9D/" rel="bookmark">
+        <time class="popular-posts-time">2023-08-24</time>
+        <br>
+      React “Key”
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E6%B5%85%E8%B0%88SOLID%E5%8E%9F%E5%88%99%E5%9C%A8%E5%89%8D%E7%AB%AF%E7%9A%84%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="afetmin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="花满渚，酒满瓯">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="浅谈SOLID原则在前端的使用 | 花满渚，酒满瓯">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浅谈SOLID原则在前端的使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-11-07 07:44:04" itemprop="dateCreated datePublished" datetime="2024-11-07T07:44:04+00:00">2024-11-07</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>10 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="浅谈SOLID原则在前端的使用"><a href="#浅谈SOLID原则在前端的使用" class="headerlink" title="浅谈SOLID原则在前端的使用"></a>浅谈SOLID原则在前端的使用</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>​<code>SOLID</code>​ 原则是由 <code>Robert C. Martin</code>​ 在 2000 年提出的一套软件开发准则，最初用于面向对象编程（OOP），旨在解决软件开发中的复杂性和维护问题。随着时间推移，它不仅在传统 OOP 语言中广泛应用，也被引入到 JavaScript 和 TypeScript 等现代编程语言和框架中，如 <code>React</code>​ 和 <code>Angular</code>​。</p>
+<p>SOLID 原则包括以下五个方面：</p>
+<ol>
+<li>单一职责原则（<code>Single Responsibility Principle - SRP</code>​）</li>
+<li>开闭原则（<code>Open/Closed Principle - OCP</code>​）</li>
+<li>里氏替换原则（<code>Liskov Substitution Principle - LSP</code>​）</li>
+<li>接口隔离原则（<code>Interface Segregation Principle - ISP</code>​）</li>
+<li>依赖倒置原则（<code>Dependency Inversion Principle - DIP</code>​）</li>
+</ol>
+<p>在 <code>JavaScript</code>​ 和 <code>TypeScript</code>​ 中，尽管它们是动态语言且不以类为核心，但这些原则可融入组件化和模块化架构，开发者能借此确保代码简洁、可扩展、易维护和测试</p>
+<h2 id="一、-单一职责原则-SRP"><a href="#一、-单一职责原则-SRP" class="headerlink" title="一、 单一职责原则 (SRP)"></a>一、 单一职责原则 (SRP)</h2><h3 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h3><p>一个类或模块应只有一个发生变化的原因，仅负责一项特定功能。在前端开发中，尤其是在 <code>React</code>​ 等组件化框架中，我们经常会看到组件承担了太多职责——不仅负责 <code>UI</code>​ 渲染，还处理业务逻辑和数据请求。这种情况很容易导致代码难以维护和测试，违反了 <code>SRP</code>​ 原则。</p>
+<h3 id="反例-js-react"><a href="#反例-js-react" class="headerlink" title="反例(js-react)"></a>反例(js-react)</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">UserProfile</span>(<span class="params">&#123; userId &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [user, setUser] = <span class="title function_">useState</span>(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">fetchUserData</span>();</span><br><span class="line">  &#125;, [userId]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">fetchUserData</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> response = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">`/api/users/<span class="subst">$&#123;userId&#125;</span>`</span>);</span><br><span class="line">    <span class="keyword">const</span> data = <span class="keyword">await</span> response.<span class="title function_">json</span>();</span><br><span class="line">    <span class="title function_">setUser</span>(data);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;user?.name&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此例中，<code>UserProfile</code>​ 组件既负责 <code>UI</code>​ 渲染又负责数据获取，违反 <code>SRP</code>​ 原则，当修改数据获取或界面渲染逻辑时，可能影响组件其他部分，增加维护复杂性。</p>
+<h3 id="重构后代码"><a href="#重构后代码" class="headerlink" title="重构后代码"></a>重构后代码</h3><p>为了遵循 <code>SRP</code>​ 原则，我们可以将数据获取逻辑提取到一个自定义的 <code>Hook</code>​ 中，让组件 <code>UserProfile</code>​ 只关注 <code>UI</code>​ 渲染。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 自定义 Hook 用于获取用户数据</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">useUserData</span>(<span class="params">userId</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [user, setUser] = <span class="title function_">useState</span>(<span class="literal">null</span>);</span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">fetchUserData</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> response = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">`/api/users/<span class="subst">$&#123;userId&#125;</span>`</span>);</span><br><span class="line">      <span class="keyword">const</span> data = <span class="keyword">await</span> response.<span class="title function_">json</span>();</span><br><span class="line">      <span class="title function_">setUser</span>(data);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">fetchUserData</span>();</span><br><span class="line">  &#125;, [userId]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> user;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// UI 组件</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">UserProfile</span>(<span class="params">&#123; userId &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> user = <span class="title function_">useUserData</span>(userId); <span class="comment">// 将数据获取逻辑移到了 Hook 中</span></span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;user?.name&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过自定义 <code>Hook</code>​（<code>useUserData</code>​）将数据获取逻辑与 <code>UI</code>​ 逻辑分离，符合 <code>SRP</code>​ 原则，提升了代码的可维护性和复用性。</p>
+<h3 id="反例-ts-angular"><a href="#反例-ts-angular" class="headerlink" title="反例(ts-angular)"></a>反例(ts-angular)</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">@<span class="title class_">Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">private http: HttpClient</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">getUser</span>(<span class="params">userId: string</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">http</span>.<span class="title function_">get</span>(<span class="string">`/api/users/<span class="subst">$&#123;userId&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">updateUserProfile</span>(<span class="params">userId: string, data: any</span>) &#123;</span><br><span class="line">    <span class="comment">// 更新用户信息并处理通知</span></span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">http</span>.<span class="title function_">put</span>(<span class="string">`/api/users/<span class="subst">$&#123;userId&#125;</span>`</span>, data).<span class="title function_">subscribe</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;User updated&#x27;</span>);</span><br><span class="line">      <span class="title function_">alert</span>(<span class="string">&#x27;Profile updated successfully&#x27;</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​<code>UserService</code>​ 类承担多个职责，包括获取和更新用户信息以及处理通知，违背 <code>SRP</code>​ 原则，导致维护困难。</p>
+<h3 id="重构后代码-1"><a href="#重构后代码-1" class="headerlink" title="重构后代码"></a>重构后代码</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">@<span class="title class_">Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">private http: HttpClient</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">getUser</span>(<span class="params">userId: string</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">http</span>.<span class="title function_">get</span>(<span class="string">`/api/users/<span class="subst">$&#123;userId&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">updateUserProfile</span>(<span class="params">userId: string, data: any</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">http</span>.<span class="title function_">put</span>(<span class="string">`/api/users/<span class="subst">$&#123;userId&#125;</span>`</span>, data);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 独立的通知服务</span></span><br><span class="line">@<span class="title class_">Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">NotificationService</span> &#123;</span><br><span class="line">  <span class="title function_">notify</span>(<span class="params">message: string</span>) &#123;</span><br><span class="line">    <span class="title function_">alert</span>(message);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过将通知逻辑分离到一个独立的 <code>NotificationService</code>​ 中，我们遵循了 <code>单一职责原则（SRP）</code>​，将通知逻辑分离到 <code>NotificationService</code>​ 中，遵循 <code>SRP</code>​ 原则，每个类职责明确，带来诸多好处：</p>
+<ol>
+<li>职责明确，增强可维护性。修改通知方式只需更改 <code>NotificationService</code>​，不影响用户服务其他功能。</li>
+<li>提高复用性。<code>NotificationService</code>​ 可在其他服务或组件中复用。</li>
+<li>测试更加方便。可单独为 <code>UserService</code>​ 和 <code>NotificationService</code>​ 编写测试。</li>
+<li>代码扩展更加灵活。如需更改通知方式，只需修改或扩展 <code>NotificationService</code>​。</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// **职责明确，增强可维护性：**修改通知为弹出窗口通知</span></span><br><span class="line">@<span class="title class_">Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">NotificationService</span> &#123;</span><br><span class="line">  <span class="title function_">notify</span>(<span class="params">message: string</span>) &#123;</span><br><span class="line">    <span class="title function_">showModal</span>(message);  <span class="comment">// 假设我们有一个 showModal 函数用于展示弹窗</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 提高复用性。NotificationService 可在其他服务或组件中复用</span></span><br><span class="line">@<span class="title class_">Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">OrderService</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">private notificationService: NotificationService</span>) &#123;&#125;</span><br><span class="line">  <span class="title function_">placeOrder</span>(<span class="params">orderData: any</span>) &#123;</span><br><span class="line">    <span class="comment">// 订单处理逻辑</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">notificationService</span>.<span class="title function_">notify</span>(<span class="string">&#x27;Order placed successfully&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 测试更加方便。可单独为 UserService 和 NotificationService 编写测试。</span></span><br><span class="line"><span class="title function_">it</span>(<span class="string">&#x27;should fetch user data&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> userService = <span class="keyword">new</span> <span class="title class_">UserService</span>(httpClientMock);</span><br><span class="line">  userService.<span class="title function_">getUser</span>(<span class="string">&#x27;1&#x27;</span>).<span class="title function_">subscribe</span>(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">expect</span>(data).<span class="title function_">toEqual</span>(mockUserData);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// NotificationService 测试</span></span><br><span class="line"><span class="title function_">it</span>(<span class="string">&#x27;should notify the user&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> notificationService = <span class="keyword">new</span> <span class="title class_">NotificationService</span>();</span><br><span class="line">  <span class="title function_">spyOn</span>(<span class="variable language_">window</span>, <span class="string">&#x27;alert&#x27;</span>);</span><br><span class="line">  notificationService.<span class="title function_">notify</span>(<span class="string">&#x27;Test message&#x27;</span>);</span><br><span class="line">  <span class="title function_">expect</span>(<span class="variable language_">window</span>.<span class="property">alert</span>).<span class="title function_">toHaveBeenCalledWith</span>(<span class="string">&#x27;Test message&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">//代码扩展更加灵活。如需更改通知方式，只需修改或扩展 NotificationService</span></span><br><span class="line">@<span class="title class_">Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">EmailNotificationService</span> <span class="keyword">extends</span> <span class="title class_ inherited__">NotificationService</span> &#123;</span><br><span class="line">  <span class="title function_">notify</span>(<span class="params">message: string</span>) &#123;</span><br><span class="line">    <span class="title function_">sendEmail</span>(message);  <span class="comment">// 假设我们有一个 sendEmail 函数发送邮件</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、开闭原则（OCP）"><a href="#二、开闭原则（OCP）" class="headerlink" title="二、开闭原则（OCP）"></a>二、开闭原则（OCP）</h2><h3 id="原则-1"><a href="#原则-1" class="headerlink" title="原则"></a>原则</h3><p>软件实体应能在不修改模块源代码的情况下扩展其行为，即对扩展开放，对修改封闭。</p>
+<h3 id="反例-js-react-1"><a href="#反例-js-react-1" class="headerlink" title="反例(js-react)"></a>反例(js-react)</h3><p>假设我们有一个表单验证函数，它目前工作正常，但未来可能需要添加更多的验证逻辑。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">validateForm</span>(<span class="params">values</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> errors = &#123;&#125;;</span><br><span class="line">  <span class="keyword">if</span> (!values.<span class="property">name</span>) &#123;</span><br><span class="line">    errors.<span class="property">name</span> = <span class="string">&quot;Name is required&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (!values.<span class="property">email</span>) &#123;</span><br><span class="line">    errors.<span class="property">email</span> = <span class="string">&quot;Email is required&quot;</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!<span class="regexp">/\S+@\S+\.\S+/</span>.<span class="title function_">test</span>(values.<span class="property">email</span>)) &#123;</span><br><span class="line">    errors.<span class="property">email</span> = <span class="string">&quot;Email is invalid&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> errors;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​<code>validateForm</code>​ 函数包含所有验证逻辑，添加新验证规则需修改现有代码，违背 <code>OCP</code>​ 原则，增加维护难度和出错风险。</p>
+<h3 id="重构后代码-2"><a href="#重构后代码-2" class="headerlink" title="重构后代码"></a>重构后代码</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 基础验证器接口</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Validator</span> &#123;</span><br><span class="line">  <span class="title function_">validate</span>(<span class="params">value</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;validate method must be implemented&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 具体的验证器</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RequiredValidator</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Validator</span> &#123;</span><br><span class="line">  <span class="title function_">validate</span>(<span class="params">value</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> value ? <span class="literal">null</span> : <span class="string">&quot;This field is required&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EmailValidator</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Validator</span> &#123;</span><br><span class="line">  <span class="title function_">validate</span>(<span class="params">value</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="regexp">/\S+@\S+\.\S+/</span>.<span class="title function_">test</span>(value) ? <span class="literal">null</span> : <span class="string">&quot;Email is invalid&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 验证表单函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">validateForm</span>(<span class="params">values, validators</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> errors = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> field <span class="keyword">in</span> validators) &#123;</span><br><span class="line">    <span class="keyword">const</span> error = validators[field].<span class="title function_">validate</span>(values[field]);</span><br><span class="line">    <span class="keyword">if</span> (error) &#123;</span><br><span class="line">      errors[field] = error;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> errors;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 使用示例</span></span><br><span class="line"><span class="keyword">const</span> validators = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="keyword">new</span> <span class="title class_">RequiredValidator</span>(),</span><br><span class="line">  <span class="attr">email</span>: <span class="keyword">new</span> <span class="title class_">EmailValidator</span>(),</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> errors = <span class="title function_">validateForm</span>(&#123; <span class="attr">name</span>: <span class="string">&quot;&quot;</span>, <span class="attr">email</span>: <span class="string">&quot;invalid email&quot;</span> &#125;, validators);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(errors);</span><br></pre></td></tr></table></figure>
+
+<p>通过将验证逻辑封装到独立的类（如 <code>RequiredValidator</code>​ 和 <code>EmailValidator</code>​）中，我们使得验证器符合 ​<strong>开放&#x2F;封闭原则（OCP）</strong>​。现在，如果需要添加新的验证规则（例如电话号码验证），只需创建一个新的验证器类，而无需修改现有的验证逻辑；换句话说，应该允许在不修改现有核心代码的情况下添加新功能。</p>
+<h3 id="反例-ts-angular-1"><a href="#反例-ts-angular-1" class="headerlink" title="反例(ts-angular)"></a>反例(ts-angular)</h3><p>在 <code>Angular</code>​ 中，服务和组件的设计应允许添加新功能，而无需修改核心逻辑。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">NotificationService</span> &#123;</span><br><span class="line">  <span class="title function_">send</span>(<span class="params">type: <span class="string">&#x27;email&#x27;</span> | <span class="string">&#x27;sms&#x27;</span>, message: string</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (type === <span class="string">&#x27;email&#x27;</span>) &#123;</span><br><span class="line">      <span class="comment">// 发送电子邮件</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type === <span class="string">&#x27;sms&#x27;</span>) &#123;</span><br><span class="line">      <span class="comment">// 发送短信</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>NotificationService</code>​ 类违反了 ​<strong>开放&#x2F;封闭原则（OCP）</strong>​，因为每次需要支持新类型的通知（例如推送通知）时，必须修改 <code>send</code>​ 方法。这不仅会增加维护成本，还容易引发错误，尤其是当代码变得越来越复杂时。</p>
+<h3 id="重构后代码-3"><a href="#重构后代码-3" class="headerlink" title="重构后代码"></a>重构后代码</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">interface <span class="title class_">Notification</span> &#123;</span><br><span class="line">  <span class="title function_">send</span>(<span class="attr">message</span>: string): <span class="keyword">void</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">EmailNotification</span> implements <span class="title class_">Notification</span> &#123;</span><br><span class="line">  <span class="title function_">send</span>(<span class="params">message: string</span>) &#123;</span><br><span class="line">    <span class="comment">// 发送电子邮件的逻辑</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">SMSNotification</span> implements <span class="title class_">Notification</span> &#123;</span><br><span class="line">  <span class="title function_">send</span>(<span class="params">message: string</span>) &#123;</span><br><span class="line">    <span class="comment">// 发送短信的逻辑</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">NotificationService</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">private notifications: Notification[]</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">notify</span>(<span class="params">message: string</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">notifications</span>.<span class="title function_">forEach</span>(<span class="function"><span class="params">n</span> =&gt;</span> n.<span class="title function_">send</span>(message));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过将通知发送逻辑封装到各自独立的类（<code>EmailNotification</code>​ 和 <code>SMSNotification</code>​）中，我们实现了符合 <strong>开放&#x2F;封闭原则（OCP）</strong> 的设计。这个设计的核心思想是，所有新功能（例如新的通知类型）都可以通过创建新的类来扩展，而不需要修改现有的 <code>NotificationService</code>​ 类。好处：对扩展开放，对修改封闭、提高复用性、测试更加简单、增强代码的灵活性与维护性。</p>
+<hr>
+<h2 id="三、-里氏替换原则-LSP"><a href="#三、-里氏替换原则-LSP" class="headerlink" title="三、 里氏替换原则 (LSP)"></a>三、 里氏替换原则 (LSP)</h2><h3 id="原则-2"><a href="#原则-2" class="headerlink" title="原则"></a>原则</h3><p>子类型必须可以替换其基类型。派生类或组件应该能够替换基类，而不会影响程序的正确性。</p>
+<h3 id="反例-js-react-2"><a href="#反例-js-react-2" class="headerlink" title="反例(js-react)"></a>反例(js-react)</h3><p>当使用高阶组件 (<code>HOC</code>​) 或有条件地渲染不同组件时，<code>LSP</code>​ 有助于确保所有组件的行为都可预测。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Button</span>(<span class="params">&#123; onClick &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;onClick&#125;</span>&gt;</span>Click me<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">LinkButton</span>(<span class="params">&#123; href &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&#123;href&#125;</span>&gt;</span>Click me<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="title class_">Button</span> onClick=&#123;<span class="function">() =&gt;</span> &#123;&#125;&#125; /&gt;;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">LinkButton</span> <span class="attr">href</span>=<span class="string">&quot;/home&quot;</span> /&gt;</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>这里 <code>Button</code> ​和 <code>LinkButton</code> ​不一致，一个用 <code>onClick</code>​，一个用 <code>href</code>​，替换起来比较困难。</p>
+<h3 id="重构后代码-4"><a href="#重构后代码-4" class="headerlink" title="重构后代码"></a>重构后代码</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Clickable</span>(<span class="params">&#123; children, onClick &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">onClick</span>=<span class="string">&#123;onClick&#125;</span>&gt;</span>&#123;children&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Button</span>(<span class="params">&#123; onClick &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">Clickable</span> <span class="attr">onClick</span>=<span class="string">&#123;onClick&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">button</span>&gt;</span>Click me<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">Clickable</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">LinkButton</span>(<span class="params">&#123; href &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">Clickable</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> window.location.href = href&#125;&gt;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&#123;href&#125;</span>&gt;</span>Click me<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">Clickable</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在，<code>Button</code>​ 和 <code>LinkButton</code>​ 的行为类似，均遵循 <code>LSP</code>​。</p>
+<h3 id="反例-ts-angular-2"><a href="#反例-ts-angular-2" class="headerlink" title="反例(ts-angular)"></a>反例(ts-angular)</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Rectangle</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">protected width: number, protected height: number</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">area</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">width</span> * <span class="variable language_">this</span>.<span class="property">height</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Square</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Rectangle</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">size: number</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(size, size);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">setWidth</span>(<span class="params">width: number</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">width</span> = width;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">height</span> = width; <span class="comment">// Breaks LSP</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改 <code>Square</code>​ 中的 <code>setWidth</code>​ 违反了 <code>LSP</code>​，因为 <code>Square</code>​ 的行为与 <code>Rectangle</code>​ 不同。</p>
+<h3 id="重构后代码-5"><a href="#重构后代码-5" class="headerlink" title="重构后代码"></a>重构后代码</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Shape</span> &#123;</span><br><span class="line">  <span class="title function_">area</span>(): number &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Method not implemented&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Rectangle</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Shape</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">private width: number, private height: number</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">area</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">width</span> * <span class="variable language_">this</span>.<span class="property">height</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Square</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Shape</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">private size: number</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">area</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">size</span> * <span class="variable language_">this</span>.<span class="property">size</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在，<code>Square</code> ​和 <code>Rectangle</code> ​可以相互替代而不违反 LSP。</p>
+<hr>
+<h2 id="四、接口隔离原则-ISP"><a href="#四、接口隔离原则-ISP" class="headerlink" title="四、接口隔离原则 (ISP)"></a>四、接口隔离原则 (ISP)</h2><h3 id="原则-3"><a href="#原则-3" class="headerlink" title="原则"></a>原则</h3><p>客户端不应被迫依赖他们不使用的接口</p>
+<h3 id="反例-js-react-3"><a href="#反例-js-react-3" class="headerlink" title="反例(js-react)"></a>反例(js-react)</h3><p>​<code>React</code>​ 组件有时会收到不必要的 <code>props</code>​，导致代码紧密耦合且庞大。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">MultiPurposeComponent</span>(<span class="params">&#123; user, posts, comments &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">UserProfile</span> <span class="attr">user</span>=<span class="string">&#123;user&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">UserPosts</span> <span class="attr">posts</span>=<span class="string">&#123;posts&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">UserComments</span> <span class="attr">comments</span>=<span class="string">&#123;comments&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里，组件依赖于多个 <code>props</code>​，即使它可能并不总是使用它们。</p>
+<h3 id="重构后代码-6"><a href="#重构后代码-6" class="headerlink" title="重构后代码"></a>重构后代码</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">UserProfileComponent</span>(<span class="params">&#123; user &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">UserProfile</span> <span class="attr">user</span>=<span class="string">&#123;user&#125;</span> /&gt;</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">UserPostsComponent</span>(<span class="params">&#123; posts &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">UserPosts</span> <span class="attr">posts</span>=<span class="string">&#123;posts&#125;</span> /&gt;</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">UserCommentsComponent</span>(<span class="params">&#123; comments &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">UserComments</span> <span class="attr">comments</span>=<span class="string">&#123;comments&#125;</span> /&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过将组件拆分成更小的组件，每个组件仅依赖于它实际使用的数据。</p>
+<h3 id="反例-ts-angular-3"><a href="#反例-ts-angular-3" class="headerlink" title="反例(ts-angular)"></a>反例(ts-angular)</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">interface <span class="title class_">Worker</span> &#123;</span><br><span class="line">  <span class="title function_">work</span>(): <span class="keyword">void</span>;</span><br><span class="line">  <span class="title function_">eat</span>(): <span class="keyword">void</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">HumanWorker</span> implements <span class="title class_">Worker</span> &#123;</span><br><span class="line">  <span class="title function_">work</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Working&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">eat</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Eating&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RobotWorker</span> implements <span class="title class_">Worker</span> &#123;</span><br><span class="line">  <span class="title function_">work</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Working&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">eat</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Robots do not eat&#x27;</span>); <span class="comment">// Violates ISP</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里，<code>RobotWorker</code> ​被迫实现了不相关的 <code>eat</code> ​方法。</p>
+<h3 id="重构后代码-7"><a href="#重构后代码-7" class="headerlink" title="重构后代码"></a>重构后代码</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">interface <span class="title class_">Worker</span> &#123;</span><br><span class="line">  <span class="title function_">work</span>(): <span class="keyword">void</span>;</span><br><span class="line">&#125;</span><br><span class="line">interface <span class="title class_">Eater</span> &#123;</span><br><span class="line">  <span class="title function_">eat</span>(): <span class="keyword">void</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">HumanWorker</span> implements <span class="title class_">Worker</span>, <span class="title class_">Eater</span> &#123;</span><br><span class="line">  <span class="title function_">work</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Working&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">eat</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Eating&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RobotWorker</span> implements <span class="title class_">Worker</span> &#123;</span><br><span class="line">  <span class="title function_">work</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Working&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过分离 <code>Worker</code>​ 和 <code>Eater</code>​ 接口，我们确保客户端只依赖于它们所需要的。</p>
+<hr>
+<h2 id="五、依赖倒置原则-DIP"><a href="#五、依赖倒置原则-DIP" class="headerlink" title="五、依赖倒置原则 (DIP)"></a>五、依赖倒置原则 (DIP)</h2><h3 id="原则-4"><a href="#原则-4" class="headerlink" title="原则"></a>原则</h3><p>高级模块不应依赖于低级模块。两者都应依赖于抽象（例如接口）。</p>
+<h3 id="反例-js-react-4"><a href="#反例-js-react-4" class="headerlink" title="反例(js-react)"></a>反例(js-react)</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">fetchUser</span>(<span class="params">userId</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">fetch</span>(<span class="string">`/api/users/<span class="subst">$&#123;userId&#125;</span>`</span>).<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> res.<span class="title function_">json</span>());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">UserComponent</span>(<span class="params">&#123; userId &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [user, setUser] = <span class="title function_">useState</span>(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">fetchUser</span>(userId).<span class="title function_">then</span>(setUser);</span><br><span class="line">  &#125;, [userId]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;user?.name&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里，<code>UserComponent</code>​ 与 <code>fetchUser</code>​ 函数紧密耦合。</p>
+<h3 id="重构后代码-8"><a href="#重构后代码-8" class="headerlink" title="重构后代码"></a>重构后代码</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">UserComponent</span>(<span class="params">&#123; userId, fetchUserData &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [user, setUser] = <span class="title function_">useState</span>(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">fetchUserData</span>(userId).<span class="title function_">then</span>(setUser);</span><br><span class="line">  &#125;, [userId, fetchUserData]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;user?.name&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Usage</span></span><br><span class="line">&lt;<span class="title class_">UserComponent</span> userId=&#123;<span class="number">1</span>&#125; fetchUserData=&#123;fetchUser&#125; /&gt;;</span><br></pre></td></tr></table></figure>
+
+<p>通过将 <code>fetchUserData</code>​ 注入组件，我们可以轻松地交换实现以进行测试或用于不同的用例。</p>
+<h3 id="反例-ts-angular-4"><a href="#反例-ts-angular-4" class="headerlink" title="反例(ts-angular)"></a>反例(ts-angular)</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">@<span class="title class_">Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">private http: HttpClient</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">getUser</span>(<span class="params">userId: string</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">http</span>.<span class="title function_">get</span>(<span class="string">`/api/users/<span class="subst">$&#123;userId&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserComponent</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">private userService: UserService</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">loadUser</span>(<span class="params">userId: string</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">userService</span>.<span class="title function_">getUser</span>(userId).<span class="title function_">subscribe</span>(<span class="function"><span class="params">user</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(user));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​<code>UserComponent</code>​ 与 <code>UserService</code>​ 紧密耦合，因此很难替换掉 <code>UserService</code>​。</p>
+<h3 id="重构后代码-9"><a href="#重构后代码-9" class="headerlink" title="重构后代码"></a>重构后代码</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">interface <span class="title class_">UserService</span> &#123;</span><br><span class="line">  <span class="title function_">getUser</span>(<span class="attr">userId</span>: string): <span class="title class_">Observable</span>&lt;<span class="title class_">User</span>&gt;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">ApiUserService</span> implements <span class="title class_">UserService</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">private http: HttpClient</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">getUser</span>(<span class="params">userId: string</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">http</span>.<span class="property">get</span>&lt;<span class="title class_">User</span>&gt;(<span class="string">`/api/users/<span class="subst">$&#123;userId&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">@<span class="title class_">Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">UserComponent</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">private userService: UserService</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">loadUser</span>(<span class="params">userId: string</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">userService</span>.<span class="title function_">getUser</span>(userId).<span class="title function_">subscribe</span>(<span class="function"><span class="params">user</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(user));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过依赖接口（<code>UserService</code>​），<code>UserComponent</code>​ 现在与 <code>ApiUserService</code>​ 的具体实现分离。</p>
+<hr>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>无论是前端的 <code>React</code>​、<code>Angular</code>​ 等框架，还是后端的 <code>Node.js</code>​，<code>SOLID</code>​ 原则都能作为指南，让软件架构更加稳固。<code>SOLID</code>​ 原则能非常有效地确保代码干净、可维护且可扩展，在 <code>JavaScript</code>​ 和 <code>TypeScript</code>​ 框架（如 <code>React</code>​ 和 <code>Angular</code>​）中同样如此。应用这些原则，开发人员能编写灵活且可重复使用的代码，随着需求的发展，这些代码也能轻松扩展和重构。遵循 <code>SOLID</code>​ 原则，能让代码库变得强大，为未来的增长做好准备。</p>
+<p>‍</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/blog/images/wechatpay.jpg" alt="afetmin 微信">
+        <span>微信</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/blog/tags/js/" rel="tag"><i class="fa fa-tag"></i> js</a>
+              <a href="/blog/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"><i class="fa fa-tag"></i> 设计模式</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E5%A6%82%E6%9E%9C%E4%B8%80%E4%B8%AAnpm%E5%8C%85%E4%B8%8D%E6%BB%A1%E8%B6%B3%E9%9C%80%E6%B1%82%EF%BC%8C%E5%A6%82%E4%BD%95%E4%BF%AE%E6%94%B9%E5%85%B6%E9%83%A8%E5%88%86%E5%8A%9F%E8%83%BD/" rel="prev" title="如果一个npm包不满足需求，如何修改其部分功能">
+                  <i class="fa fa-angle-left"></i> 如果一个npm包不满足需求，如何修改其部分功能
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">afetmin</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">71k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:17</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/sidebar.js"></script><script src="/blog/js/next-boot.js"></script><script src="/blog/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js"></script>
+
+  <script src="/blog/js/third-party/pace.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":3000,"priority":true,"url":"https://afetmin.github.io/blog/%E6%B5%85%E8%B0%88SOLID%E5%8E%9F%E5%88%99%E5%9C%A8%E5%89%8D%E7%AB%AF%E7%9A%84%E4%BD%BF%E7%94%A8/"}</script>
+  <script src="/blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>
