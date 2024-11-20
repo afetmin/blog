@@ -265,6 +265,35 @@
       </categories>
   </entry>
   <entry>
+    <title>better-scroll结合vue遇到图片引起的问题</title>
+    <url>/blog/better-scroll%E7%BB%93%E5%90%88vue%E9%81%87%E5%88%B0%E5%9B%BE%E7%89%87%E5%BC%95%E8%B5%B7%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h2 id="使用better-scroll遇到的问题"><a href="#使用better-scroll遇到的问题" class="headerlink" title="使用better-scroll遇到的问题"></a>使用better-scroll遇到的问题</h2><p>原来项目中只使用了better-scroll来做轮播图和滑动组件，但是头部和标签栏是固定的，只滑动下面部分，于是设置 scroll-warpper样式如下：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.scroll-wrapper</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">80px</span>;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是想要实现下部组件与上部标签的联动，仅仅靠better-scroll就不够了，于是项目中按需引入了vant的的标签组件，来实现移动端的左右滑动（不得不说，封装好的东西就是香）。紧接着就产生了问题，</p>
+<ul>
+<li>一是：下部组件无法滑动，</li>
+<li>二是：better-scroll滑不到底部，只能滑一部分。刷新页面后可以滑动了</li>
+</ul>
+<p>分析问题：</p>
+<ul>
+<li>查看dom发现vant的content__wrap没有高度，而scroll-warpper和内容高度一致。这是由于content__wrap的定位是relative，而scroll-wrapper是相对于content__wrap而定位的，并不是相对整个页面定位，所有内容是被里面撑开的。</li>
+<li>页面中有大量图片，当dom加载完成后图片并没有加载完成，scroll已经初始化了，所以滑不到底部。刷新页面可以滑动是因为图片已经被浏览器缓存了，刷新直接拿到图片不需要重新请求。</li>
+</ul>
+<p>解决问题：</p>
+<ul>
+<li>第一个问题是定位的原因，那我们把wrapper的高度写死就好了，<br>  但是由于头部和标签是自适应的，高度是不确定的，就没法写死了。使用动态获取设置wrapper的style：<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">setScrollWrapperHeight</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">scroll</span>.<span class="property">$el</span>.<span class="property">style</span>.<span class="property">height</span> =</span><br><span class="line">        <span class="variable language_">window</span>.<span class="property">innerHeight</span> - <span class="variable language_">this</span>.<span class="property">topHeight</span> + <span class="string">&#x27;px&#x27;</span></span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure></li>
+<li>由于多个页面都需要这个配置，放到mixin中，在mounted方法中调用此方法。<br>解决wrapper高度问题。</li>
+<li>第二个问题是图片加载时content的高度设置错误问题，可以通过img的load方法判断图片是否加载完成。<br> 子组件： <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">imgAllLoad</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> mulitImg = <span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;.suggest-item-img&#x27;</span>)</span><br><span class="line">      <span class="keyword">const</span> promiseAll = []</span><br><span class="line">      <span class="keyword">const</span> imgTotal = mulitImg.<span class="property">length</span></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; imgTotal; i++) &#123;</span><br><span class="line">        promiseAll[i] = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">          mulitImg[i].<span class="property">onload</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="comment">// 第i张加载完成</span></span><br><span class="line">            <span class="title function_">resolve</span>(mulitImg[i])</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> promiseAll</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+在子组件mounted中：派发一个imgLoad方法<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title class_">Promise</span>.<span class="title function_">all</span>(<span class="variable language_">this</span>.<span class="title function_">imgAllLoad</span>()).<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.$emit(<span class="string">&#x27;imgLoad&#x27;</span>)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+在父组件监听此方法，并刷新scroll组件<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="title function_">imgLoad</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">scroll</span>.<span class="title function_">refresh</span>()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+这样体验就不错了。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+  </entry>
+  <entry>
     <title>React的diff</title>
     <url>/blog/React%E7%9A%84diff/</url>
     <content><![CDATA[<h1 id="React-的-diff"><a href="#React-的-diff" class="headerlink" title="React 的 diff"></a>React 的 diff</h1><p>一个<code>DOM节点</code>在某一时刻最多会有 4 个节点和它相关。</p>
@@ -329,35 +358,6 @@
         <tag>js</tag>
         <tag>react</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>better-scroll结合vue遇到图片引起的问题</title>
-    <url>/blog/better-scroll%E7%BB%93%E5%90%88vue%E9%81%87%E5%88%B0%E5%9B%BE%E7%89%87%E5%BC%95%E8%B5%B7%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h2 id="使用better-scroll遇到的问题"><a href="#使用better-scroll遇到的问题" class="headerlink" title="使用better-scroll遇到的问题"></a>使用better-scroll遇到的问题</h2><p>原来项目中只使用了better-scroll来做轮播图和滑动组件，但是头部和标签栏是固定的，只滑动下面部分，于是设置 scroll-warpper样式如下：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.scroll-wrapper</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">80px</span>;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>但是想要实现下部组件与上部标签的联动，仅仅靠better-scroll就不够了，于是项目中按需引入了vant的的标签组件，来实现移动端的左右滑动（不得不说，封装好的东西就是香）。紧接着就产生了问题，</p>
-<ul>
-<li>一是：下部组件无法滑动，</li>
-<li>二是：better-scroll滑不到底部，只能滑一部分。刷新页面后可以滑动了</li>
-</ul>
-<p>分析问题：</p>
-<ul>
-<li>查看dom发现vant的content__wrap没有高度，而scroll-warpper和内容高度一致。这是由于content__wrap的定位是relative，而scroll-wrapper是相对于content__wrap而定位的，并不是相对整个页面定位，所有内容是被里面撑开的。</li>
-<li>页面中有大量图片，当dom加载完成后图片并没有加载完成，scroll已经初始化了，所以滑不到底部。刷新页面可以滑动是因为图片已经被浏览器缓存了，刷新直接拿到图片不需要重新请求。</li>
-</ul>
-<p>解决问题：</p>
-<ul>
-<li>第一个问题是定位的原因，那我们把wrapper的高度写死就好了，<br>  但是由于头部和标签是自适应的，高度是不确定的，就没法写死了。使用动态获取设置wrapper的style：<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">setScrollWrapperHeight</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">scroll</span>.<span class="property">$el</span>.<span class="property">style</span>.<span class="property">height</span> =</span><br><span class="line">        <span class="variable language_">window</span>.<span class="property">innerHeight</span> - <span class="variable language_">this</span>.<span class="property">topHeight</span> + <span class="string">&#x27;px&#x27;</span></span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure></li>
-<li>由于多个页面都需要这个配置，放到mixin中，在mounted方法中调用此方法。<br>解决wrapper高度问题。</li>
-<li>第二个问题是图片加载时content的高度设置错误问题，可以通过img的load方法判断图片是否加载完成。<br> 子组件： <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">imgAllLoad</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> mulitImg = <span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;.suggest-item-img&#x27;</span>)</span><br><span class="line">      <span class="keyword">const</span> promiseAll = []</span><br><span class="line">      <span class="keyword">const</span> imgTotal = mulitImg.<span class="property">length</span></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; imgTotal; i++) &#123;</span><br><span class="line">        promiseAll[i] = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">          mulitImg[i].<span class="property">onload</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="comment">// 第i张加载完成</span></span><br><span class="line">            <span class="title function_">resolve</span>(mulitImg[i])</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> promiseAll</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
-在子组件mounted中：派发一个imgLoad方法<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title class_">Promise</span>.<span class="title function_">all</span>(<span class="variable language_">this</span>.<span class="title function_">imgAllLoad</span>()).<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.$emit(<span class="string">&#x27;imgLoad&#x27;</span>)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
-在父组件监听此方法，并刷新scroll组件<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="title function_">imgLoad</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">scroll</span>.<span class="title function_">refresh</span>()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
-这样体验就不错了。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>vue</category>
-      </categories>
   </entry>
   <entry>
     <title>express三大概念</title>
@@ -1356,28 +1356,6 @@
       </categories>
   </entry>
   <entry>
-    <title>材质贴图属性介绍</title>
-    <url>/blog/%E6%9D%90%E8%B4%A8%E8%B4%B4%E5%9B%BE%E5%B1%9E%E6%80%A7%E4%BB%8B%E7%BB%8D/</url>
-    <content><![CDATA[<p>​<img data-src="/blog/./%E6%9D%90%E8%B4%A8%E8%B4%B4%E5%9B%BE%E5%B1%9E%E6%80%A7%E4%BB%8B%E7%BB%8D/image-20230312140945-ere8b2a.png" alt="image">diffuse&#x2F;base colos&#x2F;albedo颜色贴图： 漫反射可以简单理解成物体表面固有的颜色</p>
-<p>reflection&#x2F;specular反射贴图：白色全反射黑色不反射（排除金银铜等金属）</p>
-<p>metalness金属度： 纯白金属 黑色电解质</p>
-<p>glossiness光泽度： 材质的粗糙程度 白色光滑，黑色粗糙</p>
-<p>roughness粗糙度： 与上面相反</p>
-<p>normal蓝色法线 用rgb代表xyz三个方向上的位移值，本质改变了光线在材质表面的传播方式，没有产生模型形变， OpenGl（+X, +Y, +Z), DirectX（+X， -Y，+Z）</p>
-<p>displacement&#x2F;height置换贴图： 黑色不变，白色凸起</p>
-<p>bump凹凸： 与置换相同但只改变光线效果，没有改变模型，使之产生形变</p>
-<p>AO环境光遮蔽： 物体相交或者靠近时遮挡附近漫反射光线，前提是发生了置换效果</p>
-<ol>
-<li>颜色信息（漫反射）</li>
-<li>反射信息（反射、光泽度）</li>
-<li>高度信息（法线、凹凸、置换）</li>
-</ol>
-]]></content>
-      <categories>
-        <category>图形学</category>
-      </categories>
-  </entry>
-  <entry>
     <title>性能优化的一般性原则</title>
     <url>/blog/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%9A%84%E4%B8%80%E8%88%AC%E6%80%A7%E5%8E%9F%E5%88%99/</url>
     <content><![CDATA[<h2 id="一般性原则"><a href="#一般性原则" class="headerlink" title="一般性原则"></a>一般性原则</h2><h3 id="依据数据而不是凭空猜测"><a href="#依据数据而不是凭空猜测" class="headerlink" title="依据数据而不是凭空猜测"></a>依据数据而不是凭空猜测</h3><p>这是前端性能优化的第一原则，当我们怀疑前端性能有问题的时候，应该通过测试、浏览器开发者工具、性能分析工具来分析出哪里有问题，有的放矢，而不是凭感觉、撞运气。一个前端页面有了性能问题，瓶颈有可能是 JavaScript 执行时间过长，有可能是网络请求过多或请求资源过大，有可能是 DOM 操作频繁导致重排重绘，大方向的定位可以使用浏览器开发者工具的 Performance 面板来定位，针对具体的代码块，可以使用 console.time 和 console.timeEnd 来分析执行时间。</p>
@@ -1436,6 +1414,28 @@
       <tags>
         <tag>性能优化</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>材质贴图属性介绍</title>
+    <url>/blog/%E6%9D%90%E8%B4%A8%E8%B4%B4%E5%9B%BE%E5%B1%9E%E6%80%A7%E4%BB%8B%E7%BB%8D/</url>
+    <content><![CDATA[<p>​<img data-src="/blog/./%E6%9D%90%E8%B4%A8%E8%B4%B4%E5%9B%BE%E5%B1%9E%E6%80%A7%E4%BB%8B%E7%BB%8D/image-20230312140945-ere8b2a.png" alt="image">diffuse&#x2F;base colos&#x2F;albedo颜色贴图： 漫反射可以简单理解成物体表面固有的颜色</p>
+<p>reflection&#x2F;specular反射贴图：白色全反射黑色不反射（排除金银铜等金属）</p>
+<p>metalness金属度： 纯白金属 黑色电解质</p>
+<p>glossiness光泽度： 材质的粗糙程度 白色光滑，黑色粗糙</p>
+<p>roughness粗糙度： 与上面相反</p>
+<p>normal蓝色法线 用rgb代表xyz三个方向上的位移值，本质改变了光线在材质表面的传播方式，没有产生模型形变， OpenGl（+X, +Y, +Z), DirectX（+X， -Y，+Z）</p>
+<p>displacement&#x2F;height置换贴图： 黑色不变，白色凸起</p>
+<p>bump凹凸： 与置换相同但只改变光线效果，没有改变模型，使之产生形变</p>
+<p>AO环境光遮蔽： 物体相交或者靠近时遮挡附近漫反射光线，前提是发生了置换效果</p>
+<ol>
+<li>颜色信息（漫反射）</li>
+<li>反射信息（反射、光泽度）</li>
+<li>高度信息（法线、凹凸、置换）</li>
+</ol>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
   </entry>
   <entry>
     <title>浅谈SOLID原则在前端的使用</title>
@@ -1841,6 +1841,57 @@
       </categories>
   </entry>
   <entry>
+    <title>第七章：z-buffer和着色</title>
+    <url>/blog/%E7%AC%AC%E4%B8%83%E7%AB%A0%EF%BC%9Az-buffer%E5%92%8C%E7%9D%80%E8%89%B2/</url>
+    <content><![CDATA[<p>回顾上一课：</p>
+<ul>
+<li><p>光栅化一个三角形</p>
+</li>
+<li><p>采样</p>
+</li>
+<li><p>反走样</p>
+</li>
+</ul>
+<p>可见性&#x2F;遮挡（把三角形画在屏幕上，同时遮挡关系是对的）：</p>
+<ul>
+<li>z-buffer</li>
+</ul>
+<p><strong>painter’s algorithm（画家算法）</strong></p>
+<p>所有物体按深度排序（O(nlogn)），先把远的画上去，再把近的画上去，近的就会遮挡远的。但这种方式无法解决深度上互相遮挡的问题。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210915-pvb608h.png" alt="image">​</p>
+<p><strong>z-buffer</strong></p>
+<p>通过深度缓存维护存储每个像素当前的最小深度</p>
+<p>同步生成最后的结果（frame buffer）和当前看到的场景的任何一个像素对应的深度（depth buffer）。</p>
+<p>假设场景的点到相机的距离表示深度z，且这个值始终是正的，z越小的距离越近，越大的距离越远。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210941-qrlgori.png" alt="image">​</p>
+<p>先假设深度图上每一个像素的深度都是无限远，遍历每一个三角形的每一个像素，如果遍历到的像素深度比当前深度图记录的深度浅，就把深度图上的深度替换为这个像素的深度，否则不变。</p>
+<p>假设每个三角形覆盖的像素是常数项，时间复杂度O(n)。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210946-n9bslnc.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210954-8g8lbbc.png" alt="image">​</p>
+<p>一般两个浮点数值不会一样，所以比较深度的时候一般不会出现深度一样的情况。</p>
+<p>MSAA采样的时候一个像素可能有多个采样点，所以是记录每个采样点的深度。</p>
+<p>透明物体处理不了深度。</p>
+<h4 id="着色（shading）"><a href="#着色（shading）" class="headerlink" title="着色（shading）"></a><strong>着色（shading）</strong></h4><p>对不同物体应用不同的材质。</p>
+<p>一个基础的着色模型（Blinn-Phong 反射模型）</p>
+<p>高光、漫反射、环境光</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211003-0egfb17.png" alt="image">​</p>
+<p>对于一个物体表面的点，定义一个法线方向、一个视线方向、一个光照方向，和一些物体表面的参数</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211128-xr0alxy.png" alt="image">​</p>
+<p>着色有局部性。不考虑其他的物体，只考虑自己。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211133-dna2cne.png" alt="image">​</p>
+<p>一个shading point周围的单位面积接收的能量和光照方向和发现方向夹角的余弦成正比。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211139-xxs0w84.png" alt="image">​</p>
+<p>点光源，光线传播，每个时刻到达一个新的球壳。假如半径为1的时候，光的强度为I，则半径为r的时候，强度变为I&#x2F;r²</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211145-vw9pz1f.png" alt="image">​</p>
+<p>从不同的角度观测同一个点的结果是一样的。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211149-t038nb0.png" alt="image">​</p>
+<p>k_(d)  漫反射的系数，表示吸收了（反射了）多少颜色颜色。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211154-nrtvz3z.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
     <title>第一、二章：图形学概述、向量与线性代数</title>
     <url>/blog/%E7%AC%AC%E4%B8%80%E3%80%81%E4%BA%8C%E7%AB%A0%EF%BC%9A%E5%9B%BE%E5%BD%A2%E5%AD%A6%E6%A6%82%E8%BF%B0%E3%80%81%E5%90%91%E9%87%8F%E4%B8%8E%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/</url>
     <content><![CDATA[<h3 id="第一章-图形学概述"><a href="#第一章-图形学概述" class="headerlink" title="第一章 图形学概述"></a>第一章 图形学概述</h3><h4 id="1-图形学应用场景"><a href="#1-图形学应用场景" class="headerlink" title="1.图形学应用场景"></a>1.图形学应用场景</h4><p>游戏场景渲染、电影特效、动画、设计、可视化（人体三维扫描）、虚拟现实、数字绘图、模拟、GUI、字体排版等</p>
@@ -1944,57 +1995,6 @@
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203400-dl98u4q.png" alt="image">​</p>
 <p><strong>向量点乘和叉乘写成矩阵的形式（用在旋转的推导上）</strong></p>
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203405-yaiw812.png" alt="image">​</p>
-]]></content>
-      <categories>
-        <category>图形学</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>第七章：z-buffer和着色</title>
-    <url>/blog/%E7%AC%AC%E4%B8%83%E7%AB%A0%EF%BC%9Az-buffer%E5%92%8C%E7%9D%80%E8%89%B2/</url>
-    <content><![CDATA[<p>回顾上一课：</p>
-<ul>
-<li><p>光栅化一个三角形</p>
-</li>
-<li><p>采样</p>
-</li>
-<li><p>反走样</p>
-</li>
-</ul>
-<p>可见性&#x2F;遮挡（把三角形画在屏幕上，同时遮挡关系是对的）：</p>
-<ul>
-<li>z-buffer</li>
-</ul>
-<p><strong>painter’s algorithm（画家算法）</strong></p>
-<p>所有物体按深度排序（O(nlogn)），先把远的画上去，再把近的画上去，近的就会遮挡远的。但这种方式无法解决深度上互相遮挡的问题。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210915-pvb608h.png" alt="image">​</p>
-<p><strong>z-buffer</strong></p>
-<p>通过深度缓存维护存储每个像素当前的最小深度</p>
-<p>同步生成最后的结果（frame buffer）和当前看到的场景的任何一个像素对应的深度（depth buffer）。</p>
-<p>假设场景的点到相机的距离表示深度z，且这个值始终是正的，z越小的距离越近，越大的距离越远。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210941-qrlgori.png" alt="image">​</p>
-<p>先假设深度图上每一个像素的深度都是无限远，遍历每一个三角形的每一个像素，如果遍历到的像素深度比当前深度图记录的深度浅，就把深度图上的深度替换为这个像素的深度，否则不变。</p>
-<p>假设每个三角形覆盖的像素是常数项，时间复杂度O(n)。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210946-n9bslnc.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210954-8g8lbbc.png" alt="image">​</p>
-<p>一般两个浮点数值不会一样，所以比较深度的时候一般不会出现深度一样的情况。</p>
-<p>MSAA采样的时候一个像素可能有多个采样点，所以是记录每个采样点的深度。</p>
-<p>透明物体处理不了深度。</p>
-<h4 id="着色（shading）"><a href="#着色（shading）" class="headerlink" title="着色（shading）"></a><strong>着色（shading）</strong></h4><p>对不同物体应用不同的材质。</p>
-<p>一个基础的着色模型（Blinn-Phong 反射模型）</p>
-<p>高光、漫反射、环境光</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211003-0egfb17.png" alt="image">​</p>
-<p>对于一个物体表面的点，定义一个法线方向、一个视线方向、一个光照方向，和一些物体表面的参数</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211128-xr0alxy.png" alt="image">​</p>
-<p>着色有局部性。不考虑其他的物体，只考虑自己。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211133-dna2cne.png" alt="image">​</p>
-<p>一个shading point周围的单位面积接收的能量和光照方向和发现方向夹角的余弦成正比。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211139-xxs0w84.png" alt="image">​</p>
-<p>点光源，光线传播，每个时刻到达一个新的球壳。假如半径为1的时候，光的强度为I，则半径为r的时候，强度变为I&#x2F;r²</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211145-vw9pz1f.png" alt="image">​</p>
-<p>从不同的角度观测同一个点的结果是一样的。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211149-t038nb0.png" alt="image">​</p>
-<p>k_(d)  漫反射的系数，表示吸收了（反射了）多少颜色颜色。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211154-nrtvz3z.png" alt="image">​</p>
 ]]></content>
       <categories>
         <category>图形学</category>
@@ -2723,94 +2723,6 @@
       </categories>
   </entry>
   <entry>
-    <title>第十一章：显示几何，曲线、曲面</title>
-    <url>/blog/%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%EF%BC%9A%E6%98%BE%E7%A4%BA%E5%87%A0%E4%BD%95%EF%BC%8C%E6%9B%B2%E7%BA%BF%E3%80%81%E6%9B%B2%E9%9D%A2/</url>
-    <content><![CDATA[<h3 id="几何入门："><a href="#几何入门：" class="headerlink" title="几何入门："></a>几何入门：</h3><ul>
-<li><p>几何例子</p>
-</li>
-<li><p>不同表示几何的方式</p>
-<ul>
-<li>隐式</li>
-<li>显式</li>
-</ul>
-</li>
-</ul>
-<p>本节课：</p>
-<ul>
-<li><p>显式几何</p>
-</li>
-<li><p>曲线</p>
-</li>
-<li><p>曲面</p>
-</li>
-</ul>
-<p>显式几何有不同的表示方法：<br>三角形面、贝塞尔曲面、点云</p>
-<h3 id="点云"><a href="#点云" class="headerlink" title="点云"></a><strong>点云</strong></h3><p>物体用一堆点表示。</p>
-<p>只要点足够密，可以表示任何形状的几何。</p>
-<p>点云转换三角形面。</p>
-<h3 id="多边形面"><a href="#多边形面" class="headerlink" title="多边形面"></a><strong>多边形面</strong></h3><p>三角形、四边形面。</p>
-<p>需要用更复杂的数据结构表示三角形对连接关系。</p>
-<p>是图形学中最常见的表示方式。</p>
-<p>三角形面形成的物体：</p>
-<p>v 定义 8 个点，vn 定义 6 个面的法线（图中有冗余）、vt 定义 12 个纹理坐标（每个面四个点的纹理坐标，中间会有共用的），f（face）定义三角形之间的连接关系（第一个参数是顶点，比如图中第一行使用第 5、1、4 三个顶点形成三角形，第二个参数是三个顶点的纹理坐标，第三个参数是指三个顶点的法线）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203227-f9vqkmt.png" alt="image">​</p>
-<h3 id="曲线"><a href="#曲线" class="headerlink" title="曲线"></a><strong>曲线</strong></h3><p>相机的运动曲线，三维建模模型的运动曲线、定义字体的控制点</p>
-<h4 id="贝塞尔曲线（用一系列控制点来定义曲线）"><a href="#贝塞尔曲线（用一系列控制点来定义曲线）" class="headerlink" title="贝塞尔曲线（用一系列控制点来定义曲线）"></a><strong>贝塞尔曲线</strong>（用一系列控制点来定义曲线）</h4><p>曲线的起点在 P0、开始的方向是 P0P1，曲线的终点是 P3，结束的方向是 P2P3</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203235-qhjl8qi.png" alt="image">​</p>
-<p>de Casteljau 算法</p>
-<p>给任意一个时间 t，计算贝塞尔曲线在时间 t 的位置</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203244-i5wtnv8.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203252-moz7wnk.png" alt="image">​</p>
-<p>是一个递归的过程</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203257-ylm5qf1.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203302-idycife.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203307-fq20vuf.png" alt="image">​</p>
-<p>n 阶贝塞尔曲线可以表示为控制点的线形组合，系数就是一个和时间有关的多项式，被称为 Bernstein 多项式</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203314-7n6txxz.png" alt="image">​</p>
-<p>三维空间中同样可以用 Bernstein 多项式</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203323-9kejl38.png" alt="image">​</p>
-<p>Bernstein 多项式就是 1 的多阶展开，所以在坐标轴上画一条竖线，经过的每个点的 y 轴加起来的值都等于 1</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203330-ntfrqts.png" alt="image">​</p>
-<h5 id="贝塞尔曲线的性质："><a href="#贝塞尔曲线的性质：" class="headerlink" title="贝塞尔曲线的性质："></a>贝塞尔曲线的性质：</h5><p>1.起点和终点固定</p>
-<p>2.切线方向固定</p>
-<p>3.对曲线的顶点、控制点做仿射变换后，再画贝塞尔曲线，和对原始贝塞尔曲线做仿射变换后得到的曲线是一样的；但对投影不是这样</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203336-09akmsq.png" alt="image">​</p>
-<p>4.秃包性质：任何一个贝塞尔曲线肯定在控制点形成秃包之内。比如如果给一堆控制点都在一条直线上，那这个贝塞尔曲线一定是这条线自己。</p>
-<p>秃包：能包围给定的几何形体的最小的凸多边形</p>
-<p>想象有一堆钉子，在最外层的钉子上绑一个橡皮筋，橡皮筋围成的形状就是秃包</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203344-ge09mxp.png" alt="image">​</p>
-<h5 id="Piecewise-贝塞尔曲线"><a href="#Piecewise-贝塞尔曲线" class="headerlink" title="Piecewise 贝塞尔曲线"></a>Piecewise 贝塞尔曲线</h5><p>控制点多的时候不好控制，逐段定义贝塞尔曲线，再连起来。一般是每四个控制定义一条贝塞尔曲线。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203350-2lng0ud.png" alt="image">​</p>
-<p>几何上两条曲线都通过一个点，第一段的终点等于第二段的起点叫做 C0 连续</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203356-ut3s0bf.png" alt="image">​</p>
-<p>第一段终点控制点连线和第二段起点控制点的连线大小一致，方向相反，C1 连续（一阶导数连续）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203401-av7s8u8.png" alt="image">​</p>
-<h4 id="Spline-曲线（样条）"><a href="#Spline-曲线（样条）" class="headerlink" title="Spline 曲线（样条）"></a><strong>Spline 曲线（样条）</strong></h4><p>由一组控制点控制的曲线，能满足一定的连续性</p>
-<p>B-Spline basis splines（奇函数样条，由于不同的函数组合起来形成新的函数）</p>
-<ul>
-<li>用 Bernstein 多项式在时间 t 几个不同的项对不同的控制点做加权平均</li>
-<li>用控制点的位置对 Bernstein 多项式进行加权</li>
-</ul>
-<p>B-Spline 是对贝塞尔曲线的扩展，可以实现局部性，比如改变一个控制点，只影响一定范围内的曲线。</p>
-<p>本节课不深入学习 B 样条</p>
-<h4 id="贝塞尔曲面"><a href="#贝塞尔曲面" class="headerlink" title="贝塞尔曲面"></a><strong>贝塞尔曲面</strong></h4><p>贝塞尔曲线得到贝塞尔曲面</p>
-<p>4✖️4 控制点，双线性插值</p>
-<p>用时间 u 先确定一个方向的四个控制点，再用时间 v 确定曲面上的一个点</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203417-66viato.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203423-cxzrqk0.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203428-zjyszxx.png" alt="image">​</p>
-<p>Mesh Operations：几何处理</p>
-<ul>
-<li><p>网格细分</p>
-</li>
-<li><p>网格简化</p>
-</li>
-<li><p>网格正规化（让三角形不要出现特别尖的三角形）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203436-wy6whsg.png" alt="image">​</p>
-</li>
-</ul>
-<p>‍</p>
-]]></content>
-      <categories>
-        <category>图形学</category>
-      </categories>
-  </entry>
-  <entry>
     <title>第六章：反走样与深度缓冲</title>
     <url>/blog/%E7%AC%AC%E5%85%AD%E7%AB%A0%EF%BC%9A%E5%8F%8D%E8%B5%B0%E6%A0%B7%E4%B8%8E%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2/</url>
     <content><![CDATA[<h3 id="反走样和深度缓冲"><a href="#反走样和深度缓冲" class="headerlink" title="反走样和深度缓冲"></a>反走样和深度缓冲</h3><p>上节课提到：<br>MVP变换后，把得到的[-1,1]3区域映射到屏幕上。光栅化的思想：用像素的中心对三角形的可见行函数进行采样。<br>本节课学习的主要内容：</p>
@@ -2914,74 +2826,88 @@
       </categories>
   </entry>
   <entry>
-    <title>第十三章：Ray tracing 1 基础光线追踪算法</title>
-    <url>/blog/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%EF%BC%9ARay%20tracing%201%20%E5%9F%BA%E7%A1%80%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<h3 id="Ray-Tracing（光线追踪）"><a href="#Ray-Tracing（光线追踪）" class="headerlink" title="Ray Tracing（光线追踪）"></a>Ray Tracing（光线追踪）</h3><p>光栅化的问题</p>
-<p>不能很好地处理全局效果，比如：</p>
-<p>1.软阴影</p>
-<p>2.光线多次弹射（毛玻璃反射、间接反射）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204242-i9pwn8h.png" alt="image">​</p>
-<p>光栅化速度快，但是质量低；光线追踪准确但是速度慢。所以一般光栅化用于实时、光线追踪用于离线。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204247-44w81g6.png" alt="image">​</p>
-<h3 id="基础的光线追踪算法"><a href="#基础的光线追踪算法" class="headerlink" title="基础的光线追踪算法"></a>基础的光线追踪算法</h3><p>光线的三种假设：</p>
-<ol>
-<li><p>光沿直线传播（实际并不是</p>
+    <title>第十一章：显示几何，曲线、曲面</title>
+    <url>/blog/%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%EF%BC%9A%E6%98%BE%E7%A4%BA%E5%87%A0%E4%BD%95%EF%BC%8C%E6%9B%B2%E7%BA%BF%E3%80%81%E6%9B%B2%E9%9D%A2/</url>
+    <content><![CDATA[<h3 id="几何入门："><a href="#几何入门：" class="headerlink" title="几何入门："></a>几何入门：</h3><ul>
+<li><p>几何例子</p>
 </li>
-<li><p>光线相交时不会碰撞（实际并不是</p>
+<li><p>不同表示几何的方式</p>
+<ul>
+<li>隐式</li>
+<li>显式</li>
+</ul>
 </li>
-<li><p>光线从光源传播到眼睛（根据光的可逆性，光线以不变的光路从眼睛传播到光源</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204252-rq5ma55.png" alt="image">​</p>
+</ul>
+<p>本节课：</p>
+<ul>
+<li><p>显式几何</p>
 </li>
-</ol>
-<h4 id="光线投射"><a href="#光线投射" class="headerlink" title="光线投射"></a>光线投射</h4><p>从摄像机到成像平面中的一个像素连成一条射线，这个射线会和一个物体相交。再把这个交点和光源做连线，判定他是不是在阴影内。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204310-a4f3y6w.png" alt="image">​</p>
-<p>假设眼睛是一个点（针孔摄像机），同时光源也是点光源。光线打到场景中的物体会发生完美的折射和反射。</p>
-<p>考虑光线和场景中的物体最近的交点，交点再与光源做连线，如果没有遮挡说明没有阴影。求出交点后再对交点做着色。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204315-s1c6ju9.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204318-s2voec6.png" alt="image">​</p>
-<h4 id="recursive-Whitted-styled-ray-tracing"><a href="#recursive-Whitted-styled-ray-tracing" class="headerlink" title="recursive Whitted-styled ray tracing"></a>recursive Whitted-styled ray tracing</h4><p>光线可以不断弹射。每个弹射点可画出一条 shadow ray，计算是不是在阴影里，光源弹射后能照到的点的着色值最后都加到一个像素里面去。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204323-6as49bq.png" alt="image">​</p>
-<p>求光线和物体表面的交点</p>
-<p>光线的定义：</p>
-<p>点光源：起点 + 方向</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204331-pl418gg.png" alt="image">​</p>
-<p>判断光线与球体是否相交：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204335-tljx4px.png" alt="image">​</p>
-<p>点即在光线上，又在球上。求解一元二次方程：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204341-vxbltr2.png" alt="image">​</p>
-<p>对于一般面</p>
-<p>隐式表示：列出 surface 的隐式表达式，带入求解：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204347-seawpb6.png" alt="image">​</p>
-<p>显式表示：求光线与三角面的交点</p>
-<p>一个封闭的图形，从图形内部发出一条射线，与图形的边的交点数量一定是奇数</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204352-8swig07.png" alt="image">​</p>
-<p>简单做法：一个一个三角形求解是否与射线相交</p>
-<p>先光线与平面求交，再判断一个点是不是在三角形内部</p>
-<p>用一个法线和一个平面上的点可以确定一个平面</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204358-d9252z6.png" alt="image">​</p>
-<p>Möller Trumbore Algorithm</p>
-<p>快速求交点（重心坐标表示平面上的点）</p>
-<p>解线性方程组</p>
-<p>b1 和 b2 必须是非负的</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204403-w9iwkuw.png" alt="image">​</p>
-<p>加速光线和表面求交</p>
-<p>如果每个三角形都求一次交点很花时间</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204408-5knulr8.png" alt="image">​</p>
-<p>用包围盒进行加速<br />如果一个光线碰不到包围盒，那就不可能碰到包围和里的物体</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204414-yjgij4p.png" alt="image">​</p>
-<p>三个对面形成的交集</p>
-<p>通常用 AABB 包围盒（和坐标轴平行的包围盒）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204421-i2ydbcm.png" alt="image">​</p>
-<p>2D 求交：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204426-nic5gz7.png" alt="image">​</p>
-<p>3D 求交：<br>3D 下有三组对面，光线要进入所有面才算进入盒子，只要出了一个面就认为出了盒子</p>
-<p>3D 对三组对面分别计算进入的最大时间和出来的最小时间</p>
-<p>如果出来时间小于进入时间，说明光线在盒子里待了一段时间</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204432-5woyi5w.png" alt="image">​</p>
-<p>离开时间小于 0，说明盒子在光线背后</p>
-<p>如果进入时间小于 0，说明起点在盒子里</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204437-seo5rd8.png" alt="image">​</p>
-<p>用 AABB 包围盒更好计算</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204441-g7rxglt.png" alt="image">​</p>
+<li><p>曲线</p>
+</li>
+<li><p>曲面</p>
+</li>
+</ul>
+<p>显式几何有不同的表示方法：<br>三角形面、贝塞尔曲面、点云</p>
+<h3 id="点云"><a href="#点云" class="headerlink" title="点云"></a><strong>点云</strong></h3><p>物体用一堆点表示。</p>
+<p>只要点足够密，可以表示任何形状的几何。</p>
+<p>点云转换三角形面。</p>
+<h3 id="多边形面"><a href="#多边形面" class="headerlink" title="多边形面"></a><strong>多边形面</strong></h3><p>三角形、四边形面。</p>
+<p>需要用更复杂的数据结构表示三角形对连接关系。</p>
+<p>是图形学中最常见的表示方式。</p>
+<p>三角形面形成的物体：</p>
+<p>v 定义 8 个点，vn 定义 6 个面的法线（图中有冗余）、vt 定义 12 个纹理坐标（每个面四个点的纹理坐标，中间会有共用的），f（face）定义三角形之间的连接关系（第一个参数是顶点，比如图中第一行使用第 5、1、4 三个顶点形成三角形，第二个参数是三个顶点的纹理坐标，第三个参数是指三个顶点的法线）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203227-f9vqkmt.png" alt="image">​</p>
+<h3 id="曲线"><a href="#曲线" class="headerlink" title="曲线"></a><strong>曲线</strong></h3><p>相机的运动曲线，三维建模模型的运动曲线、定义字体的控制点</p>
+<h4 id="贝塞尔曲线（用一系列控制点来定义曲线）"><a href="#贝塞尔曲线（用一系列控制点来定义曲线）" class="headerlink" title="贝塞尔曲线（用一系列控制点来定义曲线）"></a><strong>贝塞尔曲线</strong>（用一系列控制点来定义曲线）</h4><p>曲线的起点在 P0、开始的方向是 P0P1，曲线的终点是 P3，结束的方向是 P2P3</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203235-qhjl8qi.png" alt="image">​</p>
+<p>de Casteljau 算法</p>
+<p>给任意一个时间 t，计算贝塞尔曲线在时间 t 的位置</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203244-i5wtnv8.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203252-moz7wnk.png" alt="image">​</p>
+<p>是一个递归的过程</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203257-ylm5qf1.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203302-idycife.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203307-fq20vuf.png" alt="image">​</p>
+<p>n 阶贝塞尔曲线可以表示为控制点的线形组合，系数就是一个和时间有关的多项式，被称为 Bernstein 多项式</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203314-7n6txxz.png" alt="image">​</p>
+<p>三维空间中同样可以用 Bernstein 多项式</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203323-9kejl38.png" alt="image">​</p>
+<p>Bernstein 多项式就是 1 的多阶展开，所以在坐标轴上画一条竖线，经过的每个点的 y 轴加起来的值都等于 1</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203330-ntfrqts.png" alt="image">​</p>
+<h5 id="贝塞尔曲线的性质："><a href="#贝塞尔曲线的性质：" class="headerlink" title="贝塞尔曲线的性质："></a>贝塞尔曲线的性质：</h5><p>1.起点和终点固定</p>
+<p>2.切线方向固定</p>
+<p>3.对曲线的顶点、控制点做仿射变换后，再画贝塞尔曲线，和对原始贝塞尔曲线做仿射变换后得到的曲线是一样的；但对投影不是这样</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203336-09akmsq.png" alt="image">​</p>
+<p>4.秃包性质：任何一个贝塞尔曲线肯定在控制点形成秃包之内。比如如果给一堆控制点都在一条直线上，那这个贝塞尔曲线一定是这条线自己。</p>
+<p>秃包：能包围给定的几何形体的最小的凸多边形</p>
+<p>想象有一堆钉子，在最外层的钉子上绑一个橡皮筋，橡皮筋围成的形状就是秃包</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203344-ge09mxp.png" alt="image">​</p>
+<h5 id="Piecewise-贝塞尔曲线"><a href="#Piecewise-贝塞尔曲线" class="headerlink" title="Piecewise 贝塞尔曲线"></a>Piecewise 贝塞尔曲线</h5><p>控制点多的时候不好控制，逐段定义贝塞尔曲线，再连起来。一般是每四个控制定义一条贝塞尔曲线。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203350-2lng0ud.png" alt="image">​</p>
+<p>几何上两条曲线都通过一个点，第一段的终点等于第二段的起点叫做 C0 连续</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203356-ut3s0bf.png" alt="image">​</p>
+<p>第一段终点控制点连线和第二段起点控制点的连线大小一致，方向相反，C1 连续（一阶导数连续）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203401-av7s8u8.png" alt="image">​</p>
+<h4 id="Spline-曲线（样条）"><a href="#Spline-曲线（样条）" class="headerlink" title="Spline 曲线（样条）"></a><strong>Spline 曲线（样条）</strong></h4><p>由一组控制点控制的曲线，能满足一定的连续性</p>
+<p>B-Spline basis splines（奇函数样条，由于不同的函数组合起来形成新的函数）</p>
+<ul>
+<li>用 Bernstein 多项式在时间 t 几个不同的项对不同的控制点做加权平均</li>
+<li>用控制点的位置对 Bernstein 多项式进行加权</li>
+</ul>
+<p>B-Spline 是对贝塞尔曲线的扩展，可以实现局部性，比如改变一个控制点，只影响一定范围内的曲线。</p>
+<p>本节课不深入学习 B 样条</p>
+<h4 id="贝塞尔曲面"><a href="#贝塞尔曲面" class="headerlink" title="贝塞尔曲面"></a><strong>贝塞尔曲面</strong></h4><p>贝塞尔曲线得到贝塞尔曲面</p>
+<p>4✖️4 控制点，双线性插值</p>
+<p>用时间 u 先确定一个方向的四个控制点，再用时间 v 确定曲面上的一个点</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203417-66viato.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203423-cxzrqk0.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203428-zjyszxx.png" alt="image">​</p>
+<p>Mesh Operations：几何处理</p>
+<ul>
+<li><p>网格细分</p>
+</li>
+<li><p>网格简化</p>
+</li>
+<li><p>网格正规化（让三角形不要出现特别尖的三角形）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203436-wy6whsg.png" alt="image">​</p>
+</li>
+</ul>
+<p>‍</p>
 ]]></content>
       <categories>
         <category>图形学</category>
@@ -3050,6 +2976,80 @@
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210334-aeu3ziu.png" alt="image">​</p>
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210338-3t62iua.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210344-fznpazc.png" alt="image">​</p>
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210347-3oxflxk.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第十三章：Ray tracing 1 基础光线追踪算法</title>
+    <url>/blog/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%EF%BC%9ARay%20tracing%201%20%E5%9F%BA%E7%A1%80%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h3 id="Ray-Tracing（光线追踪）"><a href="#Ray-Tracing（光线追踪）" class="headerlink" title="Ray Tracing（光线追踪）"></a>Ray Tracing（光线追踪）</h3><p>光栅化的问题</p>
+<p>不能很好地处理全局效果，比如：</p>
+<p>1.软阴影</p>
+<p>2.光线多次弹射（毛玻璃反射、间接反射）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204242-i9pwn8h.png" alt="image">​</p>
+<p>光栅化速度快，但是质量低；光线追踪准确但是速度慢。所以一般光栅化用于实时、光线追踪用于离线。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204247-44w81g6.png" alt="image">​</p>
+<h3 id="基础的光线追踪算法"><a href="#基础的光线追踪算法" class="headerlink" title="基础的光线追踪算法"></a>基础的光线追踪算法</h3><p>光线的三种假设：</p>
+<ol>
+<li><p>光沿直线传播（实际并不是</p>
+</li>
+<li><p>光线相交时不会碰撞（实际并不是</p>
+</li>
+<li><p>光线从光源传播到眼睛（根据光的可逆性，光线以不变的光路从眼睛传播到光源</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204252-rq5ma55.png" alt="image">​</p>
+</li>
+</ol>
+<h4 id="光线投射"><a href="#光线投射" class="headerlink" title="光线投射"></a>光线投射</h4><p>从摄像机到成像平面中的一个像素连成一条射线，这个射线会和一个物体相交。再把这个交点和光源做连线，判定他是不是在阴影内。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204310-a4f3y6w.png" alt="image">​</p>
+<p>假设眼睛是一个点（针孔摄像机），同时光源也是点光源。光线打到场景中的物体会发生完美的折射和反射。</p>
+<p>考虑光线和场景中的物体最近的交点，交点再与光源做连线，如果没有遮挡说明没有阴影。求出交点后再对交点做着色。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204315-s1c6ju9.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204318-s2voec6.png" alt="image">​</p>
+<h4 id="recursive-Whitted-styled-ray-tracing"><a href="#recursive-Whitted-styled-ray-tracing" class="headerlink" title="recursive Whitted-styled ray tracing"></a>recursive Whitted-styled ray tracing</h4><p>光线可以不断弹射。每个弹射点可画出一条 shadow ray，计算是不是在阴影里，光源弹射后能照到的点的着色值最后都加到一个像素里面去。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204323-6as49bq.png" alt="image">​</p>
+<p>求光线和物体表面的交点</p>
+<p>光线的定义：</p>
+<p>点光源：起点 + 方向</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204331-pl418gg.png" alt="image">​</p>
+<p>判断光线与球体是否相交：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204335-tljx4px.png" alt="image">​</p>
+<p>点即在光线上，又在球上。求解一元二次方程：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204341-vxbltr2.png" alt="image">​</p>
+<p>对于一般面</p>
+<p>隐式表示：列出 surface 的隐式表达式，带入求解：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204347-seawpb6.png" alt="image">​</p>
+<p>显式表示：求光线与三角面的交点</p>
+<p>一个封闭的图形，从图形内部发出一条射线，与图形的边的交点数量一定是奇数</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204352-8swig07.png" alt="image">​</p>
+<p>简单做法：一个一个三角形求解是否与射线相交</p>
+<p>先光线与平面求交，再判断一个点是不是在三角形内部</p>
+<p>用一个法线和一个平面上的点可以确定一个平面</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204358-d9252z6.png" alt="image">​</p>
+<p>Möller Trumbore Algorithm</p>
+<p>快速求交点（重心坐标表示平面上的点）</p>
+<p>解线性方程组</p>
+<p>b1 和 b2 必须是非负的</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204403-w9iwkuw.png" alt="image">​</p>
+<p>加速光线和表面求交</p>
+<p>如果每个三角形都求一次交点很花时间</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204408-5knulr8.png" alt="image">​</p>
+<p>用包围盒进行加速<br />如果一个光线碰不到包围盒，那就不可能碰到包围和里的物体</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204414-yjgij4p.png" alt="image">​</p>
+<p>三个对面形成的交集</p>
+<p>通常用 AABB 包围盒（和坐标轴平行的包围盒）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204421-i2ydbcm.png" alt="image">​</p>
+<p>2D 求交：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204426-nic5gz7.png" alt="image">​</p>
+<p>3D 求交：<br>3D 下有三组对面，光线要进入所有面才算进入盒子，只要出了一个面就认为出了盒子</p>
+<p>3D 对三组对面分别计算进入的最大时间和出来的最小时间</p>
+<p>如果出来时间小于进入时间，说明光线在盒子里待了一段时间</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204432-5woyi5w.png" alt="image">​</p>
+<p>离开时间小于 0，说明盒子在光线背后</p>
+<p>如果进入时间小于 0，说明起点在盒子里</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204437-seo5rd8.png" alt="image">​</p>
+<p>用 AABB 包围盒更好计算</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204441-g7rxglt.png" alt="image">​</p>
 ]]></content>
       <categories>
         <category>图形学</category>
@@ -3540,181 +3540,6 @@
       </categories>
   </entry>
   <entry>
-    <title>第十四章：Ray tracing2 加速结构、辐射度量学</title>
-    <url>/blog/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%EF%BC%9ARay%20tracing2%20%E5%8A%A0%E9%80%9F%E7%BB%93%E6%9E%84%E3%80%81%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/</url>
-    <content><![CDATA[<p>Ray Tracing 2</p>
-<ul>
-<li>加速结构</li>
-<li>辐射度量学</li>
-</ul>
-<p>题外话：</p>
-<p>GTC（GPU Technology Conference）：</p>
-<ul>
-<li><p>DLSS（Deep Learning Super Sampling）2.0 <a href="https://zhuanlan.zhihu.com/p/116211994">https://zhuanlan.zhihu.com/p/116211994</a></p>
-<ul>
-<li>光栅化生成一个 1080p 的图，把它拉大成一张 4K 的图，结果不损失太多性能，同时看上去依然清晰</li>
-</ul>
-</li>
-<li><p>RTXGI（全局光照）<a href="https://developer.nvidia.com/rtxgi">https://developer.nvidia.com/rtxgi</a></p>
-</li>
-</ul>
-<p>回顾上节课：</p>
-<ul>
-<li><p>为什么要做光线追踪</p>
-</li>
-<li><p>Whitted-style ray tracing（递归的光线追踪，光线弹射到多个地方，在每个交点计算着色和阴影）</p>
-</li>
-<li><p>光线和物体求交</p>
-<ul>
-<li>光线和隐式表面求交</li>
-<li>光线和三角形求交</li>
-</ul>
-</li>
-<li><p>AABB 包围盒</p>
-<ul>
-<li>理解包围盒：坐标轴上三对相对的平板</li>
-<li>光线和 AABB 盒求交</li>
-</ul>
-</li>
-</ul>
-<p>本节课：</p>
-<ul>
-<li><p>AABB 盒怎么加速光线追踪？</p>
-<ul>
-<li>均匀的网格（Uniform grids）</li>
-<li>空间划分 （spatial partitions）</li>
-</ul>
-</li>
-<li><p>辐射度量学</p>
-</li>
-</ul>
-<h4 id="AABB-加速光线追踪"><a href="#AABB-加速光线追踪" class="headerlink" title="AABB 加速光线追踪"></a>AABB 加速光线追踪</h4><p><strong>均匀的网格：Uniform Spatial Partitions（Grids）</strong></p>
-<p>先让光线和盒子求交，再进一步和盒子里的物体求交</p>
-<p>预处理：</p>
-<p>1.先找到场景里的一个包围盒</p>
-<p>2.把盒子分成一堆格子</p>
-<p>3.标记与物体表面相交的格子</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204558-karsvo5.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204602-xjyn2a4.png" alt="image">​</p>
-<p>怎么判断光线继续往后传播时要和哪个盒子求交，不能每个格子都求一遍。有一个简单的思路是：如果光线往右上传播，就只看当前格子右边和上面的格子，判断光线与哪个格子有交点，再把光线移动一格。光栅化一条线:<a href="https://zhuanlan.zhihu.com/p/20213658">https://zhuanlan.zhihu.com/p/20213658</a>。</p>
-<p>加速效果：<br />一个格子（格子很稀疏），基本没有加速效果</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204609-qqu5bmx.png" alt="image">​</p>
-<p>格子太密，要做很多次光线和格子的求交，效率很低</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204615-miu4wws.png" alt="image">​</p>
-<p>需要找一个平衡</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204619-otjwusd.png" alt="image">​</p>
-<p>当几何物体在场景中分布比较均匀时，格子加速的效果比较好</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204624-l67m3mz.png" alt="image">​</p>
-<p>物体在场景中分布不均匀的时候，加速的效果不好</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204632-ohvjn97.png" alt="image">​</p>
-<h4 id="空间划分-Spatial-Partitions"><a href="#空间划分-Spatial-Partitions" class="headerlink" title="空间划分 Spatial Partitions"></a><strong>空间划分 Spatial Partitions</strong></h4><p>三种空间划分的结构：<br />Oct-Tree：8 叉树，把空间分成 8 个小方块，小方块继续分割，当格子里是空的，或物体足够少，就停止分割（平面是 4 叉树，即分成几份和维度有关系）</p>
-<p>KD-Tree：2 叉树，每次一个格子只砍一刀（水平竖直沿着坐标轴交替划分，基本保证划分的空间是均匀的）</p>
-<p>BSP-Tree：选一个方向砍一刀</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204649-cee1sju.png" alt="image">​</p>
-<h5 id="KD-Tree-预处理，建立加速结构"><a href="#KD-Tree-预处理，建立加速结构" class="headerlink" title="KD-Tree 预处理，建立加速结构"></a>KD-Tree 预处理，建立加速结构</h5><p>把空间划分为二叉树：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204658-s0bi29g.png" alt="image">​</p>
-<p>数据结构：</p>
-<p>中间节点需要存储：</p>
-<ul>
-<li>当前节点沿着哪个坐标轴划分</li>
-<li>划分在哪个位置（不一定划分在中间）</li>
-<li>2 个子节点</li>
-</ul>
-<p>叶子节点需要存储：</p>
-<ul>
-<li>和格子相交的几何物体</li>
-<li>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204705-wgytx09.png" alt="image">​</li>
-</ul>
-<p>判断光线和当前节点是不是有交点，如果有交点，继续判断和当前节点的子节点是不是有交点，一直到叶子节点，如果光线和叶子节点有交点，就求光线和叶子节点里面所有物体的交点；如果光线和当前节点没有交点就不需要继续往下找。<br />如果是求最近的交点就一边找一边记录最近的。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204714-42teely.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204718-bz5cned.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204722-s8wc8ov.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204726-qsnpo7h.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204736-aedp5yz.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204740-rxxh5k1.png" alt="image">​</p>
-<p>KD-Tree 的问题：</p>
-<p>1.不好判断几何对象（三角形）和盒子是否有交集</p>
-<p>2.1 个对象可能和不同的盒子都有交集，即同一个物体会被多个叶子节点存储</p>
-<h5 id="Object-Partitions-Bounding-Volumn-Hierarchy（BVH）"><a href="#Object-Partitions-Bounding-Volumn-Hierarchy（BVH）" class="headerlink" title="Object Partitions &amp; Bounding Volumn Hierarchy（BVH）"></a><strong>Object Partitions &amp; Bounding Volumn Hierarchy（BVH）</strong></h5><p>划分物体：把一个盒子里的三角形分为两部分，把两部分的三角形再重新求包围盒，然后每个包围盒继续划分，直到一个包围盒里包含的节点数够少就停止划分。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204752-vsj137t.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204802-dw9fna8.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204806-e07iour.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204812-1n2czdl.png" alt="image">​</p>
-<p>BVH 的好处是：一个物体只可能出现在一个盒子里，且无需求三角形和包围盒的交点，避免了 KD-Tree 的问题。</p>
-<p>但 BVH 也有一个问题：BVH 对空间的划分不是很严格的划分开，BoundingBox 可以相交，所以需要在划分几何形体的时候尽量减少重叠。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204818-9pfar63.png" alt="image">​</p>
-<p>总结构造 BVH 加速结构的过程：</p>
-<p>1.找到一个包围盒</p>
-<p>2.递归地把包围盒中的物体拆成两部分</p>
-<p>3.重新计算包围盒</p>
-<p>4.当包围盒的物体足够少的时候停止递归</p>
-<p>5.把物体信息存储在叶子节点里</p>
-<p><strong>怎么做节点的划分？</strong></p>
-<ul>
-<li><p>选一个维度</p>
-</li>
-<li><p>方式 1：每次选一个最长的轴把节点分成两半，使得节点最后分布比较均匀</p>
-</li>
-<li><p>方式 2：取中间的三角形的位置把节点分为两半，是的分割后节点的三角形数量差不多，让这个树形结构两边保持平衡（深度小，平均搜索次数小）</p>
-<ul>
-<li>取中间的三角形涉及到排序：所有三角形取重心，沿一个轴排个序，找到中间的那个三角形。（也可以不用排序找中位数，快速选择算法，可以达到 O(n)的时间复杂度）</li>
-</ul>
-</li>
-<li><p>如果场景是动态的，三角形数量会变化，就需要每次变化都重新算一下 BVH。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204830-voj0qcl.png" alt="image">​</p>
-</li>
-</ul>
-<p>BVH 的数据结构：<br>中间节点存储：</p>
-<ul>
-<li>包围盒</li>
-<li>子节点的指针</li>
-</ul>
-<p>叶子节点存储：</p>
-<ul>
-<li>包围盒</li>
-<li>实际的物体</li>
-<li>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204841-zo7ev8y.png" alt="image">​</li>
-</ul>
-<p>BVH 算法伪代码：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204847-q8eypig.png" alt="image">​</p>
-<p>空间划分和物体划分的区别：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204852-d3um7bh.png" alt="image">​</p>
-<p>以上是 Whitted-style 光线追踪的内容。</p>
-<h4 id="辐射度量学-Basic-radiometry"><a href="#辐射度量学-Basic-radiometry" class="headerlink" title="辐射度量学 Basic radiometry"></a>辐射度量学 Basic radiometry</h4><p>为什么要学习辐射度量学？</p>
-<p>之间的 Blinn-Phong 模型里提到光的强度 I 是怎么得到的，他的物理意义是什么？</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204902-rtdzgu2.png" alt="image">​</p>
-<p>Whitted-style 光线追踪给的结果是正确的吗？</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204923-ev1qs1a.png" alt="image">​</p>
-<p>辐射度量学给了一种精准定义光照的物理量的方法。</p>
-<p>辐射度量学学习的内容：<br>为如何描述光照定义了一系列的方法和单位</p>
-<p>给光定义了各种空间中的属性（仍然是基于几何光学，认为光线沿直线传播）：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204928-25ee893.png" alt="image">​</p>
-<ul>
-<li>Radiant flux，intensity，irradiance，radiance</li>
-</ul>
-<p>Radiant Energy and Flux</p>
-<p>Radiant energy 是电磁辐射的能量，单位是焦耳，用符号 Q 表示。</p>
-<p>Radiant Flux 是单位时间的能量。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204935-zhh77mo.png" alt="image">​</p>
-<p>另一种理解：单位时间通过感光平面的光子的数量</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204941-3lo9p1g.png" alt="image">​</p>
-<p>光源辐射的能量：radiant Intensity，定义了方向性和能量相关的概念</p>
-<p>物体表面接受到了多少能量：Irradiance</p>
-<p>光线传播中的能量怎么度量：Radiance</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204947-ch8k18p.png" alt="image">​</p>
-<p><strong>Radiant Intensity</strong></p>
-<p>单位立体角上点光源辐射出的单位能量</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204952-czaovps.png" alt="image">​</p>
-<p>立体角：<br>角度：弧长&#x2F;半径</p>
-<p>立体角：角度在三维的延伸。锥体对应的面积&#x2F;求面的面积。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204957-l8s8bw3.png" alt="image">​</p>
-<p>单位立体角（微分立体角）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205002-ikor5vv.png" alt="image">​</p>
-<p>对单位立体角做积分可以得到整个球面</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205007-7f67wjp.png" alt="image">​</p>
-<p>在辐射度量里面通常用 ω 表示方向，ω 可以用 θ 和 φ 来定义位置，并通过 sinθdθdφ 算出单位立体角。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205012-k9khbxq.png" alt="image">​</p>
-<p>对一个点光源，radiant intensity 是单位立体角的能量，把所有方向上的单位立体角的 intensity 积分，就可以得到它的 power，反之任何一个方向的 Intensity 就是 power&#x2F;4π。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205018-foe19s0.png" alt="image">​</p>
-<p>小知识：现代 LED 灯上标注的瓦数不是真实的，而是对应于白炽灯的瓦数，LED 实际瓦数更低。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205022-d5s39qt.png" alt="image">​</p>
-]]></content>
-      <categories>
-        <category>图形学</category>
-      </categories>
-  </entry>
-  <entry>
     <title>第十六章：Ray tracing4 蒙特卡洛路径追踪</title>
     <url>/blog/%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0%EF%BC%9ARay%20tracing4%20%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E8%B7%AF%E5%BE%84%E8%BF%BD%E8%B8%AA/</url>
     <content><![CDATA[<p>Ray tracing4 蒙特卡洛路径追踪</p>
@@ -3909,6 +3734,181 @@
       </categories>
   </entry>
   <entry>
+    <title>第十四章：Ray tracing2 加速结构、辐射度量学</title>
+    <url>/blog/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%EF%BC%9ARay%20tracing2%20%E5%8A%A0%E9%80%9F%E7%BB%93%E6%9E%84%E3%80%81%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/</url>
+    <content><![CDATA[<p>Ray Tracing 2</p>
+<ul>
+<li>加速结构</li>
+<li>辐射度量学</li>
+</ul>
+<p>题外话：</p>
+<p>GTC（GPU Technology Conference）：</p>
+<ul>
+<li><p>DLSS（Deep Learning Super Sampling）2.0 <a href="https://zhuanlan.zhihu.com/p/116211994">https://zhuanlan.zhihu.com/p/116211994</a></p>
+<ul>
+<li>光栅化生成一个 1080p 的图，把它拉大成一张 4K 的图，结果不损失太多性能，同时看上去依然清晰</li>
+</ul>
+</li>
+<li><p>RTXGI（全局光照）<a href="https://developer.nvidia.com/rtxgi">https://developer.nvidia.com/rtxgi</a></p>
+</li>
+</ul>
+<p>回顾上节课：</p>
+<ul>
+<li><p>为什么要做光线追踪</p>
+</li>
+<li><p>Whitted-style ray tracing（递归的光线追踪，光线弹射到多个地方，在每个交点计算着色和阴影）</p>
+</li>
+<li><p>光线和物体求交</p>
+<ul>
+<li>光线和隐式表面求交</li>
+<li>光线和三角形求交</li>
+</ul>
+</li>
+<li><p>AABB 包围盒</p>
+<ul>
+<li>理解包围盒：坐标轴上三对相对的平板</li>
+<li>光线和 AABB 盒求交</li>
+</ul>
+</li>
+</ul>
+<p>本节课：</p>
+<ul>
+<li><p>AABB 盒怎么加速光线追踪？</p>
+<ul>
+<li>均匀的网格（Uniform grids）</li>
+<li>空间划分 （spatial partitions）</li>
+</ul>
+</li>
+<li><p>辐射度量学</p>
+</li>
+</ul>
+<h4 id="AABB-加速光线追踪"><a href="#AABB-加速光线追踪" class="headerlink" title="AABB 加速光线追踪"></a>AABB 加速光线追踪</h4><p><strong>均匀的网格：Uniform Spatial Partitions（Grids）</strong></p>
+<p>先让光线和盒子求交，再进一步和盒子里的物体求交</p>
+<p>预处理：</p>
+<p>1.先找到场景里的一个包围盒</p>
+<p>2.把盒子分成一堆格子</p>
+<p>3.标记与物体表面相交的格子</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204558-karsvo5.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204602-xjyn2a4.png" alt="image">​</p>
+<p>怎么判断光线继续往后传播时要和哪个盒子求交，不能每个格子都求一遍。有一个简单的思路是：如果光线往右上传播，就只看当前格子右边和上面的格子，判断光线与哪个格子有交点，再把光线移动一格。光栅化一条线:<a href="https://zhuanlan.zhihu.com/p/20213658">https://zhuanlan.zhihu.com/p/20213658</a>。</p>
+<p>加速效果：<br />一个格子（格子很稀疏），基本没有加速效果</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204609-qqu5bmx.png" alt="image">​</p>
+<p>格子太密，要做很多次光线和格子的求交，效率很低</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204615-miu4wws.png" alt="image">​</p>
+<p>需要找一个平衡</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204619-otjwusd.png" alt="image">​</p>
+<p>当几何物体在场景中分布比较均匀时，格子加速的效果比较好</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204624-l67m3mz.png" alt="image">​</p>
+<p>物体在场景中分布不均匀的时候，加速的效果不好</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204632-ohvjn97.png" alt="image">​</p>
+<h4 id="空间划分-Spatial-Partitions"><a href="#空间划分-Spatial-Partitions" class="headerlink" title="空间划分 Spatial Partitions"></a><strong>空间划分 Spatial Partitions</strong></h4><p>三种空间划分的结构：<br />Oct-Tree：8 叉树，把空间分成 8 个小方块，小方块继续分割，当格子里是空的，或物体足够少，就停止分割（平面是 4 叉树，即分成几份和维度有关系）</p>
+<p>KD-Tree：2 叉树，每次一个格子只砍一刀（水平竖直沿着坐标轴交替划分，基本保证划分的空间是均匀的）</p>
+<p>BSP-Tree：选一个方向砍一刀</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204649-cee1sju.png" alt="image">​</p>
+<h5 id="KD-Tree-预处理，建立加速结构"><a href="#KD-Tree-预处理，建立加速结构" class="headerlink" title="KD-Tree 预处理，建立加速结构"></a>KD-Tree 预处理，建立加速结构</h5><p>把空间划分为二叉树：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204658-s0bi29g.png" alt="image">​</p>
+<p>数据结构：</p>
+<p>中间节点需要存储：</p>
+<ul>
+<li>当前节点沿着哪个坐标轴划分</li>
+<li>划分在哪个位置（不一定划分在中间）</li>
+<li>2 个子节点</li>
+</ul>
+<p>叶子节点需要存储：</p>
+<ul>
+<li>和格子相交的几何物体</li>
+<li>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204705-wgytx09.png" alt="image">​</li>
+</ul>
+<p>判断光线和当前节点是不是有交点，如果有交点，继续判断和当前节点的子节点是不是有交点，一直到叶子节点，如果光线和叶子节点有交点，就求光线和叶子节点里面所有物体的交点；如果光线和当前节点没有交点就不需要继续往下找。<br />如果是求最近的交点就一边找一边记录最近的。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204714-42teely.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204718-bz5cned.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204722-s8wc8ov.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204726-qsnpo7h.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204736-aedp5yz.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204740-rxxh5k1.png" alt="image">​</p>
+<p>KD-Tree 的问题：</p>
+<p>1.不好判断几何对象（三角形）和盒子是否有交集</p>
+<p>2.1 个对象可能和不同的盒子都有交集，即同一个物体会被多个叶子节点存储</p>
+<h5 id="Object-Partitions-Bounding-Volumn-Hierarchy（BVH）"><a href="#Object-Partitions-Bounding-Volumn-Hierarchy（BVH）" class="headerlink" title="Object Partitions &amp; Bounding Volumn Hierarchy（BVH）"></a><strong>Object Partitions &amp; Bounding Volumn Hierarchy（BVH）</strong></h5><p>划分物体：把一个盒子里的三角形分为两部分，把两部分的三角形再重新求包围盒，然后每个包围盒继续划分，直到一个包围盒里包含的节点数够少就停止划分。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204752-vsj137t.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204802-dw9fna8.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204806-e07iour.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204812-1n2czdl.png" alt="image">​</p>
+<p>BVH 的好处是：一个物体只可能出现在一个盒子里，且无需求三角形和包围盒的交点，避免了 KD-Tree 的问题。</p>
+<p>但 BVH 也有一个问题：BVH 对空间的划分不是很严格的划分开，BoundingBox 可以相交，所以需要在划分几何形体的时候尽量减少重叠。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204818-9pfar63.png" alt="image">​</p>
+<p>总结构造 BVH 加速结构的过程：</p>
+<p>1.找到一个包围盒</p>
+<p>2.递归地把包围盒中的物体拆成两部分</p>
+<p>3.重新计算包围盒</p>
+<p>4.当包围盒的物体足够少的时候停止递归</p>
+<p>5.把物体信息存储在叶子节点里</p>
+<p><strong>怎么做节点的划分？</strong></p>
+<ul>
+<li><p>选一个维度</p>
+</li>
+<li><p>方式 1：每次选一个最长的轴把节点分成两半，使得节点最后分布比较均匀</p>
+</li>
+<li><p>方式 2：取中间的三角形的位置把节点分为两半，是的分割后节点的三角形数量差不多，让这个树形结构两边保持平衡（深度小，平均搜索次数小）</p>
+<ul>
+<li>取中间的三角形涉及到排序：所有三角形取重心，沿一个轴排个序，找到中间的那个三角形。（也可以不用排序找中位数，快速选择算法，可以达到 O(n)的时间复杂度）</li>
+</ul>
+</li>
+<li><p>如果场景是动态的，三角形数量会变化，就需要每次变化都重新算一下 BVH。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204830-voj0qcl.png" alt="image">​</p>
+</li>
+</ul>
+<p>BVH 的数据结构：<br>中间节点存储：</p>
+<ul>
+<li>包围盒</li>
+<li>子节点的指针</li>
+</ul>
+<p>叶子节点存储：</p>
+<ul>
+<li>包围盒</li>
+<li>实际的物体</li>
+<li>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204841-zo7ev8y.png" alt="image">​</li>
+</ul>
+<p>BVH 算法伪代码：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204847-q8eypig.png" alt="image">​</p>
+<p>空间划分和物体划分的区别：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204852-d3um7bh.png" alt="image">​</p>
+<p>以上是 Whitted-style 光线追踪的内容。</p>
+<h4 id="辐射度量学-Basic-radiometry"><a href="#辐射度量学-Basic-radiometry" class="headerlink" title="辐射度量学 Basic radiometry"></a>辐射度量学 Basic radiometry</h4><p>为什么要学习辐射度量学？</p>
+<p>之间的 Blinn-Phong 模型里提到光的强度 I 是怎么得到的，他的物理意义是什么？</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204902-rtdzgu2.png" alt="image">​</p>
+<p>Whitted-style 光线追踪给的结果是正确的吗？</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204923-ev1qs1a.png" alt="image">​</p>
+<p>辐射度量学给了一种精准定义光照的物理量的方法。</p>
+<p>辐射度量学学习的内容：<br>为如何描述光照定义了一系列的方法和单位</p>
+<p>给光定义了各种空间中的属性（仍然是基于几何光学，认为光线沿直线传播）：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204928-25ee893.png" alt="image">​</p>
+<ul>
+<li>Radiant flux，intensity，irradiance，radiance</li>
+</ul>
+<p>Radiant Energy and Flux</p>
+<p>Radiant energy 是电磁辐射的能量，单位是焦耳，用符号 Q 表示。</p>
+<p>Radiant Flux 是单位时间的能量。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204935-zhh77mo.png" alt="image">​</p>
+<p>另一种理解：单位时间通过感光平面的光子的数量</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204941-3lo9p1g.png" alt="image">​</p>
+<p>光源辐射的能量：radiant Intensity，定义了方向性和能量相关的概念</p>
+<p>物体表面接受到了多少能量：Irradiance</p>
+<p>光线传播中的能量怎么度量：Radiance</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204947-ch8k18p.png" alt="image">​</p>
+<p><strong>Radiant Intensity</strong></p>
+<p>单位立体角上点光源辐射出的单位能量</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204952-czaovps.png" alt="image">​</p>
+<p>立体角：<br>角度：弧长&#x2F;半径</p>
+<p>立体角：角度在三维的延伸。锥体对应的面积&#x2F;求面的面积。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204957-l8s8bw3.png" alt="image">​</p>
+<p>单位立体角（微分立体角）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205002-ikor5vv.png" alt="image">​</p>
+<p>对单位立体角做积分可以得到整个球面</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205007-7f67wjp.png" alt="image">​</p>
+<p>在辐射度量里面通常用 ω 表示方向，ω 可以用 θ 和 φ 来定义位置，并通过 sinθdθdφ 算出单位立体角。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205012-k9khbxq.png" alt="image">​</p>
+<p>对一个点光源，radiant intensity 是单位立体角的能量，把所有方向上的单位立体角的 intensity 积分，就可以得到它的 power，反之任何一个方向的 Intensity 就是 power&#x2F;4π。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205018-foe19s0.png" alt="image">​</p>
+<p>小知识：现代 LED 灯上标注的瓦数不是真实的，而是对应于白炽灯的瓦数，LED 实际瓦数更低。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205022-d5s39qt.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
     <title>第四章：三维变换</title>
     <url>/blog/%E7%AC%AC%E5%9B%9B%E7%AB%A0%EF%BC%9A%E4%B8%89%E7%BB%B4%E5%8F%98%E6%8D%A2/</url>
     <content><![CDATA[<p>补充知识：<br />旋转矩阵的逆等于它的转置，如果一个矩阵的逆等于它的转置，数学上称为正交矩阵</p>
@@ -4024,22 +4024,6 @@
       </categories>
   </entry>
   <entry>
-    <title>虚假的洗牌算法</title>
-    <url>/blog/%E8%99%9A%E5%81%87%E7%9A%84%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<h2 id="虚假的洗牌算法"><a href="#虚假的洗牌算法" class="headerlink" title="虚假的洗牌算法"></a>虚假的洗牌算法</h2><p>最常见的：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">shuffle</span> = (<span class="params">list</span>) =&gt; list.<span class="title function_">sort</span>(<span class="function">(<span class="params">x, y</span>) =&gt;</span> <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">0.5</span>)</span><br></pre></td></tr></table></figure>
-
-<p>可这并不合理，对于这个数组：[1,2,3,4,5]，每个数字出现在每个位置的概率应该是相同的。然而使用以上算法，1 出现在 index&#x3D;4 位置的概率 与 4 出现在 index&#x3D;4 的概率并不相同。</p>
-<h2 id="真正的洗牌算法"><a href="#真正的洗牌算法" class="headerlink" title="真正的洗牌算法"></a>真正的洗牌算法</h2><p><a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">Fisher–Yates shuffle</a></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> nums = <span class="title class_">Array</span>(<span class="number">54</span>)</span><br><span class="line">  .<span class="title function_">fill</span>(<span class="literal">undefined</span>)</span><br><span class="line">  .<span class="title function_">map</span>(<span class="function">(<span class="params">_, index</span>) =&gt;</span> index)</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 洗牌算法</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> nums 数组</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">FYSufffle</span>(<span class="params">nums</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> randNums = <span class="title class_">Array</span>.<span class="title function_">from</span>(nums)</span><br><span class="line">  <span class="keyword">let</span> len = nums.<span class="property">length</span></span><br><span class="line">  <span class="keyword">while</span> (len &gt; <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> rand = <span class="title class_">Math</span>.<span class="title function_">floor</span>(<span class="title class_">Math</span>.<span class="title function_">random</span>() * len)</span><br><span class="line">    len--</span><br><span class="line">    <span class="comment">// 交换</span></span><br><span class="line">    ;[randNums[rand], randNums[len]] = [randNums[len], randNums[rand]]</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> randNums</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">FYSufffle</span>(nums))</span><br></pre></td></tr></table></figure>
-
-<p>以上。</p>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-  </entry>
-  <entry>
     <title>设计一个拦截器</title>
     <url>/blog/%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E6%8B%A6%E6%88%AA%E5%99%A8/</url>
     <content><![CDATA[<p>拦截器是一个函数</p>
@@ -4059,6 +4043,22 @@
       <tags>
         <tag>进阶</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>虚假的洗牌算法</title>
+    <url>/blog/%E8%99%9A%E5%81%87%E7%9A%84%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="虚假的洗牌算法"><a href="#虚假的洗牌算法" class="headerlink" title="虚假的洗牌算法"></a>虚假的洗牌算法</h2><p>最常见的：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">shuffle</span> = (<span class="params">list</span>) =&gt; list.<span class="title function_">sort</span>(<span class="function">(<span class="params">x, y</span>) =&gt;</span> <span class="title class_">Math</span>.<span class="title function_">random</span>() - <span class="number">0.5</span>)</span><br></pre></td></tr></table></figure>
+
+<p>可这并不合理，对于这个数组：[1,2,3,4,5]，每个数字出现在每个位置的概率应该是相同的。然而使用以上算法，1 出现在 index&#x3D;4 位置的概率 与 4 出现在 index&#x3D;4 的概率并不相同。</p>
+<h2 id="真正的洗牌算法"><a href="#真正的洗牌算法" class="headerlink" title="真正的洗牌算法"></a>真正的洗牌算法</h2><p><a href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">Fisher–Yates shuffle</a></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> nums = <span class="title class_">Array</span>(<span class="number">54</span>)</span><br><span class="line">  .<span class="title function_">fill</span>(<span class="literal">undefined</span>)</span><br><span class="line">  .<span class="title function_">map</span>(<span class="function">(<span class="params">_, index</span>) =&gt;</span> index)</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 洗牌算法</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> nums 数组</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">FYSufffle</span>(<span class="params">nums</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> randNums = <span class="title class_">Array</span>.<span class="title function_">from</span>(nums)</span><br><span class="line">  <span class="keyword">let</span> len = nums.<span class="property">length</span></span><br><span class="line">  <span class="keyword">while</span> (len &gt; <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> rand = <span class="title class_">Math</span>.<span class="title function_">floor</span>(<span class="title class_">Math</span>.<span class="title function_">random</span>() * len)</span><br><span class="line">    len--</span><br><span class="line">    <span class="comment">// 交换</span></span><br><span class="line">    ;[randNums[rand], randNums[len]] = [randNums[len], randNums[rand]]</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> randNums</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">FYSufffle</span>(nums))</span><br></pre></td></tr></table></figure>
+
+<p>以上。</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
   </entry>
   <entry>
     <title>高性能的JavaScript</title>
