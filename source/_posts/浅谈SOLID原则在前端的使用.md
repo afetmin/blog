@@ -3,15 +3,13 @@ title: 浅谈SOLID原则在前端的使用
 date: 2024-11-07T07:44:04Z
 lastmod: 2024-11-07T07:44:04Z
 tags: [设计模式,js]
-description: ​SOLID​ 原则是由 Robert C. Martin​ 在 2000 年提出的一套软件开发准则，最初用于面向对象编程（OOP），旨在解决软件开发中的复杂性和维护问题。随着时间推移，它不仅在传统 OOP 语言中广泛应用，也被引入到 JavaScript 和 TypeScript 等现代编程语言和框架中，如 React​ 和 Angular​。
 ---
-
-# 浅谈SOLID原则在前端的使用
 
 ## 简介
 
 ​`SOLID`​ 原则是由 `Robert C. Martin`​ 在 2000 年提出的一套软件开发准则，最初用于面向对象编程（OOP），旨在解决软件开发中的复杂性和维护问题。随着时间推移，它不仅在传统 OOP 语言中广泛应用，也被引入到 JavaScript 和 TypeScript 等现代编程语言和框架中，如 `React`​ 和 `Angular`​。
 
+<!-- more -->
 SOLID 原则包括以下五个方面：
 
 1. 单一职责原则（`Single Responsibility Principle - SRP`​）
