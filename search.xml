@@ -1691,6 +1691,115 @@
       </categories>
   </entry>
   <entry>
+    <title>第一、二章：图形学概述、向量与线性代数</title>
+    <url>/blog/%E7%AC%AC%E4%B8%80%E3%80%81%E4%BA%8C%E7%AB%A0%EF%BC%9A%E5%9B%BE%E5%BD%A2%E5%AD%A6%E6%A6%82%E8%BF%B0%E3%80%81%E5%90%91%E9%87%8F%E4%B8%8E%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/</url>
+    <content><![CDATA[<h3 id="第一章-图形学概述"><a href="#第一章-图形学概述" class="headerlink" title="第一章 图形学概述"></a>第一章 图形学概述</h3><h4 id="1-图形学应用场景"><a href="#1-图形学应用场景" class="headerlink" title="1.图形学应用场景"></a>1.图形学应用场景</h4><p>游戏场景渲染、电影特效、动画、设计、可视化（人体三维扫描）、虚拟现实、数字绘图、模拟、GUI、字体排版等</p>
+<h4 id="2-图形学包含内容："><a href="#2-图形学包含内容：" class="headerlink" title="2.图形学包含内容："></a>2.图形学包含内容：</h4><ul>
+<li><p>数学：矩阵、曲线、曲面</p>
+</li>
+<li><p>物理学：光学、着色</p>
+</li>
+<li><p>描述、操作三维的不同形体</p>
+</li>
+<li><p>动画、仿真</p>
+</li>
+</ul>
+<h4 id="3-本课程包含的内容："><a href="#3-本课程包含的内容：" class="headerlink" title="3.本课程包含的内容："></a>3.本课程包含的内容：</h4><ul>
+<li><p>光栅化</p>
+<ul>
+<li>光栅化是把三维空间的几何形体显示在屏幕上，是实时图形学的主要应用。实时：每秒钟生成 30 帧，否则叫做离线</li>
+</ul>
+</li>
+<li><p>曲线、曲面</p>
+<ul>
+<li>如何表示一条光滑的曲线、如何表示曲面、怎么把简单曲面通过细分的方法得到更复杂的曲面，形状发生变化的时候面要如何变化，如何保持物体的拓扑结构</li>
+</ul>
+</li>
+<li><p>光线追踪</p>
+<ul>
+<li>实时光线追踪技术</li>
+</ul>
+</li>
+<li><p>动画&#x2F;模拟</p>
+</li>
+</ul>
+<h4 id="4-本课程不包含的内容："><a href="#4-本课程不包含的内容：" class="headerlink" title="4.本课程不包含的内容："></a>4.本课程不包含的内容：</h4><ul>
+<li><p>怎么使用 API</p>
+</li>
+<li><p>怎么做三维建模</p>
+</li>
+<li><p>计算机视觉：一切需要猜测的东西是计算机视觉（根据图像推测模型）。</p>
+<p>​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816202909-3znjtvt.png" alt="image">​​</p>
+<p>model 描述三维空间中形状的几何形体，或对于渲染而言描述它的材质、光照，把这些三维空间中有的东西转为一幅图（渲染），就是计算机图形学。此外，还包括纯三维空间的仿真，材质建模、材质与光线之间作用的研究等，都属于计算机图形学的范畴。</p>
+</li>
+</ul>
+<p>从一张图识别出各种模型（比如识别出照片里哪些是桌子、椅子），或者图形、视频处理（中间涉及到一些推测、推理）等是计算机视觉的范畴。</p>
+<p>某些场景下没有严格的边界，比如 AR 需要二者的结合。</p>
+<h3 id="第二章-向量与线性代数"><a href="#第二章-向量与线性代数" class="headerlink" title="第二章 向量与线性代数"></a>第二章 向量与线性代数</h3><h4 id="1-图形学依赖："><a href="#1-图形学依赖：" class="headerlink" title="1.图形学依赖："></a>1.图形学依赖：</h4><ul>
+<li><p>数学基础：线性代数、微积分、统计</p>
+</li>
+<li><p>数学基础：力学、光学</p>
+</li>
+<li><p>其他杂项：信号处理、数值分析</p>
+</li>
+<li><p>一点点美学</p>
+</li>
+</ul>
+<h4 id="2-向量（Vectors）"><a href="#2-向量（Vectors）" class="headerlink" title="2.向量（Vectors）"></a>2.向量（Vectors）</h4><p>向量表示两个内容：方向和长度，平移向量不会改变它（因为方向和长度不变）。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816202955-jjx4cx2.png" alt="image">​</p>
+<p>一个向量除它的长度可以得到一个长度为 1 的单位向量。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203024-1bw8l0i.png" alt="image">​</p>
+<h5 id="向量求和："><a href="#向量求和：" class="headerlink" title="向量求和："></a><strong>向量求和：</strong></h5><p>几何上：平行四边形法则、三角形法则。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203030-99fojmi.png" alt="image">​</p>
+<p>代数上：坐标相加（笛卡尔坐标系）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203036-px3g9cs.png" alt="image">​</p>
+<h5 id="向量点乘："><a href="#向量点乘：" class="headerlink" title="向量点乘："></a><strong>向量点乘：</strong></h5><p>可以通过点乘快速得到两个向量的夹角（特别是两个向量都是方向向量，点乘后直接得到夹角的余弦）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203046-yssyjz7.png" alt="image">​</p>
+<p><strong>点乘运算满足交换律、分配律和结合律</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203054-ozx0y20.png" alt="image">​</p>
+<p><strong>代数上的点乘即对应的坐标元素做乘积之后相加：</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203059-3o1v0i4.png" alt="image">​</p>
+<h5 id="点乘在图形学中的应用："><a href="#点乘在图形学中的应用：" class="headerlink" title="点乘在图形学中的应用："></a>点乘在图形学中的应用：</h5><ul>
+<li>找到两个向量（两个方向）之间的夹角。比如光照模型，计算光照到物体表面的法线等等</li>
+<li>找到一个向量到另一个向量上的投影，分解向量</li>
+<li>计算两个向量之间有多接近：夹角越小（点乘的结果越大）越接近。比如镜面反射计算高光点</li>
+<li>可以知道两个向量之间的方向是相同还是相反（正数相同、负数相反）<br>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203127-e9vs5ug.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203146-rmtlix3.png" alt="image">​</li>
+</ul>
+<h5 id="向量叉乘"><a href="#向量叉乘" class="headerlink" title="向量叉乘"></a><strong>向量叉乘</strong></h5><p>叉乘后的向量同时垂直于两个原向量，叉乘得到的向量方向符合右手螺旋定则。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203210-spvivvu.png" alt="image">​</p>
+<p>叉乘不满足交换律，需要加一个负号。但满足分配律和结合律。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203223-2lm3df8.png" alt="image">​</p>
+<p>代数上：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203230-6axkrx6.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203230-6axkrx6.png" alt="image">​​</p>
+<h5 id="叉乘在图形学中的应用："><a href="#叉乘在图形学中的应用：" class="headerlink" title="叉乘在图形学中的应用："></a>叉乘在图形学中的应用：</h5><ul>
+<li><p>判定左和右</p>
+</li>
+<li><p>判定内和外（三角形光栅化的基础）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203304-8s5o1zi.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203311-5841k86.png" alt="image">​​</p>
+</li>
+</ul>
+<h4 id="3-矩阵（Matrics）"><a href="#3-矩阵（Matrics）" class="headerlink" title="3.矩阵（Matrics）"></a>3.矩阵（Matrics）</h4><p>矩阵就是一堆数字，用 m 行 n 列的结构表示。</p>
+<p>图形学中，用矩阵实现一些移动、旋转的变换。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203320-z1jydy0.png" alt="image">​</p>
+<p>矩阵乘一个数就是把矩阵中每一个数字和该数字想乘得到一个矩阵。</p>
+<h5 id="矩阵乘积"><a href="#矩阵乘积" class="headerlink" title="矩阵乘积"></a><strong>矩阵乘积</strong></h5><p>一定要满足前一个矩阵的列数等于后一个矩阵的行数才能实现相乘。计算方式：乘出来的结果在 m 行 b 列就去找相乘的前一个矩阵的 m 行对应的值与后一个矩阵的 n 列对应的值一一相乘后再相加。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203329-p0untj0.png" alt="image">​</p>
+<p>矩阵不满足交换律，但满足结合率和分配律：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203336-mb007jo.png" alt="image">​</p>
+<p>矩阵和向量相乘：认为向量是一个 m 乘 1 的矩阵，则可以将任意一个 n 乘 m 的矩阵与向量相乘，基于该前提实现一个向量变换（比如相对一个坐标轴翻转）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203343-fbta21s.png" alt="image">​</p>
+<h5 id="矩阵转置"><a href="#矩阵转置" class="headerlink" title="矩阵转置"></a><strong>矩阵转置</strong></h5><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203349-3r4s0yl.png" alt="image">​</p>
+<h5 id="单位矩阵"><a href="#单位矩阵" class="headerlink" title="单位矩阵"></a><strong>单位矩阵</strong></h5><p>单位矩阵只有对角线上有元素。</p>
+<p>如果两个矩阵相乘为单位矩阵，则该两个矩阵互为逆矩阵。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203400-dl98u4q.png" alt="image">​</p>
+<p><strong>向量点乘和叉乘写成矩阵的形式（用在旋转的推导上）</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203405-yaiw812.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
     <title>现代浏览器架构</title>
     <url>/blog/%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E6%9E%B6%E6%9E%84/</url>
     <content><![CDATA[<p>原文：<a href="https://developer.chrome.com/blog/inside-browser-part1/" title="Inside look at modern web browser">Inside look at modern web browser</a></p>
@@ -1838,115 +1947,6 @@
 <h1 id="done！"><a href="#done！" class="headerlink" title="done！"></a>done！</h1>]]></content>
       <categories>
         <category>浏览器</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>第一、二章：图形学概述、向量与线性代数</title>
-    <url>/blog/%E7%AC%AC%E4%B8%80%E3%80%81%E4%BA%8C%E7%AB%A0%EF%BC%9A%E5%9B%BE%E5%BD%A2%E5%AD%A6%E6%A6%82%E8%BF%B0%E3%80%81%E5%90%91%E9%87%8F%E4%B8%8E%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/</url>
-    <content><![CDATA[<h3 id="第一章-图形学概述"><a href="#第一章-图形学概述" class="headerlink" title="第一章 图形学概述"></a>第一章 图形学概述</h3><h4 id="1-图形学应用场景"><a href="#1-图形学应用场景" class="headerlink" title="1.图形学应用场景"></a>1.图形学应用场景</h4><p>游戏场景渲染、电影特效、动画、设计、可视化（人体三维扫描）、虚拟现实、数字绘图、模拟、GUI、字体排版等</p>
-<h4 id="2-图形学包含内容："><a href="#2-图形学包含内容：" class="headerlink" title="2.图形学包含内容："></a>2.图形学包含内容：</h4><ul>
-<li><p>数学：矩阵、曲线、曲面</p>
-</li>
-<li><p>物理学：光学、着色</p>
-</li>
-<li><p>描述、操作三维的不同形体</p>
-</li>
-<li><p>动画、仿真</p>
-</li>
-</ul>
-<h4 id="3-本课程包含的内容："><a href="#3-本课程包含的内容：" class="headerlink" title="3.本课程包含的内容："></a>3.本课程包含的内容：</h4><ul>
-<li><p>光栅化</p>
-<ul>
-<li>光栅化是把三维空间的几何形体显示在屏幕上，是实时图形学的主要应用。实时：每秒钟生成 30 帧，否则叫做离线</li>
-</ul>
-</li>
-<li><p>曲线、曲面</p>
-<ul>
-<li>如何表示一条光滑的曲线、如何表示曲面、怎么把简单曲面通过细分的方法得到更复杂的曲面，形状发生变化的时候面要如何变化，如何保持物体的拓扑结构</li>
-</ul>
-</li>
-<li><p>光线追踪</p>
-<ul>
-<li>实时光线追踪技术</li>
-</ul>
-</li>
-<li><p>动画&#x2F;模拟</p>
-</li>
-</ul>
-<h4 id="4-本课程不包含的内容："><a href="#4-本课程不包含的内容：" class="headerlink" title="4.本课程不包含的内容："></a>4.本课程不包含的内容：</h4><ul>
-<li><p>怎么使用 API</p>
-</li>
-<li><p>怎么做三维建模</p>
-</li>
-<li><p>计算机视觉：一切需要猜测的东西是计算机视觉（根据图像推测模型）。</p>
-<p>​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816202909-3znjtvt.png" alt="image">​​</p>
-<p>model 描述三维空间中形状的几何形体，或对于渲染而言描述它的材质、光照，把这些三维空间中有的东西转为一幅图（渲染），就是计算机图形学。此外，还包括纯三维空间的仿真，材质建模、材质与光线之间作用的研究等，都属于计算机图形学的范畴。</p>
-</li>
-</ul>
-<p>从一张图识别出各种模型（比如识别出照片里哪些是桌子、椅子），或者图形、视频处理（中间涉及到一些推测、推理）等是计算机视觉的范畴。</p>
-<p>某些场景下没有严格的边界，比如 AR 需要二者的结合。</p>
-<h3 id="第二章-向量与线性代数"><a href="#第二章-向量与线性代数" class="headerlink" title="第二章 向量与线性代数"></a>第二章 向量与线性代数</h3><h4 id="1-图形学依赖："><a href="#1-图形学依赖：" class="headerlink" title="1.图形学依赖："></a>1.图形学依赖：</h4><ul>
-<li><p>数学基础：线性代数、微积分、统计</p>
-</li>
-<li><p>数学基础：力学、光学</p>
-</li>
-<li><p>其他杂项：信号处理、数值分析</p>
-</li>
-<li><p>一点点美学</p>
-</li>
-</ul>
-<h4 id="2-向量（Vectors）"><a href="#2-向量（Vectors）" class="headerlink" title="2.向量（Vectors）"></a>2.向量（Vectors）</h4><p>向量表示两个内容：方向和长度，平移向量不会改变它（因为方向和长度不变）。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816202955-jjx4cx2.png" alt="image">​</p>
-<p>一个向量除它的长度可以得到一个长度为 1 的单位向量。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203024-1bw8l0i.png" alt="image">​</p>
-<h5 id="向量求和："><a href="#向量求和：" class="headerlink" title="向量求和："></a><strong>向量求和：</strong></h5><p>几何上：平行四边形法则、三角形法则。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203030-99fojmi.png" alt="image">​</p>
-<p>代数上：坐标相加（笛卡尔坐标系）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203036-px3g9cs.png" alt="image">​</p>
-<h5 id="向量点乘："><a href="#向量点乘：" class="headerlink" title="向量点乘："></a><strong>向量点乘：</strong></h5><p>可以通过点乘快速得到两个向量的夹角（特别是两个向量都是方向向量，点乘后直接得到夹角的余弦）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203046-yssyjz7.png" alt="image">​</p>
-<p><strong>点乘运算满足交换律、分配律和结合律</strong></p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203054-ozx0y20.png" alt="image">​</p>
-<p><strong>代数上的点乘即对应的坐标元素做乘积之后相加：</strong></p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203059-3o1v0i4.png" alt="image">​</p>
-<h5 id="点乘在图形学中的应用："><a href="#点乘在图形学中的应用：" class="headerlink" title="点乘在图形学中的应用："></a>点乘在图形学中的应用：</h5><ul>
-<li>找到两个向量（两个方向）之间的夹角。比如光照模型，计算光照到物体表面的法线等等</li>
-<li>找到一个向量到另一个向量上的投影，分解向量</li>
-<li>计算两个向量之间有多接近：夹角越小（点乘的结果越大）越接近。比如镜面反射计算高光点</li>
-<li>可以知道两个向量之间的方向是相同还是相反（正数相同、负数相反）<br>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203127-e9vs5ug.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203146-rmtlix3.png" alt="image">​</li>
-</ul>
-<h5 id="向量叉乘"><a href="#向量叉乘" class="headerlink" title="向量叉乘"></a><strong>向量叉乘</strong></h5><p>叉乘后的向量同时垂直于两个原向量，叉乘得到的向量方向符合右手螺旋定则。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203210-spvivvu.png" alt="image">​</p>
-<p>叉乘不满足交换律，需要加一个负号。但满足分配律和结合律。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203223-2lm3df8.png" alt="image">​</p>
-<p>代数上：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203230-6axkrx6.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203230-6axkrx6.png" alt="image">​​</p>
-<h5 id="叉乘在图形学中的应用："><a href="#叉乘在图形学中的应用：" class="headerlink" title="叉乘在图形学中的应用："></a>叉乘在图形学中的应用：</h5><ul>
-<li><p>判定左和右</p>
-</li>
-<li><p>判定内和外（三角形光栅化的基础）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203304-8s5o1zi.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203311-5841k86.png" alt="image">​​</p>
-</li>
-</ul>
-<h4 id="3-矩阵（Matrics）"><a href="#3-矩阵（Matrics）" class="headerlink" title="3.矩阵（Matrics）"></a>3.矩阵（Matrics）</h4><p>矩阵就是一堆数字，用 m 行 n 列的结构表示。</p>
-<p>图形学中，用矩阵实现一些移动、旋转的变换。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203320-z1jydy0.png" alt="image">​</p>
-<p>矩阵乘一个数就是把矩阵中每一个数字和该数字想乘得到一个矩阵。</p>
-<h5 id="矩阵乘积"><a href="#矩阵乘积" class="headerlink" title="矩阵乘积"></a><strong>矩阵乘积</strong></h5><p>一定要满足前一个矩阵的列数等于后一个矩阵的行数才能实现相乘。计算方式：乘出来的结果在 m 行 b 列就去找相乘的前一个矩阵的 m 行对应的值与后一个矩阵的 n 列对应的值一一相乘后再相加。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203329-p0untj0.png" alt="image">​</p>
-<p>矩阵不满足交换律，但满足结合率和分配律：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203336-mb007jo.png" alt="image">​</p>
-<p>矩阵和向量相乘：认为向量是一个 m 乘 1 的矩阵，则可以将任意一个 n 乘 m 的矩阵与向量相乘，基于该前提实现一个向量变换（比如相对一个坐标轴翻转）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203343-fbta21s.png" alt="image">​</p>
-<h5 id="矩阵转置"><a href="#矩阵转置" class="headerlink" title="矩阵转置"></a><strong>矩阵转置</strong></h5><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203349-3r4s0yl.png" alt="image">​</p>
-<h5 id="单位矩阵"><a href="#单位矩阵" class="headerlink" title="单位矩阵"></a><strong>单位矩阵</strong></h5><p>单位矩阵只有对角线上有元素。</p>
-<p>如果两个矩阵相乘为单位矩阵，则该两个矩阵互为逆矩阵。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203400-dl98u4q.png" alt="image">​</p>
-<p><strong>向量点乘和叉乘写成矩阵的形式（用在旋转的推导上）</strong></p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203405-yaiw812.png" alt="image">​</p>
-]]></content>
-      <categories>
-        <category>图形学</category>
       </categories>
   </entry>
   <entry>
@@ -4061,6 +4061,27 @@
       </tags>
   </entry>
   <entry>
+    <title>齐次坐标到底是什么</title>
+    <url>/blog/%E9%BD%90%E6%AC%A1%E5%9D%90%E6%A0%87%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88/</url>
+    <content><![CDATA[<h1 id="齐次坐标"><a href="#齐次坐标" class="headerlink" title="齐次坐标"></a>齐次坐标</h1><p>齐次坐标可以用来区分 (X,Y) 到底是个向量还是个坐标，它不是一个新的坐标系，不是说把二维的变成三维的，它是一种记法。</p>
+<p>（x,y,0) 表示一个向量， (x,y,1)表示一个坐标。</p>
+<p><strong>点+点&#x3D;点，点加向量&#x3D;点，向量+向量&#x3D;向量，点-点&#x3D;向量。</strong></p>
+<p>引入齐次坐标是为了在发生变换时，其几何意义依然准确。</p>
+<p><strong>一个向量平移之后，其结果仍然是这个向量</strong>，<strong>而一个点平移之后，其值就会发生变化但仍然是一个点</strong>。</p>
+<p>对于平移来说：</p>
+<p>$$<br>\left(\begin{array}{cccc}<br>1 &amp; 0 &amp; 0 &amp; t_{x} \\<br>0 &amp; 1 &amp; 0 &amp; t_{y} \\<br>0 &amp; 0 &amp; 1 &amp; t_{z} \\<br>0 &amp; 0 &amp; 0 &amp; 1<br>\end{array}\right) \cdot\left(\begin{array}{c}<br>x_{0} \\<br>y_{0} \\<br>z_{0} \\<br>w_{0}<br>\end{array}\right)&#x3D;\left(\begin{array}{c}<br>x_{0}+w_{0} * t_{x} \\<br>y_{0}+w_{0} * t_{y} \\<br>z_{0}+w_{0} * t_{z} \\<br>w_{0}<br>\end{array}\right)<br>$$</p>
+<p>如果$w_{0}$是0，那这个结果就是$\left(x_{0}, y_{0}, z_{0}\right)$，与向量的定义相符。</p>
+<p>如果$w_{0}$是1，结果仍是一个点，与点的定义相符。</p>
+<p>‍</p>
+<p>对于平移、旋转、缩放这3个最常见的仿射变换，平移变换只对点有意义，因为向量没有位置概念。</p>
+<p>而旋转和缩放对于向量和点都有意义。</p>
+<p>‍</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
     <title>高性能的JavaScript</title>
     <url>/blog/%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84JavaScript/</url>
     <content><![CDATA[<h3 id="加载和执行"><a href="#加载和执行" class="headerlink" title="加载和执行"></a>加载和执行</h3><p>每个<code>&lt;script&gt;</code>标签初始化下载都会阻塞页面渲染，所以减少页面的<code>&lt;script&gt;</code>标签数量可以起到优化作用，内嵌脚本外链脚本通用,另外HTTP会带来的额外的性能消耗，下载一个100KB的文件比下载4个25KB的文件更快，所以可以通过进行脚本的合并去1、减少<code>&lt;script&gt;</code>标签数量 2、减少HTTP请求带来的消耗（针对外链脚本）。</p>
@@ -4119,26 +4140,5 @@
       <tags>
         <tag>性能优化</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>齐次坐标到底是什么</title>
-    <url>/blog/%E9%BD%90%E6%AC%A1%E5%9D%90%E6%A0%87%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88/</url>
-    <content><![CDATA[<h1 id="齐次坐标"><a href="#齐次坐标" class="headerlink" title="齐次坐标"></a>齐次坐标</h1><p>齐次坐标可以用来区分 (X,Y) 到底是个向量还是个坐标，它不是一个新的坐标系，不是说把二维的变成三维的，它是一种记法。</p>
-<p>（x,y,0) 表示一个向量， (x,y,1)表示一个坐标。</p>
-<p><strong>点+点&#x3D;点，点加向量&#x3D;点，向量+向量&#x3D;向量，点-点&#x3D;向量。</strong></p>
-<p>引入齐次坐标是为了在发生变换时，其几何意义依然准确。</p>
-<p><strong>一个向量平移之后，其结果仍然是这个向量</strong>，<strong>而一个点平移之后，其值就会发生变化但仍然是一个点</strong>。</p>
-<p>对于平移来说：</p>
-<p>$$<br>\left(\begin{array}{cccc}<br>1 &amp; 0 &amp; 0 &amp; t_{x} \\<br>0 &amp; 1 &amp; 0 &amp; t_{y} \\<br>0 &amp; 0 &amp; 1 &amp; t_{z} \\<br>0 &amp; 0 &amp; 0 &amp; 1<br>\end{array}\right) \cdot\left(\begin{array}{c}<br>x_{0} \\<br>y_{0} \\<br>z_{0} \\<br>w_{0}<br>\end{array}\right)&#x3D;\left(\begin{array}{c}<br>x_{0}+w_{0} * t_{x} \\<br>y_{0}+w_{0} * t_{y} \\<br>z_{0}+w_{0} * t_{z} \\<br>w_{0}<br>\end{array}\right)<br>$$</p>
-<p>如果$w_{0}$是0，那这个结果就是$\left(x_{0}, y_{0}, z_{0}\right)$，与向量的定义相符。</p>
-<p>如果$w_{0}$是1，结果仍是一个点，与点的定义相符。</p>
-<p>‍</p>
-<p>对于平移、旋转、缩放这3个最常见的仿射变换，平移变换只对点有意义，因为向量没有位置概念。</p>
-<p>而旋转和缩放对于向量和点都有意义。</p>
-<p>‍</p>
-]]></content>
-      <categories>
-        <category>图形学</category>
-      </categories>
   </entry>
 </search>
