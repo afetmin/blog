@@ -363,19 +363,19 @@ codeblock:
   # Code Highlight theme
   # All available themes: https://theme-next.js.org/highlight/
   theme:
-    light: atom-one-dark
+    light: atom
     dark: atom-one-dark
   prism:
-    light: prism-one-light
+    light: prism
     dark: prism-one-dark
   # Add copy button on codeblock
   copy_button:
     enable: true
     # Available values: default | flat | mac
-    style:
+    style: flat
   # Fold code block
   fold:
-    enable: false
+    enable: true
     height: 400
 
 back2top:
