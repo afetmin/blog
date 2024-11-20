@@ -81,6 +81,48 @@
       </categories>
   </entry>
   <entry>
+    <title>React memo lazy</title>
+    <url>/blog/React-memo-lazy/</url>
+    <content><![CDATA[<h2 id="React-memo"><a href="#React-memo" class="headerlink" title="React.memo"></a>React.memo</h2><p>react.memo 有第二个参数，可以通过第二个参数来自定义组件的渲染时机。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="title class_">React</span>.<span class="title function_">memo</span>(<span class="title class_">Component</span>, compare)</span><br></pre></td></tr></table></figure>
+
+<p>React.memo 接受两个参数，第一个参数 Component 原始组件本身，第二个参数 compare 是一个函数，可以根据一次更新中 props 是否相同决定原始组件是否重新渲染。</p>
+<p>memo 的几个特点是：</p>
+<ul>
+<li><p>React.memo: 第二个参数 返回 true 组件不渲染 ， 返回 false 组件重新渲染。<br>和 shouldComponentUpdate 相反，shouldComponentUpdate : 返回 true 组件渲染 ， 返回 false 组件不渲染。</p>
+</li>
+<li><p>memo 当二个参数 compare 不存在时，会用浅比较原则处理 props ，相当于仅比较 props 版本的 pureComponent 。</p>
+</li>
+<li><p>memo 同样适合类组件和函数组件。<br>关于第二个参数你可以这样写：</p>
+</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">compare</span> = (<span class="params">prev, next</span>) =&gt;</span><br><span class="line">  prev.<span class="property">number</span> === next.<span class="property">number</span> ||</span><br><span class="line">  (prev.<span class="property">number</span> !== next.<span class="property">number</span> &amp;&amp; next.<span class="property">number</span> &gt; <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这里有两个意思：</p>
+<ul>
+<li>number 改变时 组件渲染</li>
+<li>number 小于 1 时 组件渲染</li>
+</ul>
+<h2 id="关于-rander"><a href="#关于-rander" class="headerlink" title="关于 rander"></a>关于 rander</h2><h3 id="有没有必要在乎组件不必要渲染。"><a href="#有没有必要在乎组件不必要渲染。" class="headerlink" title="有没有必要在乎组件不必要渲染。"></a>有没有必要在乎组件不必要渲染。</h3><p>在正常情况下，无须过分在乎 React 没有必要的渲染，执行 render 不等于真正的浏览器渲染视图，render 阶段执行是在 js 当中，js 中运行代码远快于浏览器的 Rendering 和 Painting 的，更何况 React 还提供了 diff 算法等手段，去复用真实 DOM 。</p>
+<h3 id="什么时候需要注意渲染节流。"><a href="#什么时候需要注意渲染节流。" class="headerlink" title="什么时候需要注意渲染节流。"></a>什么时候需要注意渲染节流。</h3><p>但是对于以下情况，值得开发者注意，需要采用渲染节流：</p>
+<ul>
+<li>第一种情况数据可视化的模块组件（展示了大量的数据），这种情况比较小心因为一次更新，可能伴随大量的 diff ，数据量越大也就越浪费性能，所以对于数据展示模块组件，有必要采取 memo ， shouldComponentUpdate 等方案控制自身组件渲染。</li>
+<li>第二种情况含有大量表单的页面，React 一般会采用受控组件的模式去管理表单数据层，表单数据层完全托管于 props 或是 state ，而用户操作表单往往是频繁的，需要频繁改变数据层，所以很有可能让整个页面组件高频率 render 。</li>
+<li>第三种情况就是越是靠近 app root 根组件越值得注意，根组件渲染会波及到整个组件树重新 render ，子组件 render ，一是浪费性能，二是可能执行 useEffect ，componentWillReceiveProps 等钩子，造成意想不到的情况发生。</li>
+</ul>
+<h2 id="使用-Suspense-和-React-lazy-模拟实现异步加载组件"><a href="#使用-Suspense-和-React-lazy-模拟实现异步加载组件" class="headerlink" title="使用 Suspense 和 React.lazy 模拟实现异步加载组件"></a>使用 Suspense 和 React.lazy 模拟实现异步加载组件</h2><h3 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h3><ul>
+<li>异步请求数据，请求完数据挂载组件，请求过程中展示 loading 效果。</li>
+<li>全程组件只渲染一次</li>
+</ul>
+<h3 id="编写"><a href="#编写" class="headerlink" title="编写"></a>编写</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">AsyncComp</span>(<span class="params">Comp, asyncFn</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">AsyncCompPromise</span> = (<span class="params"></span>) =&gt;</span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="title function_">async</span> (resolve) =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> data = <span class="keyword">await</span> <span class="title function_">asyncFn</span>()</span><br><span class="line">      <span class="title function_">resolve</span>(&#123;</span><br><span class="line">        <span class="attr">default</span>: <span class="function">(<span class="params">props</span>) =&gt;</span> <span class="language-xml"><span class="tag">&lt;<span class="name">Comp</span> <span class="attr">value</span>=<span class="string">&#123;data&#125;</span> &#123;<span class="attr">...props</span>&#125; /&gt;</span></span>,</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">React</span>.<span class="title function_">lazy</span>(<span class="title class_">AsyncCompPromise</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">fetchData</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">resolve</span>(&#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&quot;ranxiu&quot;</span>,</span><br><span class="line">        <span class="attr">msg</span>: <span class="string">&quot;a lot of data&quot;</span>,</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Test</span>(<span class="params">&#123; value, gender &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; name, msg &#125; = value</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">div</span>&gt;</span>my name is &#123;name&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">div</span>&gt;</span>this is &#123;msg&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">div</span>&gt;</span>my gender is &#123;gender&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">App</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="title class_">LzayTest</span> = <span class="title class_">AsyncComp</span>(<span class="title class_">Test</span>, fetchData)</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Suspense</span> <span class="attr">fallback</span>=<span class="string">&#123;</span>&lt;<span class="attr">div</span>&gt;</span>loading...<span class="tag">&lt;/<span class="name">div</span>&gt;</span>&#125;&gt;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">LzayTest</span> <span class="attr">gender</span>=<span class="string">&#x27;男&#x27;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">Suspense</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>React.lazy 要求函数需要返回一个 Promise。大致流程是，react.lazy 第一次渲染时会向外抛个异常 Promise，这个异常会被 Suspense 捕获到，Suspense 处理 Promise，Promise 执行成功后 Susponse 发起渲染，返回真正需要渲染的组件。</p>
+]]></content>
+      <categories>
+        <category>React</category>
+      </categories>
+  </entry>
+  <entry>
     <title>React element，children，parents and re-renders</title>
     <url>/blog/React-element%EF%BC%8Cchildren%EF%BC%8Cparents-and-re-renders/</url>
     <content><![CDATA[<h3 id="children-as-a-render-function"><a href="#children-as-a-render-function" class="headerlink" title="children as a render function"></a>children as a render function</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">MovingComponent</span> = (<span class="params">&#123; children &#125;</span>) =&gt; &#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">...</span>// <span class="attr">callbacks</span> <span class="attr">same</span> <span class="attr">as</span> <span class="attr">before</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      &gt;</span></span></span><br><span class="line"><span class="language-xml">      // children as render function with some data</span></span><br><span class="line"><span class="language-xml">      // data doesn&#x27;t depend on the changed state!</span></span><br><span class="line"><span class="language-xml">      &#123;children(&#123; data: &#x27;something&#x27; &#125;)&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">SomeOutsideComponent</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">MovingComponent</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      // ChildComponent re-renders when state in MovingComponent changes!</span></span><br><span class="line"><span class="language-xml">      // even if it doesn&#x27;t use the data that is passed from it</span></span><br><span class="line"><span class="language-xml">      &#123;() =&gt; <span class="tag">&lt;<span class="name">ChildComponent</span> /&gt;</span>&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">MovingComponent</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -143,48 +185,6 @@
       <tags>
         <tag>进阶</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>React memo lazy</title>
-    <url>/blog/React-memo-lazy/</url>
-    <content><![CDATA[<h2 id="React-memo"><a href="#React-memo" class="headerlink" title="React.memo"></a>React.memo</h2><p>react.memo 有第二个参数，可以通过第二个参数来自定义组件的渲染时机。</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="title class_">React</span>.<span class="title function_">memo</span>(<span class="title class_">Component</span>, compare)</span><br></pre></td></tr></table></figure>
-
-<p>React.memo 接受两个参数，第一个参数 Component 原始组件本身，第二个参数 compare 是一个函数，可以根据一次更新中 props 是否相同决定原始组件是否重新渲染。</p>
-<p>memo 的几个特点是：</p>
-<ul>
-<li><p>React.memo: 第二个参数 返回 true 组件不渲染 ， 返回 false 组件重新渲染。<br>和 shouldComponentUpdate 相反，shouldComponentUpdate : 返回 true 组件渲染 ， 返回 false 组件不渲染。</p>
-</li>
-<li><p>memo 当二个参数 compare 不存在时，会用浅比较原则处理 props ，相当于仅比较 props 版本的 pureComponent 。</p>
-</li>
-<li><p>memo 同样适合类组件和函数组件。<br>关于第二个参数你可以这样写：</p>
-</li>
-</ul>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">compare</span> = (<span class="params">prev, next</span>) =&gt;</span><br><span class="line">  prev.<span class="property">number</span> === next.<span class="property">number</span> ||</span><br><span class="line">  (prev.<span class="property">number</span> !== next.<span class="property">number</span> &amp;&amp; next.<span class="property">number</span> &gt; <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
-<p>这里有两个意思：</p>
-<ul>
-<li>number 改变时 组件渲染</li>
-<li>number 小于 1 时 组件渲染</li>
-</ul>
-<h2 id="关于-rander"><a href="#关于-rander" class="headerlink" title="关于 rander"></a>关于 rander</h2><h3 id="有没有必要在乎组件不必要渲染。"><a href="#有没有必要在乎组件不必要渲染。" class="headerlink" title="有没有必要在乎组件不必要渲染。"></a>有没有必要在乎组件不必要渲染。</h3><p>在正常情况下，无须过分在乎 React 没有必要的渲染，执行 render 不等于真正的浏览器渲染视图，render 阶段执行是在 js 当中，js 中运行代码远快于浏览器的 Rendering 和 Painting 的，更何况 React 还提供了 diff 算法等手段，去复用真实 DOM 。</p>
-<h3 id="什么时候需要注意渲染节流。"><a href="#什么时候需要注意渲染节流。" class="headerlink" title="什么时候需要注意渲染节流。"></a>什么时候需要注意渲染节流。</h3><p>但是对于以下情况，值得开发者注意，需要采用渲染节流：</p>
-<ul>
-<li>第一种情况数据可视化的模块组件（展示了大量的数据），这种情况比较小心因为一次更新，可能伴随大量的 diff ，数据量越大也就越浪费性能，所以对于数据展示模块组件，有必要采取 memo ， shouldComponentUpdate 等方案控制自身组件渲染。</li>
-<li>第二种情况含有大量表单的页面，React 一般会采用受控组件的模式去管理表单数据层，表单数据层完全托管于 props 或是 state ，而用户操作表单往往是频繁的，需要频繁改变数据层，所以很有可能让整个页面组件高频率 render 。</li>
-<li>第三种情况就是越是靠近 app root 根组件越值得注意，根组件渲染会波及到整个组件树重新 render ，子组件 render ，一是浪费性能，二是可能执行 useEffect ，componentWillReceiveProps 等钩子，造成意想不到的情况发生。</li>
-</ul>
-<h2 id="使用-Suspense-和-React-lazy-模拟实现异步加载组件"><a href="#使用-Suspense-和-React-lazy-模拟实现异步加载组件" class="headerlink" title="使用 Suspense 和 React.lazy 模拟实现异步加载组件"></a>使用 Suspense 和 React.lazy 模拟实现异步加载组件</h2><h3 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h3><ul>
-<li>异步请求数据，请求完数据挂载组件，请求过程中展示 loading 效果。</li>
-<li>全程组件只渲染一次</li>
-</ul>
-<h3 id="编写"><a href="#编写" class="headerlink" title="编写"></a>编写</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">AsyncComp</span>(<span class="params">Comp, asyncFn</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">AsyncCompPromise</span> = (<span class="params"></span>) =&gt;</span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="title function_">async</span> (resolve) =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> data = <span class="keyword">await</span> <span class="title function_">asyncFn</span>()</span><br><span class="line">      <span class="title function_">resolve</span>(&#123;</span><br><span class="line">        <span class="attr">default</span>: <span class="function">(<span class="params">props</span>) =&gt;</span> <span class="language-xml"><span class="tag">&lt;<span class="name">Comp</span> <span class="attr">value</span>=<span class="string">&#123;data&#125;</span> &#123;<span class="attr">...props</span>&#125; /&gt;</span></span>,</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">React</span>.<span class="title function_">lazy</span>(<span class="title class_">AsyncCompPromise</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">fetchData</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">resolve</span>(&#123;</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&quot;ranxiu&quot;</span>,</span><br><span class="line">        <span class="attr">msg</span>: <span class="string">&quot;a lot of data&quot;</span>,</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Test</span>(<span class="params">&#123; value, gender &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; name, msg &#125; = value</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">div</span>&gt;</span>my name is &#123;name&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">div</span>&gt;</span>this is &#123;msg&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">div</span>&gt;</span>my gender is &#123;gender&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">App</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="title class_">LzayTest</span> = <span class="title class_">AsyncComp</span>(<span class="title class_">Test</span>, fetchData)</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Suspense</span> <span class="attr">fallback</span>=<span class="string">&#123;</span>&lt;<span class="attr">div</span>&gt;</span>loading...<span class="tag">&lt;/<span class="name">div</span>&gt;</span>&#125;&gt;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">LzayTest</span> <span class="attr">gender</span>=<span class="string">&#x27;男&#x27;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">Suspense</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>React.lazy 要求函数需要返回一个 Promise。大致流程是，react.lazy 第一次渲染时会向外抛个异常 Promise，这个异常会被 Suspense 捕获到，Suspense 处理 Promise，Promise 执行成功后 Susponse 发起渲染，返回真正需要渲染的组件。</p>
-]]></content>
-      <categories>
-        <category>React</category>
-      </categories>
   </entry>
   <entry>
     <title>React typescript cheatsheet</title>
@@ -331,6 +331,35 @@
       </tags>
   </entry>
   <entry>
+    <title>better-scroll结合vue遇到图片引起的问题</title>
+    <url>/blog/better-scroll%E7%BB%93%E5%90%88vue%E9%81%87%E5%88%B0%E5%9B%BE%E7%89%87%E5%BC%95%E8%B5%B7%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h2 id="使用better-scroll遇到的问题"><a href="#使用better-scroll遇到的问题" class="headerlink" title="使用better-scroll遇到的问题"></a>使用better-scroll遇到的问题</h2><p>原来项目中只使用了better-scroll来做轮播图和滑动组件，但是头部和标签栏是固定的，只滑动下面部分，于是设置 scroll-warpper样式如下：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.scroll-wrapper</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">80px</span>;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是想要实现下部组件与上部标签的联动，仅仅靠better-scroll就不够了，于是项目中按需引入了vant的的标签组件，来实现移动端的左右滑动（不得不说，封装好的东西就是香）。紧接着就产生了问题，</p>
+<ul>
+<li>一是：下部组件无法滑动，</li>
+<li>二是：better-scroll滑不到底部，只能滑一部分。刷新页面后可以滑动了</li>
+</ul>
+<p>分析问题：</p>
+<ul>
+<li>查看dom发现vant的content__wrap没有高度，而scroll-warpper和内容高度一致。这是由于content__wrap的定位是relative，而scroll-wrapper是相对于content__wrap而定位的，并不是相对整个页面定位，所有内容是被里面撑开的。</li>
+<li>页面中有大量图片，当dom加载完成后图片并没有加载完成，scroll已经初始化了，所以滑不到底部。刷新页面可以滑动是因为图片已经被浏览器缓存了，刷新直接拿到图片不需要重新请求。</li>
+</ul>
+<p>解决问题：</p>
+<ul>
+<li>第一个问题是定位的原因，那我们把wrapper的高度写死就好了，<br>  但是由于头部和标签是自适应的，高度是不确定的，就没法写死了。使用动态获取设置wrapper的style：<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">setScrollWrapperHeight</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">scroll</span>.<span class="property">$el</span>.<span class="property">style</span>.<span class="property">height</span> =</span><br><span class="line">        <span class="variable language_">window</span>.<span class="property">innerHeight</span> - <span class="variable language_">this</span>.<span class="property">topHeight</span> + <span class="string">&#x27;px&#x27;</span></span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure></li>
+<li>由于多个页面都需要这个配置，放到mixin中，在mounted方法中调用此方法。<br>解决wrapper高度问题。</li>
+<li>第二个问题是图片加载时content的高度设置错误问题，可以通过img的load方法判断图片是否加载完成。<br> 子组件： <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">imgAllLoad</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> mulitImg = <span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;.suggest-item-img&#x27;</span>)</span><br><span class="line">      <span class="keyword">const</span> promiseAll = []</span><br><span class="line">      <span class="keyword">const</span> imgTotal = mulitImg.<span class="property">length</span></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; imgTotal; i++) &#123;</span><br><span class="line">        promiseAll[i] = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">          mulitImg[i].<span class="property">onload</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="comment">// 第i张加载完成</span></span><br><span class="line">            <span class="title function_">resolve</span>(mulitImg[i])</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> promiseAll</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+在子组件mounted中：派发一个imgLoad方法<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title class_">Promise</span>.<span class="title function_">all</span>(<span class="variable language_">this</span>.<span class="title function_">imgAllLoad</span>()).<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.$emit(<span class="string">&#x27;imgLoad&#x27;</span>)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+在父组件监听此方法，并刷新scroll组件<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="title function_">imgLoad</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">scroll</span>.<span class="title function_">refresh</span>()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+这样体验就不错了。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+  </entry>
+  <entry>
     <title>express三大概念</title>
     <url>/blog/express%E4%B8%89%E5%A4%A7%E6%A6%82%E5%BF%B5/</url>
     <content><![CDATA[<h2 id="Express-三大基础概念"><a href="#Express-三大基础概念" class="headerlink" title="Express 三大基础概念"></a>Express 三大基础概念</h2><h3 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h3><p>中间件是一个函数，在请求和响应周期中被顺序调用</p>
@@ -359,35 +388,6 @@
       <tags>
         <tag>express</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>better-scroll结合vue遇到图片引起的问题</title>
-    <url>/blog/better-scroll%E7%BB%93%E5%90%88vue%E9%81%87%E5%88%B0%E5%9B%BE%E7%89%87%E5%BC%95%E8%B5%B7%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h2 id="使用better-scroll遇到的问题"><a href="#使用better-scroll遇到的问题" class="headerlink" title="使用better-scroll遇到的问题"></a>使用better-scroll遇到的问题</h2><p>原来项目中只使用了better-scroll来做轮播图和滑动组件，但是头部和标签栏是固定的，只滑动下面部分，于是设置 scroll-warpper样式如下：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.scroll-wrapper</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">80px</span>;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>但是想要实现下部组件与上部标签的联动，仅仅靠better-scroll就不够了，于是项目中按需引入了vant的的标签组件，来实现移动端的左右滑动（不得不说，封装好的东西就是香）。紧接着就产生了问题，</p>
-<ul>
-<li>一是：下部组件无法滑动，</li>
-<li>二是：better-scroll滑不到底部，只能滑一部分。刷新页面后可以滑动了</li>
-</ul>
-<p>分析问题：</p>
-<ul>
-<li>查看dom发现vant的content__wrap没有高度，而scroll-warpper和内容高度一致。这是由于content__wrap的定位是relative，而scroll-wrapper是相对于content__wrap而定位的，并不是相对整个页面定位，所有内容是被里面撑开的。</li>
-<li>页面中有大量图片，当dom加载完成后图片并没有加载完成，scroll已经初始化了，所以滑不到底部。刷新页面可以滑动是因为图片已经被浏览器缓存了，刷新直接拿到图片不需要重新请求。</li>
-</ul>
-<p>解决问题：</p>
-<ul>
-<li>第一个问题是定位的原因，那我们把wrapper的高度写死就好了，<br>  但是由于头部和标签是自适应的，高度是不确定的，就没法写死了。使用动态获取设置wrapper的style：<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">setScrollWrapperHeight</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">scroll</span>.<span class="property">$el</span>.<span class="property">style</span>.<span class="property">height</span> =</span><br><span class="line">        <span class="variable language_">window</span>.<span class="property">innerHeight</span> - <span class="variable language_">this</span>.<span class="property">topHeight</span> + <span class="string">&#x27;px&#x27;</span></span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure></li>
-<li>由于多个页面都需要这个配置，放到mixin中，在mounted方法中调用此方法。<br>解决wrapper高度问题。</li>
-<li>第二个问题是图片加载时content的高度设置错误问题，可以通过img的load方法判断图片是否加载完成。<br> 子组件： <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">imgAllLoad</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> mulitImg = <span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;.suggest-item-img&#x27;</span>)</span><br><span class="line">      <span class="keyword">const</span> promiseAll = []</span><br><span class="line">      <span class="keyword">const</span> imgTotal = mulitImg.<span class="property">length</span></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; imgTotal; i++) &#123;</span><br><span class="line">        promiseAll[i] = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">          mulitImg[i].<span class="property">onload</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">            <span class="comment">// 第i张加载完成</span></span><br><span class="line">            <span class="title function_">resolve</span>(mulitImg[i])</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> promiseAll</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
-在子组件mounted中：派发一个imgLoad方法<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title class_">Promise</span>.<span class="title function_">all</span>(<span class="variable language_">this</span>.<span class="title function_">imgAllLoad</span>()).<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.$emit(<span class="string">&#x27;imgLoad&#x27;</span>)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
-在父组件监听此方法，并刷新scroll组件<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="title function_">imgLoad</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">scroll</span>.<span class="title function_">refresh</span>()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
-这样体验就不错了。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>vue</category>
-      </categories>
   </entry>
   <entry>
     <title>js语法细节</title>
@@ -634,52 +634,6 @@
       </categories>
   </entry>
   <entry>
-    <title>一些Vue小技巧</title>
-    <url>/blog/%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7/</url>
-    <content><![CDATA[<h2 id="关于-vue-filters"><a href="#关于-vue-filters" class="headerlink" title="关于 vue.filters"></a>关于 vue.filters</h2><p>可以写在单个组件内，也可以单独写全局的然后加到 main.js 中，像是日期格式，数字格式就可以写在全局</p>
-<h2 id="和！！"><a href="#和！！" class="headerlink" title="~~和！！"></a>~~和！！</h2><p>&#126;是按位取反运算，&#126;&#126;是取反两次。<br>&#126;&#126;的作用是去掉小数部分，因为位运算的操作值要求是整数，其结果也是整数，所以经过位运算的都会自动变成整数。<br>！一个！是取反，！！两个再取反，就是强制转换成 Boolen 类型</p>
-<h2 id="关于-markdown-语法"><a href="#关于-markdown-语法" class="headerlink" title="关于 markdown 语法"></a>关于 markdown 语法</h2><p>如果要使用 Markdown 保留字，可以使用 Unicode 字符。如上面的&#126;&#126;,两边加&#126;&#126;会导致形成文字之间产生删除线，把&#126;&#126;换成<code>&amp;#126;&amp;#126;</code>就可以了。<a href="http://tool.oschina.net/encode">Unicode 在线转义</a></p>
-<h2 id="js-和-css-两用样式"><a href="#js-和-css-两用样式" class="headerlink" title="js 和 css 两用样式"></a>js 和 css 两用样式</h2><p>template 中需要动态定义样式，通常做法：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">:style</span>=<span class="string">&quot;&#123; color: textColor &#125;&quot;</span>&gt;</span>Text<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">textColor</span>: <span class="string">&quot;#ff5000&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>高端做法：</p>
-<ul>
-<li>定义 scss 文件</li>
-</ul>
-<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="variable">$menuActiveText</span>: <span class="number">#409eff</span>;</span><br><span class="line"></span><br><span class="line">:export &#123;</span><br><span class="line">  menuActiveText: <span class="variable">$menuActiveText</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>在 js 中引用：<ul>
-<li>使用 import 引用 scss 文件</li>
-<li>定义 computed 将 styles 对象变成响应式对象</li>
-<li>在 template 中使用 styles 对象</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">:style</span>=<span class="string">&quot;&#123; color: styles.menuActiveText &#125;&quot;</span>&gt;</span>Text<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">import</span> styles <span class="keyword">from</span> <span class="string">&quot;@/styles/variables.scss&quot;</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">computed</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="title function_">styles</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span> styles</span></span><br><span class="line"><span class="language-javascript">      &#125;,</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="连续解构"><a href="#连续解构" class="headerlink" title="连续解构"></a>连续解构</h2><p>从数组第一个对象元素中提取某个属性，比如：err 对象中包含一个 errors 数组，errors 数组每一个对象都包含一个 msg 属性</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">err = &#123;</span><br><span class="line">  <span class="attr">errors</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">msg</span>: <span class="string">&quot;this is a message&quot;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>快速的提取方法为：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> [&#123; msg &#125;] = err.<span class="property">errors</span></span><br></pre></td></tr></table></figure>
-
-<p>如果不用解构写法为：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> msg = err.<span class="property">errors</span>[<span class="number">0</span>].<span class="property">msg</span></span><br></pre></td></tr></table></figure>
-
-<p>真不错！</p>
-<h2 id="vm-nextTick"><a href="#vm-nextTick" class="headerlink" title="vm.$nextTick"></a>vm.$nextTick</h2><p>vue 更新 DOM 是异步的，如果你想基于更新后的 DOM 状态来做点什么，为了在数据变化之后等待 Vue 完成更新 DOM，可以在数据变化之后立即使用 Vue.nextTick(callback)。这样回调函数将在 DOM 更新完成后被调用。详情参见:<a href="https://cn.vuejs.org/v2/guide/reactivity.html#%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%96%B0%E9%98%9F%E5%88%97">异步更新队列</a></p>
-<h2 id="columns-分页"><a href="#columns-分页" class="headerlink" title="columns 分页"></a>columns 分页</h2><p>利用 columns 实现小说分页效果，每一列的高度与父元素相同</p>
-<h2 id="绝对定位居中"><a href="#绝对定位居中" class="headerlink" title="绝对定位居中"></a>绝对定位居中</h2><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.demo</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">margin</span>: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="使页面的左右边距相同"><a href="#使页面的左右边距相同" class="headerlink" title="使页面的左右边距相同"></a>使页面的左右边距相同</h2><p>可以父元素加 padding：15px, 子元素加 margin：15px， 这样所有间隙都是 30px。</p>
-<h2 id="math-floor-和-0"><a href="#math-floor-和-0" class="headerlink" title="math.floor 和 | 0"></a>math.floor 和 <code>| 0</code></h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">;(<span class="title class_">Math</span>.<span class="title function_">floor</span>(<span class="number">10</span> / <span class="number">3</span>) === <span class="number">10</span> / <span class="number">3</span>) | <span class="number">0</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>vue</category>
-      </categories>
-  </entry>
-  <entry>
     <title>三次握手和四次挥手</title>
     <url>/blog/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%92%8C%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B/</url>
     <content><![CDATA[<h2 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h2><p>• 第一次握手([SYN], Seq &#x3D; x)<br>客户端发送一个SYN标记的包，Seq初始序列号x，发送完成后客户端进入SYN_SEND状态。<br>• 第二次握手([SYN,ACK], Seq &#x3D; y, ACK &#x3D; x + 1)<br>服务器返回确认包(ACK)应答，同时还要发送一个SYN包回去。ACK &#x3D; x + 1,表示确认收到(客户端发来的Seq值 + 1)，Seq &#x3D; y, 表示让客户端确认是否能收到。发送完成后服务端进入SYN_RCVD状态。<br>• 第三次握手([ACK], ACK &#x3D; y + 1)<br>客户端再次发送确认包(ACK),ACK &#x3D; y + 1, 表示确认收到服务器的包（服务端发来的Seq值 + 1）。客户端发送完毕后，进入ESTABLISHED状态，服务端接收到这个包，也进入ESTABLISHED状态, TCP握手结束。</p>
@@ -726,6 +680,52 @@
 ]]></content>
       <categories>
         <category>js</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>一些Vue小技巧</title>
+    <url>/blog/%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7/</url>
+    <content><![CDATA[<h2 id="关于-vue-filters"><a href="#关于-vue-filters" class="headerlink" title="关于 vue.filters"></a>关于 vue.filters</h2><p>可以写在单个组件内，也可以单独写全局的然后加到 main.js 中，像是日期格式，数字格式就可以写在全局</p>
+<h2 id="和！！"><a href="#和！！" class="headerlink" title="~~和！！"></a>~~和！！</h2><p>&#126;是按位取反运算，&#126;&#126;是取反两次。<br>&#126;&#126;的作用是去掉小数部分，因为位运算的操作值要求是整数，其结果也是整数，所以经过位运算的都会自动变成整数。<br>！一个！是取反，！！两个再取反，就是强制转换成 Boolen 类型</p>
+<h2 id="关于-markdown-语法"><a href="#关于-markdown-语法" class="headerlink" title="关于 markdown 语法"></a>关于 markdown 语法</h2><p>如果要使用 Markdown 保留字，可以使用 Unicode 字符。如上面的&#126;&#126;,两边加&#126;&#126;会导致形成文字之间产生删除线，把&#126;&#126;换成<code>&amp;#126;&amp;#126;</code>就可以了。<a href="http://tool.oschina.net/encode">Unicode 在线转义</a></p>
+<h2 id="js-和-css-两用样式"><a href="#js-和-css-两用样式" class="headerlink" title="js 和 css 两用样式"></a>js 和 css 两用样式</h2><p>template 中需要动态定义样式，通常做法：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">:style</span>=<span class="string">&quot;&#123; color: textColor &#125;&quot;</span>&gt;</span>Text<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">textColor</span>: <span class="string">&quot;#ff5000&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>高端做法：</p>
+<ul>
+<li>定义 scss 文件</li>
+</ul>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="variable">$menuActiveText</span>: <span class="number">#409eff</span>;</span><br><span class="line"></span><br><span class="line">:export &#123;</span><br><span class="line">  menuActiveText: <span class="variable">$menuActiveText</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在 js 中引用：<ul>
+<li>使用 import 引用 scss 文件</li>
+<li>定义 computed 将 styles 对象变成响应式对象</li>
+<li>在 template 中使用 styles 对象</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">:style</span>=<span class="string">&quot;&#123; color: styles.menuActiveText &#125;&quot;</span>&gt;</span>Text<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">import</span> styles <span class="keyword">from</span> <span class="string">&quot;@/styles/variables.scss&quot;</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">computed</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="title function_">styles</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span> styles</span></span><br><span class="line"><span class="language-javascript">      &#125;,</span></span><br><span class="line"><span class="language-javascript">    &#125;,</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="连续解构"><a href="#连续解构" class="headerlink" title="连续解构"></a>连续解构</h2><p>从数组第一个对象元素中提取某个属性，比如：err 对象中包含一个 errors 数组，errors 数组每一个对象都包含一个 msg 属性</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">err = &#123;</span><br><span class="line">  <span class="attr">errors</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">msg</span>: <span class="string">&quot;this is a message&quot;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>快速的提取方法为：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> [&#123; msg &#125;] = err.<span class="property">errors</span></span><br></pre></td></tr></table></figure>
+
+<p>如果不用解构写法为：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> msg = err.<span class="property">errors</span>[<span class="number">0</span>].<span class="property">msg</span></span><br></pre></td></tr></table></figure>
+
+<p>真不错！</p>
+<h2 id="vm-nextTick"><a href="#vm-nextTick" class="headerlink" title="vm.$nextTick"></a>vm.$nextTick</h2><p>vue 更新 DOM 是异步的，如果你想基于更新后的 DOM 状态来做点什么，为了在数据变化之后等待 Vue 完成更新 DOM，可以在数据变化之后立即使用 Vue.nextTick(callback)。这样回调函数将在 DOM 更新完成后被调用。详情参见:<a href="https://cn.vuejs.org/v2/guide/reactivity.html#%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%96%B0%E9%98%9F%E5%88%97">异步更新队列</a></p>
+<h2 id="columns-分页"><a href="#columns-分页" class="headerlink" title="columns 分页"></a>columns 分页</h2><p>利用 columns 实现小说分页效果，每一列的高度与父元素相同</p>
+<h2 id="绝对定位居中"><a href="#绝对定位居中" class="headerlink" title="绝对定位居中"></a>绝对定位居中</h2><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.demo</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">margin</span>: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使页面的左右边距相同"><a href="#使页面的左右边距相同" class="headerlink" title="使页面的左右边距相同"></a>使页面的左右边距相同</h2><p>可以父元素加 padding：15px, 子元素加 margin：15px， 这样所有间隙都是 30px。</p>
+<h2 id="math-floor-和-0"><a href="#math-floor-和-0" class="headerlink" title="math.floor 和 | 0"></a>math.floor 和 <code>| 0</code></h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">;(<span class="title class_">Math</span>.<span class="title function_">floor</span>(<span class="number">10</span> / <span class="number">3</span>) === <span class="number">10</span> / <span class="number">3</span>) | <span class="number">0</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>vue</category>
       </categories>
   </entry>
   <entry>
@@ -1649,6 +1649,57 @@
       </categories>
   </entry>
   <entry>
+    <title>第七章：z-buffer和着色</title>
+    <url>/blog/%E7%AC%AC%E4%B8%83%E7%AB%A0%EF%BC%9Az-buffer%E5%92%8C%E7%9D%80%E8%89%B2/</url>
+    <content><![CDATA[<p>回顾上一课：</p>
+<ul>
+<li><p>光栅化一个三角形</p>
+</li>
+<li><p>采样</p>
+</li>
+<li><p>反走样</p>
+</li>
+</ul>
+<p>可见性&#x2F;遮挡（把三角形画在屏幕上，同时遮挡关系是对的）：</p>
+<ul>
+<li>z-buffer</li>
+</ul>
+<p><strong>painter’s algorithm（画家算法）</strong></p>
+<p>所有物体按深度排序（O(nlogn)），先把远的画上去，再把近的画上去，近的就会遮挡远的。但这种方式无法解决深度上互相遮挡的问题。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210915-pvb608h.png" alt="image">​</p>
+<p><strong>z-buffer</strong></p>
+<p>通过深度缓存维护存储每个像素当前的最小深度</p>
+<p>同步生成最后的结果（frame buffer）和当前看到的场景的任何一个像素对应的深度（depth buffer）。</p>
+<p>假设场景的点到相机的距离表示深度z，且这个值始终是正的，z越小的距离越近，越大的距离越远。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210941-qrlgori.png" alt="image">​</p>
+<p>先假设深度图上每一个像素的深度都是无限远，遍历每一个三角形的每一个像素，如果遍历到的像素深度比当前深度图记录的深度浅，就把深度图上的深度替换为这个像素的深度，否则不变。</p>
+<p>假设每个三角形覆盖的像素是常数项，时间复杂度O(n)。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210946-n9bslnc.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210954-8g8lbbc.png" alt="image">​</p>
+<p>一般两个浮点数值不会一样，所以比较深度的时候一般不会出现深度一样的情况。</p>
+<p>MSAA采样的时候一个像素可能有多个采样点，所以是记录每个采样点的深度。</p>
+<p>透明物体处理不了深度。</p>
+<h4 id="着色（shading）"><a href="#着色（shading）" class="headerlink" title="着色（shading）"></a><strong>着色（shading）</strong></h4><p>对不同物体应用不同的材质。</p>
+<p>一个基础的着色模型（Blinn-Phong 反射模型）</p>
+<p>高光、漫反射、环境光</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211003-0egfb17.png" alt="image">​</p>
+<p>对于一个物体表面的点，定义一个法线方向、一个视线方向、一个光照方向，和一些物体表面的参数</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211128-xr0alxy.png" alt="image">​</p>
+<p>着色有局部性。不考虑其他的物体，只考虑自己。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211133-dna2cne.png" alt="image">​</p>
+<p>一个shading point周围的单位面积接收的能量和光照方向和发现方向夹角的余弦成正比。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211139-xxs0w84.png" alt="image">​</p>
+<p>点光源，光线传播，每个时刻到达一个新的球壳。假如半径为1的时候，光的强度为I，则半径为r的时候，强度变为I&#x2F;r²</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211145-vw9pz1f.png" alt="image">​</p>
+<p>从不同的角度观测同一个点的结果是一样的。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211149-t038nb0.png" alt="image">​</p>
+<p>k_(d)  漫反射的系数，表示吸收了（反射了）多少颜色颜色。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211154-nrtvz3z.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
     <title>现代浏览器架构</title>
     <url>/blog/%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E6%9E%B6%E6%9E%84/</url>
     <content><![CDATA[<p>原文：<a href="https://developer.chrome.com/blog/inside-browser-part1/" title="Inside look at modern web browser">Inside look at modern web browser</a></p>
@@ -1902,57 +1953,6 @@
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203400-dl98u4q.png" alt="image">​</p>
 <p><strong>向量点乘和叉乘写成矩阵的形式（用在旋转的推导上）</strong></p>
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203405-yaiw812.png" alt="image">​</p>
-]]></content>
-      <categories>
-        <category>图形学</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>第七章：z-buffer和着色</title>
-    <url>/blog/%E7%AC%AC%E4%B8%83%E7%AB%A0%EF%BC%9Az-buffer%E5%92%8C%E7%9D%80%E8%89%B2/</url>
-    <content><![CDATA[<p>回顾上一课：</p>
-<ul>
-<li><p>光栅化一个三角形</p>
-</li>
-<li><p>采样</p>
-</li>
-<li><p>反走样</p>
-</li>
-</ul>
-<p>可见性&#x2F;遮挡（把三角形画在屏幕上，同时遮挡关系是对的）：</p>
-<ul>
-<li>z-buffer</li>
-</ul>
-<p><strong>painter’s algorithm（画家算法）</strong></p>
-<p>所有物体按深度排序（O(nlogn)），先把远的画上去，再把近的画上去，近的就会遮挡远的。但这种方式无法解决深度上互相遮挡的问题。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210915-pvb608h.png" alt="image">​</p>
-<p><strong>z-buffer</strong></p>
-<p>通过深度缓存维护存储每个像素当前的最小深度</p>
-<p>同步生成最后的结果（frame buffer）和当前看到的场景的任何一个像素对应的深度（depth buffer）。</p>
-<p>假设场景的点到相机的距离表示深度z，且这个值始终是正的，z越小的距离越近，越大的距离越远。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210941-qrlgori.png" alt="image">​</p>
-<p>先假设深度图上每一个像素的深度都是无限远，遍历每一个三角形的每一个像素，如果遍历到的像素深度比当前深度图记录的深度浅，就把深度图上的深度替换为这个像素的深度，否则不变。</p>
-<p>假设每个三角形覆盖的像素是常数项，时间复杂度O(n)。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210946-n9bslnc.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210954-8g8lbbc.png" alt="image">​</p>
-<p>一般两个浮点数值不会一样，所以比较深度的时候一般不会出现深度一样的情况。</p>
-<p>MSAA采样的时候一个像素可能有多个采样点，所以是记录每个采样点的深度。</p>
-<p>透明物体处理不了深度。</p>
-<h4 id="着色（shading）"><a href="#着色（shading）" class="headerlink" title="着色（shading）"></a><strong>着色（shading）</strong></h4><p>对不同物体应用不同的材质。</p>
-<p>一个基础的着色模型（Blinn-Phong 反射模型）</p>
-<p>高光、漫反射、环境光</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211003-0egfb17.png" alt="image">​</p>
-<p>对于一个物体表面的点，定义一个法线方向、一个视线方向、一个光照方向，和一些物体表面的参数</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211128-xr0alxy.png" alt="image">​</p>
-<p>着色有局部性。不考虑其他的物体，只考虑自己。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211133-dna2cne.png" alt="image">​</p>
-<p>一个shading point周围的单位面积接收的能量和光照方向和发现方向夹角的余弦成正比。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211139-xxs0w84.png" alt="image">​</p>
-<p>点光源，光线传播，每个时刻到达一个新的球壳。假如半径为1的时候，光的强度为I，则半径为r的时候，强度变为I&#x2F;r²</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211145-vw9pz1f.png" alt="image">​</p>
-<p>从不同的角度观测同一个点的结果是一样的。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211149-t038nb0.png" alt="image">​</p>
-<p>k_(d)  漫反射的系数，表示吸收了（反射了）多少颜色颜色。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211154-nrtvz3z.png" alt="image">​</p>
 ]]></content>
       <categories>
         <category>图形学</category>
@@ -2234,6 +2234,146 @@
 <p>面部表情捕捉​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213406-ncqy94v.png" alt="image">​</p>
 <p>电影的生产线​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817213411-b3rw3wd.png" alt="image">​</p>
 <p>下一节课：<br>怎么通过力、物理理论模拟真实的运动 </p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第二十章：颜色和感知</title>
+    <url>/blog/%E7%AC%AC%E4%BA%8C%E5%8D%81%E7%AB%A0%EF%BC%9A%E9%A2%9C%E8%89%B2%E5%92%8C%E6%84%9F%E7%9F%A5/</url>
+    <content><![CDATA[<p>颜色和感知（Color and Perception）</p>
+<p>本节课内容：<br>完成上节课的光场</p>
+<p>颜色</p>
+<ul>
+<li>什么是颜色</li>
+<li>颜色感知</li>
+<li>颜色再现&#x2F;匹配</li>
+<li>颜色空间</li>
+</ul>
+<p>光场（Light Field&#x2F;Lumigraph）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212149-biusqbv.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212153-wripzwk.png" alt="image">​</p>
+<p>我们看到的世界，可以用眼前的一块幕布，来模拟我们在各个方向看到的光照</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212159-t1z7726.png" alt="image">​</p>
+<p><a href="https://www.bilibili.com/video/BV1Je4y1e7g1/?vd_source=d6c15f5bd49b1cdbb4227e5dc29a5666">碟中谍 4 里全息投影</a></p>
+<p>全光函数描述我们能看到的所有东西</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212207-lkbdvwz.png" alt="image">​</p>
+<p>在某个方向看到的光照</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212212-j59oo2d.png" alt="image">​</p>
+<p>加上了波长的参数，可以看到彩色的</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212217-ljy981o.png" alt="image">​</p>
+<p>加上时间的参数，可以看到电影</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212222-ldyl2kk.png" alt="image">​</p>
+<p>再加上空间的参数，在不同位置看到的，可以看到全息电影</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212226-knvbyjb.png" alt="image">​</p>
+<p>最后把函数理解成在任何位置，往任何方向看，在任何时间，看到不同的颜色。这个 7 维的函数就叫做全光函数。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212230-8jqyzha.png" alt="image">​</p>
+<p>可以从全光函数提取一部分信息出来，用来表示复杂的光。光场就是全光函数的一个小部分。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212235-c9ukq57.png" alt="image">​</p>
+<p>定义光线：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212239-1alvcnu.png" alt="image">​</p>
+<p>可以是起点 + 方向，或者是取光线上的任意两点</p>
+<p>重点是需要二维的位置和二维的方向</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212244-vhro91v.png" alt="image">​</p>
+<p>根据光路可逆性，要描述一个物体能被看到的所有情况，即描述这个物体在包围盒上任何一个位置往各个方向过去的光线</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212249-2w9ir16.png" alt="image">​</p>
+<p>光场即在任何一个位置往任何一个方向去的光的强度</p>
+<p>首先三维物体的表面在一个二维的空间中，可以用（u,v）两个变量表示位置，任何一个空间中的方向都可以用（θ，φ）表示，所以光场是一个四维的函数。</p>
+<p>可以从光场中直接提取到任意一个位置看向一个物体的光强度</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212257-vy1ra6a.png" alt="image">​</p>
+<p>可以简化一点，我们不需要知道光场表示的是什么东西，我们只需要知道盒子上表面任意一个点往任意一个方向（观测点）发出的光的强度（前提是观测点不在盒子内部）。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212303-kuret66.png" alt="image">​</p>
+<p>更进一步，可以取一个平面，平面右边是发光的物体，光线会穿过平面。我们可以忽略平面右边的东西，对平面上任意一个点，只需要知道方向就可以。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212310-6saigsp.png" alt="image">​</p>
+<p>也可以用两个平面来定义光场，两个平面各取一个点确定方向：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212315-x788fiz.png" alt="image">​</p>
+<p>用(u,v)和(s,t)来确定光场：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212319-2ex6d8z.png" alt="image">​</p>
+<p>对于两个平面的参数化方法有不同的处理方式：<br />可以固定一个(s,t)，让（u,v）变化：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212324-9sw3nfv.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212327-hp3bgqm.png" alt="image">​</p>
+<p>上图中的上图是从(u,v)平面上找到一个点看向(s,t)平面的所有方向，得到从这个点的方向看过去的物体的全貌</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212332-i285fqr.png" alt="image">​</p>
+<p>下图是从(s,t)平面上找一个点，看向(u,v)平面，这里可以理解为(u,v)平面所有方向看向(s,t)同一个点得到的图像。</p>
+<p>类似于苍蝇的复眼，光照射到一个像素点上是不同方向的光混合起来的，这里在光前面用一个透镜，就可以把光分开，把一个像素不同方向上光分别记录在不同的位置。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212336-lz08vc2.png" alt="image">​</p>
+<h5 id="光场照相机"><a href="#光场照相机" class="headerlink" title="光场照相机"></a><strong>光场照相机</strong></h5><p>先拍照，后期再重新聚焦</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212347-x5da9aq.png" alt="image">​</p>
+<p>光场相机就是用透镜把光分开，一个像素的 irradiance 现在分开记录到一块区域上的 radiance。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212353-tcfytv2.png" alt="image">​</p>
+<p>光场相机还原照片，可以选择一个方向，计算这个方向上像素点接受的光照，这样就可以模拟相机移动。</p>
+<p>重新聚焦和移动相机位置一个道理，光场已经记录了所有方向所有位置的光照信息，只需要选取聚焦对应的方向和位置就可以计算得到。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212358-9q7c6jb.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212402-0ncmilv.png" alt="image">​</p>
+<p>光场照相机的缺陷：</p>
+<ul>
+<li>分辨率不足。以前的一个像素要用很多个像素去记录，对胶片要求很高</li>
+<li>高成本。透镜非常精密，实现需要巨大的成本</li>
+<li>如果要记录更精密的方向信息，位置信息就会丢失的更多（复眼如果圆圈更大，那么圆圈的数量就更少）</li>
+</ul>
+<p>Physical Basis of Color</p>
+<p>颜色是很多基本颜色混合得到的结果</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212412-2xr85v6.png" alt="image">​</p>
+<p>不同颜色的光有不同的波长，图形学关心的通常是可见光的光谱</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212417-e5ouu5i.png" alt="image">​</p>
+<p>谱功率密度就是描述光在任何一个波长的分布是多少</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212422-03r38eq.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212425-yb4zoad.png" alt="image">​</p>
+<p>不同的光有不同的 SPD</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212432-lf9bskw.png" alt="image">​</p>
+<p>SPD 有线性的性质</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212438-83o4esf.png" alt="image">​</p>
+<p>颜色是什么？<br />颜色是人的感知</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212443-9dw0i6f.png" alt="image">​</p>
+<p>人眼的构造：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212448-xrm3hz7.png" alt="image">​</p>
+<p>肌肉会拉扯晶状体改变焦距</p>
+<p>视网膜上有感光细胞</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212453-bfvlha9.png" alt="image">​</p>
+<p>RodCell 棒状细胞，感知光的强度，不感知颜色。用棒状细胞可以得到一个灰度图</p>
+<p>Cones 锥形细胞，感知颜色。锥形细胞内部又分成三种不同的锥形细胞（S，M，L），感应不同范围的波长。</p>
+<p>曲线线叫做响应曲线，即给不同的光会有多强的反应。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212459-wha2myo.png" alt="image">​</p>
+<p>不同的人这些细胞的分布非常不一样</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212503-qagx39w.png" alt="image">​</p>
+<p>把响应曲线和感应到的 SPD 做积分，得到三个数 S、M、L，就是人感知到的颜色，而不是光本身的 SPD。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212509-8gmpyoq.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212514-6wx4ip4.png" alt="image">​</p>
+<p>同色异谱</p>
+<p>光谱不一样，但是人感知到的颜色一样</p>
+<p>通过调和光谱，使得得到的颜色和看到的另一种颜色一样，就是 color mapping 的过程</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212523-a1oxy8r.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212527-jsnrcem.png" alt="image">​</p>
+<p>比如在显示器上显示一个太阳，混合的光谱可以和真实的完全不一样，但最后的颜色是一样的：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212533-rbxf13f.png" alt="image">​</p>
+<p>计算机的成像系统是加色系统<br />把 R、G、B 各自乘上不同的强度再混合起来（画画是减色系统，把各种颜色调和到一起最后会变成黑色）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212538-8531v6x.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212542-vi4gdg1.png" alt="image">​</p>
+<p>混色实验：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212547-dggcuc4.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212550-3k8imeq.png" alt="image">​</p>
+<p>但有一些颜色会怎么混两边颜色都不一样</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212555-61dtj1f.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212559-vg15b9h.png" alt="image">​</p>
+<p>这个时候给左边的颜色加一个颜色，相当于右边的颜色减了一个颜色（真实情况下不能减，因为是加色系统）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212605-w9725m9.png" alt="image">​</p>
+<p><strong>CIE RGB</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212611-z91bpi2.png" alt="image">​</p>
+<p>实验测算三种波长的光混出一个波长，得到一个匹配函数：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212616-ko9pk3o.png" alt="image">​</p>
+<p>给任何一种实际光的光谱，把每个波长需要多少 R、G、B 都算出来，然后做积分把颜色表示出来</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212620-zgaxgwj.png" alt="image">​</p>
+<p><strong>颜色空间</strong></p>
+<p>sRGB（标准 RGB）</p>
+<p>RGB 形成的颜色空间色域是有限的</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212625-gk3f7b7.png" alt="image">​</p>
+<p>A Universal Color Space: CIE XYZ</p>
+<p>定义颜色匹配函数，和 RGB 匹配函数不一样，不是实验测出来的匹配系统</p>
+<p>特别的 Y 本身还表示亮度​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212630-bzmd3o3.png" alt="image">​</p>
+<p>可视化 XYZ 系统得到的所有颜色，但是三维的不好显示，所以把 X、Y、Z 做归一化处理，Y 表示亮度，所以把 Y 固定成某一个数，让 X、Z 发生变化，显示的图显示小写的（x, y），看到的形状就叫做色域。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212636-wfe51o6.png" alt="image">​</p>
+<p>色域的中心是白色，是最不纯的颜色，最纯的颜色在边界上。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212642-qtjx9m0.png" alt="image">​</p>
+<p>不同的颜色空间表示的色域是不一样的：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212647-r2sokkt.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212653-57wp5tt.png" alt="image">​​</p>
+<p>HSV Color Space​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212708-u7dxdkg.png" alt="image">​</p>
+<p>通过色调选不同的颜色，通过饱和度选偏白还是偏这个颜色，亮度决定偏黑还是偏这个颜色​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212713-94ok1ay.png" alt="image">​</p>
+<p>CIELAB 空间<br />轴上任意两端端颜色都是互补色：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212719-iuoilio.png" alt="image">​</p>
+<p>互补色（实验得到的，人的大脑的定义）：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212723-3qotxdc.png" alt="image">​</p>
+<p>盯住下图的中心点十秒后切换到另一张白色的图上，会看到互补色：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212727-ny6h0qm.png" alt="image">​</p>
+<p>颜色是感知，所以看到的颜色有多强是感觉的：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212731-0aa227f.png" alt="image">​</p>
+<h5 id="​​​​​​减色系统"><a href="#​​​​​​减色系统" class="headerlink" title="​​​​​​减色系统"></a>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212740-uorj6m5.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212746-pbyyamz.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212750-d2843g9.png" alt="image">​减色系统</h5><p>**CMYK **</p>
+<p>打印上混合各种颜色，所有颜色混起来变成黑色。这里面虽然黑色可以由其他颜色混合得到，但是考虑打印成本，都会带上一个黑色：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212757-g32nl7k.png" alt="image">​</p>
 ]]></content>
       <categories>
         <category>图形学</category>
@@ -2535,146 +2675,6 @@
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211741-8eowj5b.png" alt="image">​</p>
 <p>这种重复使用依旧衔接的很好的纹理叫做 tiled textures。</p>
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211746-qu6dqrd.png" alt="image">​</p>
-]]></content>
-      <categories>
-        <category>图形学</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>第二十章：颜色和感知</title>
-    <url>/blog/%E7%AC%AC%E4%BA%8C%E5%8D%81%E7%AB%A0%EF%BC%9A%E9%A2%9C%E8%89%B2%E5%92%8C%E6%84%9F%E7%9F%A5/</url>
-    <content><![CDATA[<p>颜色和感知（Color and Perception）</p>
-<p>本节课内容：<br>完成上节课的光场</p>
-<p>颜色</p>
-<ul>
-<li>什么是颜色</li>
-<li>颜色感知</li>
-<li>颜色再现&#x2F;匹配</li>
-<li>颜色空间</li>
-</ul>
-<p>光场（Light Field&#x2F;Lumigraph）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212149-biusqbv.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212153-wripzwk.png" alt="image">​</p>
-<p>我们看到的世界，可以用眼前的一块幕布，来模拟我们在各个方向看到的光照</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212159-t1z7726.png" alt="image">​</p>
-<p><a href="https://www.bilibili.com/video/BV1Je4y1e7g1/?vd_source=d6c15f5bd49b1cdbb4227e5dc29a5666">碟中谍 4 里全息投影</a></p>
-<p>全光函数描述我们能看到的所有东西</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212207-lkbdvwz.png" alt="image">​</p>
-<p>在某个方向看到的光照</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212212-j59oo2d.png" alt="image">​</p>
-<p>加上了波长的参数，可以看到彩色的</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212217-ljy981o.png" alt="image">​</p>
-<p>加上时间的参数，可以看到电影</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212222-ldyl2kk.png" alt="image">​</p>
-<p>再加上空间的参数，在不同位置看到的，可以看到全息电影</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212226-knvbyjb.png" alt="image">​</p>
-<p>最后把函数理解成在任何位置，往任何方向看，在任何时间，看到不同的颜色。这个 7 维的函数就叫做全光函数。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212230-8jqyzha.png" alt="image">​</p>
-<p>可以从全光函数提取一部分信息出来，用来表示复杂的光。光场就是全光函数的一个小部分。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212235-c9ukq57.png" alt="image">​</p>
-<p>定义光线：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212239-1alvcnu.png" alt="image">​</p>
-<p>可以是起点 + 方向，或者是取光线上的任意两点</p>
-<p>重点是需要二维的位置和二维的方向</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212244-vhro91v.png" alt="image">​</p>
-<p>根据光路可逆性，要描述一个物体能被看到的所有情况，即描述这个物体在包围盒上任何一个位置往各个方向过去的光线</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212249-2w9ir16.png" alt="image">​</p>
-<p>光场即在任何一个位置往任何一个方向去的光的强度</p>
-<p>首先三维物体的表面在一个二维的空间中，可以用（u,v）两个变量表示位置，任何一个空间中的方向都可以用（θ，φ）表示，所以光场是一个四维的函数。</p>
-<p>可以从光场中直接提取到任意一个位置看向一个物体的光强度</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212257-vy1ra6a.png" alt="image">​</p>
-<p>可以简化一点，我们不需要知道光场表示的是什么东西，我们只需要知道盒子上表面任意一个点往任意一个方向（观测点）发出的光的强度（前提是观测点不在盒子内部）。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212303-kuret66.png" alt="image">​</p>
-<p>更进一步，可以取一个平面，平面右边是发光的物体，光线会穿过平面。我们可以忽略平面右边的东西，对平面上任意一个点，只需要知道方向就可以。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212310-6saigsp.png" alt="image">​</p>
-<p>也可以用两个平面来定义光场，两个平面各取一个点确定方向：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212315-x788fiz.png" alt="image">​</p>
-<p>用(u,v)和(s,t)来确定光场：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212319-2ex6d8z.png" alt="image">​</p>
-<p>对于两个平面的参数化方法有不同的处理方式：<br />可以固定一个(s,t)，让（u,v）变化：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212324-9sw3nfv.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212327-hp3bgqm.png" alt="image">​</p>
-<p>上图中的上图是从(u,v)平面上找到一个点看向(s,t)平面的所有方向，得到从这个点的方向看过去的物体的全貌</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212332-i285fqr.png" alt="image">​</p>
-<p>下图是从(s,t)平面上找一个点，看向(u,v)平面，这里可以理解为(u,v)平面所有方向看向(s,t)同一个点得到的图像。</p>
-<p>类似于苍蝇的复眼，光照射到一个像素点上是不同方向的光混合起来的，这里在光前面用一个透镜，就可以把光分开，把一个像素不同方向上光分别记录在不同的位置。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212336-lz08vc2.png" alt="image">​</p>
-<h5 id="光场照相机"><a href="#光场照相机" class="headerlink" title="光场照相机"></a><strong>光场照相机</strong></h5><p>先拍照，后期再重新聚焦</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212347-x5da9aq.png" alt="image">​</p>
-<p>光场相机就是用透镜把光分开，一个像素的 irradiance 现在分开记录到一块区域上的 radiance。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212353-tcfytv2.png" alt="image">​</p>
-<p>光场相机还原照片，可以选择一个方向，计算这个方向上像素点接受的光照，这样就可以模拟相机移动。</p>
-<p>重新聚焦和移动相机位置一个道理，光场已经记录了所有方向所有位置的光照信息，只需要选取聚焦对应的方向和位置就可以计算得到。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212358-9q7c6jb.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212402-0ncmilv.png" alt="image">​</p>
-<p>光场照相机的缺陷：</p>
-<ul>
-<li>分辨率不足。以前的一个像素要用很多个像素去记录，对胶片要求很高</li>
-<li>高成本。透镜非常精密，实现需要巨大的成本</li>
-<li>如果要记录更精密的方向信息，位置信息就会丢失的更多（复眼如果圆圈更大，那么圆圈的数量就更少）</li>
-</ul>
-<p>Physical Basis of Color</p>
-<p>颜色是很多基本颜色混合得到的结果</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212412-2xr85v6.png" alt="image">​</p>
-<p>不同颜色的光有不同的波长，图形学关心的通常是可见光的光谱</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212417-e5ouu5i.png" alt="image">​</p>
-<p>谱功率密度就是描述光在任何一个波长的分布是多少</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212422-03r38eq.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212425-yb4zoad.png" alt="image">​</p>
-<p>不同的光有不同的 SPD</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212432-lf9bskw.png" alt="image">​</p>
-<p>SPD 有线性的性质</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212438-83o4esf.png" alt="image">​</p>
-<p>颜色是什么？<br />颜色是人的感知</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212443-9dw0i6f.png" alt="image">​</p>
-<p>人眼的构造：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212448-xrm3hz7.png" alt="image">​</p>
-<p>肌肉会拉扯晶状体改变焦距</p>
-<p>视网膜上有感光细胞</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212453-bfvlha9.png" alt="image">​</p>
-<p>RodCell 棒状细胞，感知光的强度，不感知颜色。用棒状细胞可以得到一个灰度图</p>
-<p>Cones 锥形细胞，感知颜色。锥形细胞内部又分成三种不同的锥形细胞（S，M，L），感应不同范围的波长。</p>
-<p>曲线线叫做响应曲线，即给不同的光会有多强的反应。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212459-wha2myo.png" alt="image">​</p>
-<p>不同的人这些细胞的分布非常不一样</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212503-qagx39w.png" alt="image">​</p>
-<p>把响应曲线和感应到的 SPD 做积分，得到三个数 S、M、L，就是人感知到的颜色，而不是光本身的 SPD。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212509-8gmpyoq.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212514-6wx4ip4.png" alt="image">​</p>
-<p>同色异谱</p>
-<p>光谱不一样，但是人感知到的颜色一样</p>
-<p>通过调和光谱，使得得到的颜色和看到的另一种颜色一样，就是 color mapping 的过程</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212523-a1oxy8r.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212527-jsnrcem.png" alt="image">​</p>
-<p>比如在显示器上显示一个太阳，混合的光谱可以和真实的完全不一样，但最后的颜色是一样的：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212533-rbxf13f.png" alt="image">​</p>
-<p>计算机的成像系统是加色系统<br />把 R、G、B 各自乘上不同的强度再混合起来（画画是减色系统，把各种颜色调和到一起最后会变成黑色）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212538-8531v6x.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212542-vi4gdg1.png" alt="image">​</p>
-<p>混色实验：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212547-dggcuc4.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212550-3k8imeq.png" alt="image">​</p>
-<p>但有一些颜色会怎么混两边颜色都不一样</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212555-61dtj1f.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212559-vg15b9h.png" alt="image">​</p>
-<p>这个时候给左边的颜色加一个颜色，相当于右边的颜色减了一个颜色（真实情况下不能减，因为是加色系统）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212605-w9725m9.png" alt="image">​</p>
-<p><strong>CIE RGB</strong></p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212611-z91bpi2.png" alt="image">​</p>
-<p>实验测算三种波长的光混出一个波长，得到一个匹配函数：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212616-ko9pk3o.png" alt="image">​</p>
-<p>给任何一种实际光的光谱，把每个波长需要多少 R、G、B 都算出来，然后做积分把颜色表示出来</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212620-zgaxgwj.png" alt="image">​</p>
-<p><strong>颜色空间</strong></p>
-<p>sRGB（标准 RGB）</p>
-<p>RGB 形成的颜色空间色域是有限的</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212625-gk3f7b7.png" alt="image">​</p>
-<p>A Universal Color Space: CIE XYZ</p>
-<p>定义颜色匹配函数，和 RGB 匹配函数不一样，不是实验测出来的匹配系统</p>
-<p>特别的 Y 本身还表示亮度​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212630-bzmd3o3.png" alt="image">​</p>
-<p>可视化 XYZ 系统得到的所有颜色，但是三维的不好显示，所以把 X、Y、Z 做归一化处理，Y 表示亮度，所以把 Y 固定成某一个数，让 X、Z 发生变化，显示的图显示小写的（x, y），看到的形状就叫做色域。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212636-wfe51o6.png" alt="image">​</p>
-<p>色域的中心是白色，是最不纯的颜色，最纯的颜色在边界上。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212642-qtjx9m0.png" alt="image">​</p>
-<p>不同的颜色空间表示的色域是不一样的：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212647-r2sokkt.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212653-57wp5tt.png" alt="image">​​</p>
-<p>HSV Color Space​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212708-u7dxdkg.png" alt="image">​</p>
-<p>通过色调选不同的颜色，通过饱和度选偏白还是偏这个颜色，亮度决定偏黑还是偏这个颜色​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212713-94ok1ay.png" alt="image">​</p>
-<p>CIELAB 空间<br />轴上任意两端端颜色都是互补色：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212719-iuoilio.png" alt="image">​</p>
-<p>互补色（实验得到的，人的大脑的定义）：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212723-3qotxdc.png" alt="image">​</p>
-<p>盯住下图的中心点十秒后切换到另一张白色的图上，会看到互补色：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212727-ny6h0qm.png" alt="image">​</p>
-<p>颜色是感知，所以看到的颜色有多强是感觉的：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212731-0aa227f.png" alt="image">​</p>
-<h5 id="​​​​​​减色系统"><a href="#​​​​​​减色系统" class="headerlink" title="​​​​​​减色系统"></a>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212740-uorj6m5.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212746-pbyyamz.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212750-d2843g9.png" alt="image">​减色系统</h5><p>**CMYK **</p>
-<p>打印上混合各种颜色，所有颜色混起来变成黑色。这里面虽然黑色可以由其他颜色混合得到，但是考虑打印成本，都会带上一个黑色：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212757-g32nl7k.png" alt="image">​</p>
 ]]></content>
       <categories>
         <category>图形学</category>
