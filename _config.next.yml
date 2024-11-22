@@ -363,19 +363,19 @@ codeblock:
   # Code Highlight theme
   # All available themes: https://theme-next.js.org/highlight/
   theme:
-    light: atom-one-dark
+    light: atom-one-light
     dark: atom-one-dark
   prism:
-    light: prism-one-light
+    light: prism
     dark: prism-one-dark
   # Add copy button on codeblock
   copy_button:
     enable: true
     # Available values: default | flat | mac
-    style:
+    style: flat
   # Fold code block
   fold:
-    enable: false
+    enable: true
     height: 400
 
 back2top:
@@ -834,7 +834,7 @@ firestore:
 # Show Views / Visitors of the website / page with busuanzi.
 # For more information: http://ibruce.info/2015/04/04/busuanzi/
 busuanzi_count:
-  enable: true
+  enable: false
   total_visitors: true
   total_visitors_icon: fa fa-user
   total_views: true

@@ -9,3 +9,4 @@ _multiconfig.yml
 package-lock.json
 yarn.lock
 .vscode/
+.gitconfig
