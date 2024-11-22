@@ -294,7 +294,7 @@
     
     <div class="post-body" itemprop="articleBody"><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>某日发布节点后，监控平台发现包体积超限，增长很多，于是拉了各个业务方进行排查</p>
 <h2 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h2><p>我这边用 webpack-bundle-analyzer 发现增长的体积和懒加载的代码体积刚好对得上，怀疑是不是懒加载代码加载的时间提前了，代码有循环引用之类的，导致应该懒加载的代码，提前加载进来了。但是逐一查看改动代码，没有发现循环引用的情况。</p>
-<p>又看了下监控的数据，发现统计的数据是不稳定的，在这之前也有部分数据超限，感觉统计代码的脚本不是很稳定，于是又去看统计代码体积的脚本。<br>看了代码，发现统计脚本是在插件加载完成后使用 <a href="'https://developer.mozilla.org/en-US/docs/Web/API/Performance/getEntriesByType">performance.getEntriesByType</a> 来获取所有加载的 script 资源的体积数据。</p>
+<p>又看了下监控的数据，发现统计的数据是不稳定的，在这之前也有部分数据超限，感觉统计代码的脚本不是很稳定，于是又去看统计代码体积的脚本。<br>看了代码，发现统计脚本是在插件加载完成后使用 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/Performance/getEntriesByType">performance.getEntriesByType</a> 来获取所有加载的 script 资源的体积数据。</p>
 <p>又想到前两天上线的一个 <a href="/blog/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%B1%80%E5%9B%BE%E7%89%87%E7%9B%91%E6%8E%A7/" title="如何实现全局图片监控">如何实现全局图片监控</a> 的功能中，有一行代码是改动了 performance 的缓存空间大小</p>
 <figure class="highlight ts"><table><tr><td class="code"><pre><span class="line">performance.<span class="title function_">setResourceTimingBufferSize</span>(<span class="number">2000</span>)</span><br></pre></td></tr></table></figure>
 
