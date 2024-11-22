@@ -950,6 +950,22 @@
       </categories>
   </entry>
   <entry>
+    <title>前端路由</title>
+    <url>/blog/%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/</url>
+    <content><![CDATA[<p>URL 是由几个部分组成：</p>
+<p>​<code>protocol: // hostname:port / pathname ? query # hash</code>​</p>
+<p>路由模块需要实现的功能就是 —— 解析 URL 中的 pathname，根据不同的路径将请求分配给相应的模块去处理。</p>
+<p>一个简单的路由是一个类，它的方法能够返回不同的拦截切面，这样的类叫做 HTTP <strong>服务中间件</strong>​<strong>（Middleware）</strong>。具体实现代码如下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Router类</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">&quot;url&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">@rule：路径规则</span></span><br><span class="line"><span class="comment">@pathname：路径名</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">check</span>(<span class="params">rule, pathname</span>) &#123;</span><br><span class="line">  <span class="comment">/* </span></span><br><span class="line"><span class="comment">  解析规则，比如：/test/:course/:lecture</span></span><br><span class="line"><span class="comment">  paraMatched = [&#x27;/test/:course/:lecture&#x27;, &#x27;:course&#x27;, &#x27;:lecture&#x27;]</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">const</span> paraMatched = rule.<span class="title function_">match</span>(<span class="regexp">/:[^/]+/g</span>);</span><br><span class="line">  <span class="keyword">const</span> ruleExp = <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">`^<span class="subst">$&#123;rule.replace(/:[^/]+/g, <span class="string">&quot;([^/]+)&quot;</span>)&#125;</span>$`</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  解析真正的路径，比如：/test/123/abc</span></span><br><span class="line"><span class="comment">  ruleMatched = [&#x27;/test/123/abs&#x27;, &#x27;123&#x27;, &#x27;abs&#x27;]</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">const</span> ruleMatched = pathname.<span class="title function_">match</span>(ruleExp);</span><br><span class="line"></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  将规则和路径拼接为对象：</span></span><br><span class="line"><span class="comment">  ret = &#123;course: 123, lecture: abc&#125;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">if</span> (ruleMatched) &#123;</span><br><span class="line">    <span class="keyword">const</span> ret = &#123;&#125;;</span><br><span class="line">    <span class="keyword">if</span> (paraMatched) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; paraMatched.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        ret[paraMatched[i].<span class="title function_">slice</span>(<span class="number">1</span>)] = ruleMatched[i + <span class="number">1</span>];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">@method: GET/POST/PUT/DELETE</span></span><br><span class="line"><span class="comment">@rule: 路径规则，比如：test/:course/:lecture</span></span><br><span class="line"><span class="comment">@aspect: 拦截函数</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">route</span>(<span class="params">method, rule, aspect</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> req = ctx.<span class="property">req</span>;</span><br><span class="line">    <span class="keyword">if</span> (!ctx.<span class="property">url</span>) ctx.<span class="property">url</span> = url.<span class="title function_">parse</span>(<span class="string">`http://<span class="subst">$&#123;req.headers.host&#125;</span><span class="subst">$&#123;req.url&#125;</span>`</span>);</span><br><span class="line">    <span class="keyword">const</span> checked = <span class="title function_">check</span>(rule, ctx.<span class="property">url</span>.<span class="property">pathname</span>); <span class="comment">// 根据路径规则解析路径</span></span><br><span class="line">    <span class="keyword">if</span> (!ctx.<span class="property">route</span> &amp;&amp; (method === <span class="string">&quot;*&quot;</span> || req.<span class="property">method</span> === method) &amp;&amp; !!checked) &#123;</span><br><span class="line">      ctx.<span class="property">route</span> = checked;</span><br><span class="line">      <span class="keyword">await</span> <span class="title function_">aspect</span>(ctx, next);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 如果路径与路由规则不匹配，则跳过当前拦截切面，执行下一个拦截切面</span></span><br><span class="line">      <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Router</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">base = <span class="string">&quot;&quot;</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">baseURL</span> = base;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">get</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;GET&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">post</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;POST&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">put</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;PUT&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">delete</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;DELETE&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">all</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;*&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title class_">Router</span>;</span><br></pre></td></tr></table></figure>
+
+<p>可以这样使用</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Server</span> = <span class="built_in">require</span>(<span class="string">&quot;./lib/server&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Router</span> = <span class="built_in">require</span>(<span class="string">&quot;./lib/middleware/router&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> <span class="title class_">Server</span>();</span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">Router</span>();</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">listen</span>(&#123;</span><br><span class="line">  <span class="attr">port</span>: <span class="number">9090</span>,</span><br><span class="line">  <span class="attr">host</span>: <span class="string">&quot;0.0.0.0&quot;</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(</span><br><span class="line">  router.<span class="title function_">all</span>(<span class="string">&quot;/test/:course/:lecture&quot;</span>, <span class="title function_">async</span> (&#123; route, res &#125;, next) =&gt; &#123;</span><br><span class="line">    res.<span class="title function_">setHeader</span>(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;application/json&quot;</span>);</span><br><span class="line">    res.<span class="property">body</span> = route;</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(</span><br><span class="line">  router.<span class="title function_">all</span>(<span class="string">&quot;.*&quot;</span>, <span class="title function_">async</span> (&#123; req, res &#125;, next) =&gt; &#123;</span><br><span class="line">    res.<span class="title function_">setHeader</span>(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;text/html&quot;</span>);</span><br><span class="line">    res.<span class="property">body</span> = <span class="string">&quot;&lt;h1&gt;Hello world&lt;/h1&gt;&quot;</span>;</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
+  </entry>
+  <entry>
     <title>前端调试通关</title>
     <url>/blog/%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/</url>
     <content><![CDATA[<h2 id="各类调试工具原理"><a href="#各类调试工具原理" class="headerlink" title="各类调试工具原理"></a>各类调试工具原理</h2><h3 id="Chrome-DevTools-原理"><a href="#Chrome-DevTools-原理" class="headerlink" title="Chrome DevTools 原理"></a>Chrome DevTools 原理</h3><p>Chrome DevTools 分为两部分，backend 和 frontend：</p>
@@ -1045,22 +1061,6 @@
 <li>红色：掉帧，无法在合理的时间内渲染帧，比如：<code>scroll</code>​，<code>resize</code> ​ 事件触发过于频繁,浏览器来不及处理导致在下一个事件被触发之前无法完成</li>
 </ul>
 <p>‍</p>
-]]></content>
-      <categories>
-        <category>js</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>前端路由</title>
-    <url>/blog/%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/</url>
-    <content><![CDATA[<p>URL 是由几个部分组成：</p>
-<p>​<code>protocol: // hostname:port / pathname ? query # hash</code>​</p>
-<p>路由模块需要实现的功能就是 —— 解析 URL 中的 pathname，根据不同的路径将请求分配给相应的模块去处理。</p>
-<p>一个简单的路由是一个类，它的方法能够返回不同的拦截切面，这样的类叫做 HTTP <strong>服务中间件</strong>​<strong>（Middleware）</strong>。具体实现代码如下：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Router类</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">&quot;url&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">@rule：路径规则</span></span><br><span class="line"><span class="comment">@pathname：路径名</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">check</span>(<span class="params">rule, pathname</span>) &#123;</span><br><span class="line">  <span class="comment">/* </span></span><br><span class="line"><span class="comment">  解析规则，比如：/test/:course/:lecture</span></span><br><span class="line"><span class="comment">  paraMatched = [&#x27;/test/:course/:lecture&#x27;, &#x27;:course&#x27;, &#x27;:lecture&#x27;]</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">const</span> paraMatched = rule.<span class="title function_">match</span>(<span class="regexp">/:[^/]+/g</span>);</span><br><span class="line">  <span class="keyword">const</span> ruleExp = <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">`^<span class="subst">$&#123;rule.replace(/:[^/]+/g, <span class="string">&quot;([^/]+)&quot;</span>)&#125;</span>$`</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  解析真正的路径，比如：/test/123/abc</span></span><br><span class="line"><span class="comment">  ruleMatched = [&#x27;/test/123/abs&#x27;, &#x27;123&#x27;, &#x27;abs&#x27;]</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">const</span> ruleMatched = pathname.<span class="title function_">match</span>(ruleExp);</span><br><span class="line"></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  将规则和路径拼接为对象：</span></span><br><span class="line"><span class="comment">  ret = &#123;course: 123, lecture: abc&#125;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">if</span> (ruleMatched) &#123;</span><br><span class="line">    <span class="keyword">const</span> ret = &#123;&#125;;</span><br><span class="line">    <span class="keyword">if</span> (paraMatched) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; paraMatched.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        ret[paraMatched[i].<span class="title function_">slice</span>(<span class="number">1</span>)] = ruleMatched[i + <span class="number">1</span>];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">@method: GET/POST/PUT/DELETE</span></span><br><span class="line"><span class="comment">@rule: 路径规则，比如：test/:course/:lecture</span></span><br><span class="line"><span class="comment">@aspect: 拦截函数</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">route</span>(<span class="params">method, rule, aspect</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> req = ctx.<span class="property">req</span>;</span><br><span class="line">    <span class="keyword">if</span> (!ctx.<span class="property">url</span>) ctx.<span class="property">url</span> = url.<span class="title function_">parse</span>(<span class="string">`http://<span class="subst">$&#123;req.headers.host&#125;</span><span class="subst">$&#123;req.url&#125;</span>`</span>);</span><br><span class="line">    <span class="keyword">const</span> checked = <span class="title function_">check</span>(rule, ctx.<span class="property">url</span>.<span class="property">pathname</span>); <span class="comment">// 根据路径规则解析路径</span></span><br><span class="line">    <span class="keyword">if</span> (!ctx.<span class="property">route</span> &amp;&amp; (method === <span class="string">&quot;*&quot;</span> || req.<span class="property">method</span> === method) &amp;&amp; !!checked) &#123;</span><br><span class="line">      ctx.<span class="property">route</span> = checked;</span><br><span class="line">      <span class="keyword">await</span> <span class="title function_">aspect</span>(ctx, next);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 如果路径与路由规则不匹配，则跳过当前拦截切面，执行下一个拦截切面</span></span><br><span class="line">      <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Router</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">base = <span class="string">&quot;&quot;</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">baseURL</span> = base;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">get</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;GET&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">post</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;POST&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">put</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;PUT&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">delete</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;DELETE&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">all</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;*&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title class_">Router</span>;</span><br></pre></td></tr></table></figure>
-
-<p>可以这样使用</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Server</span> = <span class="built_in">require</span>(<span class="string">&quot;./lib/server&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Router</span> = <span class="built_in">require</span>(<span class="string">&quot;./lib/middleware/router&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> <span class="title class_">Server</span>();</span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">Router</span>();</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">listen</span>(&#123;</span><br><span class="line">  <span class="attr">port</span>: <span class="number">9090</span>,</span><br><span class="line">  <span class="attr">host</span>: <span class="string">&quot;0.0.0.0&quot;</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(</span><br><span class="line">  router.<span class="title function_">all</span>(<span class="string">&quot;/test/:course/:lecture&quot;</span>, <span class="title function_">async</span> (&#123; route, res &#125;, next) =&gt; &#123;</span><br><span class="line">    res.<span class="title function_">setHeader</span>(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;application/json&quot;</span>);</span><br><span class="line">    res.<span class="property">body</span> = route;</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(</span><br><span class="line">  router.<span class="title function_">all</span>(<span class="string">&quot;.*&quot;</span>, <span class="title function_">async</span> (&#123; req, res &#125;, next) =&gt; &#123;</span><br><span class="line">    res.<span class="title function_">setHeader</span>(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;text/html&quot;</span>);</span><br><span class="line">    res.<span class="property">body</span> = <span class="string">&quot;&lt;h1&gt;Hello world&lt;/h1&gt;&quot;</span>;</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>js</category>
@@ -2914,6 +2914,74 @@
       </categories>
   </entry>
   <entry>
+    <title>第十七章：材质与外观</title>
+    <url>/blog/%E7%AC%AC%E5%8D%81%E4%B8%83%E7%AB%A0%EF%BC%9A%E6%9D%90%E8%B4%A8%E4%B8%8E%E5%A4%96%E8%A7%82/</url>
+    <content><![CDATA[<p>Materials and Apperances （材质与外观）</p>
+<p>外观是不同材质与光线共同作用的结果</p>
+<p>光打进去后在物体内部反射多次变成一大片再出来——次表面散射</p>
+<p>自然界中有无数的材质，但渲染器中支持的材质很少（比如维塔数码的 Manuka 渲染器，只支持 40 种材质），要呈现自然界中的材质，需要各种纹理贴图。</p>
+<p>在渲染方程中，BRDF 是和材质相关的，它决定了光怎么被反射</p>
+<p>Material &#x3D;&#x3D; BRDF</p>
+<h4 id="对于漫反射："><a href="#对于漫反射：" class="headerlink" title="对于漫反射："></a>对于漫反射：</h4><p>假设空间中任何一个方向进来的光的 radiance 的一样的，它反射的光也是一样的。根据能量守恒，如果一个点不发光也不吸收光，那么进来多少就应该反射多少。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210024-1xry8mn.png" alt="image">​</p>
+<p>定义一个反射率 albedo，它的值在 0-1 之间，可以引入不同颜色的 albedo。</p>
+<p>对于 Glossy 的材质，一部分反射，一部分折射</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210030-s9lod8b.png" alt="image">​</p>
+<p>光线折射过后会有部分被吸收</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210035-nubt5cn.png" alt="image">​</p>
+<p>镜面反射计算出射角，可以把它转换到 φ 平面上：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210041-4qd0k79.png" alt="image">​</p>
+<p>镜面发射也可以写出 BRDF，但是出射方向只集中在镜面反射的方向，因此写出正确的 BRDF 不那么容易。</p>
+<h4 id="对于折射："><a href="#对于折射：" class="headerlink" title="对于折射："></a>对于折射：</h4><p>折射定律</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210046-st4zygq.png" alt="image">​</p>
+<p>当出射的折射率大于入射的折射率时，可能出现无法折射的现象：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210051-hfsbjfk.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210055-3gamr9a.png" alt="image">​</p>
+<p>折射的 BRDF 就叫做 BTDF，T 表示 transmission。BRDF 和 BTDF 统称 BSDF，S（scaterring）表示散射。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210100-ifhya3o.png" alt="image">​</p>
+<p>菲涅尔项表示有多少光线被反射、多少被折射。<br>图中的虚线表示极化现象下的光，极化现象即光只沿某一个方向振动。</p>
+<h4 id="对于绝缘体："><a href="#对于绝缘体：" class="headerlink" title="对于绝缘体："></a>对于绝缘体：</h4><p>入射光线的入射角与物体表面越平行，反射的越多。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210106-z0r0kul.png" alt="image">​</p>
+<h4 id="对于导体："><a href="#对于导体：" class="headerlink" title="对于导体："></a>对于导体：</h4><p>任何情况下反射都很多。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210111-gri140d.png" alt="image">​</p>
+<h4 id="菲涅尔项的计算："><a href="#菲涅尔项的计算：" class="headerlink" title="菲涅尔项的计算："></a>菲涅尔项的计算：</h4><p>用 Schlick 近似进行拟合，不管曲线的真实趋势，认为 θ 为 0 时为 R₀，θ 为 90 度时为 1。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210117-j82wjuy.png" alt="image">​</p>
+<h5 id="微表面模型："><a href="#微表面模型：" class="headerlink" title="微表面模型："></a>微表面模型：</h5><p>当我们离的够远，我们看不到表面上的细节， 只能看到总体对光形成的一个效应。<br />从远处看，看到的是材质和外观，从近处看，看到的是几何。<br />每一个微表面，都看作是镜面。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210122-wppkyqt.png" alt="image">​</p>
+<p>一个物体表面的粗糙程度可以用微表面的法线分布来表示：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210127-x62l2q1.png" alt="image">​</p>
+<h5 id="微表面的-BRDF："><a href="#微表面的-BRDF：" class="headerlink" title="微表面的 BRDF："></a>微表面的 BRDF：</h5><p>G（shadowing-masking term）表示微表面被遮挡的修正。当光线越平行于表面（grazing angle）时，越容易发生遮挡。D 表示法线分布。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210132-6wj19bj.png" alt="image"><br /><br /><strong>各向同性&#x2F;各向异性材质</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210144-8f2vzc9.png" alt="image">​</p>
+<p><strong>各向同性的材质发现分布也很均匀</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210150-84x9cl6.png" alt="image">​</p>
+<p><strong>各向异性用 BRDF 来解释就是方向角是绝对的，不是相对的。</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210157-lk44knp.png" alt="image">​</p>
+<p><strong>总结 BRDF 的属性：</strong></p>
+<p>1.BRDF 的值一定是非负的</p>
+<p>2.线性性质</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210205-fex4vfm.png" alt="image">​</p>
+<p>3.可逆性。交换入射和出射方向的角色，得到的 BRDF 是一样的</p>
+<p>4.能量守恒</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210212-oloyznz.png" alt="image">​</p>
+<p>5.各向同性和各向异性</p>
+<p>各向同性时，BRDF 只和相对方位角有关，即和 φ 的差值有关，即四维的方程可以转为三维的</p>
+<p>且由于可逆性，φ 的差值不需要考虑正负</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210218-4fiwd6v.png" alt="image">​</p>
+<h5 id="测量-BRDF"><a href="#测量-BRDF" class="headerlink" title="测量 BRDF"></a>测量 BRDF</h5><ul>
+<li>如果能直接测量，就不需要用到模型去计算</li>
+<li>测量能够用真实世界的材质做到更精确的渲染​</li>
+</ul>
+<p>‍</p>
+<p><img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210236-a7sm6d4.png" alt="image">​</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210334-aeu3ziu.png" alt="image">​</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210338-3t62iua.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210344-fznpazc.png" alt="image">​</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210347-3oxflxk.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
     <title>第十三章：Ray tracing 1 基础光线追踪算法</title>
     <url>/blog/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0%EF%BC%9ARay%20tracing%201%20%E5%9F%BA%E7%A1%80%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA%E7%AE%97%E6%B3%95/</url>
     <content><![CDATA[<h3 id="Ray-Tracing（光线追踪）"><a href="#Ray-Tracing（光线追踪）" class="headerlink" title="Ray Tracing（光线追踪）"></a>Ray Tracing（光线追踪）</h3><p>光栅化的问题</p>
@@ -2982,74 +3050,6 @@
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204437-seo5rd8.png" alt="image">​</p>
 <p>用 AABB 包围盒更好计算</p>
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204441-g7rxglt.png" alt="image">​</p>
-]]></content>
-      <categories>
-        <category>图形学</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>第十七章：材质与外观</title>
-    <url>/blog/%E7%AC%AC%E5%8D%81%E4%B8%83%E7%AB%A0%EF%BC%9A%E6%9D%90%E8%B4%A8%E4%B8%8E%E5%A4%96%E8%A7%82/</url>
-    <content><![CDATA[<p>Materials and Apperances （材质与外观）</p>
-<p>外观是不同材质与光线共同作用的结果</p>
-<p>光打进去后在物体内部反射多次变成一大片再出来——次表面散射</p>
-<p>自然界中有无数的材质，但渲染器中支持的材质很少（比如维塔数码的 Manuka 渲染器，只支持 40 种材质），要呈现自然界中的材质，需要各种纹理贴图。</p>
-<p>在渲染方程中，BRDF 是和材质相关的，它决定了光怎么被反射</p>
-<p>Material &#x3D;&#x3D; BRDF</p>
-<h4 id="对于漫反射："><a href="#对于漫反射：" class="headerlink" title="对于漫反射："></a>对于漫反射：</h4><p>假设空间中任何一个方向进来的光的 radiance 的一样的，它反射的光也是一样的。根据能量守恒，如果一个点不发光也不吸收光，那么进来多少就应该反射多少。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210024-1xry8mn.png" alt="image">​</p>
-<p>定义一个反射率 albedo，它的值在 0-1 之间，可以引入不同颜色的 albedo。</p>
-<p>对于 Glossy 的材质，一部分反射，一部分折射</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210030-s9lod8b.png" alt="image">​</p>
-<p>光线折射过后会有部分被吸收</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210035-nubt5cn.png" alt="image">​</p>
-<p>镜面反射计算出射角，可以把它转换到 φ 平面上：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210041-4qd0k79.png" alt="image">​</p>
-<p>镜面发射也可以写出 BRDF，但是出射方向只集中在镜面反射的方向，因此写出正确的 BRDF 不那么容易。</p>
-<h4 id="对于折射："><a href="#对于折射：" class="headerlink" title="对于折射："></a>对于折射：</h4><p>折射定律</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210046-st4zygq.png" alt="image">​</p>
-<p>当出射的折射率大于入射的折射率时，可能出现无法折射的现象：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210051-hfsbjfk.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210055-3gamr9a.png" alt="image">​</p>
-<p>折射的 BRDF 就叫做 BTDF，T 表示 transmission。BRDF 和 BTDF 统称 BSDF，S（scaterring）表示散射。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210100-ifhya3o.png" alt="image">​</p>
-<p>菲涅尔项表示有多少光线被反射、多少被折射。<br>图中的虚线表示极化现象下的光，极化现象即光只沿某一个方向振动。</p>
-<h4 id="对于绝缘体："><a href="#对于绝缘体：" class="headerlink" title="对于绝缘体："></a>对于绝缘体：</h4><p>入射光线的入射角与物体表面越平行，反射的越多。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210106-z0r0kul.png" alt="image">​</p>
-<h4 id="对于导体："><a href="#对于导体：" class="headerlink" title="对于导体："></a>对于导体：</h4><p>任何情况下反射都很多。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210111-gri140d.png" alt="image">​</p>
-<h4 id="菲涅尔项的计算："><a href="#菲涅尔项的计算：" class="headerlink" title="菲涅尔项的计算："></a>菲涅尔项的计算：</h4><p>用 Schlick 近似进行拟合，不管曲线的真实趋势，认为 θ 为 0 时为 R₀，θ 为 90 度时为 1。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210117-j82wjuy.png" alt="image">​</p>
-<h5 id="微表面模型："><a href="#微表面模型：" class="headerlink" title="微表面模型："></a>微表面模型：</h5><p>当我们离的够远，我们看不到表面上的细节， 只能看到总体对光形成的一个效应。<br />从远处看，看到的是材质和外观，从近处看，看到的是几何。<br />每一个微表面，都看作是镜面。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210122-wppkyqt.png" alt="image">​</p>
-<p>一个物体表面的粗糙程度可以用微表面的法线分布来表示：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210127-x62l2q1.png" alt="image">​</p>
-<h5 id="微表面的-BRDF："><a href="#微表面的-BRDF：" class="headerlink" title="微表面的 BRDF："></a>微表面的 BRDF：</h5><p>G（shadowing-masking term）表示微表面被遮挡的修正。当光线越平行于表面（grazing angle）时，越容易发生遮挡。D 表示法线分布。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210132-6wj19bj.png" alt="image"><br /><br /><strong>各向同性&#x2F;各向异性材质</strong></p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210144-8f2vzc9.png" alt="image">​</p>
-<p><strong>各向同性的材质发现分布也很均匀</strong></p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210150-84x9cl6.png" alt="image">​</p>
-<p><strong>各向异性用 BRDF 来解释就是方向角是绝对的，不是相对的。</strong></p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210157-lk44knp.png" alt="image">​</p>
-<p><strong>总结 BRDF 的属性：</strong></p>
-<p>1.BRDF 的值一定是非负的</p>
-<p>2.线性性质</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210205-fex4vfm.png" alt="image">​</p>
-<p>3.可逆性。交换入射和出射方向的角色，得到的 BRDF 是一样的</p>
-<p>4.能量守恒</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210212-oloyznz.png" alt="image">​</p>
-<p>5.各向同性和各向异性</p>
-<p>各向同性时，BRDF 只和相对方位角有关，即和 φ 的差值有关，即四维的方程可以转为三维的</p>
-<p>且由于可逆性，φ 的差值不需要考虑正负</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210218-4fiwd6v.png" alt="image">​</p>
-<h5 id="测量-BRDF"><a href="#测量-BRDF" class="headerlink" title="测量 BRDF"></a>测量 BRDF</h5><ul>
-<li>如果能直接测量，就不需要用到模型去计算</li>
-<li>测量能够用真实世界的材质做到更精确的渲染​</li>
-</ul>
-<p>‍</p>
-<p><img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210236-a7sm6d4.png" alt="image">​</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210334-aeu3ziu.png" alt="image">​</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210338-3t62iua.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210344-fznpazc.png" alt="image">​</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817210347-3oxflxk.png" alt="image">​</p>
 ]]></content>
       <categories>
         <category>图形学</category>
@@ -4045,7 +4045,7 @@
     <content><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>某日发布节点后，监控平台发现包体积超限，增长很多，于是拉了各个业务方进行排查</p>
 <h2 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h2><p>我这边用 webpack-bundle-analyzer 发现增长的体积和懒加载的代码体积刚好对得上，怀疑是不是懒加载代码加载的时间提前了，代码有循环引用之类的，导致应该懒加载的代码，提前加载进来了。但是逐一查看改动代码，没有发现循环引用的情况。</p>
 <p>又看了下监控的数据，发现统计的数据是不稳定的，在这之前也有部分数据超限，感觉统计代码的脚本不是很稳定，于是又去看统计代码体积的脚本。<br>看了代码，发现统计脚本是在插件加载完成后使用 <a href="'https://developer.mozilla.org/en-US/docs/Web/API/Performance/getEntriesByType">performance.getEntriesByType</a> 来获取所有加载的 script 资源的体积数据。</p>
-<p>又想到前两天上线的一个全局图片监控的功能中，有一行代码是改动了 performance 的缓存空间大小</p>
+<p>又想到前两天上线的一个 <a href="/blog/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%B1%80%E5%9B%BE%E7%89%87%E7%9B%91%E6%8E%A7/" title="如何实现全局图片监控">如何实现全局图片监控</a> 的功能中，有一行代码是改动了 performance 的缓存空间大小</p>
 <figure class="highlight ts"><table><tr><td class="code"><pre><span class="line">performance.<span class="title function_">setResourceTimingBufferSize</span>(<span class="number">2000</span>)</span><br></pre></td></tr></table></figure>
 
 <p>于是怀疑是不是这个改动影响了统计代码体积的脚本，于是把这段代码删掉，重新发布，发现包体积恢复’正常’。<br>把这个size改为一个小值，跑一下脚本，发现统计的数据更少了，说明这个改动确实影响了统计代码体积的脚本。</p>
