@@ -4,11 +4,9 @@ date: 2024-11-29T20:03:39Z
 lastmod: 2024-11-29T20:52:10Z
 ---
 
-# 逆天!纯CSS实现获取窗口大小
-
 先看看效果
 
-<video controls="controls" src="./assets/Video_2024-11-29_201258-20241129202925-emiv1pj.mp4" data-src="./assets/Video_2024-11-29_201258-20241129202925-emiv1pj.mp4"></video>
+<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=113570696204148&bvid=BV1JgzEY4Em6&cid=27106543898&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 
 看看代码是怎么样的
 
