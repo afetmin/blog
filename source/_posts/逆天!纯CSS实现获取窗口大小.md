@@ -8,7 +8,7 @@ lastmod: 2024-11-29T20:52:10Z
 
 先看看效果
 
-<video controls="controls" src="assets/Video_2024-11-29_201258-20241129202925-emiv1pj.mp4" data-src="assets/Video_2024-11-29_201258-20241129202925-emiv1pj.mp4"></video>
+<video controls="controls" src="./assets/Video_2024-11-29_201258-20241129202925-emiv1pj.mp4" data-src="./assets/Video_2024-11-29_201258-20241129202925-emiv1pj.mp4"></video>
 
 看看代码是怎么样的
 
