@@ -958,22 +958,6 @@
       </categories>
   </entry>
   <entry>
-    <title>前端路由</title>
-    <url>/blog/%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/</url>
-    <content><![CDATA[<p>URL 是由几个部分组成：</p>
-<p>​<code>protocol: // hostname:port / pathname ? query # hash</code>​</p>
-<p>路由模块需要实现的功能就是 —— 解析 URL 中的 pathname，根据不同的路径将请求分配给相应的模块去处理。</p>
-<p>一个简单的路由是一个类，它的方法能够返回不同的拦截切面，这样的类叫做 HTTP <strong>服务中间件</strong>​**（Middleware）**。具体实现代码如下：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Router类</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">&quot;url&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">@rule：路径规则</span></span><br><span class="line"><span class="comment">@pathname：路径名</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">check</span>(<span class="params">rule, pathname</span>) &#123;</span><br><span class="line">  <span class="comment">/* </span></span><br><span class="line"><span class="comment">  解析规则，比如：/test/:course/:lecture</span></span><br><span class="line"><span class="comment">  paraMatched = [&#x27;/test/:course/:lecture&#x27;, &#x27;:course&#x27;, &#x27;:lecture&#x27;]</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">const</span> paraMatched = rule.<span class="title function_">match</span>(<span class="regexp">/:[^/]+/g</span>);</span><br><span class="line">  <span class="keyword">const</span> ruleExp = <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">`^<span class="subst">$&#123;rule.replace(/:[^/]+/g, <span class="string">&quot;([^/]+)&quot;</span>)&#125;</span>$`</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  解析真正的路径，比如：/test/123/abc</span></span><br><span class="line"><span class="comment">  ruleMatched = [&#x27;/test/123/abs&#x27;, &#x27;123&#x27;, &#x27;abs&#x27;]</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">const</span> ruleMatched = pathname.<span class="title function_">match</span>(ruleExp);</span><br><span class="line"></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  将规则和路径拼接为对象：</span></span><br><span class="line"><span class="comment">  ret = &#123;course: 123, lecture: abc&#125;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">if</span> (ruleMatched) &#123;</span><br><span class="line">    <span class="keyword">const</span> ret = &#123;&#125;;</span><br><span class="line">    <span class="keyword">if</span> (paraMatched) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; paraMatched.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        ret[paraMatched[i].<span class="title function_">slice</span>(<span class="number">1</span>)] = ruleMatched[i + <span class="number">1</span>];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">@method: GET/POST/PUT/DELETE</span></span><br><span class="line"><span class="comment">@rule: 路径规则，比如：test/:course/:lecture</span></span><br><span class="line"><span class="comment">@aspect: 拦截函数</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">route</span>(<span class="params">method, rule, aspect</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> req = ctx.<span class="property">req</span>;</span><br><span class="line">    <span class="keyword">if</span> (!ctx.<span class="property">url</span>) ctx.<span class="property">url</span> = url.<span class="title function_">parse</span>(<span class="string">`http://<span class="subst">$&#123;req.headers.host&#125;</span><span class="subst">$&#123;req.url&#125;</span>`</span>);</span><br><span class="line">    <span class="keyword">const</span> checked = <span class="title function_">check</span>(rule, ctx.<span class="property">url</span>.<span class="property">pathname</span>); <span class="comment">// 根据路径规则解析路径</span></span><br><span class="line">    <span class="keyword">if</span> (!ctx.<span class="property">route</span> &amp;&amp; (method === <span class="string">&quot;*&quot;</span> || req.<span class="property">method</span> === method) &amp;&amp; !!checked) &#123;</span><br><span class="line">      ctx.<span class="property">route</span> = checked;</span><br><span class="line">      <span class="keyword">await</span> <span class="title function_">aspect</span>(ctx, next);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 如果路径与路由规则不匹配，则跳过当前拦截切面，执行下一个拦截切面</span></span><br><span class="line">      <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Router</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">base = <span class="string">&quot;&quot;</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">baseURL</span> = base;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">get</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;GET&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">post</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;POST&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">put</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;PUT&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">delete</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;DELETE&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">all</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;*&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title class_">Router</span>;</span><br></pre></td></tr></table></figure>
-
-<p>可以这样使用</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Server</span> = <span class="built_in">require</span>(<span class="string">&quot;./lib/server&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Router</span> = <span class="built_in">require</span>(<span class="string">&quot;./lib/middleware/router&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> <span class="title class_">Server</span>();</span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">Router</span>();</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">listen</span>(&#123;</span><br><span class="line">  <span class="attr">port</span>: <span class="number">9090</span>,</span><br><span class="line">  <span class="attr">host</span>: <span class="string">&quot;0.0.0.0&quot;</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(</span><br><span class="line">  router.<span class="title function_">all</span>(<span class="string">&quot;/test/:course/:lecture&quot;</span>, <span class="title function_">async</span> (&#123; route, res &#125;, next) =&gt; &#123;</span><br><span class="line">    res.<span class="title function_">setHeader</span>(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;application/json&quot;</span>);</span><br><span class="line">    res.<span class="property">body</span> = route;</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(</span><br><span class="line">  router.<span class="title function_">all</span>(<span class="string">&quot;.*&quot;</span>, <span class="title function_">async</span> (&#123; req, res &#125;, next) =&gt; &#123;</span><br><span class="line">    res.<span class="title function_">setHeader</span>(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;text/html&quot;</span>);</span><br><span class="line">    res.<span class="property">body</span> = <span class="string">&quot;&lt;h1&gt;Hello world&lt;/h1&gt;&quot;</span>;</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>js</category>
-      </categories>
-  </entry>
-  <entry>
     <title>前端调试通关</title>
     <url>/blog/%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/</url>
     <content><![CDATA[<h2 id="各类调试工具原理"><a href="#各类调试工具原理" class="headerlink" title="各类调试工具原理"></a>各类调试工具原理</h2><h3 id="Chrome-DevTools-原理"><a href="#Chrome-DevTools-原理" class="headerlink" title="Chrome DevTools 原理"></a>Chrome DevTools 原理</h3><p>Chrome DevTools 分为两部分，backend 和 frontend：</p>
@@ -1069,6 +1053,62 @@
 <li>红色：掉帧，无法在合理的时间内渲染帧，比如：<code>scroll</code>​，<code>resize</code> ​ 事件触发过于频繁,浏览器来不及处理导致在下一个事件被触发之前无法完成</li>
 </ul>
 <p>‍</p>
+]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>前端路由</title>
+    <url>/blog/%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1/</url>
+    <content><![CDATA[<p>URL 是由几个部分组成：</p>
+<p>​<code>protocol: // hostname:port / pathname ? query # hash</code>​</p>
+<p>路由模块需要实现的功能就是 —— 解析 URL 中的 pathname，根据不同的路径将请求分配给相应的模块去处理。</p>
+<p>一个简单的路由是一个类，它的方法能够返回不同的拦截切面，这样的类叫做 HTTP <strong>服务中间件</strong>​**（Middleware）**。具体实现代码如下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Router类</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">&quot;url&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">@rule：路径规则</span></span><br><span class="line"><span class="comment">@pathname：路径名</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">check</span>(<span class="params">rule, pathname</span>) &#123;</span><br><span class="line">  <span class="comment">/* </span></span><br><span class="line"><span class="comment">  解析规则，比如：/test/:course/:lecture</span></span><br><span class="line"><span class="comment">  paraMatched = [&#x27;/test/:course/:lecture&#x27;, &#x27;:course&#x27;, &#x27;:lecture&#x27;]</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">const</span> paraMatched = rule.<span class="title function_">match</span>(<span class="regexp">/:[^/]+/g</span>);</span><br><span class="line">  <span class="keyword">const</span> ruleExp = <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">`^<span class="subst">$&#123;rule.replace(/:[^/]+/g, <span class="string">&quot;([^/]+)&quot;</span>)&#125;</span>$`</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  解析真正的路径，比如：/test/123/abc</span></span><br><span class="line"><span class="comment">  ruleMatched = [&#x27;/test/123/abs&#x27;, &#x27;123&#x27;, &#x27;abs&#x27;]</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">const</span> ruleMatched = pathname.<span class="title function_">match</span>(ruleExp);</span><br><span class="line"></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  将规则和路径拼接为对象：</span></span><br><span class="line"><span class="comment">  ret = &#123;course: 123, lecture: abc&#125;</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">if</span> (ruleMatched) &#123;</span><br><span class="line">    <span class="keyword">const</span> ret = &#123;&#125;;</span><br><span class="line">    <span class="keyword">if</span> (paraMatched) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; paraMatched.<span class="property">length</span>; i++) &#123;</span><br><span class="line">        ret[paraMatched[i].<span class="title function_">slice</span>(<span class="number">1</span>)] = ruleMatched[i + <span class="number">1</span>];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">@method: GET/POST/PUT/DELETE</span></span><br><span class="line"><span class="comment">@rule: 路径规则，比如：test/:course/:lecture</span></span><br><span class="line"><span class="comment">@aspect: 拦截函数</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">route</span>(<span class="params">method, rule, aspect</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> req = ctx.<span class="property">req</span>;</span><br><span class="line">    <span class="keyword">if</span> (!ctx.<span class="property">url</span>) ctx.<span class="property">url</span> = url.<span class="title function_">parse</span>(<span class="string">`http://<span class="subst">$&#123;req.headers.host&#125;</span><span class="subst">$&#123;req.url&#125;</span>`</span>);</span><br><span class="line">    <span class="keyword">const</span> checked = <span class="title function_">check</span>(rule, ctx.<span class="property">url</span>.<span class="property">pathname</span>); <span class="comment">// 根据路径规则解析路径</span></span><br><span class="line">    <span class="keyword">if</span> (!ctx.<span class="property">route</span> &amp;&amp; (method === <span class="string">&quot;*&quot;</span> || req.<span class="property">method</span> === method) &amp;&amp; !!checked) &#123;</span><br><span class="line">      ctx.<span class="property">route</span> = checked;</span><br><span class="line">      <span class="keyword">await</span> <span class="title function_">aspect</span>(ctx, next);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 如果路径与路由规则不匹配，则跳过当前拦截切面，执行下一个拦截切面</span></span><br><span class="line">      <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Router</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">base = <span class="string">&quot;&quot;</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">baseURL</span> = base;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">get</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;GET&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">post</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;POST&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">put</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;PUT&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">delete</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;DELETE&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">all</span>(<span class="params">rule, aspect</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">route</span>(<span class="string">&quot;*&quot;</span>, path.<span class="title function_">join</span>(<span class="variable language_">this</span>.<span class="property">baseURL</span>, rule), aspect);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title class_">Router</span>;</span><br></pre></td></tr></table></figure>
+
+<p>可以这样使用</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Server</span> = <span class="built_in">require</span>(<span class="string">&quot;./lib/server&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Router</span> = <span class="built_in">require</span>(<span class="string">&quot;./lib/middleware/router&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> <span class="title class_">Server</span>();</span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">Router</span>();</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">listen</span>(&#123;</span><br><span class="line">  <span class="attr">port</span>: <span class="number">9090</span>,</span><br><span class="line">  <span class="attr">host</span>: <span class="string">&quot;0.0.0.0&quot;</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(</span><br><span class="line">  router.<span class="title function_">all</span>(<span class="string">&quot;/test/:course/:lecture&quot;</span>, <span class="title function_">async</span> (&#123; route, res &#125;, next) =&gt; &#123;</span><br><span class="line">    res.<span class="title function_">setHeader</span>(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;application/json&quot;</span>);</span><br><span class="line">    res.<span class="property">body</span> = route;</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(</span><br><span class="line">  router.<span class="title function_">all</span>(<span class="string">&quot;.*&quot;</span>, <span class="title function_">async</span> (&#123; req, res &#125;, next) =&gt; &#123;</span><br><span class="line">    res.<span class="title function_">setHeader</span>(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;text/html&quot;</span>);</span><br><span class="line">    res.<span class="property">body</span> = <span class="string">&quot;&lt;h1&gt;Hello world&lt;/h1&gt;&quot;</span>;</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>原型与原型链</title>
+    <url>/blog/%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/</url>
+    <content><![CDATA[<h2 id="原型与原型链"><a href="#原型与原型链" class="headerlink" title="原型与原型链"></a>原型与原型链</h2><p><strong>实例与构造函数原型之间有直接的联系，但实例与构造函数之间没有。</strong></p>
+<p>每个函数都有一个属性，就是 prototype，函数的 prototype 指向了一个对象，这个对象就是调用该构造函数创建的<strong>实例</strong>的原型。</p>
+<p>可以这么理解：每一个 JavaScript 对象(null 除外)在创建的时候就会与之关联另一个对象，这个对象就是我们所说的原型，每一个对象都会从原型“继承”属性。实例 person 与 Person.prototype 之间的关系通过 <strong>proto</strong> 连接这是每一个 JavaScript 对象(除了 null )都具有的一个属性，叫<strong>proto</strong>，这个属性会指向该对象的原型。</p>
+<p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image1.png" alt="原型"></p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> <span class="title class_">Person</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(person.<span class="property">__proto__</span> === <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image2.png" alt="原型"></p>
+<p>每个原型都有一个 <strong>constructor</strong> 属性指向关联的构造函数。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Person</span> === <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image3.png" alt="原型"></p>
+<p>原型也是一个对象，那就可以通过 Object 构造函数生成，所以</p>
+<p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image4.png" alt="原型"></p>
+<p>Object.prototype.<strong>proto</strong> 的值为 null 跟 Object.prototype 没有原型，其实表达了一个意思。</p>
+<h3 id="一些细节"><a href="#一些细节" class="headerlink" title="一些细节"></a>一些细节</h3><p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image5.png" alt="原型"></p>
+<h3 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> <span class="title class_">Person</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(person.<span class="property">constructor</span> === <span class="title class_">Person</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>当获取 person.constructor 时，其实 person 中并没有 constructor 属性,当不能读取到 constructor 属性时，会从 person 的原型也就是 Person.prototype 中读取，正好原型中有该属性，所以：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">person.<span class="property">constructor</span> === <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="proto"><a href="#proto" class="headerlink" title="proto"></a><strong>proto</strong></h3><p>绝大部分浏览器都支持这个非标准的方法访问原型，然而它并不存在于 Person.prototype 中，实际上，它是来自于 Object.prototype ，与其说是一个属性，不如说是一个 getter&#x2F;setter，当使用 obj.<strong>proto</strong> 时，可以理解成返回了 Object.getPrototypeOf(obj)。</p>
+<h3 id="真的是继承吗？"><a href="#真的是继承吗？" class="headerlink" title="真的是继承吗？"></a>真的是继承吗？</h3><p>最后是关于继承，前面我们讲到“每一个对象都会从原型‘继承’属性”，实际上，继承是一个十分具有迷惑性的说法，引用《你不知道的 JavaScript》中的话，就是：</p>
+<p>继承意味着复制操作，然而 JavaScript 默认并不会复制对象的属性，相反，JavaScript 只是在两个对象之间创建一个关联，这样，一个对象就可以通过委托访问另一个对象的属性和函数，所以与其叫继承，委托的说法反而更准确些。</p>
+<h3 id="Function-proto-Function-prototype"><a href="#Function-proto-Function-prototype" class="headerlink" title="Function.proto &#x3D;&#x3D;&#x3D; Function.prototype"></a>Function.<strong>proto</strong> &#x3D;&#x3D;&#x3D; Function.prototype</h3><p>Function 作为一个内置对象，是运行前就已经存在的东西，所以根本就不会根据自己生成自己，就是先有的 Function，然后实现上把原型指向了 Function.prototype，但是我们不能倒过来推测因为 Function.<strong>proto</strong> &#x3D;&#x3D;&#x3D; Function.prototype，所以 Function 调用了自己生成了自己。</p>
+<h3 id="完整的原型链"><a href="#完整的原型链" class="headerlink" title="完整的原型链"></a>完整的原型链</h3><p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image6.png" alt="原型"></p>
+<p><strong>什么是原型链？</strong></p>
+<p>当对象查找一个属性的时候，如果没有在自身找到，那么就会查找自身的原型，如果原型还没有找到，那么会继续查找原型的原型，直到找到 Object.prototype 的原型时，此时原型为 null，查找停止。 这种通过<strong>原型链接的逐级向上的查找链</strong>被称为原型链</p>
+<p><strong>什么是原型继承？</strong></p>
+<p>一个对象可以使用另外一个对象的属性或者方法，就称之为继承。具体是通过将这个对象的原型设置为另外一个对象，这样根据原型链的规则，如果查找一个对象属性且在自身不存在时，就会查找另外一个对象，相当于一个对象可以使用另外一个对象的属性和方法了。</p>
+<p>使用 <strong>Object.prototype.toString.call()</strong> 判断数据类型</p>
+<p><strong>proto</strong> 与内部的 <strong>[[Prototype]] 不一样</strong>。</p>
+<p><strong>proto</strong> 是 <strong>[[Prototype]]</strong> 的 getter&#x2F;setter。</p>
 ]]></content>
       <categories>
         <category>js</category>
@@ -1221,46 +1261,6 @@
 <p>原文地址：</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cubWFjYXJ0aHVyLm1lL3Bvc3RzL29wdGlvbnMtZm9yLXJlbW92aW5nLWV2ZW50LWxpc3RlbmVycw==" title="You’ve Got Options for Removing Event Listeners">You’ve Got Options for Removing Event Listeners<i class="fa fa-external-link-alt"></i></span></p>
 <p>‍</p>
-]]></content>
-      <categories>
-        <category>js</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>原型与原型链</title>
-    <url>/blog/%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/</url>
-    <content><![CDATA[<h2 id="原型与原型链"><a href="#原型与原型链" class="headerlink" title="原型与原型链"></a>原型与原型链</h2><p><strong>实例与构造函数原型之间有直接的联系，但实例与构造函数之间没有。</strong></p>
-<p>每个函数都有一个属性，就是 prototype，函数的 prototype 指向了一个对象，这个对象就是调用该构造函数创建的<strong>实例</strong>的原型。</p>
-<p>可以这么理解：每一个 JavaScript 对象(null 除外)在创建的时候就会与之关联另一个对象，这个对象就是我们所说的原型，每一个对象都会从原型“继承”属性。实例 person 与 Person.prototype 之间的关系通过 <strong>proto</strong> 连接这是每一个 JavaScript 对象(除了 null )都具有的一个属性，叫<strong>proto</strong>，这个属性会指向该对象的原型。</p>
-<p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image1.png" alt="原型"></p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> <span class="title class_">Person</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(person.<span class="property">__proto__</span> === <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-
-<p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image2.png" alt="原型"></p>
-<p>每个原型都有一个 <strong>constructor</strong> 属性指向关联的构造函数。</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Person</span> === <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-
-<p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image3.png" alt="原型"></p>
-<p>原型也是一个对象，那就可以通过 Object 构造函数生成，所以</p>
-<p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image4.png" alt="原型"></p>
-<p>Object.prototype.<strong>proto</strong> 的值为 null 跟 Object.prototype 没有原型，其实表达了一个意思。</p>
-<h3 id="一些细节"><a href="#一些细节" class="headerlink" title="一些细节"></a>一些细节</h3><p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image5.png" alt="原型"></p>
-<h3 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> <span class="title class_">Person</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(person.<span class="property">constructor</span> === <span class="title class_">Person</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-
-<p>当获取 person.constructor 时，其实 person 中并没有 constructor 属性,当不能读取到 constructor 属性时，会从 person 的原型也就是 Person.prototype 中读取，正好原型中有该属性，所以：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">person.<span class="property">constructor</span> === <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="proto"><a href="#proto" class="headerlink" title="proto"></a><strong>proto</strong></h3><p>绝大部分浏览器都支持这个非标准的方法访问原型，然而它并不存在于 Person.prototype 中，实际上，它是来自于 Object.prototype ，与其说是一个属性，不如说是一个 getter&#x2F;setter，当使用 obj.<strong>proto</strong> 时，可以理解成返回了 Object.getPrototypeOf(obj)。</p>
-<h3 id="真的是继承吗？"><a href="#真的是继承吗？" class="headerlink" title="真的是继承吗？"></a>真的是继承吗？</h3><p>最后是关于继承，前面我们讲到“每一个对象都会从原型‘继承’属性”，实际上，继承是一个十分具有迷惑性的说法，引用《你不知道的 JavaScript》中的话，就是：</p>
-<p>继承意味着复制操作，然而 JavaScript 默认并不会复制对象的属性，相反，JavaScript 只是在两个对象之间创建一个关联，这样，一个对象就可以通过委托访问另一个对象的属性和函数，所以与其叫继承，委托的说法反而更准确些。</p>
-<h3 id="Function-proto-Function-prototype"><a href="#Function-proto-Function-prototype" class="headerlink" title="Function.proto &#x3D;&#x3D;&#x3D; Function.prototype"></a>Function.<strong>proto</strong> &#x3D;&#x3D;&#x3D; Function.prototype</h3><p>Function 作为一个内置对象，是运行前就已经存在的东西，所以根本就不会根据自己生成自己，就是先有的 Function，然后实现上把原型指向了 Function.prototype，但是我们不能倒过来推测因为 Function.<strong>proto</strong> &#x3D;&#x3D;&#x3D; Function.prototype，所以 Function 调用了自己生成了自己。</p>
-<h3 id="完整的原型链"><a href="#完整的原型链" class="headerlink" title="完整的原型链"></a>完整的原型链</h3><p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image6.png" alt="原型"></p>
-<p><strong>什么是原型链？</strong></p>
-<p>当对象查找一个属性的时候，如果没有在自身找到，那么就会查找自身的原型，如果原型还没有找到，那么会继续查找原型的原型，直到找到 Object.prototype 的原型时，此时原型为 null，查找停止。 这种通过<strong>原型链接的逐级向上的查找链</strong>被称为原型链</p>
-<p><strong>什么是原型继承？</strong></p>
-<p>一个对象可以使用另外一个对象的属性或者方法，就称之为继承。具体是通过将这个对象的原型设置为另外一个对象，这样根据原型链的规则，如果查找一个对象属性且在自身不存在时，就会查找另外一个对象，相当于一个对象可以使用另外一个对象的属性和方法了。</p>
-<p>使用 <strong>Object.prototype.toString.call()</strong> 判断数据类型</p>
-<p><strong>proto</strong> 与内部的 <strong>[[Prototype]] 不一样</strong>。</p>
-<p><strong>proto</strong> 是 <strong>[[Prototype]]</strong> 的 getter&#x2F;setter。</p>
 ]]></content>
       <categories>
         <category>js</category>
@@ -1699,115 +1699,6 @@
       </categories>
   </entry>
   <entry>
-    <title>第一、二章：图形学概述、向量与线性代数</title>
-    <url>/blog/%E7%AC%AC%E4%B8%80%E3%80%81%E4%BA%8C%E7%AB%A0%EF%BC%9A%E5%9B%BE%E5%BD%A2%E5%AD%A6%E6%A6%82%E8%BF%B0%E3%80%81%E5%90%91%E9%87%8F%E4%B8%8E%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/</url>
-    <content><![CDATA[<h3 id="第一章-图形学概述"><a href="#第一章-图形学概述" class="headerlink" title="第一章 图形学概述"></a>第一章 图形学概述</h3><h4 id="1-图形学应用场景"><a href="#1-图形学应用场景" class="headerlink" title="1.图形学应用场景"></a>1.图形学应用场景</h4><p>游戏场景渲染、电影特效、动画、设计、可视化（人体三维扫描）、虚拟现实、数字绘图、模拟、GUI、字体排版等</p>
-<h4 id="2-图形学包含内容："><a href="#2-图形学包含内容：" class="headerlink" title="2.图形学包含内容："></a>2.图形学包含内容：</h4><ul>
-<li><p>数学：矩阵、曲线、曲面</p>
-</li>
-<li><p>物理学：光学、着色</p>
-</li>
-<li><p>描述、操作三维的不同形体</p>
-</li>
-<li><p>动画、仿真</p>
-</li>
-</ul>
-<h4 id="3-本课程包含的内容："><a href="#3-本课程包含的内容：" class="headerlink" title="3.本课程包含的内容："></a>3.本课程包含的内容：</h4><ul>
-<li><p>光栅化</p>
-<ul>
-<li>光栅化是把三维空间的几何形体显示在屏幕上，是实时图形学的主要应用。实时：每秒钟生成 30 帧，否则叫做离线</li>
-</ul>
-</li>
-<li><p>曲线、曲面</p>
-<ul>
-<li>如何表示一条光滑的曲线、如何表示曲面、怎么把简单曲面通过细分的方法得到更复杂的曲面，形状发生变化的时候面要如何变化，如何保持物体的拓扑结构</li>
-</ul>
-</li>
-<li><p>光线追踪</p>
-<ul>
-<li>实时光线追踪技术</li>
-</ul>
-</li>
-<li><p>动画&#x2F;模拟</p>
-</li>
-</ul>
-<h4 id="4-本课程不包含的内容："><a href="#4-本课程不包含的内容：" class="headerlink" title="4.本课程不包含的内容："></a>4.本课程不包含的内容：</h4><ul>
-<li><p>怎么使用 API</p>
-</li>
-<li><p>怎么做三维建模</p>
-</li>
-<li><p>计算机视觉：一切需要猜测的东西是计算机视觉（根据图像推测模型）。</p>
-<p>​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816202909-3znjtvt.png" alt="image">​​</p>
-<p>model 描述三维空间中形状的几何形体，或对于渲染而言描述它的材质、光照，把这些三维空间中有的东西转为一幅图（渲染），就是计算机图形学。此外，还包括纯三维空间的仿真，材质建模、材质与光线之间作用的研究等，都属于计算机图形学的范畴。</p>
-</li>
-</ul>
-<p>从一张图识别出各种模型（比如识别出照片里哪些是桌子、椅子），或者图形、视频处理（中间涉及到一些推测、推理）等是计算机视觉的范畴。</p>
-<p>某些场景下没有严格的边界，比如 AR 需要二者的结合。</p>
-<h3 id="第二章-向量与线性代数"><a href="#第二章-向量与线性代数" class="headerlink" title="第二章 向量与线性代数"></a>第二章 向量与线性代数</h3><h4 id="1-图形学依赖："><a href="#1-图形学依赖：" class="headerlink" title="1.图形学依赖："></a>1.图形学依赖：</h4><ul>
-<li><p>数学基础：线性代数、微积分、统计</p>
-</li>
-<li><p>数学基础：力学、光学</p>
-</li>
-<li><p>其他杂项：信号处理、数值分析</p>
-</li>
-<li><p>一点点美学</p>
-</li>
-</ul>
-<h4 id="2-向量（Vectors）"><a href="#2-向量（Vectors）" class="headerlink" title="2.向量（Vectors）"></a>2.向量（Vectors）</h4><p>向量表示两个内容：方向和长度，平移向量不会改变它（因为方向和长度不变）。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816202955-jjx4cx2.png" alt="image">​</p>
-<p>一个向量除它的长度可以得到一个长度为 1 的单位向量。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203024-1bw8l0i.png" alt="image">​</p>
-<h5 id="向量求和："><a href="#向量求和：" class="headerlink" title="向量求和："></a><strong>向量求和：</strong></h5><p>几何上：平行四边形法则、三角形法则。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203030-99fojmi.png" alt="image">​</p>
-<p>代数上：坐标相加（笛卡尔坐标系）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203036-px3g9cs.png" alt="image">​</p>
-<h5 id="向量点乘："><a href="#向量点乘：" class="headerlink" title="向量点乘："></a><strong>向量点乘：</strong></h5><p>可以通过点乘快速得到两个向量的夹角（特别是两个向量都是方向向量，点乘后直接得到夹角的余弦）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203046-yssyjz7.png" alt="image">​</p>
-<p><strong>点乘运算满足交换律、分配律和结合律</strong></p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203054-ozx0y20.png" alt="image">​</p>
-<p><strong>代数上的点乘即对应的坐标元素做乘积之后相加：</strong></p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203059-3o1v0i4.png" alt="image">​</p>
-<h5 id="点乘在图形学中的应用："><a href="#点乘在图形学中的应用：" class="headerlink" title="点乘在图形学中的应用："></a>点乘在图形学中的应用：</h5><ul>
-<li>找到两个向量（两个方向）之间的夹角。比如光照模型，计算光照到物体表面的法线等等</li>
-<li>找到一个向量到另一个向量上的投影，分解向量</li>
-<li>计算两个向量之间有多接近：夹角越小（点乘的结果越大）越接近。比如镜面反射计算高光点</li>
-<li>可以知道两个向量之间的方向是相同还是相反（正数相同、负数相反）<br>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203127-e9vs5ug.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203146-rmtlix3.png" alt="image">​</li>
-</ul>
-<h5 id="向量叉乘"><a href="#向量叉乘" class="headerlink" title="向量叉乘"></a><strong>向量叉乘</strong></h5><p>叉乘后的向量同时垂直于两个原向量，叉乘得到的向量方向符合右手螺旋定则。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203210-spvivvu.png" alt="image">​</p>
-<p>叉乘不满足交换律，需要加一个负号。但满足分配律和结合律。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203223-2lm3df8.png" alt="image">​</p>
-<p>代数上：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203230-6axkrx6.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203230-6axkrx6.png" alt="image">​​</p>
-<h5 id="叉乘在图形学中的应用："><a href="#叉乘在图形学中的应用：" class="headerlink" title="叉乘在图形学中的应用："></a>叉乘在图形学中的应用：</h5><ul>
-<li><p>判定左和右</p>
-</li>
-<li><p>判定内和外（三角形光栅化的基础）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203304-8s5o1zi.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203311-5841k86.png" alt="image">​​</p>
-</li>
-</ul>
-<h4 id="3-矩阵（Matrics）"><a href="#3-矩阵（Matrics）" class="headerlink" title="3.矩阵（Matrics）"></a>3.矩阵（Matrics）</h4><p>矩阵就是一堆数字，用 m 行 n 列的结构表示。</p>
-<p>图形学中，用矩阵实现一些移动、旋转的变换。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203320-z1jydy0.png" alt="image">​</p>
-<p>矩阵乘一个数就是把矩阵中每一个数字和该数字想乘得到一个矩阵。</p>
-<h5 id="矩阵乘积"><a href="#矩阵乘积" class="headerlink" title="矩阵乘积"></a><strong>矩阵乘积</strong></h5><p>一定要满足前一个矩阵的列数等于后一个矩阵的行数才能实现相乘。计算方式：乘出来的结果在 m 行 b 列就去找相乘的前一个矩阵的 m 行对应的值与后一个矩阵的 n 列对应的值一一相乘后再相加。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203329-p0untj0.png" alt="image">​</p>
-<p>矩阵不满足交换律，但满足结合率和分配律：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203336-mb007jo.png" alt="image">​</p>
-<p>矩阵和向量相乘：认为向量是一个 m 乘 1 的矩阵，则可以将任意一个 n 乘 m 的矩阵与向量相乘，基于该前提实现一个向量变换（比如相对一个坐标轴翻转）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203343-fbta21s.png" alt="image">​</p>
-<h5 id="矩阵转置"><a href="#矩阵转置" class="headerlink" title="矩阵转置"></a><strong>矩阵转置</strong></h5><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203349-3r4s0yl.png" alt="image">​</p>
-<h5 id="单位矩阵"><a href="#单位矩阵" class="headerlink" title="单位矩阵"></a><strong>单位矩阵</strong></h5><p>单位矩阵只有对角线上有元素。</p>
-<p>如果两个矩阵相乘为单位矩阵，则该两个矩阵互为逆矩阵。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203400-dl98u4q.png" alt="image">​</p>
-<p><strong>向量点乘和叉乘写成矩阵的形式（用在旋转的推导上）</strong></p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203405-yaiw812.png" alt="image">​</p>
-]]></content>
-      <categories>
-        <category>图形学</category>
-      </categories>
-  </entry>
-  <entry>
     <title>现代浏览器架构</title>
     <url>/blog/%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E6%9E%B6%E6%9E%84/</url>
     <content><![CDATA[<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuY2hyb21lLmNvbS9ibG9nL2luc2lkZS1icm93c2VyLXBhcnQxLw==" title="Inside look at modern web browser">Inside look at modern web browser<i class="fa fa-external-link-alt"></i></span></p>
@@ -1955,6 +1846,115 @@
 <h1 id="done！"><a href="#done！" class="headerlink" title="done！"></a>done！</h1>]]></content>
       <categories>
         <category>浏览器</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第一、二章：图形学概述、向量与线性代数</title>
+    <url>/blog/%E7%AC%AC%E4%B8%80%E3%80%81%E4%BA%8C%E7%AB%A0%EF%BC%9A%E5%9B%BE%E5%BD%A2%E5%AD%A6%E6%A6%82%E8%BF%B0%E3%80%81%E5%90%91%E9%87%8F%E4%B8%8E%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/</url>
+    <content><![CDATA[<h3 id="第一章-图形学概述"><a href="#第一章-图形学概述" class="headerlink" title="第一章 图形学概述"></a>第一章 图形学概述</h3><h4 id="1-图形学应用场景"><a href="#1-图形学应用场景" class="headerlink" title="1.图形学应用场景"></a>1.图形学应用场景</h4><p>游戏场景渲染、电影特效、动画、设计、可视化（人体三维扫描）、虚拟现实、数字绘图、模拟、GUI、字体排版等</p>
+<h4 id="2-图形学包含内容："><a href="#2-图形学包含内容：" class="headerlink" title="2.图形学包含内容："></a>2.图形学包含内容：</h4><ul>
+<li><p>数学：矩阵、曲线、曲面</p>
+</li>
+<li><p>物理学：光学、着色</p>
+</li>
+<li><p>描述、操作三维的不同形体</p>
+</li>
+<li><p>动画、仿真</p>
+</li>
+</ul>
+<h4 id="3-本课程包含的内容："><a href="#3-本课程包含的内容：" class="headerlink" title="3.本课程包含的内容："></a>3.本课程包含的内容：</h4><ul>
+<li><p>光栅化</p>
+<ul>
+<li>光栅化是把三维空间的几何形体显示在屏幕上，是实时图形学的主要应用。实时：每秒钟生成 30 帧，否则叫做离线</li>
+</ul>
+</li>
+<li><p>曲线、曲面</p>
+<ul>
+<li>如何表示一条光滑的曲线、如何表示曲面、怎么把简单曲面通过细分的方法得到更复杂的曲面，形状发生变化的时候面要如何变化，如何保持物体的拓扑结构</li>
+</ul>
+</li>
+<li><p>光线追踪</p>
+<ul>
+<li>实时光线追踪技术</li>
+</ul>
+</li>
+<li><p>动画&#x2F;模拟</p>
+</li>
+</ul>
+<h4 id="4-本课程不包含的内容："><a href="#4-本课程不包含的内容：" class="headerlink" title="4.本课程不包含的内容："></a>4.本课程不包含的内容：</h4><ul>
+<li><p>怎么使用 API</p>
+</li>
+<li><p>怎么做三维建模</p>
+</li>
+<li><p>计算机视觉：一切需要猜测的东西是计算机视觉（根据图像推测模型）。</p>
+<p>​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816202909-3znjtvt.png" alt="image">​​</p>
+<p>model 描述三维空间中形状的几何形体，或对于渲染而言描述它的材质、光照，把这些三维空间中有的东西转为一幅图（渲染），就是计算机图形学。此外，还包括纯三维空间的仿真，材质建模、材质与光线之间作用的研究等，都属于计算机图形学的范畴。</p>
+</li>
+</ul>
+<p>从一张图识别出各种模型（比如识别出照片里哪些是桌子、椅子），或者图形、视频处理（中间涉及到一些推测、推理）等是计算机视觉的范畴。</p>
+<p>某些场景下没有严格的边界，比如 AR 需要二者的结合。</p>
+<h3 id="第二章-向量与线性代数"><a href="#第二章-向量与线性代数" class="headerlink" title="第二章 向量与线性代数"></a>第二章 向量与线性代数</h3><h4 id="1-图形学依赖："><a href="#1-图形学依赖：" class="headerlink" title="1.图形学依赖："></a>1.图形学依赖：</h4><ul>
+<li><p>数学基础：线性代数、微积分、统计</p>
+</li>
+<li><p>数学基础：力学、光学</p>
+</li>
+<li><p>其他杂项：信号处理、数值分析</p>
+</li>
+<li><p>一点点美学</p>
+</li>
+</ul>
+<h4 id="2-向量（Vectors）"><a href="#2-向量（Vectors）" class="headerlink" title="2.向量（Vectors）"></a>2.向量（Vectors）</h4><p>向量表示两个内容：方向和长度，平移向量不会改变它（因为方向和长度不变）。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816202955-jjx4cx2.png" alt="image">​</p>
+<p>一个向量除它的长度可以得到一个长度为 1 的单位向量。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203024-1bw8l0i.png" alt="image">​</p>
+<h5 id="向量求和："><a href="#向量求和：" class="headerlink" title="向量求和："></a><strong>向量求和：</strong></h5><p>几何上：平行四边形法则、三角形法则。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203030-99fojmi.png" alt="image">​</p>
+<p>代数上：坐标相加（笛卡尔坐标系）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203036-px3g9cs.png" alt="image">​</p>
+<h5 id="向量点乘："><a href="#向量点乘：" class="headerlink" title="向量点乘："></a><strong>向量点乘：</strong></h5><p>可以通过点乘快速得到两个向量的夹角（特别是两个向量都是方向向量，点乘后直接得到夹角的余弦）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203046-yssyjz7.png" alt="image">​</p>
+<p><strong>点乘运算满足交换律、分配律和结合律</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203054-ozx0y20.png" alt="image">​</p>
+<p><strong>代数上的点乘即对应的坐标元素做乘积之后相加：</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203059-3o1v0i4.png" alt="image">​</p>
+<h5 id="点乘在图形学中的应用："><a href="#点乘在图形学中的应用：" class="headerlink" title="点乘在图形学中的应用："></a>点乘在图形学中的应用：</h5><ul>
+<li>找到两个向量（两个方向）之间的夹角。比如光照模型，计算光照到物体表面的法线等等</li>
+<li>找到一个向量到另一个向量上的投影，分解向量</li>
+<li>计算两个向量之间有多接近：夹角越小（点乘的结果越大）越接近。比如镜面反射计算高光点</li>
+<li>可以知道两个向量之间的方向是相同还是相反（正数相同、负数相反）<br>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203127-e9vs5ug.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203146-rmtlix3.png" alt="image">​</li>
+</ul>
+<h5 id="向量叉乘"><a href="#向量叉乘" class="headerlink" title="向量叉乘"></a><strong>向量叉乘</strong></h5><p>叉乘后的向量同时垂直于两个原向量，叉乘得到的向量方向符合右手螺旋定则。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203210-spvivvu.png" alt="image">​</p>
+<p>叉乘不满足交换律，需要加一个负号。但满足分配律和结合律。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203223-2lm3df8.png" alt="image">​</p>
+<p>代数上：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203230-6axkrx6.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203230-6axkrx6.png" alt="image">​​</p>
+<h5 id="叉乘在图形学中的应用："><a href="#叉乘在图形学中的应用：" class="headerlink" title="叉乘在图形学中的应用："></a>叉乘在图形学中的应用：</h5><ul>
+<li><p>判定左和右</p>
+</li>
+<li><p>判定内和外（三角形光栅化的基础）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203304-8s5o1zi.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203311-5841k86.png" alt="image">​​</p>
+</li>
+</ul>
+<h4 id="3-矩阵（Matrics）"><a href="#3-矩阵（Matrics）" class="headerlink" title="3.矩阵（Matrics）"></a>3.矩阵（Matrics）</h4><p>矩阵就是一堆数字，用 m 行 n 列的结构表示。</p>
+<p>图形学中，用矩阵实现一些移动、旋转的变换。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203320-z1jydy0.png" alt="image">​</p>
+<p>矩阵乘一个数就是把矩阵中每一个数字和该数字想乘得到一个矩阵。</p>
+<h5 id="矩阵乘积"><a href="#矩阵乘积" class="headerlink" title="矩阵乘积"></a><strong>矩阵乘积</strong></h5><p>一定要满足前一个矩阵的列数等于后一个矩阵的行数才能实现相乘。计算方式：乘出来的结果在 m 行 b 列就去找相乘的前一个矩阵的 m 行对应的值与后一个矩阵的 n 列对应的值一一相乘后再相加。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203329-p0untj0.png" alt="image">​</p>
+<p>矩阵不满足交换律，但满足结合率和分配律：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203336-mb007jo.png" alt="image">​</p>
+<p>矩阵和向量相乘：认为向量是一个 m 乘 1 的矩阵，则可以将任意一个 n 乘 m 的矩阵与向量相乘，基于该前提实现一个向量变换（比如相对一个坐标轴翻转）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203343-fbta21s.png" alt="image">​</p>
+<h5 id="矩阵转置"><a href="#矩阵转置" class="headerlink" title="矩阵转置"></a><strong>矩阵转置</strong></h5><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203349-3r4s0yl.png" alt="image">​</p>
+<h5 id="单位矩阵"><a href="#单位矩阵" class="headerlink" title="单位矩阵"></a><strong>单位矩阵</strong></h5><p>单位矩阵只有对角线上有元素。</p>
+<p>如果两个矩阵相乘为单位矩阵，则该两个矩阵互为逆矩阵。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203400-dl98u4q.png" alt="image">​</p>
+<p><strong>向量点乘和叉乘写成矩阵的形式（用在旋转的推导上）</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203405-yaiw812.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
       </categories>
   </entry>
   <entry>
@@ -2834,94 +2834,6 @@
       </categories>
   </entry>
   <entry>
-    <title>第十一章：显示几何，曲线、曲面</title>
-    <url>/blog/%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%EF%BC%9A%E6%98%BE%E7%A4%BA%E5%87%A0%E4%BD%95%EF%BC%8C%E6%9B%B2%E7%BA%BF%E3%80%81%E6%9B%B2%E9%9D%A2/</url>
-    <content><![CDATA[<h3 id="几何入门："><a href="#几何入门：" class="headerlink" title="几何入门："></a>几何入门：</h3><ul>
-<li><p>几何例子</p>
-</li>
-<li><p>不同表示几何的方式</p>
-<ul>
-<li>隐式</li>
-<li>显式</li>
-</ul>
-</li>
-</ul>
-<p>本节课：</p>
-<ul>
-<li><p>显式几何</p>
-</li>
-<li><p>曲线</p>
-</li>
-<li><p>曲面</p>
-</li>
-</ul>
-<p>显式几何有不同的表示方法：<br>三角形面、贝塞尔曲面、点云</p>
-<h3 id="点云"><a href="#点云" class="headerlink" title="点云"></a><strong>点云</strong></h3><p>物体用一堆点表示。</p>
-<p>只要点足够密，可以表示任何形状的几何。</p>
-<p>点云转换三角形面。</p>
-<h3 id="多边形面"><a href="#多边形面" class="headerlink" title="多边形面"></a><strong>多边形面</strong></h3><p>三角形、四边形面。</p>
-<p>需要用更复杂的数据结构表示三角形对连接关系。</p>
-<p>是图形学中最常见的表示方式。</p>
-<p>三角形面形成的物体：</p>
-<p>v 定义 8 个点，vn 定义 6 个面的法线（图中有冗余）、vt 定义 12 个纹理坐标（每个面四个点的纹理坐标，中间会有共用的），f（face）定义三角形之间的连接关系（第一个参数是顶点，比如图中第一行使用第 5、1、4 三个顶点形成三角形，第二个参数是三个顶点的纹理坐标，第三个参数是指三个顶点的法线）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203227-f9vqkmt.png" alt="image">​</p>
-<h3 id="曲线"><a href="#曲线" class="headerlink" title="曲线"></a><strong>曲线</strong></h3><p>相机的运动曲线，三维建模模型的运动曲线、定义字体的控制点</p>
-<h4 id="贝塞尔曲线（用一系列控制点来定义曲线）"><a href="#贝塞尔曲线（用一系列控制点来定义曲线）" class="headerlink" title="贝塞尔曲线（用一系列控制点来定义曲线）"></a><strong>贝塞尔曲线</strong>（用一系列控制点来定义曲线）</h4><p>曲线的起点在 P0、开始的方向是 P0P1，曲线的终点是 P3，结束的方向是 P2P3</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203235-qhjl8qi.png" alt="image">​</p>
-<p>de Casteljau 算法</p>
-<p>给任意一个时间 t，计算贝塞尔曲线在时间 t 的位置</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203244-i5wtnv8.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203252-moz7wnk.png" alt="image">​</p>
-<p>是一个递归的过程</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203257-ylm5qf1.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203302-idycife.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203307-fq20vuf.png" alt="image">​</p>
-<p>n 阶贝塞尔曲线可以表示为控制点的线形组合，系数就是一个和时间有关的多项式，被称为 Bernstein 多项式</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203314-7n6txxz.png" alt="image">​</p>
-<p>三维空间中同样可以用 Bernstein 多项式</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203323-9kejl38.png" alt="image">​</p>
-<p>Bernstein 多项式就是 1 的多阶展开，所以在坐标轴上画一条竖线，经过的每个点的 y 轴加起来的值都等于 1</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203330-ntfrqts.png" alt="image">​</p>
-<h5 id="贝塞尔曲线的性质："><a href="#贝塞尔曲线的性质：" class="headerlink" title="贝塞尔曲线的性质："></a>贝塞尔曲线的性质：</h5><p>1.起点和终点固定</p>
-<p>2.切线方向固定</p>
-<p>3.对曲线的顶点、控制点做仿射变换后，再画贝塞尔曲线，和对原始贝塞尔曲线做仿射变换后得到的曲线是一样的；但对投影不是这样</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203336-09akmsq.png" alt="image">​</p>
-<p>4.秃包性质：任何一个贝塞尔曲线肯定在控制点形成秃包之内。比如如果给一堆控制点都在一条直线上，那这个贝塞尔曲线一定是这条线自己。</p>
-<p>秃包：能包围给定的几何形体的最小的凸多边形</p>
-<p>想象有一堆钉子，在最外层的钉子上绑一个橡皮筋，橡皮筋围成的形状就是秃包</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203344-ge09mxp.png" alt="image">​</p>
-<h5 id="Piecewise-贝塞尔曲线"><a href="#Piecewise-贝塞尔曲线" class="headerlink" title="Piecewise 贝塞尔曲线"></a>Piecewise 贝塞尔曲线</h5><p>控制点多的时候不好控制，逐段定义贝塞尔曲线，再连起来。一般是每四个控制定义一条贝塞尔曲线。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203350-2lng0ud.png" alt="image">​</p>
-<p>几何上两条曲线都通过一个点，第一段的终点等于第二段的起点叫做 C0 连续</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203356-ut3s0bf.png" alt="image">​</p>
-<p>第一段终点控制点连线和第二段起点控制点的连线大小一致，方向相反，C1 连续（一阶导数连续）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203401-av7s8u8.png" alt="image">​</p>
-<h4 id="Spline-曲线（样条）"><a href="#Spline-曲线（样条）" class="headerlink" title="Spline 曲线（样条）"></a><strong>Spline 曲线（样条）</strong></h4><p>由一组控制点控制的曲线，能满足一定的连续性</p>
-<p>B-Spline basis splines（奇函数样条，由于不同的函数组合起来形成新的函数）</p>
-<ul>
-<li>用 Bernstein 多项式在时间 t 几个不同的项对不同的控制点做加权平均</li>
-<li>用控制点的位置对 Bernstein 多项式进行加权</li>
-</ul>
-<p>B-Spline 是对贝塞尔曲线的扩展，可以实现局部性，比如改变一个控制点，只影响一定范围内的曲线。</p>
-<p>本节课不深入学习 B 样条</p>
-<h4 id="贝塞尔曲面"><a href="#贝塞尔曲面" class="headerlink" title="贝塞尔曲面"></a><strong>贝塞尔曲面</strong></h4><p>贝塞尔曲线得到贝塞尔曲面</p>
-<p>4✖️4 控制点，双线性插值</p>
-<p>用时间 u 先确定一个方向的四个控制点，再用时间 v 确定曲面上的一个点</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203417-66viato.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203423-cxzrqk0.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203428-zjyszxx.png" alt="image">​</p>
-<p>Mesh Operations：几何处理</p>
-<ul>
-<li><p>网格细分</p>
-</li>
-<li><p>网格简化</p>
-</li>
-<li><p>网格正规化（让三角形不要出现特别尖的三角形）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203436-wy6whsg.png" alt="image">​</p>
-</li>
-</ul>
-<p>‍</p>
-]]></content>
-      <categories>
-        <category>图形学</category>
-      </categories>
-  </entry>
-  <entry>
     <title>第十七章：材质与外观</title>
     <url>/blog/%E7%AC%AC%E5%8D%81%E4%B8%83%E7%AB%A0%EF%BC%9A%E6%9D%90%E8%B4%A8%E4%B8%8E%E5%A4%96%E8%A7%82/</url>
     <content><![CDATA[<p>Materials and Apperances （材质与外观）</p>
@@ -3058,6 +2970,94 @@
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204437-seo5rd8.png" alt="image">​</p>
 <p>用 AABB 包围盒更好计算</p>
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204441-g7rxglt.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第十一章：显示几何，曲线、曲面</title>
+    <url>/blog/%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%EF%BC%9A%E6%98%BE%E7%A4%BA%E5%87%A0%E4%BD%95%EF%BC%8C%E6%9B%B2%E7%BA%BF%E3%80%81%E6%9B%B2%E9%9D%A2/</url>
+    <content><![CDATA[<h3 id="几何入门："><a href="#几何入门：" class="headerlink" title="几何入门："></a>几何入门：</h3><ul>
+<li><p>几何例子</p>
+</li>
+<li><p>不同表示几何的方式</p>
+<ul>
+<li>隐式</li>
+<li>显式</li>
+</ul>
+</li>
+</ul>
+<p>本节课：</p>
+<ul>
+<li><p>显式几何</p>
+</li>
+<li><p>曲线</p>
+</li>
+<li><p>曲面</p>
+</li>
+</ul>
+<p>显式几何有不同的表示方法：<br>三角形面、贝塞尔曲面、点云</p>
+<h3 id="点云"><a href="#点云" class="headerlink" title="点云"></a><strong>点云</strong></h3><p>物体用一堆点表示。</p>
+<p>只要点足够密，可以表示任何形状的几何。</p>
+<p>点云转换三角形面。</p>
+<h3 id="多边形面"><a href="#多边形面" class="headerlink" title="多边形面"></a><strong>多边形面</strong></h3><p>三角形、四边形面。</p>
+<p>需要用更复杂的数据结构表示三角形对连接关系。</p>
+<p>是图形学中最常见的表示方式。</p>
+<p>三角形面形成的物体：</p>
+<p>v 定义 8 个点，vn 定义 6 个面的法线（图中有冗余）、vt 定义 12 个纹理坐标（每个面四个点的纹理坐标，中间会有共用的），f（face）定义三角形之间的连接关系（第一个参数是顶点，比如图中第一行使用第 5、1、4 三个顶点形成三角形，第二个参数是三个顶点的纹理坐标，第三个参数是指三个顶点的法线）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203227-f9vqkmt.png" alt="image">​</p>
+<h3 id="曲线"><a href="#曲线" class="headerlink" title="曲线"></a><strong>曲线</strong></h3><p>相机的运动曲线，三维建模模型的运动曲线、定义字体的控制点</p>
+<h4 id="贝塞尔曲线（用一系列控制点来定义曲线）"><a href="#贝塞尔曲线（用一系列控制点来定义曲线）" class="headerlink" title="贝塞尔曲线（用一系列控制点来定义曲线）"></a><strong>贝塞尔曲线</strong>（用一系列控制点来定义曲线）</h4><p>曲线的起点在 P0、开始的方向是 P0P1，曲线的终点是 P3，结束的方向是 P2P3</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203235-qhjl8qi.png" alt="image">​</p>
+<p>de Casteljau 算法</p>
+<p>给任意一个时间 t，计算贝塞尔曲线在时间 t 的位置</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203244-i5wtnv8.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203252-moz7wnk.png" alt="image">​</p>
+<p>是一个递归的过程</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203257-ylm5qf1.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203302-idycife.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203307-fq20vuf.png" alt="image">​</p>
+<p>n 阶贝塞尔曲线可以表示为控制点的线形组合，系数就是一个和时间有关的多项式，被称为 Bernstein 多项式</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203314-7n6txxz.png" alt="image">​</p>
+<p>三维空间中同样可以用 Bernstein 多项式</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203323-9kejl38.png" alt="image">​</p>
+<p>Bernstein 多项式就是 1 的多阶展开，所以在坐标轴上画一条竖线，经过的每个点的 y 轴加起来的值都等于 1</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203330-ntfrqts.png" alt="image">​</p>
+<h5 id="贝塞尔曲线的性质："><a href="#贝塞尔曲线的性质：" class="headerlink" title="贝塞尔曲线的性质："></a>贝塞尔曲线的性质：</h5><p>1.起点和终点固定</p>
+<p>2.切线方向固定</p>
+<p>3.对曲线的顶点、控制点做仿射变换后，再画贝塞尔曲线，和对原始贝塞尔曲线做仿射变换后得到的曲线是一样的；但对投影不是这样</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203336-09akmsq.png" alt="image">​</p>
+<p>4.秃包性质：任何一个贝塞尔曲线肯定在控制点形成秃包之内。比如如果给一堆控制点都在一条直线上，那这个贝塞尔曲线一定是这条线自己。</p>
+<p>秃包：能包围给定的几何形体的最小的凸多边形</p>
+<p>想象有一堆钉子，在最外层的钉子上绑一个橡皮筋，橡皮筋围成的形状就是秃包</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203344-ge09mxp.png" alt="image">​</p>
+<h5 id="Piecewise-贝塞尔曲线"><a href="#Piecewise-贝塞尔曲线" class="headerlink" title="Piecewise 贝塞尔曲线"></a>Piecewise 贝塞尔曲线</h5><p>控制点多的时候不好控制，逐段定义贝塞尔曲线，再连起来。一般是每四个控制定义一条贝塞尔曲线。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203350-2lng0ud.png" alt="image">​</p>
+<p>几何上两条曲线都通过一个点，第一段的终点等于第二段的起点叫做 C0 连续</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203356-ut3s0bf.png" alt="image">​</p>
+<p>第一段终点控制点连线和第二段起点控制点的连线大小一致，方向相反，C1 连续（一阶导数连续）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203401-av7s8u8.png" alt="image">​</p>
+<h4 id="Spline-曲线（样条）"><a href="#Spline-曲线（样条）" class="headerlink" title="Spline 曲线（样条）"></a><strong>Spline 曲线（样条）</strong></h4><p>由一组控制点控制的曲线，能满足一定的连续性</p>
+<p>B-Spline basis splines（奇函数样条，由于不同的函数组合起来形成新的函数）</p>
+<ul>
+<li>用 Bernstein 多项式在时间 t 几个不同的项对不同的控制点做加权平均</li>
+<li>用控制点的位置对 Bernstein 多项式进行加权</li>
+</ul>
+<p>B-Spline 是对贝塞尔曲线的扩展，可以实现局部性，比如改变一个控制点，只影响一定范围内的曲线。</p>
+<p>本节课不深入学习 B 样条</p>
+<h4 id="贝塞尔曲面"><a href="#贝塞尔曲面" class="headerlink" title="贝塞尔曲面"></a><strong>贝塞尔曲面</strong></h4><p>贝塞尔曲线得到贝塞尔曲面</p>
+<p>4✖️4 控制点，双线性插值</p>
+<p>用时间 u 先确定一个方向的四个控制点，再用时间 v 确定曲面上的一个点</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203417-66viato.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203423-cxzrqk0.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203428-zjyszxx.png" alt="image">​</p>
+<p>Mesh Operations：几何处理</p>
+<ul>
+<li><p>网格细分</p>
+</li>
+<li><p>网格简化</p>
+</li>
+<li><p>网格正规化（让三角形不要出现特别尖的三角形）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203436-wy6whsg.png" alt="image">​</p>
+</li>
+</ul>
+<p>‍</p>
 ]]></content>
       <categories>
         <category>图形学</category>
