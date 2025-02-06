@@ -29,7 +29,7 @@ custom_file_path:
   #bodyEnd: source/_data/body-end.njk
   #variable: source/_data/variables.styl
   #mixin: source/_data/mixins.styl
-  #style: source/_data/styles.styl
+  # style: source/_data/styles.styl
 
 
 # ---------------------------------------------------------------
@@ -40,7 +40,7 @@ custom_file_path:
 # scheme: Muse
 # scheme: Mist
 # scheme: Pisces
-scheme: Muse
+scheme: Pisces
 
 # Dark Mode
 darkmode: false
