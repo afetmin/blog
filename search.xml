@@ -979,7 +979,6 @@
 <p>DevTools Page 部分可以访问 devtools api，可以向当前 window 注入 JS 执行。</p>
 <p><strong>frontend、backend、调试协议、信道，这是调试工具的四要素。</strong></p>
 <p>不过，不同的调试工具都会有不同的设计，比如 VSCode Debugger 为了跨语言复用，多了一层 Debugger Adapter，React DevTools 有独立的 electron 应用，用自定义调试协议，可以调试 React Native 代码。</p>
-<p>‍</p>
 <h3 id="使用-vscode-调试-chrome"><a href="#使用-vscode-调试-chrome" class="headerlink" title="使用 vscode 调试 chrome"></a>使用 vscode 调试 chrome</h3><ol>
 <li><p>打开项目目录，创建 .vscode&#x2F;launch.json 文件：<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20221129075017-vwleyz3.png" alt="image">​</p>
 </li>
@@ -989,17 +988,13 @@
 </li>
 <li><p>然后进入 Debug 窗口，点击启动：<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20221129075112-qt6kf7w.png" alt="image">​</p>
 </li>
-<li><p>在代码打个断点，然后点击 <img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/net-img-437daa8d0a9d44fca3e3041ca0581725~tplv-k3u1fbpfcp-zoom-in-crop-ma-20221129075142-zv8q8sx.awebp">刷新：<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20221129075159-qvcbj6q.png" alt="image"></p>
+<li><p>在代码打个断点，然后点击刷新：<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20221129075159-qvcbj6q.png" alt="image"></p>
 </li>
-<li><p><img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20221129075215-72053ta.png" alt="image">​</p>
+<li><p>可以看到在断点处暂停<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20221129075215-72053ta.png" alt="image">​</p>
 </li>
 <li><p>想访问 this 的某个属性，可以在 Debug Console 里输入 this 看下它的值，然后再来写代码：<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20221129075245-wsumjko.png" alt="image">​</p>
 </li>
 </ol>
-<p>‍</p>
-<p>‍</p>
-<p>‍</p>
-<p>‍</p>
 <h3 id="Vscode-Snippets"><a href="#Vscode-Snippets" class="headerlink" title="Vscode Snippets"></a>Vscode Snippets</h3><h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><ul>
 <li>指定光标位置：$x</li>
 <li>多光标编辑：$x $x</li>
@@ -1008,7 +1003,6 @@
 <li>取变量：$VariableName <span class="exturl" data-url="aHR0cHM6Ly9jb2RlLnZpc3VhbHN0dWRpby5jb20vZG9jcy9lZGl0b3IvdXNlcmRlZmluZWRzbmlwcGV0cyNfdmFyaWFibGVz">vscode 变量<i class="fa fa-external-link-alt"></i></span></li>
 <li>对变量做转换：${VariableName&#x2F;正则&#x2F;替换的文本&#x2F;}</li>
 </ul>
-<p>‍</p>
 <h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><p><span class="exturl" data-url="aHR0cHM6Ly9jbGF1ZGlvcHJvLmdpdGh1Yi5pby9yZWFjdC1maWJlci12cy1zdGFjay1kZW1vL2ZpYmVyLmh0bWw=" title="fiber测试">fiber 测试页面<i class="fa fa-external-link-alt"></i></span></p>
 <h3 id="Main-主线程"><a href="#Main-主线程" class="headerlink" title="Main 主线程"></a>Main 主线程</h3><p>​<img data-src="/blog/./%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%80%9A%E5%85%B3/image-20230212091321-e22i48e.png" alt="image">​</p>
 <p>灰色的是宏任务，橙色的是浏览器内部的 js，紫色的是 reflow、repaint， 绿色的是渲染。</p>
@@ -1069,46 +1063,6 @@
 
 <p>可以这样使用</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Server</span> = <span class="built_in">require</span>(<span class="string">&quot;./lib/server&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Router</span> = <span class="built_in">require</span>(<span class="string">&quot;./lib/middleware/router&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> <span class="title class_">Server</span>();</span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">Router</span>();</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">listen</span>(&#123;</span><br><span class="line">  <span class="attr">port</span>: <span class="number">9090</span>,</span><br><span class="line">  <span class="attr">host</span>: <span class="string">&quot;0.0.0.0&quot;</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(</span><br><span class="line">  router.<span class="title function_">all</span>(<span class="string">&quot;/test/:course/:lecture&quot;</span>, <span class="title function_">async</span> (&#123; route, res &#125;, next) =&gt; &#123;</span><br><span class="line">    res.<span class="title function_">setHeader</span>(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;application/json&quot;</span>);</span><br><span class="line">    res.<span class="property">body</span> = route;</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(</span><br><span class="line">  router.<span class="title function_">all</span>(<span class="string">&quot;.*&quot;</span>, <span class="title function_">async</span> (&#123; req, res &#125;, next) =&gt; &#123;</span><br><span class="line">    res.<span class="title function_">setHeader</span>(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;text/html&quot;</span>);</span><br><span class="line">    res.<span class="property">body</span> = <span class="string">&quot;&lt;h1&gt;Hello world&lt;/h1&gt;&quot;</span>;</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">  &#125;)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>js</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>原型与原型链</title>
-    <url>/blog/%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/</url>
-    <content><![CDATA[<h2 id="原型与原型链"><a href="#原型与原型链" class="headerlink" title="原型与原型链"></a>原型与原型链</h2><p><strong>实例与构造函数原型之间有直接的联系，但实例与构造函数之间没有。</strong></p>
-<p>每个函数都有一个属性，就是 prototype，函数的 prototype 指向了一个对象，这个对象就是调用该构造函数创建的<strong>实例</strong>的原型。</p>
-<p>可以这么理解：每一个 JavaScript 对象(null 除外)在创建的时候就会与之关联另一个对象，这个对象就是我们所说的原型，每一个对象都会从原型“继承”属性。实例 person 与 Person.prototype 之间的关系通过 <strong>proto</strong> 连接这是每一个 JavaScript 对象(除了 null )都具有的一个属性，叫<strong>proto</strong>，这个属性会指向该对象的原型。</p>
-<p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image1.png" alt="原型"></p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> <span class="title class_">Person</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(person.<span class="property">__proto__</span> === <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-
-<p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image2.png" alt="原型"></p>
-<p>每个原型都有一个 <strong>constructor</strong> 属性指向关联的构造函数。</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Person</span> === <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-
-<p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image3.png" alt="原型"></p>
-<p>原型也是一个对象，那就可以通过 Object 构造函数生成，所以</p>
-<p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image4.png" alt="原型"></p>
-<p>Object.prototype.<strong>proto</strong> 的值为 null 跟 Object.prototype 没有原型，其实表达了一个意思。</p>
-<h3 id="一些细节"><a href="#一些细节" class="headerlink" title="一些细节"></a>一些细节</h3><p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image5.png" alt="原型"></p>
-<h3 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> <span class="title class_">Person</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(person.<span class="property">constructor</span> === <span class="title class_">Person</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-
-<p>当获取 person.constructor 时，其实 person 中并没有 constructor 属性,当不能读取到 constructor 属性时，会从 person 的原型也就是 Person.prototype 中读取，正好原型中有该属性，所以：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">person.<span class="property">constructor</span> === <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="proto"><a href="#proto" class="headerlink" title="proto"></a><strong>proto</strong></h3><p>绝大部分浏览器都支持这个非标准的方法访问原型，然而它并不存在于 Person.prototype 中，实际上，它是来自于 Object.prototype ，与其说是一个属性，不如说是一个 getter&#x2F;setter，当使用 obj.<strong>proto</strong> 时，可以理解成返回了 Object.getPrototypeOf(obj)。</p>
-<h3 id="真的是继承吗？"><a href="#真的是继承吗？" class="headerlink" title="真的是继承吗？"></a>真的是继承吗？</h3><p>最后是关于继承，前面我们讲到“每一个对象都会从原型‘继承’属性”，实际上，继承是一个十分具有迷惑性的说法，引用《你不知道的 JavaScript》中的话，就是：</p>
-<p>继承意味着复制操作，然而 JavaScript 默认并不会复制对象的属性，相反，JavaScript 只是在两个对象之间创建一个关联，这样，一个对象就可以通过委托访问另一个对象的属性和函数，所以与其叫继承，委托的说法反而更准确些。</p>
-<h3 id="Function-proto-Function-prototype"><a href="#Function-proto-Function-prototype" class="headerlink" title="Function.proto &#x3D;&#x3D;&#x3D; Function.prototype"></a>Function.<strong>proto</strong> &#x3D;&#x3D;&#x3D; Function.prototype</h3><p>Function 作为一个内置对象，是运行前就已经存在的东西，所以根本就不会根据自己生成自己，就是先有的 Function，然后实现上把原型指向了 Function.prototype，但是我们不能倒过来推测因为 Function.<strong>proto</strong> &#x3D;&#x3D;&#x3D; Function.prototype，所以 Function 调用了自己生成了自己。</p>
-<h3 id="完整的原型链"><a href="#完整的原型链" class="headerlink" title="完整的原型链"></a>完整的原型链</h3><p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image6.png" alt="原型"></p>
-<p><strong>什么是原型链？</strong></p>
-<p>当对象查找一个属性的时候，如果没有在自身找到，那么就会查找自身的原型，如果原型还没有找到，那么会继续查找原型的原型，直到找到 Object.prototype 的原型时，此时原型为 null，查找停止。 这种通过<strong>原型链接的逐级向上的查找链</strong>被称为原型链</p>
-<p><strong>什么是原型继承？</strong></p>
-<p>一个对象可以使用另外一个对象的属性或者方法，就称之为继承。具体是通过将这个对象的原型设置为另外一个对象，这样根据原型链的规则，如果查找一个对象属性且在自身不存在时，就会查找另外一个对象，相当于一个对象可以使用另外一个对象的属性和方法了。</p>
-<p>使用 <strong>Object.prototype.toString.call()</strong> 判断数据类型</p>
-<p><strong>proto</strong> 与内部的 <strong>[[Prototype]] 不一样</strong>。</p>
-<p><strong>proto</strong> 是 <strong>[[Prototype]]</strong> 的 getter&#x2F;setter。</p>
 ]]></content>
       <categories>
         <category>js</category>
@@ -1208,6 +1162,46 @@
       <tags>
         <tag>监控</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>原型与原型链</title>
+    <url>/blog/%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/</url>
+    <content><![CDATA[<h2 id="原型与原型链"><a href="#原型与原型链" class="headerlink" title="原型与原型链"></a>原型与原型链</h2><p><strong>实例与构造函数原型之间有直接的联系，但实例与构造函数之间没有。</strong></p>
+<p>每个函数都有一个属性，就是 prototype，函数的 prototype 指向了一个对象，这个对象就是调用该构造函数创建的<strong>实例</strong>的原型。</p>
+<p>可以这么理解：每一个 JavaScript 对象(null 除外)在创建的时候就会与之关联另一个对象，这个对象就是我们所说的原型，每一个对象都会从原型“继承”属性。实例 person 与 Person.prototype 之间的关系通过 <strong>proto</strong> 连接这是每一个 JavaScript 对象(除了 null )都具有的一个属性，叫<strong>proto</strong>，这个属性会指向该对象的原型。</p>
+<p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image1.png" alt="原型"></p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> <span class="title class_">Person</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(person.<span class="property">__proto__</span> === <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image2.png" alt="原型"></p>
+<p>每个原型都有一个 <strong>constructor</strong> 属性指向关联的构造函数。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Person</span> === <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image3.png" alt="原型"></p>
+<p>原型也是一个对象，那就可以通过 Object 构造函数生成，所以</p>
+<p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image4.png" alt="原型"></p>
+<p>Object.prototype.<strong>proto</strong> 的值为 null 跟 Object.prototype 没有原型，其实表达了一个意思。</p>
+<h3 id="一些细节"><a href="#一些细节" class="headerlink" title="一些细节"></a>一些细节</h3><p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image5.png" alt="原型"></p>
+<h3 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title="constructor"></a>constructor</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> <span class="title class_">Person</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(person.<span class="property">constructor</span> === <span class="title class_">Person</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>当获取 person.constructor 时，其实 person 中并没有 constructor 属性,当不能读取到 constructor 属性时，会从 person 的原型也就是 Person.prototype 中读取，正好原型中有该属性，所以：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">person.<span class="property">constructor</span> === <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="proto"><a href="#proto" class="headerlink" title="proto"></a><strong>proto</strong></h3><p>绝大部分浏览器都支持这个非标准的方法访问原型，然而它并不存在于 Person.prototype 中，实际上，它是来自于 Object.prototype ，与其说是一个属性，不如说是一个 getter&#x2F;setter，当使用 obj.<strong>proto</strong> 时，可以理解成返回了 Object.getPrototypeOf(obj)。</p>
+<h3 id="真的是继承吗？"><a href="#真的是继承吗？" class="headerlink" title="真的是继承吗？"></a>真的是继承吗？</h3><p>最后是关于继承，前面我们讲到“每一个对象都会从原型‘继承’属性”，实际上，继承是一个十分具有迷惑性的说法，引用《你不知道的 JavaScript》中的话，就是：</p>
+<p>继承意味着复制操作，然而 JavaScript 默认并不会复制对象的属性，相反，JavaScript 只是在两个对象之间创建一个关联，这样，一个对象就可以通过委托访问另一个对象的属性和函数，所以与其叫继承，委托的说法反而更准确些。</p>
+<h3 id="Function-proto-Function-prototype"><a href="#Function-proto-Function-prototype" class="headerlink" title="Function.proto &#x3D;&#x3D;&#x3D; Function.prototype"></a>Function.<strong>proto</strong> &#x3D;&#x3D;&#x3D; Function.prototype</h3><p>Function 作为一个内置对象，是运行前就已经存在的东西，所以根本就不会根据自己生成自己，就是先有的 Function，然后实现上把原型指向了 Function.prototype，但是我们不能倒过来推测因为 Function.<strong>proto</strong> &#x3D;&#x3D;&#x3D; Function.prototype，所以 Function 调用了自己生成了自己。</p>
+<h3 id="完整的原型链"><a href="#完整的原型链" class="headerlink" title="完整的原型链"></a>完整的原型链</h3><p><img data-src="/blog/./%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/image6.png" alt="原型"></p>
+<p><strong>什么是原型链？</strong></p>
+<p>当对象查找一个属性的时候，如果没有在自身找到，那么就会查找自身的原型，如果原型还没有找到，那么会继续查找原型的原型，直到找到 Object.prototype 的原型时，此时原型为 null，查找停止。 这种通过<strong>原型链接的逐级向上的查找链</strong>被称为原型链</p>
+<p><strong>什么是原型继承？</strong></p>
+<p>一个对象可以使用另外一个对象的属性或者方法，就称之为继承。具体是通过将这个对象的原型设置为另外一个对象，这样根据原型链的规则，如果查找一个对象属性且在自身不存在时，就会查找另外一个对象，相当于一个对象可以使用另外一个对象的属性和方法了。</p>
+<p>使用 <strong>Object.prototype.toString.call()</strong> 判断数据类型</p>
+<p><strong>proto</strong> 与内部的 <strong>[[Prototype]] 不一样</strong>。</p>
+<p><strong>proto</strong> 是 <strong>[[Prototype]]</strong> 的 getter&#x2F;setter。</p>
+]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
   </entry>
   <entry>
     <title>四种移除事件监听的方式</title>
@@ -1958,57 +1952,6 @@
       </categories>
   </entry>
   <entry>
-    <title>第七章：z-buffer和着色</title>
-    <url>/blog/%E7%AC%AC%E4%B8%83%E7%AB%A0%EF%BC%9Az-buffer%E5%92%8C%E7%9D%80%E8%89%B2/</url>
-    <content><![CDATA[<p>回顾上一课：</p>
-<ul>
-<li><p>光栅化一个三角形</p>
-</li>
-<li><p>采样</p>
-</li>
-<li><p>反走样</p>
-</li>
-</ul>
-<p>可见性&#x2F;遮挡（把三角形画在屏幕上，同时遮挡关系是对的）：</p>
-<ul>
-<li>z-buffer</li>
-</ul>
-<p><strong>painter’s algorithm（画家算法）</strong></p>
-<p>所有物体按深度排序（O(nlogn)），先把远的画上去，再把近的画上去，近的就会遮挡远的。但这种方式无法解决深度上互相遮挡的问题。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210915-pvb608h.png" alt="image">​</p>
-<p><strong>z-buffer</strong></p>
-<p>通过深度缓存维护存储每个像素当前的最小深度</p>
-<p>同步生成最后的结果（frame buffer）和当前看到的场景的任何一个像素对应的深度（depth buffer）。</p>
-<p>假设场景的点到相机的距离表示深度z，且这个值始终是正的，z越小的距离越近，越大的距离越远。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210941-qrlgori.png" alt="image">​</p>
-<p>先假设深度图上每一个像素的深度都是无限远，遍历每一个三角形的每一个像素，如果遍历到的像素深度比当前深度图记录的深度浅，就把深度图上的深度替换为这个像素的深度，否则不变。</p>
-<p>假设每个三角形覆盖的像素是常数项，时间复杂度O(n)。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210946-n9bslnc.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210954-8g8lbbc.png" alt="image">​</p>
-<p>一般两个浮点数值不会一样，所以比较深度的时候一般不会出现深度一样的情况。</p>
-<p>MSAA采样的时候一个像素可能有多个采样点，所以是记录每个采样点的深度。</p>
-<p>透明物体处理不了深度。</p>
-<h4 id="着色（shading）"><a href="#着色（shading）" class="headerlink" title="着色（shading）"></a><strong>着色（shading）</strong></h4><p>对不同物体应用不同的材质。</p>
-<p>一个基础的着色模型（Blinn-Phong 反射模型）</p>
-<p>高光、漫反射、环境光</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211003-0egfb17.png" alt="image">​</p>
-<p>对于一个物体表面的点，定义一个法线方向、一个视线方向、一个光照方向，和一些物体表面的参数</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211128-xr0alxy.png" alt="image">​</p>
-<p>着色有局部性。不考虑其他的物体，只考虑自己。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211133-dna2cne.png" alt="image">​</p>
-<p>一个shading point周围的单位面积接收的能量和光照方向和发现方向夹角的余弦成正比。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211139-xxs0w84.png" alt="image">​</p>
-<p>点光源，光线传播，每个时刻到达一个新的球壳。假如半径为1的时候，光的强度为I，则半径为r的时候，强度变为I&#x2F;r²</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211145-vw9pz1f.png" alt="image">​</p>
-<p>从不同的角度观测同一个点的结果是一样的。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211149-t038nb0.png" alt="image">​</p>
-<p>k_(d)  漫反射的系数，表示吸收了（反射了）多少颜色颜色。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211154-nrtvz3z.png" alt="image">​</p>
-]]></content>
-      <categories>
-        <category>图形学</category>
-      </categories>
-  </entry>
-  <entry>
     <title>第三章：变换</title>
     <url>/blog/%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%9A%E5%8F%98%E6%8D%A2/</url>
     <content><![CDATA[<h3 id="变换"><a href="#变换" class="headerlink" title="变换"></a>变换</h3><p>本章学习内容：</p>
@@ -2060,6 +2003,57 @@
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204520-braqfca.png" alt="image">​</p>
 <h4 id="三维变换"><a href="#三维变换" class="headerlink" title="三维变换"></a>三维变换</h4><p>与 2 维类似</p>
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204527-f0sng0l.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第七章：z-buffer和着色</title>
+    <url>/blog/%E7%AC%AC%E4%B8%83%E7%AB%A0%EF%BC%9Az-buffer%E5%92%8C%E7%9D%80%E8%89%B2/</url>
+    <content><![CDATA[<p>回顾上一课：</p>
+<ul>
+<li><p>光栅化一个三角形</p>
+</li>
+<li><p>采样</p>
+</li>
+<li><p>反走样</p>
+</li>
+</ul>
+<p>可见性&#x2F;遮挡（把三角形画在屏幕上，同时遮挡关系是对的）：</p>
+<ul>
+<li>z-buffer</li>
+</ul>
+<p><strong>painter’s algorithm（画家算法）</strong></p>
+<p>所有物体按深度排序（O(nlogn)），先把远的画上去，再把近的画上去，近的就会遮挡远的。但这种方式无法解决深度上互相遮挡的问题。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210915-pvb608h.png" alt="image">​</p>
+<p><strong>z-buffer</strong></p>
+<p>通过深度缓存维护存储每个像素当前的最小深度</p>
+<p>同步生成最后的结果（frame buffer）和当前看到的场景的任何一个像素对应的深度（depth buffer）。</p>
+<p>假设场景的点到相机的距离表示深度z，且这个值始终是正的，z越小的距离越近，越大的距离越远。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210941-qrlgori.png" alt="image">​</p>
+<p>先假设深度图上每一个像素的深度都是无限远，遍历每一个三角形的每一个像素，如果遍历到的像素深度比当前深度图记录的深度浅，就把深度图上的深度替换为这个像素的深度，否则不变。</p>
+<p>假设每个三角形覆盖的像素是常数项，时间复杂度O(n)。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210946-n9bslnc.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210954-8g8lbbc.png" alt="image">​</p>
+<p>一般两个浮点数值不会一样，所以比较深度的时候一般不会出现深度一样的情况。</p>
+<p>MSAA采样的时候一个像素可能有多个采样点，所以是记录每个采样点的深度。</p>
+<p>透明物体处理不了深度。</p>
+<h4 id="着色（shading）"><a href="#着色（shading）" class="headerlink" title="着色（shading）"></a><strong>着色（shading）</strong></h4><p>对不同物体应用不同的材质。</p>
+<p>一个基础的着色模型（Blinn-Phong 反射模型）</p>
+<p>高光、漫反射、环境光</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211003-0egfb17.png" alt="image">​</p>
+<p>对于一个物体表面的点，定义一个法线方向、一个视线方向、一个光照方向，和一些物体表面的参数</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211128-xr0alxy.png" alt="image">​</p>
+<p>着色有局部性。不考虑其他的物体，只考虑自己。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211133-dna2cne.png" alt="image">​</p>
+<p>一个shading point周围的单位面积接收的能量和光照方向和发现方向夹角的余弦成正比。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211139-xxs0w84.png" alt="image">​</p>
+<p>点光源，光线传播，每个时刻到达一个新的球壳。假如半径为1的时候，光的强度为I，则半径为r的时候，强度变为I&#x2F;r²</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211145-vw9pz1f.png" alt="image">​</p>
+<p>从不同的角度观测同一个点的结果是一样的。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211149-t038nb0.png" alt="image">​</p>
+<p>k_(d)  漫反射的系数，表示吸收了（反射了）多少颜色颜色。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211154-nrtvz3z.png" alt="image">​</p>
 ]]></content>
       <categories>
         <category>图形学</category>
@@ -2834,6 +2828,94 @@
       </categories>
   </entry>
   <entry>
+    <title>第十一章：显示几何，曲线、曲面</title>
+    <url>/blog/%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%EF%BC%9A%E6%98%BE%E7%A4%BA%E5%87%A0%E4%BD%95%EF%BC%8C%E6%9B%B2%E7%BA%BF%E3%80%81%E6%9B%B2%E9%9D%A2/</url>
+    <content><![CDATA[<h3 id="几何入门："><a href="#几何入门：" class="headerlink" title="几何入门："></a>几何入门：</h3><ul>
+<li><p>几何例子</p>
+</li>
+<li><p>不同表示几何的方式</p>
+<ul>
+<li>隐式</li>
+<li>显式</li>
+</ul>
+</li>
+</ul>
+<p>本节课：</p>
+<ul>
+<li><p>显式几何</p>
+</li>
+<li><p>曲线</p>
+</li>
+<li><p>曲面</p>
+</li>
+</ul>
+<p>显式几何有不同的表示方法：<br>三角形面、贝塞尔曲面、点云</p>
+<h3 id="点云"><a href="#点云" class="headerlink" title="点云"></a><strong>点云</strong></h3><p>物体用一堆点表示。</p>
+<p>只要点足够密，可以表示任何形状的几何。</p>
+<p>点云转换三角形面。</p>
+<h3 id="多边形面"><a href="#多边形面" class="headerlink" title="多边形面"></a><strong>多边形面</strong></h3><p>三角形、四边形面。</p>
+<p>需要用更复杂的数据结构表示三角形对连接关系。</p>
+<p>是图形学中最常见的表示方式。</p>
+<p>三角形面形成的物体：</p>
+<p>v 定义 8 个点，vn 定义 6 个面的法线（图中有冗余）、vt 定义 12 个纹理坐标（每个面四个点的纹理坐标，中间会有共用的），f（face）定义三角形之间的连接关系（第一个参数是顶点，比如图中第一行使用第 5、1、4 三个顶点形成三角形，第二个参数是三个顶点的纹理坐标，第三个参数是指三个顶点的法线）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203227-f9vqkmt.png" alt="image">​</p>
+<h3 id="曲线"><a href="#曲线" class="headerlink" title="曲线"></a><strong>曲线</strong></h3><p>相机的运动曲线，三维建模模型的运动曲线、定义字体的控制点</p>
+<h4 id="贝塞尔曲线（用一系列控制点来定义曲线）"><a href="#贝塞尔曲线（用一系列控制点来定义曲线）" class="headerlink" title="贝塞尔曲线（用一系列控制点来定义曲线）"></a><strong>贝塞尔曲线</strong>（用一系列控制点来定义曲线）</h4><p>曲线的起点在 P0、开始的方向是 P0P1，曲线的终点是 P3，结束的方向是 P2P3</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203235-qhjl8qi.png" alt="image">​</p>
+<p>de Casteljau 算法</p>
+<p>给任意一个时间 t，计算贝塞尔曲线在时间 t 的位置</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203244-i5wtnv8.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203252-moz7wnk.png" alt="image">​</p>
+<p>是一个递归的过程</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203257-ylm5qf1.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203302-idycife.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203307-fq20vuf.png" alt="image">​</p>
+<p>n 阶贝塞尔曲线可以表示为控制点的线形组合，系数就是一个和时间有关的多项式，被称为 Bernstein 多项式</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203314-7n6txxz.png" alt="image">​</p>
+<p>三维空间中同样可以用 Bernstein 多项式</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203323-9kejl38.png" alt="image">​</p>
+<p>Bernstein 多项式就是 1 的多阶展开，所以在坐标轴上画一条竖线，经过的每个点的 y 轴加起来的值都等于 1</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203330-ntfrqts.png" alt="image">​</p>
+<h5 id="贝塞尔曲线的性质："><a href="#贝塞尔曲线的性质：" class="headerlink" title="贝塞尔曲线的性质："></a>贝塞尔曲线的性质：</h5><p>1.起点和终点固定</p>
+<p>2.切线方向固定</p>
+<p>3.对曲线的顶点、控制点做仿射变换后，再画贝塞尔曲线，和对原始贝塞尔曲线做仿射变换后得到的曲线是一样的；但对投影不是这样</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203336-09akmsq.png" alt="image">​</p>
+<p>4.秃包性质：任何一个贝塞尔曲线肯定在控制点形成秃包之内。比如如果给一堆控制点都在一条直线上，那这个贝塞尔曲线一定是这条线自己。</p>
+<p>秃包：能包围给定的几何形体的最小的凸多边形</p>
+<p>想象有一堆钉子，在最外层的钉子上绑一个橡皮筋，橡皮筋围成的形状就是秃包</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203344-ge09mxp.png" alt="image">​</p>
+<h5 id="Piecewise-贝塞尔曲线"><a href="#Piecewise-贝塞尔曲线" class="headerlink" title="Piecewise 贝塞尔曲线"></a>Piecewise 贝塞尔曲线</h5><p>控制点多的时候不好控制，逐段定义贝塞尔曲线，再连起来。一般是每四个控制定义一条贝塞尔曲线。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203350-2lng0ud.png" alt="image">​</p>
+<p>几何上两条曲线都通过一个点，第一段的终点等于第二段的起点叫做 C0 连续</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203356-ut3s0bf.png" alt="image">​</p>
+<p>第一段终点控制点连线和第二段起点控制点的连线大小一致，方向相反，C1 连续（一阶导数连续）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203401-av7s8u8.png" alt="image">​</p>
+<h4 id="Spline-曲线（样条）"><a href="#Spline-曲线（样条）" class="headerlink" title="Spline 曲线（样条）"></a><strong>Spline 曲线（样条）</strong></h4><p>由一组控制点控制的曲线，能满足一定的连续性</p>
+<p>B-Spline basis splines（奇函数样条，由于不同的函数组合起来形成新的函数）</p>
+<ul>
+<li>用 Bernstein 多项式在时间 t 几个不同的项对不同的控制点做加权平均</li>
+<li>用控制点的位置对 Bernstein 多项式进行加权</li>
+</ul>
+<p>B-Spline 是对贝塞尔曲线的扩展，可以实现局部性，比如改变一个控制点，只影响一定范围内的曲线。</p>
+<p>本节课不深入学习 B 样条</p>
+<h4 id="贝塞尔曲面"><a href="#贝塞尔曲面" class="headerlink" title="贝塞尔曲面"></a><strong>贝塞尔曲面</strong></h4><p>贝塞尔曲线得到贝塞尔曲面</p>
+<p>4✖️4 控制点，双线性插值</p>
+<p>用时间 u 先确定一个方向的四个控制点，再用时间 v 确定曲面上的一个点</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203417-66viato.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203423-cxzrqk0.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203428-zjyszxx.png" alt="image">​</p>
+<p>Mesh Operations：几何处理</p>
+<ul>
+<li><p>网格细分</p>
+</li>
+<li><p>网格简化</p>
+</li>
+<li><p>网格正规化（让三角形不要出现特别尖的三角形）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203436-wy6whsg.png" alt="image">​</p>
+</li>
+</ul>
+<p>‍</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
     <title>第十七章：材质与外观</title>
     <url>/blog/%E7%AC%AC%E5%8D%81%E4%B8%83%E7%AB%A0%EF%BC%9A%E6%9D%90%E8%B4%A8%E4%B8%8E%E5%A4%96%E8%A7%82/</url>
     <content><![CDATA[<p>Materials and Apperances （材质与外观）</p>
@@ -2976,94 +3058,6 @@
       </categories>
   </entry>
   <entry>
-    <title>第十一章：显示几何，曲线、曲面</title>
-    <url>/blog/%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0%EF%BC%9A%E6%98%BE%E7%A4%BA%E5%87%A0%E4%BD%95%EF%BC%8C%E6%9B%B2%E7%BA%BF%E3%80%81%E6%9B%B2%E9%9D%A2/</url>
-    <content><![CDATA[<h3 id="几何入门："><a href="#几何入门：" class="headerlink" title="几何入门："></a>几何入门：</h3><ul>
-<li><p>几何例子</p>
-</li>
-<li><p>不同表示几何的方式</p>
-<ul>
-<li>隐式</li>
-<li>显式</li>
-</ul>
-</li>
-</ul>
-<p>本节课：</p>
-<ul>
-<li><p>显式几何</p>
-</li>
-<li><p>曲线</p>
-</li>
-<li><p>曲面</p>
-</li>
-</ul>
-<p>显式几何有不同的表示方法：<br>三角形面、贝塞尔曲面、点云</p>
-<h3 id="点云"><a href="#点云" class="headerlink" title="点云"></a><strong>点云</strong></h3><p>物体用一堆点表示。</p>
-<p>只要点足够密，可以表示任何形状的几何。</p>
-<p>点云转换三角形面。</p>
-<h3 id="多边形面"><a href="#多边形面" class="headerlink" title="多边形面"></a><strong>多边形面</strong></h3><p>三角形、四边形面。</p>
-<p>需要用更复杂的数据结构表示三角形对连接关系。</p>
-<p>是图形学中最常见的表示方式。</p>
-<p>三角形面形成的物体：</p>
-<p>v 定义 8 个点，vn 定义 6 个面的法线（图中有冗余）、vt 定义 12 个纹理坐标（每个面四个点的纹理坐标，中间会有共用的），f（face）定义三角形之间的连接关系（第一个参数是顶点，比如图中第一行使用第 5、1、4 三个顶点形成三角形，第二个参数是三个顶点的纹理坐标，第三个参数是指三个顶点的法线）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203227-f9vqkmt.png" alt="image">​</p>
-<h3 id="曲线"><a href="#曲线" class="headerlink" title="曲线"></a><strong>曲线</strong></h3><p>相机的运动曲线，三维建模模型的运动曲线、定义字体的控制点</p>
-<h4 id="贝塞尔曲线（用一系列控制点来定义曲线）"><a href="#贝塞尔曲线（用一系列控制点来定义曲线）" class="headerlink" title="贝塞尔曲线（用一系列控制点来定义曲线）"></a><strong>贝塞尔曲线</strong>（用一系列控制点来定义曲线）</h4><p>曲线的起点在 P0、开始的方向是 P0P1，曲线的终点是 P3，结束的方向是 P2P3</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203235-qhjl8qi.png" alt="image">​</p>
-<p>de Casteljau 算法</p>
-<p>给任意一个时间 t，计算贝塞尔曲线在时间 t 的位置</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203244-i5wtnv8.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203252-moz7wnk.png" alt="image">​</p>
-<p>是一个递归的过程</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203257-ylm5qf1.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203302-idycife.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203307-fq20vuf.png" alt="image">​</p>
-<p>n 阶贝塞尔曲线可以表示为控制点的线形组合，系数就是一个和时间有关的多项式，被称为 Bernstein 多项式</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203314-7n6txxz.png" alt="image">​</p>
-<p>三维空间中同样可以用 Bernstein 多项式</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203323-9kejl38.png" alt="image">​</p>
-<p>Bernstein 多项式就是 1 的多阶展开，所以在坐标轴上画一条竖线，经过的每个点的 y 轴加起来的值都等于 1</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203330-ntfrqts.png" alt="image">​</p>
-<h5 id="贝塞尔曲线的性质："><a href="#贝塞尔曲线的性质：" class="headerlink" title="贝塞尔曲线的性质："></a>贝塞尔曲线的性质：</h5><p>1.起点和终点固定</p>
-<p>2.切线方向固定</p>
-<p>3.对曲线的顶点、控制点做仿射变换后，再画贝塞尔曲线，和对原始贝塞尔曲线做仿射变换后得到的曲线是一样的；但对投影不是这样</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203336-09akmsq.png" alt="image">​</p>
-<p>4.秃包性质：任何一个贝塞尔曲线肯定在控制点形成秃包之内。比如如果给一堆控制点都在一条直线上，那这个贝塞尔曲线一定是这条线自己。</p>
-<p>秃包：能包围给定的几何形体的最小的凸多边形</p>
-<p>想象有一堆钉子，在最外层的钉子上绑一个橡皮筋，橡皮筋围成的形状就是秃包</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203344-ge09mxp.png" alt="image">​</p>
-<h5 id="Piecewise-贝塞尔曲线"><a href="#Piecewise-贝塞尔曲线" class="headerlink" title="Piecewise 贝塞尔曲线"></a>Piecewise 贝塞尔曲线</h5><p>控制点多的时候不好控制，逐段定义贝塞尔曲线，再连起来。一般是每四个控制定义一条贝塞尔曲线。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203350-2lng0ud.png" alt="image">​</p>
-<p>几何上两条曲线都通过一个点，第一段的终点等于第二段的起点叫做 C0 连续</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203356-ut3s0bf.png" alt="image">​</p>
-<p>第一段终点控制点连线和第二段起点控制点的连线大小一致，方向相反，C1 连续（一阶导数连续）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203401-av7s8u8.png" alt="image">​</p>
-<h4 id="Spline-曲线（样条）"><a href="#Spline-曲线（样条）" class="headerlink" title="Spline 曲线（样条）"></a><strong>Spline 曲线（样条）</strong></h4><p>由一组控制点控制的曲线，能满足一定的连续性</p>
-<p>B-Spline basis splines（奇函数样条，由于不同的函数组合起来形成新的函数）</p>
-<ul>
-<li>用 Bernstein 多项式在时间 t 几个不同的项对不同的控制点做加权平均</li>
-<li>用控制点的位置对 Bernstein 多项式进行加权</li>
-</ul>
-<p>B-Spline 是对贝塞尔曲线的扩展，可以实现局部性，比如改变一个控制点，只影响一定范围内的曲线。</p>
-<p>本节课不深入学习 B 样条</p>
-<h4 id="贝塞尔曲面"><a href="#贝塞尔曲面" class="headerlink" title="贝塞尔曲面"></a><strong>贝塞尔曲面</strong></h4><p>贝塞尔曲线得到贝塞尔曲面</p>
-<p>4✖️4 控制点，双线性插值</p>
-<p>用时间 u 先确定一个方向的四个控制点，再用时间 v 确定曲面上的一个点</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203417-66viato.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203423-cxzrqk0.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203428-zjyszxx.png" alt="image">​</p>
-<p>Mesh Operations：几何处理</p>
-<ul>
-<li><p>网格细分</p>
-</li>
-<li><p>网格简化</p>
-</li>
-<li><p>网格正规化（让三角形不要出现特别尖的三角形）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203436-wy6whsg.png" alt="image">​</p>
-</li>
-</ul>
-<p>‍</p>
-]]></content>
-      <categories>
-        <category>图形学</category>
-      </categories>
-  </entry>
-  <entry>
     <title>第十九章：相机、透镜、光场</title>
     <url>/blog/%E7%AC%AC%E5%8D%81%E4%B9%9D%E7%AB%A0%EF%BC%9A%E7%9B%B8%E6%9C%BA%E3%80%81%E9%80%8F%E9%95%9C%E3%80%81%E5%85%89%E5%9C%BA/</url>
     <content><![CDATA[<p> Cameras, Lenses and Light Fields (相机、透镜、光场)</p>
@@ -3163,88 +3157,6 @@
 <p>景深的最远处穿过透镜和最近处穿过透镜会得到一段范围 Depth of focus：</p>
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212112-4gc8rlq.png" alt="image">​</p>
 <p>光场&#x2F;Lumigraph（to be continue）</p>
-]]></content>
-      <categories>
-        <category>图形学</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>第十二章：Mesh细分、光线追踪</title>
-    <url>/blog/%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9AMesh%E7%BB%86%E5%88%86%E3%80%81%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/</url>
-    <content><![CDATA[<h3 id="网格操作：细分、简化、规则化"><a href="#网格操作：细分、简化、规则化" class="headerlink" title="网格操作：细分、简化、规则化"></a>网格操作：细分、简化、规则化</h3><p>Mesh 细分（引入更多的三角形，让三角形的位置发生变化，使得原来的模型变得更光滑）</p>
-<p>Loop Subdivision（Loop 不是循环的意思，是发明者的 familyname 是 Loop）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203741-vrjiai4.png" alt="image">​</p>
-<p>1.把三角形分成更多的三角形：连接边的中点</p>
-<p>2.调整三角形的位置（把三角形的顶点区分成新的顶点和老的顶点，分别应用不同的规则改变顶点的位置）</p>
-<p>度：一个点相邻的边数。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203748-jh7r0of.png" alt="image">​</p>
-<p>新的顶点用四周的老顶点做加权平均</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203753-n5c1ivn.png" alt="image">​</p>
-<p>老的点用原本的点位置和相连三角形的顶点位置再加上度做加权平均。</p>
-<p>Catmull-Clark Subdivision（General Mesh）</p>
-<p>Loop Subdivision 只能处理三角形的情况，Catmull-Clark 可以处理任何面</p>
-<p>两个概念：</p>
-<p>1.非四边形面</p>
-<p>2.奇艺点（度不为 4 的点）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203759-efb66dj.png" alt="image">​</p>
-<h4 id="细分："><a href="#细分：" class="headerlink" title="细分："></a>细分：</h4><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203759-efb66dj.png" alt="image">​</p>
-<p>每一条边都选它的中点，每一个面都选中间的一个点。把边上的中点和面的中点连起来。</p>
-<p>只要是非四边形面，就一定会引入新的奇艺点。经过一次细分后，非四边形都会消失，也即不会再增加新的奇艺点。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203835-vn53o33.png" alt="image">​</p>
-<p>新的点考虑在面中心的点和边中心的点两种情况。</p>
-<p>老的点用它原本的位置和新的面中心点、边中心点做加权平均。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203840-gizxki9.png" alt="image">​</p>
-<h4 id="Mesh-简化"><a href="#Mesh-简化" class="headerlink" title="Mesh 简化"></a>Mesh 简化</h4><p>不同情况下选用不同复杂度的模型，比如离得远的时候用简化模型</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203915-3xed1sl.png" alt="image">​</p>
-<p>但是几何的层级结构不好处理，从 300 个网格到 3000 个网格时平滑过渡怎么处理</p>
-<h5 id="简化怎么计算？"><a href="#简化怎么计算？" class="headerlink" title="简化怎么计算？"></a>简化怎么计算？</h5><p>一种方法：边坍缩</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203915-3xed1sl.png" alt="image">​</p>
-<p>坍缩即找到一条边的两个顶点，捏成一个顶点，重点是找到要坍缩哪些点。</p>
-<p>用到一种叫做二次（平方）误差度量（Quadric Error Metrics）的方法</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203925-xsk1ax6.png" alt="image">​</p>
-<p>找到一个最优位置，使得它到原本相关联的各个面的平方和达到最小。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203930-kcxeki3.png" alt="image">​</p>
-<p>选坍缩的边的时候，给每个边一个分数表示坍缩后最优位置计算出来的平方和，选择平方和最小的边。但是坍缩一条边后，会影响其他相邻的边。所以需要一边求最小，一边动态更新任一点的值，需要用到优先队列（堆）的数据结构。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203937-ge7wdte.png" alt="image">​</p>
-<p>局部取最小，更新受影响的边的二次度量误差，再取最小，再更新…</p>
-<p>用局部最优解找全局最优解（贪心算法）</p>
-<p>越简单越接近平面的面坍缩得越多（计算出来的二次度量误差越小），比如下图中的小奶牛的面部坍缩的多，但是颈部坍缩的少</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203942-g2sko9n.png" alt="image">​</p>
-<h3 id="光线追踪"><a href="#光线追踪" class="headerlink" title="光线追踪"></a><strong>光线追踪</strong></h3><p>光栅化怎么绘制阴影？</p>
-<p>着色是一种局部行为，仅考虑自己、光源和摄像机，不考虑其他物体，因此无法解决阴影的问题</p>
-<p>于是发明了<strong>阴影映射（shadow mapping）。</strong></p>
-<ul>
-<li><p>图像空间算法</p>
-</li>
-<li><ul>
-<li>在生成阴影的时候不需要知道场景的几何信息</li>
-<li>会产生走样现象</li>
-</ul>
-</li>
-<li><p>主要思想</p>
-<ul>
-<li>如果一个点不在阴影里面，说明可以从照相机看到这个点，也可以从光源看到这个点</li>
-<li>如果一个点在阴影里，说明相机可以看到这个点，但是光看不到这个点</li>
-</ul>
-</li>
-</ul>
-<p>经典的 shadow mappding 只能处理点光源，这种阴影是非 0 即 1 的阴影，叫做硬阴影</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203952-o4xzfvk.png" alt="image">​</p>
-<p>从光源看向物体，生成一幅图，把不同位置看到的点的深度记录下来</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203958-kxh4gvc.png" alt="image">​</p>
-<p>再从摄像机出发看向场景。把看到的点投影回光源，就知道之前记录到深度图上的深度。把记录的深度图深度和眼睛看到的点到光源的实际深度比较，如果二者一致，说明这个点一定即可以被光源看到，又可以被摄像机看到。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204010-1qz8hu3.png" alt="image">​</p>
-<p>如果深度不一致，说明这个点被挡住了。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204014-gt5m7zx.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204019-nkz2q3v.png" alt="image">​</p>
-<p>shadowMapping 会有各种问题：<br>判断深度是否相等，需要判断两个浮点数相等，实际一定会有误差，有精度问题。</p>
-<p>另外 shadowMap 自己有分辨率，如果这个分辨率很低，但是渲染场景的分辨率很高，那么阴影信息是走样的</p>
-<p>另外要做两遍渲染，从光源看过去做一遍，从相机看过去做一遍，性能开销大</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204025-oor2frq.png" alt="image">​</p>
-<h4 id="硬阴影-VS-软阴影"><a href="#硬阴影-VS-软阴影" class="headerlink" title="硬阴影 VS 软阴影"></a>硬阴影 VS 软阴影</h4><p>硬阴影要么可见要么不可见，边缘很锐利</p>
-<p>软光源边缘是慢慢过渡的，越靠近物体根部阴影越硬</p>
-<p>软硬指的是物理上的半影。如果一个地方完全看不到光源，则这个地方叫做本影区域，如果看得到部分光源就叫做半影，如果完全能看到则没有阴影。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204032-beag1cr.png" alt="image">​</p>
-<p>阴影程度取决于可以看到多大的光源。</p>
 ]]></content>
       <categories>
         <category>图形学</category>
@@ -3356,6 +3268,88 @@
 <p>连续情况下描述变量和分布（概率密度函数）：</p>
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205442-0dhlbe4.png" alt="image">​</p>
 <p>如果有一个随机变量的函数，函数的期望等于函数在某个变量的值乘以对应的概率密度再积分。</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第十二章：Mesh细分、光线追踪</title>
+    <url>/blog/%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9AMesh%E7%BB%86%E5%88%86%E3%80%81%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/</url>
+    <content><![CDATA[<h3 id="网格操作：细分、简化、规则化"><a href="#网格操作：细分、简化、规则化" class="headerlink" title="网格操作：细分、简化、规则化"></a>网格操作：细分、简化、规则化</h3><p>Mesh 细分（引入更多的三角形，让三角形的位置发生变化，使得原来的模型变得更光滑）</p>
+<p>Loop Subdivision（Loop 不是循环的意思，是发明者的 familyname 是 Loop）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203741-vrjiai4.png" alt="image">​</p>
+<p>1.把三角形分成更多的三角形：连接边的中点</p>
+<p>2.调整三角形的位置（把三角形的顶点区分成新的顶点和老的顶点，分别应用不同的规则改变顶点的位置）</p>
+<p>度：一个点相邻的边数。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203748-jh7r0of.png" alt="image">​</p>
+<p>新的顶点用四周的老顶点做加权平均</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203753-n5c1ivn.png" alt="image">​</p>
+<p>老的点用原本的点位置和相连三角形的顶点位置再加上度做加权平均。</p>
+<p>Catmull-Clark Subdivision（General Mesh）</p>
+<p>Loop Subdivision 只能处理三角形的情况，Catmull-Clark 可以处理任何面</p>
+<p>两个概念：</p>
+<p>1.非四边形面</p>
+<p>2.奇艺点（度不为 4 的点）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203759-efb66dj.png" alt="image">​</p>
+<h4 id="细分："><a href="#细分：" class="headerlink" title="细分："></a>细分：</h4><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203759-efb66dj.png" alt="image">​</p>
+<p>每一条边都选它的中点，每一个面都选中间的一个点。把边上的中点和面的中点连起来。</p>
+<p>只要是非四边形面，就一定会引入新的奇艺点。经过一次细分后，非四边形都会消失，也即不会再增加新的奇艺点。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203835-vn53o33.png" alt="image">​</p>
+<p>新的点考虑在面中心的点和边中心的点两种情况。</p>
+<p>老的点用它原本的位置和新的面中心点、边中心点做加权平均。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203840-gizxki9.png" alt="image">​</p>
+<h4 id="Mesh-简化"><a href="#Mesh-简化" class="headerlink" title="Mesh 简化"></a>Mesh 简化</h4><p>不同情况下选用不同复杂度的模型，比如离得远的时候用简化模型</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203915-3xed1sl.png" alt="image">​</p>
+<p>但是几何的层级结构不好处理，从 300 个网格到 3000 个网格时平滑过渡怎么处理</p>
+<h5 id="简化怎么计算？"><a href="#简化怎么计算？" class="headerlink" title="简化怎么计算？"></a>简化怎么计算？</h5><p>一种方法：边坍缩</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203915-3xed1sl.png" alt="image">​</p>
+<p>坍缩即找到一条边的两个顶点，捏成一个顶点，重点是找到要坍缩哪些点。</p>
+<p>用到一种叫做二次（平方）误差度量（Quadric Error Metrics）的方法</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203925-xsk1ax6.png" alt="image">​</p>
+<p>找到一个最优位置，使得它到原本相关联的各个面的平方和达到最小。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203930-kcxeki3.png" alt="image">​</p>
+<p>选坍缩的边的时候，给每个边一个分数表示坍缩后最优位置计算出来的平方和，选择平方和最小的边。但是坍缩一条边后，会影响其他相邻的边。所以需要一边求最小，一边动态更新任一点的值，需要用到优先队列（堆）的数据结构。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203937-ge7wdte.png" alt="image">​</p>
+<p>局部取最小，更新受影响的边的二次度量误差，再取最小，再更新…</p>
+<p>用局部最优解找全局最优解（贪心算法）</p>
+<p>越简单越接近平面的面坍缩得越多（计算出来的二次度量误差越小），比如下图中的小奶牛的面部坍缩的多，但是颈部坍缩的少</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203942-g2sko9n.png" alt="image">​</p>
+<h3 id="光线追踪"><a href="#光线追踪" class="headerlink" title="光线追踪"></a><strong>光线追踪</strong></h3><p>光栅化怎么绘制阴影？</p>
+<p>着色是一种局部行为，仅考虑自己、光源和摄像机，不考虑其他物体，因此无法解决阴影的问题</p>
+<p>于是发明了<strong>阴影映射（shadow mapping）。</strong></p>
+<ul>
+<li><p>图像空间算法</p>
+</li>
+<li><ul>
+<li>在生成阴影的时候不需要知道场景的几何信息</li>
+<li>会产生走样现象</li>
+</ul>
+</li>
+<li><p>主要思想</p>
+<ul>
+<li>如果一个点不在阴影里面，说明可以从照相机看到这个点，也可以从光源看到这个点</li>
+<li>如果一个点在阴影里，说明相机可以看到这个点，但是光看不到这个点</li>
+</ul>
+</li>
+</ul>
+<p>经典的 shadow mappding 只能处理点光源，这种阴影是非 0 即 1 的阴影，叫做硬阴影</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203952-o4xzfvk.png" alt="image">​</p>
+<p>从光源看向物体，生成一幅图，把不同位置看到的点的深度记录下来</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203958-kxh4gvc.png" alt="image">​</p>
+<p>再从摄像机出发看向场景。把看到的点投影回光源，就知道之前记录到深度图上的深度。把记录的深度图深度和眼睛看到的点到光源的实际深度比较，如果二者一致，说明这个点一定即可以被光源看到，又可以被摄像机看到。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204010-1qz8hu3.png" alt="image">​</p>
+<p>如果深度不一致，说明这个点被挡住了。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204014-gt5m7zx.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204019-nkz2q3v.png" alt="image">​</p>
+<p>shadowMapping 会有各种问题：<br>判断深度是否相等，需要判断两个浮点数相等，实际一定会有误差，有精度问题。</p>
+<p>另外 shadowMap 自己有分辨率，如果这个分辨率很低，但是渲染场景的分辨率很高，那么阴影信息是走样的</p>
+<p>另外要做两遍渲染，从光源看过去做一遍，从相机看过去做一遍，性能开销大</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204025-oor2frq.png" alt="image">​</p>
+<h4 id="硬阴影-VS-软阴影"><a href="#硬阴影-VS-软阴影" class="headerlink" title="硬阴影 VS 软阴影"></a>硬阴影 VS 软阴影</h4><p>硬阴影要么可见要么不可见，边缘很锐利</p>
+<p>软光源边缘是慢慢过渡的，越靠近物体根部阴影越硬</p>
+<p>软硬指的是物理上的半影。如果一个地方完全看不到光源，则这个地方叫做本影区域，如果看得到部分光源就叫做半影，如果完全能看到则没有阴影。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204032-beag1cr.png" alt="image">​</p>
+<p>阴影程度取决于可以看到多大的光源。</p>
 ]]></content>
       <categories>
         <category>图形学</category>
