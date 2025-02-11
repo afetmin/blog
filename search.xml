@@ -366,6 +366,63 @@
       </categories>
   </entry>
   <entry>
+    <title>Unit8Array ImageData Blob</title>
+    <url>/blog/Unit8Array%20ImageData%20Blob/</url>
+    <content><![CDATA[<h1 id="Unit8Array-ImageData-Blob"><a href="#Unit8Array-ImageData-Blob" class="headerlink" title="Unit8Array ImageData Blob"></a>Unit8Array ImageData Blob</h1><p>　　在做一个工具内截图的功能时发现的问题，Unit8Array 类型的数据转换成 blob 二进制数据然后上传到后端时出现错误。这里记录一下解决方法</p>
+<h3 id="​Uint8Array​​-和-​ImageData​​-的关系"><a href="#​Uint8Array​​-和-​ImageData​​-的关系" class="headerlink" title="​Uint8Array​​ 和 ​ImageData​​ 的关系"></a><strong>​<code>Uint8Array</code>​</strong>​ <strong>和</strong> <strong>​<code>ImageData</code>​</strong>​ <strong>的关系</strong></h3><ul>
+<li>​<strong>​<code>Uint8Array</code>​</strong>​ 是一个存储 8 位无符号整数的数组，常用于表示二进制数据（如图像的像素数据）。</li>
+<li>​<strong>​<code>ImageData</code>​</strong>​ 是浏览器提供的一个专门用于表示图像数据的对象，通常用于 <code>&lt;canvas&gt;</code>​ 元素的图像操作。它的数据结构是一个包含像素数据的 <code>Uint8ClampedArray</code>​（类似于 <code>Uint8Array</code>​，但值会被限制在 0-255 之间）。</li>
+</ul>
+<h4 id="为什么可以转换？"><a href="#为什么可以转换？" class="headerlink" title="为什么可以转换？"></a><strong>为什么可以转换？</strong></h4><ul>
+<li>​<code>ImageData</code>​ 的像素数据本质上是一个一维数组，每个像素由 4 个值（RGBA）表示，每个值是一个 8 位无符号整数（0-255）。</li>
+<li>如果 <code>Uint8Array</code>​ 中的数据是按照 RGBA 顺序排列的，并且长度与图像的宽度和高度匹配，那么可以直接将其转换为 <code>ImageData</code>​。</li>
+</ul>
+<h4 id="转换示例："><a href="#转换示例：" class="headerlink" title="转换示例："></a><strong>转换示例：</strong></h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 假设有一个 2x2 的图像，每个像素有 RGBA 四个通道</span></span><br><span class="line"><span class="keyword">let</span> width = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">let</span> height = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">let</span> pixelData = <span class="keyword">new</span> <span class="title class_">Uint8Array</span>([</span><br><span class="line">    <span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>,   <span class="comment">// 红色像素</span></span><br><span class="line">    <span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>, <span class="number">255</span>,   <span class="comment">// 绿色像素</span></span><br><span class="line">    <span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>, <span class="number">255</span>,   <span class="comment">// 蓝色像素</span></span><br><span class="line">    <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span> <span class="comment">// 白色像素</span></span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 ImageData 对象</span></span><br><span class="line"><span class="keyword">let</span> imageData = <span class="keyword">new</span> <span class="title class_">ImageData</span>(<span class="keyword">new</span> <span class="title class_">Uint8ClampedArray</span>(pixelData), width, height);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(imageData);</span><br></pre></td></tr></table></figure>
+
+<h3 id="​Uint8Array​​-和-​Blob​​-的关系"><a href="#​Uint8Array​​-和-​Blob​​-的关系" class="headerlink" title="​Uint8Array​​ 和 ​Blob​​ 的关系"></a><strong>​<code>Uint8Array</code>​</strong>​ <strong>和</strong> <strong>​<code>Blob</code>​</strong>​ <strong>的关系</strong></h3><ul>
+<li>​<strong>​<code>Blob</code>​</strong>​ 是一种表示不可变二进制数据的对象，通常用于文件操作（如上传、下载）或存储任意类型的二进制数据。</li>
+<li>​<code>Blob</code>​ 的数据可以是任意格式的二进制数据（如图片、音频、视频、文本等），而不仅仅是图像数据。</li>
+</ul>
+<h4 id="为什么不能直接转换？"><a href="#为什么不能直接转换？" class="headerlink" title="为什么不能直接转换？"></a><strong>为什么不能直接转换？</strong></h4><ul>
+<li>​<code>Uint8Array</code>​ 只是一个存储 8 位无符号整数的数组，它本身没有描述数据的格式或类型（例如，是图像、音频还是其他数据）。</li>
+<li>要将 <code>Uint8Array</code>​ 转换为 <code>Blob</code>​，需要明确指定数据的 MIME 类型（如 <code>image/png</code>​、<code>application/octet-stream</code>​ 等），以便 <code>Blob</code>​ 知道如何解释这些数据。</li>
+</ul>
+<h4 id="如何转换为-​Blob​​-？"><a href="#如何转换为-​Blob​​-？" class="headerlink" title="如何转换为 ​Blob​​ ？"></a><strong>如何转换为</strong> <strong>​<code>Blob</code>​</strong>​ <strong>？</strong></h4><p>　　虽然不能直接转换，但可以通过指定 MIME 类型将 <code>Uint8Array</code>​ 包装成 <code>Blob</code>​：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> uint8Array = <span class="keyword">new</span> <span class="title class_">Uint8Array</span>([<span class="number">72</span>, <span class="number">101</span>, <span class="number">108</span>, <span class="number">108</span>, <span class="number">111</span>]); <span class="comment">// &quot;Hello&quot; 的二进制数据</span></span><br><span class="line"><span class="keyword">let</span> blob = <span class="keyword">new</span> <span class="title class_">Blob</span>([uint8Array], &#123; <span class="attr">type</span>: <span class="string">&#x27;application/octet-stream&#x27;</span> &#125;); <span class="comment">// 创建 Blob</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(blob);</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-关键区别"><a href="#3-关键区别" class="headerlink" title="3. 关键区别"></a>3. <strong>关键区别</strong></h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>​<code>ImageData</code>​</th>
+<th>​<code>Blob</code>​</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>用途</strong></td>
+<td>专门用于表示图像像素数据</td>
+<td>用于表示任意类型的二进制数据</td>
+</tr>
+<tr>
+<td><strong>数据结构</strong></td>
+<td>必须是 RGBA 格式的像素数据</td>
+<td>可以是任意格式的二进制数据</td>
+</tr>
+<tr>
+<td><strong>MIME 类型</strong></td>
+<td>不需要指定 MIME 类型</td>
+<td>需要明确指定 MIME 类型</td>
+</tr>
+<tr>
+<td><strong>浏览器支持</strong></td>
+<td>主要用于 <code>&lt;canvas&gt;</code>​ 图像操作</td>
+<td>用于文件操作（上传、下载等）</td>
+</tr>
+</tbody></table>
+<p>　　‍</p>
+]]></content>
+  </entry>
+  <entry>
     <title>express三大概念</title>
     <url>/blog/express%E4%B8%89%E5%A4%A7%E6%A6%82%E5%BF%B5/</url>
     <content><![CDATA[<h2 id="Express-三大基础概念"><a href="#Express-三大基础概念" class="headerlink" title="Express 三大基础概念"></a>Express 三大基础概念</h2><h3 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h3><p>中间件是一个函数，在请求和响应周期中被顺序调用</p>
@@ -1952,63 +2009,6 @@
       </categories>
   </entry>
   <entry>
-    <title>第三章：变换</title>
-    <url>/blog/%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%9A%E5%8F%98%E6%8D%A2/</url>
-    <content><![CDATA[<h3 id="变换"><a href="#变换" class="headerlink" title="变换"></a>变换</h3><p>本章学习内容：</p>
-<ul>
-<li>为什么学习变换</li>
-<li>2 维空间变换：旋转、缩放和切片</li>
-<li>齐次坐标</li>
-<li>变换组合（不同的变换组合形新的变换）</li>
-<li>3 维空间变换</li>
-</ul>
-<h4 id="为什么学习变换"><a href="#为什么学习变换" class="headerlink" title="为什么学习变换"></a>为什么学习变换</h4><p>变换分为：模型变换、视图变换</p>
-<p>变换的重要应用：</p>
-<p>modeling translation：描述摄像机的运动（位置移动）</p>
-<p>modeling rotation：机器人动画关节转动，逆运动学</p>
-<p>modeling scale：皮克斯开场动画 </p>
-<p>viewing：3 维到 2 维投影</p>
-<h4 id="二维变换"><a href="#二维变换" class="headerlink" title="二维变换"></a>二维变换</h4><p>scale matrix 缩放</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204136-qxvt0ld.png" alt="image">​</p>
-<p>reflection matrix 反射（对称）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204147-vqe87zn.png" alt="image">​</p>
-<p>shear matrix 切变</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204154-8vcpz15.png" alt="image">​</p>
-<p>rotation matrix 旋转</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204201-y4nybe9.png" alt="image">​</p>
-<p>（同维度的）矩阵乘输入坐标可以得到输出到坐标叫做线性变换</p>
-<h4 id="齐次坐标"><a href="#齐次坐标" class="headerlink" title="齐次坐标"></a>齐次坐标</h4><p>平移变换不能直接表示为矩阵乘坐标，需要加一个向量</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204222-f32ucjb.png" alt="image">​</p>
-<p>引入齐次坐标是为了找到一个解决方法统一表示二维变换</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204300-jhy7t5e.png" alt="image"></p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204339-hdzd9sz.png" alt="image">​​​</p>
-<p>线性变化 + 平移可以统称为仿射变换，这种仿射变换都可以都可以转换为齐次坐标的形式。用一个矩阵可以统一所有的操作</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204358-hjfetw8.png" alt="image">​</p>
-<p>最后一行永远是 0 0 1</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204406-9c74516.png" alt="image">​</p>
-<p>逆变换（变换操作反过来，乘以变换的逆矩阵）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204416-s93vg8b.png" alt="image">​</p>
-<h4 id="变换组合"><a href="#变换组合" class="headerlink" title="变换组合"></a>变换组合</h4><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204426-omsp01l.png" alt="image">​</p>
-<p>先平移再旋转</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204433-fslqzhf.png" alt="image">​</p>
-<p>先旋转再平移</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204441-uhltcjb.png" alt="image">​</p>
-<p>复杂的变换可以通过简单的变换得到</p>
-<p>变换的顺序非常重要（矩阵乘法的顺序影响结果）</p>
-<p>变换组合从右到左应用矩阵</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204455-01rrf9f.png" alt="image"></p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204509-qmc17ai.png" alt="image">​​</p>
-<p>变换分解</p>
-<p>如果希望在非原点旋转，可以把旋转点平移到原点后再进行旋转，旋转后再平移回去</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204520-braqfca.png" alt="image">​</p>
-<h4 id="三维变换"><a href="#三维变换" class="headerlink" title="三维变换"></a>三维变换</h4><p>与 2 维类似</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204527-f0sng0l.png" alt="image">​</p>
-]]></content>
-      <categories>
-        <category>图形学</category>
-      </categories>
-  </entry>
-  <entry>
     <title>第七章：z-buffer和着色</title>
     <url>/blog/%E7%AC%AC%E4%B8%83%E7%AB%A0%EF%BC%9Az-buffer%E5%92%8C%E7%9D%80%E8%89%B2/</url>
     <content><![CDATA[<p>回顾上一课：</p>
@@ -2156,6 +2156,63 @@
 <p>EWA 过滤</p>
 <p>任意一个不规则的形状都可以拆成多个圆形，覆盖在不规则的形状上，每次查询一个圆形，多次查询。</p>
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816212304-vuf9svm.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第三章：变换</title>
+    <url>/blog/%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%9A%E5%8F%98%E6%8D%A2/</url>
+    <content><![CDATA[<h3 id="变换"><a href="#变换" class="headerlink" title="变换"></a>变换</h3><p>本章学习内容：</p>
+<ul>
+<li>为什么学习变换</li>
+<li>2 维空间变换：旋转、缩放和切片</li>
+<li>齐次坐标</li>
+<li>变换组合（不同的变换组合形新的变换）</li>
+<li>3 维空间变换</li>
+</ul>
+<h4 id="为什么学习变换"><a href="#为什么学习变换" class="headerlink" title="为什么学习变换"></a>为什么学习变换</h4><p>变换分为：模型变换、视图变换</p>
+<p>变换的重要应用：</p>
+<p>modeling translation：描述摄像机的运动（位置移动）</p>
+<p>modeling rotation：机器人动画关节转动，逆运动学</p>
+<p>modeling scale：皮克斯开场动画 </p>
+<p>viewing：3 维到 2 维投影</p>
+<h4 id="二维变换"><a href="#二维变换" class="headerlink" title="二维变换"></a>二维变换</h4><p>scale matrix 缩放</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204136-qxvt0ld.png" alt="image">​</p>
+<p>reflection matrix 反射（对称）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204147-vqe87zn.png" alt="image">​</p>
+<p>shear matrix 切变</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204154-8vcpz15.png" alt="image">​</p>
+<p>rotation matrix 旋转</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204201-y4nybe9.png" alt="image">​</p>
+<p>（同维度的）矩阵乘输入坐标可以得到输出到坐标叫做线性变换</p>
+<h4 id="齐次坐标"><a href="#齐次坐标" class="headerlink" title="齐次坐标"></a>齐次坐标</h4><p>平移变换不能直接表示为矩阵乘坐标，需要加一个向量</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204222-f32ucjb.png" alt="image">​</p>
+<p>引入齐次坐标是为了找到一个解决方法统一表示二维变换</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204300-jhy7t5e.png" alt="image"></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204339-hdzd9sz.png" alt="image">​​​</p>
+<p>线性变化 + 平移可以统称为仿射变换，这种仿射变换都可以都可以转换为齐次坐标的形式。用一个矩阵可以统一所有的操作</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204358-hjfetw8.png" alt="image">​</p>
+<p>最后一行永远是 0 0 1</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204406-9c74516.png" alt="image">​</p>
+<p>逆变换（变换操作反过来，乘以变换的逆矩阵）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204416-s93vg8b.png" alt="image">​</p>
+<h4 id="变换组合"><a href="#变换组合" class="headerlink" title="变换组合"></a>变换组合</h4><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204426-omsp01l.png" alt="image">​</p>
+<p>先平移再旋转</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204433-fslqzhf.png" alt="image">​</p>
+<p>先旋转再平移</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204441-uhltcjb.png" alt="image">​</p>
+<p>复杂的变换可以通过简单的变换得到</p>
+<p>变换的顺序非常重要（矩阵乘法的顺序影响结果）</p>
+<p>变换组合从右到左应用矩阵</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204455-01rrf9f.png" alt="image"></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204509-qmc17ai.png" alt="image">​​</p>
+<p>变换分解</p>
+<p>如果希望在非原点旋转，可以把旋转点平移到原点后再进行旋转，旋转后再平移回去</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204520-braqfca.png" alt="image">​</p>
+<h4 id="三维变换"><a href="#三维变换" class="headerlink" title="三维变换"></a>三维变换</h4><p>与 2 维类似</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204527-f0sng0l.png" alt="image">​</p>
 ]]></content>
       <categories>
         <category>图形学</category>
@@ -3163,6 +3220,88 @@
       </categories>
   </entry>
   <entry>
+    <title>第十二章：Mesh细分、光线追踪</title>
+    <url>/blog/%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9AMesh%E7%BB%86%E5%88%86%E3%80%81%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/</url>
+    <content><![CDATA[<h3 id="网格操作：细分、简化、规则化"><a href="#网格操作：细分、简化、规则化" class="headerlink" title="网格操作：细分、简化、规则化"></a>网格操作：细分、简化、规则化</h3><p>Mesh 细分（引入更多的三角形，让三角形的位置发生变化，使得原来的模型变得更光滑）</p>
+<p>Loop Subdivision（Loop 不是循环的意思，是发明者的 familyname 是 Loop）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203741-vrjiai4.png" alt="image">​</p>
+<p>1.把三角形分成更多的三角形：连接边的中点</p>
+<p>2.调整三角形的位置（把三角形的顶点区分成新的顶点和老的顶点，分别应用不同的规则改变顶点的位置）</p>
+<p>度：一个点相邻的边数。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203748-jh7r0of.png" alt="image">​</p>
+<p>新的顶点用四周的老顶点做加权平均</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203753-n5c1ivn.png" alt="image">​</p>
+<p>老的点用原本的点位置和相连三角形的顶点位置再加上度做加权平均。</p>
+<p>Catmull-Clark Subdivision（General Mesh）</p>
+<p>Loop Subdivision 只能处理三角形的情况，Catmull-Clark 可以处理任何面</p>
+<p>两个概念：</p>
+<p>1.非四边形面</p>
+<p>2.奇艺点（度不为 4 的点）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203759-efb66dj.png" alt="image">​</p>
+<h4 id="细分："><a href="#细分：" class="headerlink" title="细分："></a>细分：</h4><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203759-efb66dj.png" alt="image">​</p>
+<p>每一条边都选它的中点，每一个面都选中间的一个点。把边上的中点和面的中点连起来。</p>
+<p>只要是非四边形面，就一定会引入新的奇艺点。经过一次细分后，非四边形都会消失，也即不会再增加新的奇艺点。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203835-vn53o33.png" alt="image">​</p>
+<p>新的点考虑在面中心的点和边中心的点两种情况。</p>
+<p>老的点用它原本的位置和新的面中心点、边中心点做加权平均。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203840-gizxki9.png" alt="image">​</p>
+<h4 id="Mesh-简化"><a href="#Mesh-简化" class="headerlink" title="Mesh 简化"></a>Mesh 简化</h4><p>不同情况下选用不同复杂度的模型，比如离得远的时候用简化模型</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203915-3xed1sl.png" alt="image">​</p>
+<p>但是几何的层级结构不好处理，从 300 个网格到 3000 个网格时平滑过渡怎么处理</p>
+<h5 id="简化怎么计算？"><a href="#简化怎么计算？" class="headerlink" title="简化怎么计算？"></a>简化怎么计算？</h5><p>一种方法：边坍缩</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203915-3xed1sl.png" alt="image">​</p>
+<p>坍缩即找到一条边的两个顶点，捏成一个顶点，重点是找到要坍缩哪些点。</p>
+<p>用到一种叫做二次（平方）误差度量（Quadric Error Metrics）的方法</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203925-xsk1ax6.png" alt="image">​</p>
+<p>找到一个最优位置，使得它到原本相关联的各个面的平方和达到最小。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203930-kcxeki3.png" alt="image">​</p>
+<p>选坍缩的边的时候，给每个边一个分数表示坍缩后最优位置计算出来的平方和，选择平方和最小的边。但是坍缩一条边后，会影响其他相邻的边。所以需要一边求最小，一边动态更新任一点的值，需要用到优先队列（堆）的数据结构。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203937-ge7wdte.png" alt="image">​</p>
+<p>局部取最小，更新受影响的边的二次度量误差，再取最小，再更新…</p>
+<p>用局部最优解找全局最优解（贪心算法）</p>
+<p>越简单越接近平面的面坍缩得越多（计算出来的二次度量误差越小），比如下图中的小奶牛的面部坍缩的多，但是颈部坍缩的少</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203942-g2sko9n.png" alt="image">​</p>
+<h3 id="光线追踪"><a href="#光线追踪" class="headerlink" title="光线追踪"></a><strong>光线追踪</strong></h3><p>光栅化怎么绘制阴影？</p>
+<p>着色是一种局部行为，仅考虑自己、光源和摄像机，不考虑其他物体，因此无法解决阴影的问题</p>
+<p>于是发明了<strong>阴影映射（shadow mapping）。</strong></p>
+<ul>
+<li><p>图像空间算法</p>
+</li>
+<li><ul>
+<li>在生成阴影的时候不需要知道场景的几何信息</li>
+<li>会产生走样现象</li>
+</ul>
+</li>
+<li><p>主要思想</p>
+<ul>
+<li>如果一个点不在阴影里面，说明可以从照相机看到这个点，也可以从光源看到这个点</li>
+<li>如果一个点在阴影里，说明相机可以看到这个点，但是光看不到这个点</li>
+</ul>
+</li>
+</ul>
+<p>经典的 shadow mappding 只能处理点光源，这种阴影是非 0 即 1 的阴影，叫做硬阴影</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203952-o4xzfvk.png" alt="image">​</p>
+<p>从光源看向物体，生成一幅图，把不同位置看到的点的深度记录下来</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203958-kxh4gvc.png" alt="image">​</p>
+<p>再从摄像机出发看向场景。把看到的点投影回光源，就知道之前记录到深度图上的深度。把记录的深度图深度和眼睛看到的点到光源的实际深度比较，如果二者一致，说明这个点一定即可以被光源看到，又可以被摄像机看到。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204010-1qz8hu3.png" alt="image">​</p>
+<p>如果深度不一致，说明这个点被挡住了。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204014-gt5m7zx.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204019-nkz2q3v.png" alt="image">​</p>
+<p>shadowMapping 会有各种问题：<br>判断深度是否相等，需要判断两个浮点数相等，实际一定会有误差，有精度问题。</p>
+<p>另外 shadowMap 自己有分辨率，如果这个分辨率很低，但是渲染场景的分辨率很高，那么阴影信息是走样的</p>
+<p>另外要做两遍渲染，从光源看过去做一遍，从相机看过去做一遍，性能开销大</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204025-oor2frq.png" alt="image">​</p>
+<h4 id="硬阴影-VS-软阴影"><a href="#硬阴影-VS-软阴影" class="headerlink" title="硬阴影 VS 软阴影"></a>硬阴影 VS 软阴影</h4><p>硬阴影要么可见要么不可见，边缘很锐利</p>
+<p>软光源边缘是慢慢过渡的，越靠近物体根部阴影越硬</p>
+<p>软硬指的是物理上的半影。如果一个地方完全看不到光源，则这个地方叫做本影区域，如果看得到部分光源就叫做半影，如果完全能看到则没有阴影。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204032-beag1cr.png" alt="image">​</p>
+<p>阴影程度取决于可以看到多大的光源。</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
     <title>第十五章：Ray tracing 3 光线传播和全局光照</title>
     <url>/blog/%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0%EF%BC%9ARay%20tracing%203%20%E5%85%89%E7%BA%BF%E4%BC%A0%E6%92%AD%E5%92%8C%E5%85%A8%E5%B1%80%E5%85%89%E7%85%A7/</url>
     <content><![CDATA[<p>RayTracing 3 光线传播和全局光照</p>
@@ -3268,88 +3407,6 @@
 <p>连续情况下描述变量和分布（概率密度函数）：</p>
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205442-0dhlbe4.png" alt="image">​</p>
 <p>如果有一个随机变量的函数，函数的期望等于函数在某个变量的值乘以对应的概率密度再积分。</p>
-]]></content>
-      <categories>
-        <category>图形学</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>第十二章：Mesh细分、光线追踪</title>
-    <url>/blog/%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9AMesh%E7%BB%86%E5%88%86%E3%80%81%E5%85%89%E7%BA%BF%E8%BF%BD%E8%B8%AA/</url>
-    <content><![CDATA[<h3 id="网格操作：细分、简化、规则化"><a href="#网格操作：细分、简化、规则化" class="headerlink" title="网格操作：细分、简化、规则化"></a>网格操作：细分、简化、规则化</h3><p>Mesh 细分（引入更多的三角形，让三角形的位置发生变化，使得原来的模型变得更光滑）</p>
-<p>Loop Subdivision（Loop 不是循环的意思，是发明者的 familyname 是 Loop）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203741-vrjiai4.png" alt="image">​</p>
-<p>1.把三角形分成更多的三角形：连接边的中点</p>
-<p>2.调整三角形的位置（把三角形的顶点区分成新的顶点和老的顶点，分别应用不同的规则改变顶点的位置）</p>
-<p>度：一个点相邻的边数。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203748-jh7r0of.png" alt="image">​</p>
-<p>新的顶点用四周的老顶点做加权平均</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203753-n5c1ivn.png" alt="image">​</p>
-<p>老的点用原本的点位置和相连三角形的顶点位置再加上度做加权平均。</p>
-<p>Catmull-Clark Subdivision（General Mesh）</p>
-<p>Loop Subdivision 只能处理三角形的情况，Catmull-Clark 可以处理任何面</p>
-<p>两个概念：</p>
-<p>1.非四边形面</p>
-<p>2.奇艺点（度不为 4 的点）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203759-efb66dj.png" alt="image">​</p>
-<h4 id="细分："><a href="#细分：" class="headerlink" title="细分："></a>细分：</h4><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203759-efb66dj.png" alt="image">​</p>
-<p>每一条边都选它的中点，每一个面都选中间的一个点。把边上的中点和面的中点连起来。</p>
-<p>只要是非四边形面，就一定会引入新的奇艺点。经过一次细分后，非四边形都会消失，也即不会再增加新的奇艺点。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203835-vn53o33.png" alt="image">​</p>
-<p>新的点考虑在面中心的点和边中心的点两种情况。</p>
-<p>老的点用它原本的位置和新的面中心点、边中心点做加权平均。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203840-gizxki9.png" alt="image">​</p>
-<h4 id="Mesh-简化"><a href="#Mesh-简化" class="headerlink" title="Mesh 简化"></a>Mesh 简化</h4><p>不同情况下选用不同复杂度的模型，比如离得远的时候用简化模型</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203915-3xed1sl.png" alt="image">​</p>
-<p>但是几何的层级结构不好处理，从 300 个网格到 3000 个网格时平滑过渡怎么处理</p>
-<h5 id="简化怎么计算？"><a href="#简化怎么计算？" class="headerlink" title="简化怎么计算？"></a>简化怎么计算？</h5><p>一种方法：边坍缩</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203915-3xed1sl.png" alt="image">​</p>
-<p>坍缩即找到一条边的两个顶点，捏成一个顶点，重点是找到要坍缩哪些点。</p>
-<p>用到一种叫做二次（平方）误差度量（Quadric Error Metrics）的方法</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203925-xsk1ax6.png" alt="image">​</p>
-<p>找到一个最优位置，使得它到原本相关联的各个面的平方和达到最小。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203930-kcxeki3.png" alt="image">​</p>
-<p>选坍缩的边的时候，给每个边一个分数表示坍缩后最优位置计算出来的平方和，选择平方和最小的边。但是坍缩一条边后，会影响其他相邻的边。所以需要一边求最小，一边动态更新任一点的值，需要用到优先队列（堆）的数据结构。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203937-ge7wdte.png" alt="image">​</p>
-<p>局部取最小，更新受影响的边的二次度量误差，再取最小，再更新…</p>
-<p>用局部最优解找全局最优解（贪心算法）</p>
-<p>越简单越接近平面的面坍缩得越多（计算出来的二次度量误差越小），比如下图中的小奶牛的面部坍缩的多，但是颈部坍缩的少</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203942-g2sko9n.png" alt="image">​</p>
-<h3 id="光线追踪"><a href="#光线追踪" class="headerlink" title="光线追踪"></a><strong>光线追踪</strong></h3><p>光栅化怎么绘制阴影？</p>
-<p>着色是一种局部行为，仅考虑自己、光源和摄像机，不考虑其他物体，因此无法解决阴影的问题</p>
-<p>于是发明了<strong>阴影映射（shadow mapping）。</strong></p>
-<ul>
-<li><p>图像空间算法</p>
-</li>
-<li><ul>
-<li>在生成阴影的时候不需要知道场景的几何信息</li>
-<li>会产生走样现象</li>
-</ul>
-</li>
-<li><p>主要思想</p>
-<ul>
-<li>如果一个点不在阴影里面，说明可以从照相机看到这个点，也可以从光源看到这个点</li>
-<li>如果一个点在阴影里，说明相机可以看到这个点，但是光看不到这个点</li>
-</ul>
-</li>
-</ul>
-<p>经典的 shadow mappding 只能处理点光源，这种阴影是非 0 即 1 的阴影，叫做硬阴影</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203952-o4xzfvk.png" alt="image">​</p>
-<p>从光源看向物体，生成一幅图，把不同位置看到的点的深度记录下来</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817203958-kxh4gvc.png" alt="image">​</p>
-<p>再从摄像机出发看向场景。把看到的点投影回光源，就知道之前记录到深度图上的深度。把记录的深度图深度和眼睛看到的点到光源的实际深度比较，如果二者一致，说明这个点一定即可以被光源看到，又可以被摄像机看到。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204010-1qz8hu3.png" alt="image">​</p>
-<p>如果深度不一致，说明这个点被挡住了。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204014-gt5m7zx.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204019-nkz2q3v.png" alt="image">​</p>
-<p>shadowMapping 会有各种问题：<br>判断深度是否相等，需要判断两个浮点数相等，实际一定会有误差，有精度问题。</p>
-<p>另外 shadowMap 自己有分辨率，如果这个分辨率很低，但是渲染场景的分辨率很高，那么阴影信息是走样的</p>
-<p>另外要做两遍渲染，从光源看过去做一遍，从相机看过去做一遍，性能开销大</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204025-oor2frq.png" alt="image">​</p>
-<h4 id="硬阴影-VS-软阴影"><a href="#硬阴影-VS-软阴影" class="headerlink" title="硬阴影 VS 软阴影"></a>硬阴影 VS 软阴影</h4><p>硬阴影要么可见要么不可见，边缘很锐利</p>
-<p>软光源边缘是慢慢过渡的，越靠近物体根部阴影越硬</p>
-<p>软硬指的是物理上的半影。如果一个地方完全看不到光源，则这个地方叫做本影区域，如果看得到部分光源就叫做半影，如果完全能看到则没有阴影。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817204032-beag1cr.png" alt="image">​</p>
-<p>阴影程度取决于可以看到多大的光源。</p>
 ]]></content>
       <categories>
         <category>图形学</category>
@@ -4042,6 +4099,27 @@
       </categories>
   </entry>
   <entry>
+    <title>设计一个拦截器</title>
+    <url>/blog/%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E6%8B%A6%E6%88%AA%E5%99%A8/</url>
+    <content><![CDATA[<p>拦截器是一个函数</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">do</span> sth...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>它有两个参数。第一个参数是一个上下文，这个上下文在多个拦截切面中是共享的。第二个参数是一个 next 函数，调用它会进入下一个拦截切面。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Interceptor</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">aspects</span> = []; <span class="comment">// 用于存储拦截切面</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">use</span>(<span class="params"><span class="comment">/* async */</span> functor</span>) &#123;</span><br><span class="line">    <span class="comment">// 注册拦截切面</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">aspects</span>.<span class="title function_">push</span>(functor);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">run</span>(<span class="params">context</span>) &#123;</span><br><span class="line">    <span class="comment">// 执行注册的拦截切面</span></span><br><span class="line">    <span class="keyword">const</span> aspects = <span class="variable language_">this</span>.<span class="property">aspects</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将注册的拦截切面包装成一个洋葱模型</span></span><br><span class="line">    <span class="keyword">const</span> proc = aspects.<span class="title function_">reduceRight</span>(</span><br><span class="line">      <span class="keyword">function</span> (<span class="params">a, b</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">          <span class="keyword">await</span> <span class="title function_">b</span>(context, a);</span><br><span class="line">        &#125;;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="function">() =&gt;</span> <span class="title class_">Promise</span>.<span class="title function_">resolve</span>()</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">await</span> <span class="title function_">proc</span>(); <span class="comment">//从外到里执行这个洋葱模型</span></span><br><span class="line">    &#125; <span class="keyword">catch</span> (ex) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(ex.<span class="property">message</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> context;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title class_">Interceptor</span>;</span><br></pre></td></tr></table></figure>
+
+<p>测试代码</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">wait</span>(<span class="params">ms</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(resolve, ms);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> inter = <span class="keyword">new</span> <span class="title class_">Interceptor</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> task = <span class="keyword">function</span> (<span class="params">id</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`task <span class="subst">$&#123;id&#125;</span> begin`</span>);</span><br><span class="line">    ctx.<span class="property">count</span>++;</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">wait</span>(<span class="number">1000</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`count: <span class="subst">$&#123;ctx.count&#125;</span>`</span>);</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`task <span class="subst">$&#123;id&#125;</span> end`</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将多个任务以拦截切面的方式注册到拦截器中</span></span><br><span class="line">inter.<span class="title function_">use</span>(<span class="title function_">task</span>(<span class="number">0</span>));</span><br><span class="line">inter.<span class="title function_">use</span>(<span class="title function_">task</span>(<span class="number">1</span>));</span><br><span class="line">inter.<span class="title function_">use</span>(<span class="title function_">task</span>(<span class="number">2</span>));</span><br><span class="line">inter.<span class="title function_">use</span>(<span class="title function_">task</span>(<span class="number">3</span>));</span><br><span class="line">inter.<span class="title function_">use</span>(<span class="title function_">task</span>(<span class="number">4</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从外到里依次执行拦截切面</span></span><br><span class="line">inter.<span class="title function_">run</span>(&#123; <span class="attr">count</span>: <span class="number">0</span> &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>使用拦截器的好处：控制业务流程，复用模块功能（拦截切面可以被共用，避免代码冗余）</p>
+]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
+      <tags>
+        <tag>进阶</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>包体积超限问题</title>
     <url>/blog/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%8C%85%E4%BD%93%E7%A7%AF%E8%B6%85%E9%99%90%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>某日发布节点后，监控平台发现包体积超限，增长很多，于是拉了各个业务方进行排查</p>
@@ -4065,27 +4143,6 @@
       <tags>
         <tag>js</tag>
         <tag>性能</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>设计一个拦截器</title>
-    <url>/blog/%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E6%8B%A6%E6%88%AA%E5%99%A8/</url>
-    <content><![CDATA[<p>拦截器是一个函数</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">do</span> sth...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>它有两个参数。第一个参数是一个上下文，这个上下文在多个拦截切面中是共享的。第二个参数是一个 next 函数，调用它会进入下一个拦截切面。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Interceptor</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">aspects</span> = []; <span class="comment">// 用于存储拦截切面</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">use</span>(<span class="params"><span class="comment">/* async */</span> functor</span>) &#123;</span><br><span class="line">    <span class="comment">// 注册拦截切面</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">aspects</span>.<span class="title function_">push</span>(functor);</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">run</span>(<span class="params">context</span>) &#123;</span><br><span class="line">    <span class="comment">// 执行注册的拦截切面</span></span><br><span class="line">    <span class="keyword">const</span> aspects = <span class="variable language_">this</span>.<span class="property">aspects</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将注册的拦截切面包装成一个洋葱模型</span></span><br><span class="line">    <span class="keyword">const</span> proc = aspects.<span class="title function_">reduceRight</span>(</span><br><span class="line">      <span class="keyword">function</span> (<span class="params">a, b</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">          <span class="keyword">await</span> <span class="title function_">b</span>(context, a);</span><br><span class="line">        &#125;;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="function">() =&gt;</span> <span class="title class_">Promise</span>.<span class="title function_">resolve</span>()</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">await</span> <span class="title function_">proc</span>(); <span class="comment">//从外到里执行这个洋葱模型</span></span><br><span class="line">    &#125; <span class="keyword">catch</span> (ex) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(ex.<span class="property">message</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> context;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title class_">Interceptor</span>;</span><br></pre></td></tr></table></figure>
-
-<p>测试代码</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">wait</span>(<span class="params">ms</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(resolve, ms);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> inter = <span class="keyword">new</span> <span class="title class_">Interceptor</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> task = <span class="keyword">function</span> (<span class="params">id</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`task <span class="subst">$&#123;id&#125;</span> begin`</span>);</span><br><span class="line">    ctx.<span class="property">count</span>++;</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">wait</span>(<span class="number">1000</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`count: <span class="subst">$&#123;ctx.count&#125;</span>`</span>);</span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">next</span>();</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`task <span class="subst">$&#123;id&#125;</span> end`</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将多个任务以拦截切面的方式注册到拦截器中</span></span><br><span class="line">inter.<span class="title function_">use</span>(<span class="title function_">task</span>(<span class="number">0</span>));</span><br><span class="line">inter.<span class="title function_">use</span>(<span class="title function_">task</span>(<span class="number">1</span>));</span><br><span class="line">inter.<span class="title function_">use</span>(<span class="title function_">task</span>(<span class="number">2</span>));</span><br><span class="line">inter.<span class="title function_">use</span>(<span class="title function_">task</span>(<span class="number">3</span>));</span><br><span class="line">inter.<span class="title function_">use</span>(<span class="title function_">task</span>(<span class="number">4</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从外到里依次执行拦截切面</span></span><br><span class="line">inter.<span class="title function_">run</span>(&#123; <span class="attr">count</span>: <span class="number">0</span> &#125;);</span><br></pre></td></tr></table></figure>
-
-<p>使用拦截器的好处：控制业务流程，复用模块功能（拦截切面可以被共用，避免代码冗余）</p>
-]]></content>
-      <categories>
-        <category>js</category>
-      </categories>
-      <tags>
-        <tag>进阶</tag>
       </tags>
   </entry>
   <entry>
