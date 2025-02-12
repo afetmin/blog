@@ -27,13 +27,13 @@
 
 
 
-<link rel="canonical" href="https://afetmin.github.io/blog/Unit8Array%20ImageData%20Blob/">
+<link rel="canonical" href="https://afetmin.github.io/blog/%E4%B8%80%E5%9B%BE%E6%90%9E%E6%87%82%20Unit8Array%20ImageData%20Blob/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/Unit8Array%20ImageData%20Blob/","path":"Unit8Array ImageData Blob/","title":"Unit8Array ImageData Blob"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E4%B8%80%E5%9B%BE%E6%90%9E%E6%87%82%20Unit8Array%20ImageData%20Blob/","path":"一图搞懂 Unit8Array ImageData Blob/","title":"一图搞懂 Unit8Array ImageData Blob"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Unit8Array ImageData Blob | DevDino 🦖</title>
+<title>一图搞懂 Unit8Array ImageData Blob | DevDino 🦖</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
@@ -143,7 +143,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Unit8Array-ImageData-Blob"><span class="nav-number">1.</span> <span class="nav-text">Unit8Array ImageData Blob</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%8BUint8Array%E2%80%8B%E2%80%8B-%E5%92%8C-%E2%80%8BImageData%E2%80%8B%E2%80%8B-%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">1.0.1.</span> <span class="nav-text">​Uint8Array​​ 和 ​ImageData​​ 的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E4%BB%A5%E8%BD%AC%E6%8D%A2%EF%BC%9F"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">为什么可以转换？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">转换示例：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%8BUint8Array%E2%80%8B%E2%80%8B-%E5%92%8C-%E2%80%8BBlob%E2%80%8B%E2%80%8B-%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">1.0.2.</span> <span class="nav-text">​Uint8Array​​ 和 ​Blob​​ 的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E8%BD%AC%E6%8D%A2%EF%BC%9F"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">为什么不能直接转换？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%BD%AC%E6%8D%A2%E4%B8%BA-%E2%80%8BBlob%E2%80%8B%E2%80%8B-%EF%BC%9F"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">如何转换为 ​Blob​​ ？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%85%B3%E9%94%AE%E5%8C%BA%E5%88%AB"><span class="nav-number">1.0.3.</span> <span class="nav-text">3. 关键区别</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%8BUint8Array%E2%80%8B%E2%80%8B-%E5%92%8C-%E2%80%8BImageData%E2%80%8B%E2%80%8B-%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">1.</span> <span class="nav-text">​Uint8Array​​ 和 ​ImageData​​ 的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E4%BB%A5%E8%BD%AC%E6%8D%A2%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">为什么可以转换？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2%E7%A4%BA%E4%BE%8B%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">转换示例：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%8BUint8Array%E2%80%8B%E2%80%8B-%E5%92%8C-%E2%80%8BBlob%E2%80%8B%E2%80%8B-%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">2.</span> <span class="nav-text">​Uint8Array​​ 和 ​Blob​​ 的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E8%BD%AC%E6%8D%A2%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">为什么不能直接转换？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%BD%AC%E6%8D%A2%E4%B8%BA-%E2%80%8BBlob%E2%80%8B%E2%80%8B-%EF%BC%9F"><span class="nav-number">2.2.</span> <span class="nav-text">如何转换为 ​Blob​​ ？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%85%B3%E9%94%AE%E5%8C%BA%E5%88%AB"><span class="nav-number">3.</span> <span class="nav-text">3. 关键区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">图像的数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM"><span class="nav-number">5.</span> <span class="nav-text">DOM</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%8B"><span class="nav-number">5.1.</span> <span class="nav-text">&lt;img&gt;​</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%8B-1"><span class="nav-number">5.2.</span> <span class="nav-text">&lt;canvas&gt;​</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#URL"><span class="nav-number">6.</span> <span class="nav-text">URL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Data-URL"><span class="nav-number">6.1.</span> <span class="nav-text">Data URL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-URL"><span class="nav-number">6.2.</span> <span class="nav-text">HTTP URL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Object-URL"><span class="nav-number">6.3.</span> <span class="nav-text">Object URL</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6"><span class="nav-number">7.</span> <span class="nav-text">文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Blob%E2%80%8B"><span class="nav-number">7.1.</span> <span class="nav-text">Blob​</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#File%E2%80%8B"><span class="nav-number">7.2.</span> <span class="nav-text">File​</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%8BImageData%E2%80%8B"><span class="nav-number">7.3.</span> <span class="nav-text">​ImageData​</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Buffer"><span class="nav-number">8.</span> <span class="nav-text">Buffer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ArrayBuffer%E2%80%8B"><span class="nav-number">8.1.</span> <span class="nav-text">ArrayBuffer​</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Buffer%E2%80%8B"><span class="nav-number">8.2.</span> <span class="nav-text">Buffer​</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8-ArrayBuffer%E2%80%8B%EF%BC%8CDataView%E2%80%8B%EF%BC%8CTypedArray-%E5%92%8C-Buffer%E2%80%8B-%E4%B9%8B%E9%97%B4%E8%BD%AC%E6%8D%A2"><span class="nav-number">9.</span> <span class="nav-text">在 ArrayBuffer​，DataView​，TypedArray 和 Buffer​ 之间转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8-DOM%EF%BC%8CURL%EF%BC%8CBlob-File-%EF%BC%8CImageData%E2%80%8B-%E5%92%8C-Buffer-%E4%B9%8B%E9%97%B4%E8%BD%AC%E6%8D%A2"><span class="nav-number">10.</span> <span class="nav-text">在 DOM，URL，Blob(File)，ImageData​ 和 Buffer 之间转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A%E6%9B%B4%E5%85%A8%E7%9A%84%E4%B8%80%E5%9B%BE%E6%B5%81%E2%80%8B"><span class="nav-number">11.</span> <span class="nav-text">总结：更全的一图流​</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -196,6 +196,23 @@
 
     
         <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E7%AC%AC%E4%B8%83%E7%AB%A0%EF%BC%9Az-buffer%E5%92%8C%E7%9D%80%E8%89%B2/" rel="bookmark">
+        <time class="popular-posts-time">2023-07-16</time>
+        <br>
+      第七章：z-buffer和着色
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
         </div>
   </aside>
 
@@ -213,7 +230,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/Unit8Array%20ImageData%20Blob/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E4%B8%80%E5%9B%BE%E6%90%9E%E6%87%82%20Unit8Array%20ImageData%20Blob/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.jpg">
@@ -226,12 +243,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Unit8Array ImageData Blob | DevDino 🦖">
+      <meta itemprop="name" content="一图搞懂 Unit8Array ImageData Blob | DevDino 🦖">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Unit8Array ImageData Blob
+          一图搞懂 Unit8Array ImageData Blob
         </h1>
 
         <div class="post-meta-container">
@@ -259,14 +276,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>688</span>
+      <span>1.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -276,7 +293,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="Unit8Array-ImageData-Blob"><a href="#Unit8Array-ImageData-Blob" class="headerlink" title="Unit8Array ImageData Blob"></a>Unit8Array ImageData Blob</h1><p>　　在做一个工具内截图的功能时发现的问题，Unit8Array 类型的数据转换成 blob 二进制数据然后上传到后端时出现错误。这里记录一下解决方法</p>
+    <div class="post-body" itemprop="articleBody"><p>　　在做一个工具内截图的功能时发现的问题，Unit8Array 类型的数据转换成 blob 二进制数据然后上传到后端时出现错误。这里记录一下解决方法</p>
 <h3 id="​Uint8Array​​-和-​ImageData​​-的关系"><a href="#​Uint8Array​​-和-​ImageData​​-的关系" class="headerlink" title="​Uint8Array​​ 和 ​ImageData​​ 的关系"></a><strong>​<code>Uint8Array</code>​</strong>​ <strong>和</strong> <strong>​<code>ImageData</code>​</strong>​ <strong>的关系</strong></h3><ul>
 <li>​<strong>​<code>Uint8Array</code>​</strong>​ 是一个存储 8 位无符号整数的数组，常用于表示二进制数据（如图像的像素数据）。</li>
 <li>​<strong>​<code>ImageData</code>​</strong>​ 是浏览器提供的一个专门用于表示图像数据的对象，通常用于 <code>&lt;canvas&gt;</code>​ 元素的图像操作。它的数据结构是一个包含像素数据的 <code>Uint8ClampedArray</code>​（类似于 <code>Uint8Array</code>​，但值会被限制在 0-255 之间）。</li>
@@ -327,8 +344,19 @@
 <td>用于文件操作（上传、下载等）</td>
 </tr>
 </tbody></table>
-<p>　　‍</p>
-
+<h3 id="图像的数据类型"><a href="#图像的数据类型" class="headerlink" title="图像的数据类型"></a>图像的数据类型</h3><h3 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h3><h4 id="​"><a href="#​" class="headerlink" title="&lt;img&gt;​"></a><code>&lt;img&gt;</code>​</h4><p>　　​<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/img" title="&#96;&lt;img&gt;&#96;"><code>&amp;lt;img&amp;gt;</code></a>​ 元素从 URL（Data URL，HTTP URL 或 Object URL）加载图像。</p>
+<h4 id="​-1"><a href="#​-1" class="headerlink" title="&lt;canvas&gt;​"></a><code>&lt;canvas&gt;</code>​</h4><p>　　​<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/canvas" title="&#96;&lt;canvas&gt;&#96;"><code>&amp;lt;canvas&amp;gt;</code></a>​ 元素通过 canvas API <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/drawImage" title="&#96;drawImage&#96;"><code>drawImage</code></a>​ 来获取 <code>&lt;img&gt;</code>​ 元素上的图像数据。</p>
+<h3 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h3><h4 id="Data-URL"><a href="#Data-URL" class="headerlink" title="Data URL"></a>Data URL</h4><p>　　<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIubW96aWxsYS5vcmcvemgtQ04vZG9jcy9XZWIvSFRUUC9CYXNpY3Nfb2ZfSFRUUC9EYXRhX1VSSXM=" title="Data URL">Data URL<i class="fa fa-external-link-alt"></i></span> 带有 base64 编码的图像数据。可以从 Data URL 数据中解码出图像的二进制数据。Data URL 数据的大小比原始的二进制数据大一些。</p>
+<h4 id="HTTP-URL"><a href="#HTTP-URL" class="headerlink" title="HTTP URL"></a>HTTP URL</h4><p>　　<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIubW96aWxsYS5vcmcvemgtQ04vZG9jcy9MZWFybi9Db21tb25fcXVlc3Rpb25zL1doYXRfaXNfYV9VUkw=" title="HTTP URL">HTTP URL<i class="fa fa-external-link-alt"></i></span> 代表存储在服务器上的图像。HTTP URL 用于从服务器获取图像数据。</p>
+<h4 id="Object-URL"><a href="#Object-URL" class="headerlink" title="Object URL"></a>Object URL</h4><p>　　<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIubW96aWxsYS5vcmcvemgtQ04vZG9jcy9XZWIvQVBJL1VSTC9jcmVhdGVPYmplY3RVUkw=" title="Object URL">Object URL<i class="fa fa-external-link-alt"></i></span> 用来代表存储在浏览器内存中的 <code>File</code>​ 或 <code>Blob</code>​ 对象。Object URL 可以由 <code>createObjectURL</code>​ API 来创建，并由 <code>revokeObjectURL</code>​ API 释放。</p>
+<h3 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h3><h4 id="Blob​"><a href="#Blob​" class="headerlink" title="Blob​"></a><code>Blob</code>​</h4><p>　　​<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Blob" title="&#96;Blob&#96;"><code>Blob</code></a>​ 是带有二进制数据的类文件对象。它包含一个只读的 <code>size</code>​ 属性和一个只读的 <code>type</code>​ 属性。你可以通过 <code>slice</code>​，<code>stream</code>​，<code>text</code>​ 等方法来读取二进制数据。</p>
+<h4 id="File​"><a href="#File​" class="headerlink" title="File​"></a><code>File</code>​</h4><p>　　一个 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/File" title="&#96;File&#96;"><code>File</code></a>​ 对象是一个特殊的 <code>Blob</code>​ 对象。除了 <code>Blob</code>​ 的属性和方法外，<code>File</code>​ 对象还包含 <code>lastModified</code>​，<code>name</code>​ 等属性。</p>
+<h4 id="​ImageData​"><a href="#​ImageData​" class="headerlink" title="​ImageData​"></a>​<code>ImageData</code>​</h4><p>　　一个 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/ImageData" title="&#96;ImageData&#96;"><code>ImageData</code></a>​ 对象是一个 JavaScript 对象，包含 <code>width</code>​，<code>height</code>​ 和 <code>data</code>​ 属性，分别表示图像宽度，高度和像素数据。 <code>data</code>​ 属性是一个一维数组，包含 <code>R，G，B，A，R，G，B，A</code>​ 这样格式的数据。每个 <code>R，G，B，A</code>​ 代表一个像素。可以通过 <code>&lt;canvas&gt;</code>​ API <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/createImageData" title="&#96;createImageData&#96;"><code>createImageData</code></a>​ 或 <code>ImageData</code>​ 构造函数来创建 <code>ImageData</code>​。</p>
+<h3 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h3><h4 id="ArrayBuffer​"><a href="#ArrayBuffer​" class="headerlink" title="ArrayBuffer​"></a><code>ArrayBuffer</code>​</h4><p>　　​<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" title="&#96;ArrayBuffer&#96;"><code>ArrayBuffer</code></a>​ 是在浏览器中唯一一种访问二进制数据的方法。<code>ArrayBuffer</code>​ 代表图像的原始二进制数据缓冲区。我们无法读取和写入 <code>ArrayBuffer</code>​ ，只能将 <code>ArrayBuffer</code>​ 转换为 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/DataView" title="&#96;DataView&#96;"><code>DataView</code></a>​ 或 <span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIubW96aWxsYS5vcmcvemgtQ04vZG9jcy9XZWIvSmF2YVNjcmlwdC9SZWZlcmVuY2UvR2xvYmFsX09iamVjdHMvVHlwZWRBcnJheQ==" title="TypedArray">TypedArray<i class="fa fa-external-link-alt"></i></span> 来读取和写入二进制数据。</p>
+<h4 id="Buffer​"><a href="#Buffer​" class="headerlink" title="Buffer​"></a><code>Buffer</code>​</h4><p>　　​<a target="_blank" rel="noopener" href="https://nodejs.org/api/buffer.html" title="&#96;Buffer&#96;"><code>Buffer</code></a>​ 是 Node.js 中特殊的一种 <code>Uint8Array</code>​，Node.js 对其进行了一些优化。</p>
+<h3 id="在-ArrayBuffer​，DataView​，TypedArray-和-Buffer​-之间转换"><a href="#在-ArrayBuffer​，DataView​，TypedArray-和-Buffer​-之间转换" class="headerlink" title="在 ArrayBuffer​，DataView​，TypedArray 和 Buffer​ 之间转换"></a>在 <code>ArrayBuffer</code>​，<code>DataView</code>​，TypedArray 和 <code>Buffer</code>​ 之间转换</h3><p>​<img data-src="/blog/assets/image-20250212081014-ekwghax.png" alt="image">​</p>
+<h3 id="在-DOM，URL，Blob-File-，ImageData​-和-Buffer-之间转换"><a href="#在-DOM，URL，Blob-File-，ImageData​-和-Buffer-之间转换" class="headerlink" title="在 DOM，URL，Blob(File)，ImageData​ 和 Buffer 之间转换"></a>在 DOM，URL，Blob(File)，<code>ImageData</code>​ 和 Buffer 之间转换</h3><p>​<img data-src="/blog/assets/image-20250212081032-avtgge0.png" alt="image">​</p>
+<h3 id="总结：更全的一图流​"><a href="#总结：更全的一图流​" class="headerlink" title="总结：更全的一图流​"></a>总结：更全的一图流<img data-src="/blog/assets/e999ec2b844443469599017c7bd792fdtplv-73owjymdk6-jj-mark-v1_0_0_0_0_5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5YmN56uvX-aYpeesiw_q75-Photoroom%201-20250212081848-6geuy3r.png" alt="e999ec2b844443469599017c7bd792fdtplv-73owjymdk6-jj-mark-v1_0_0_0_0_5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5YmN56uvX-aYpeesiw_q75-Photoroom 1">​</h3>
     </div>
 
     
@@ -378,14 +406,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">73k</span>
+    <span title="站点总字数">74k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:27</span>
+    <span title="站点阅读时长">4:29</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -455,7 +483,7 @@
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
-  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/Unit8Array%20ImageData%20Blob/"}</script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/%E4%B8%80%E5%9B%BE%E6%90%9E%E6%87%82%20Unit8Array%20ImageData%20Blob/"}</script>
   <script src="/blog/js/third-party/quicklink.js"></script>
 <script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
 <script src="/blog/js/third-party/comments/utterances.js"></script>
