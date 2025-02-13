@@ -117,10 +117,10 @@ console.log(blob);
 
 ### 在 `ArrayBuffer`​，`DataView`​，TypedArray 和 `Buffer`​ 之间转换
 
-​![image](assets/image-20250212081014-ekwghax.png)​
+​![image](./assets/image-20250212081014-ekwghax.png)​
 
 ### 在 DOM，URL，Blob(File)，`ImageData`​ 和 Buffer 之间转换
 
-​![image](assets/image-20250212081032-avtgge0.png)​
+​![image](./assets/image-20250212081032-avtgge0.png)​
 
-### 总结：更全的一图流![e999ec2b844443469599017c7bd792fdtplv-73owjymdk6-jj-mark-v1_0_0_0_0_5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5YmN56uvX-aYpeesiw_q75-Photoroom 1](assets/e999ec2b844443469599017c7bd792fdtplv-73owjymdk6-jj-mark-v1_0_0_0_0_5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5YmN56uvX-aYpeesiw_q75-Photoroom%201-20250212081848-6geuy3r.png)​
+### 总结：更全的一图流![e999ec2b844443469599017c7bd792fdtplv-73owjymdk6-jj-mark-v1_0_0_0_0_5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5YmN56uvX-aYpeesiw_q75-Photoroom 1](./assets/e999ec2b844443469599017c7bd792fdtplv-73owjymdk6-jj-mark-v1_0_0_0_0_5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5YmN56uvX-aYpeesiw_q75-Photoroom%201-20250212081848-6geuy3r.png)​
