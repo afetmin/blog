@@ -209,6 +209,27 @@
       第七章：z-buffer和着色
       </a>
     </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%85%B3%E4%BA%8EcreateObjectURL/" rel="bookmark">
+        <time class="popular-posts-time">2021-09-08</time>
+        <br>
+      createObjectURL
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0%EF%BC%9ARay%20tracing4%20%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E8%B7%AF%E5%BE%84%E8%BF%BD%E8%B8%AA/" rel="bookmark">
+        <time class="popular-posts-time">2023-08-17</time>
+        <br>
+      第十六章：Ray tracing4 蒙特卡洛路径追踪
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%9A%E5%8F%98%E6%8D%A2/" rel="bookmark">
+        <time class="popular-posts-time">2023-04-01</time>
+        <br>
+      第三章：变换
+      </a>
+    </li>
   </ul>
 
           </div>
@@ -354,9 +375,9 @@
 <h4 id="​ImageData​"><a href="#​ImageData​" class="headerlink" title="​ImageData​"></a>​<code>ImageData</code>​</h4><p>　　一个 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/ImageData" title="&#96;ImageData&#96;"><code>ImageData</code></a>​ 对象是一个 JavaScript 对象，包含 <code>width</code>​，<code>height</code>​ 和 <code>data</code>​ 属性，分别表示图像宽度，高度和像素数据。 <code>data</code>​ 属性是一个一维数组，包含 <code>R，G，B，A，R，G，B，A</code>​ 这样格式的数据。每个 <code>R，G，B，A</code>​ 代表一个像素。可以通过 <code>&lt;canvas&gt;</code>​ API <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/createImageData" title="&#96;createImageData&#96;"><code>createImageData</code></a>​ 或 <code>ImageData</code>​ 构造函数来创建 <code>ImageData</code>​。</p>
 <h3 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h3><h4 id="ArrayBuffer​"><a href="#ArrayBuffer​" class="headerlink" title="ArrayBuffer​"></a><code>ArrayBuffer</code>​</h4><p>　　​<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" title="&#96;ArrayBuffer&#96;"><code>ArrayBuffer</code></a>​ 是在浏览器中唯一一种访问二进制数据的方法。<code>ArrayBuffer</code>​ 代表图像的原始二进制数据缓冲区。我们无法读取和写入 <code>ArrayBuffer</code>​ ，只能将 <code>ArrayBuffer</code>​ 转换为 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/DataView" title="&#96;DataView&#96;"><code>DataView</code></a>​ 或 <span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIubW96aWxsYS5vcmcvemgtQ04vZG9jcy9XZWIvSmF2YVNjcmlwdC9SZWZlcmVuY2UvR2xvYmFsX09iamVjdHMvVHlwZWRBcnJheQ==" title="TypedArray">TypedArray<i class="fa fa-external-link-alt"></i></span> 来读取和写入二进制数据。</p>
 <h4 id="Buffer​"><a href="#Buffer​" class="headerlink" title="Buffer​"></a><code>Buffer</code>​</h4><p>　　​<a target="_blank" rel="noopener" href="https://nodejs.org/api/buffer.html" title="&#96;Buffer&#96;"><code>Buffer</code></a>​ 是 Node.js 中特殊的一种 <code>Uint8Array</code>​，Node.js 对其进行了一些优化。</p>
-<h3 id="在-ArrayBuffer​，DataView​，TypedArray-和-Buffer​-之间转换"><a href="#在-ArrayBuffer​，DataView​，TypedArray-和-Buffer​-之间转换" class="headerlink" title="在 ArrayBuffer​，DataView​，TypedArray 和 Buffer​ 之间转换"></a>在 <code>ArrayBuffer</code>​，<code>DataView</code>​，TypedArray 和 <code>Buffer</code>​ 之间转换</h3><p>​<img data-src="/blog/./assets/image-20250212081014-ekwghax.png" alt="image">​</p>
-<h3 id="在-DOM，URL，Blob-File-，ImageData​-和-Buffer-之间转换"><a href="#在-DOM，URL，Blob-File-，ImageData​-和-Buffer-之间转换" class="headerlink" title="在 DOM，URL，Blob(File)，ImageData​ 和 Buffer 之间转换"></a>在 DOM，URL，Blob(File)，<code>ImageData</code>​ 和 Buffer 之间转换</h3><p>​<img data-src="/blog/./assets/image-20250212081032-avtgge0.png" alt="image">​</p>
-<h3 id="总结：更全的一图流​"><a href="#总结：更全的一图流​" class="headerlink" title="总结：更全的一图流​"></a>总结：更全的一图流<img data-src="/blog/./assets/e999ec2b844443469599017c7bd792fdtplv-73owjymdk6-jj-mark-v1_0_0_0_0_5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5YmN56uvX-aYpeesiw_q75-Photoroom%201-20250212081848-6geuy3r.png" alt="e999ec2b844443469599017c7bd792fdtplv-73owjymdk6-jj-mark-v1_0_0_0_0_5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5YmN56uvX-aYpeesiw_q75-Photoroom 1">​</h3>
+<h3 id="在-ArrayBuffer​，DataView​，TypedArray-和-Buffer​-之间转换"><a href="#在-ArrayBuffer​，DataView​，TypedArray-和-Buffer​-之间转换" class="headerlink" title="在 ArrayBuffer​，DataView​，TypedArray 和 Buffer​ 之间转换"></a>在 <code>ArrayBuffer</code>​，<code>DataView</code>​，TypedArray 和 <code>Buffer</code>​ 之间转换</h3><p>​<img data-src="/blog/./images/assets/image-20250212081014-ekwghax.png" alt="image">​</p>
+<h3 id="在-DOM，URL，Blob-File-，ImageData​-和-Buffer-之间转换"><a href="#在-DOM，URL，Blob-File-，ImageData​-和-Buffer-之间转换" class="headerlink" title="在 DOM，URL，Blob(File)，ImageData​ 和 Buffer 之间转换"></a>在 DOM，URL，Blob(File)，<code>ImageData</code>​ 和 Buffer 之间转换</h3><p>​<img data-src="/blog/./images/assets/image-20250212081032-avtgge0.png" alt="image">​</p>
+<h3 id="总结：更全的一图流​"><a href="#总结：更全的一图流​" class="headerlink" title="总结：更全的一图流​"></a>总结：更全的一图流<img data-src="/blog/./images/assets/e999ec2b844443469599017c7bd792fdtplv-73owjymdk6-jj-mark-v1_0_0_0_0_5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5YmN56uvX-aYpeesiw_q75-Photoroom%201-20250212081848-6geuy3r.png" alt="image">​</h3>
     </div>
 
     

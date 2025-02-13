@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>React Hook 和 setInterval一起使用的问题</title>
+    <url>/blog/React-Hook-%E5%92%8C-setInterval%E4%B8%80%E8%B5%B7%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>如果仅仅是用一个变量来保存tiner的ID，会导致无法清除timerID<br />如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">TimerCount</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> [count,setCount] = <span class="title function_">useState</span>(<span class="number">0</span>)</span><br><span class="line">  <span class="keyword">let</span> timer</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handleStart</span> =(<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    timer = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">setCount</span>(count++)</span><br><span class="line">    &#125;,<span class="number">1000</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handleEnd</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="built_in">clearInterval</span>(timer)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleStart&#125;</span>&gt;</span>start<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleEnd&#125;</span>&gt;</span>end<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;count&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="原因："><a href="#原因：" class="headerlink" title="原因："></a>原因：</h3><p>timer的id是一个number类型，每次在页面展示count时，都会 触发重新渲染，timer会被重新赋值，这是一个基本类型的值，需要清除的timer值已经不是原来的值了，虽然打印出来的是一样的值。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>用useRef，在整个渲染周期固定一个值</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">TimerCount</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> [count,setCount] = <span class="title function_">useState</span>(<span class="number">0</span>)</span><br><span class="line">  <span class="keyword">let</span> timer = useRef&lt;any&gt;(<span class="literal">null</span>)</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handleStart</span> =(<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    timer.<span class="property">current</span> = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">setCount</span>(count++)</span><br><span class="line">    &#125;,<span class="number">1000</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handleEnd</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="built_in">clearInterval</span>(timer.<span class="property">current</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleStart&#125;</span>&gt;</span>start<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleEnd&#125;</span>&gt;</span>end<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;count&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这时timer是一个引用类型，里面的current属性保存了timer的id，并且整个渲染周期不变。使用ref访问DOM节点也是一样的原理</p>
+]]></content>
+      <categories>
+        <category>React</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Higher-order component</title>
     <url>/blog/Higher-order-component/</url>
     <content><![CDATA[<h2 id="高阶组件可以做什么？"><a href="#高阶组件可以做什么？" class="headerlink" title="高阶组件可以做什么？"></a>高阶组件可以做什么？</h2><h3 id="增强回调和生命周期"><a href="#增强回调和生命周期" class="headerlink" title="增强回调和生命周期"></a>增强回调和生命周期</h3><ol>
@@ -24,22 +40,6 @@
 <li>拦截 DOM 事件，例如在打开模式对话框时阻止全局键盘快捷键</li>
 <li>提取一段上下文而不导致组件中不必要的重新渲染</li>
 </ol>
-]]></content>
-      <categories>
-        <category>React</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>React Hook 和 setInterval一起使用的问题</title>
-    <url>/blog/React-Hook-%E5%92%8C-setInterval%E4%B8%80%E8%B5%B7%E4%BD%BF%E7%94%A8%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>如果仅仅是用一个变量来保存tiner的ID，会导致无法清除timerID<br />如下：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">TimerCount</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> [count,setCount] = <span class="title function_">useState</span>(<span class="number">0</span>)</span><br><span class="line">  <span class="keyword">let</span> timer</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handleStart</span> =(<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    timer = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">setCount</span>(count++)</span><br><span class="line">    &#125;,<span class="number">1000</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handleEnd</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="built_in">clearInterval</span>(timer)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleStart&#125;</span>&gt;</span>start<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleEnd&#125;</span>&gt;</span>end<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;count&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="原因："><a href="#原因：" class="headerlink" title="原因："></a>原因：</h3><p>timer的id是一个number类型，每次在页面展示count时，都会 触发重新渲染，timer会被重新赋值，这是一个基本类型的值，需要清除的timer值已经不是原来的值了，虽然打印出来的是一样的值。</p>
-<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>用useRef，在整个渲染周期固定一个值</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">TimerCount</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> [count,setCount] = <span class="title function_">useState</span>(<span class="number">0</span>)</span><br><span class="line">  <span class="keyword">let</span> timer = useRef&lt;any&gt;(<span class="literal">null</span>)</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handleStart</span> =(<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    timer.<span class="property">current</span> = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">setCount</span>(count++)</span><br><span class="line">    &#125;,<span class="number">1000</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handleEnd</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="built_in">clearInterval</span>(timer.<span class="property">current</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleStart&#125;</span>&gt;</span>start<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleEnd&#125;</span>&gt;</span>end<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;count&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这时timer是一个引用类型，里面的current属性保存了timer的id，并且整个渲染周期不变。使用ref访问DOM节点也是一样的原理</p>
 ]]></content>
       <categories>
         <category>React</category>
@@ -187,6 +187,19 @@
       </categories>
   </entry>
   <entry>
+    <title>React “Key”</title>
+    <url>/blog/React-%E2%80%9CKey%E2%80%9D/</url>
+    <content><![CDATA[<h3 id="什么是key属性以及为什么React需要它？"><a href="#什么是key属性以及为什么React需要它？" class="headerlink" title="什么是key属性以及为什么React需要它？"></a>什么是key属性以及为什么React需要它？</h3><p>如果存在“key”属性，React 使用它作为在重新渲染期间在其兄弟姐妹中识别相同类型元素的一种方式，也就是说，仅在重新渲染期间和相同类型的相邻元素才需要它。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">Item</span> = (<span class="params">&#123; country &#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">className</span>=<span class="string">&quot;country-item&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#123;country.flagUrl&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;country.name&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">CountriesList</span> = (<span class="params">&#123; countries &#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;countries.map((country) =&gt; (</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Item</span> <span class="attr">country</span>=<span class="string">&#123;country&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      ))&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// same as </span></span><br><span class="line">countries.<span class="title function_">map</span>(<span class="function">(<span class="params">country, index</span>) =&gt;</span> <span class="language-xml"><span class="tag">&lt;<span class="name">Item</span> <span class="attr">country</span>=<span class="string">&#123;country&#125;</span> <span class="attr">key</span>=<span class="string">&#123;index&#125;</span> /&gt;</span></span>);</span><br></pre></td></tr></table></figure>
+
+<p>React 会发现那里没有“键”，然后回退到使用countries数组的索引作为键</p>
+<h3 id="什么情况下可以使用-index-作为-key呢？"><a href="#什么情况下可以使用-index-作为-key呢？" class="headerlink" title="什么情况下可以使用 index 作为 key呢？"></a>什么情况下可以使用 index 作为 key呢？</h3><p><strong>分页列表</strong><br />如果你希望在相同大小的列表中显示相同类型的不同项目。如果您采用key&#x3D;”id”方法，那么每次更改页面时，都会加载具有完全不同 ID 的全新项目集。这意味着 React 将无法找到任何“现有”项目，卸载整个列表，并安装全新的项目集。但！如果你采用key&#x3D;”index”这种方法，React 会认为新“页面”上的所有项目都已经存在，并且只会用新数据更新这些项目，而实际组件会被挂载。</p>
+]]></content>
+      <categories>
+        <category>React</category>
+      </categories>
+  </entry>
+  <entry>
     <title>React typescript cheatsheet</title>
     <url>/blog/React-typescript-cheatsheet/</url>
     <content><![CDATA[<p><span class="exturl" data-url="aHR0cHM6Ly9yZWFjdC10eXBlc2NyaXB0LWNoZWF0c2hlZXQubmV0bGlmeS5hcHAvZG9jcy9iYXNpYy9nZXR0aW5nLXN0YXJ0ZWQvYmFzaWNfdHlwZV9leGFtcGxl">React Typescript Cheetsheet<i class="fa fa-external-link-alt"></i></span></p>
@@ -210,19 +223,6 @@
 <figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">type <span class="title class_">MyProps</span> = &#123;</span><br><span class="line">  readonly <span class="attr">message</span>: string;</span><br><span class="line">&#125;;</span><br><span class="line">type <span class="title class_">MyState</span> = &#123;</span><br><span class="line">  readonly <span class="attr">count</span>: number;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>React.Component&lt;P,S&gt; 已经默认标记它们为不可变。</p>
-]]></content>
-      <categories>
-        <category>React</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>React “Key”</title>
-    <url>/blog/React-%E2%80%9CKey%E2%80%9D/</url>
-    <content><![CDATA[<h3 id="什么是key属性以及为什么React需要它？"><a href="#什么是key属性以及为什么React需要它？" class="headerlink" title="什么是key属性以及为什么React需要它？"></a>什么是key属性以及为什么React需要它？</h3><p>如果存在“key”属性，React 使用它作为在重新渲染期间在其兄弟姐妹中识别相同类型元素的一种方式，也就是说，仅在重新渲染期间和相同类型的相邻元素才需要它。</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">Item</span> = (<span class="params">&#123; country &#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">className</span>=<span class="string">&quot;country-item&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#123;country.flagUrl&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;country.name&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">CountriesList</span> = (<span class="params">&#123; countries &#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;countries.map((country) =&gt; (</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">Item</span> <span class="attr">country</span>=<span class="string">&#123;country&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">      ))&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// same as </span></span><br><span class="line">countries.<span class="title function_">map</span>(<span class="function">(<span class="params">country, index</span>) =&gt;</span> <span class="language-xml"><span class="tag">&lt;<span class="name">Item</span> <span class="attr">country</span>=<span class="string">&#123;country&#125;</span> <span class="attr">key</span>=<span class="string">&#123;index&#125;</span> /&gt;</span></span>);</span><br></pre></td></tr></table></figure>
-
-<p>React 会发现那里没有“键”，然后回退到使用countries数组的索引作为键</p>
-<h3 id="什么情况下可以使用-index-作为-key呢？"><a href="#什么情况下可以使用-index-作为-key呢？" class="headerlink" title="什么情况下可以使用 index 作为 key呢？"></a>什么情况下可以使用 index 作为 key呢？</h3><p><strong>分页列表</strong><br />如果你希望在相同大小的列表中显示相同类型的不同项目。如果您采用key&#x3D;”id”方法，那么每次更改页面时，都会加载具有完全不同 ID 的全新项目集。这意味着 React 将无法找到任何“现有”项目，卸载整个列表，并安装全新的项目集。但！如果你采用key&#x3D;”index”这种方法，React 会认为新“页面”上的所有项目都已经存在，并且只会用新数据更新这些项目，而实际组件会被挂载。</p>
 ]]></content>
       <categories>
         <category>React</category>
@@ -752,9 +752,9 @@
 <h4 id="​ImageData​"><a href="#​ImageData​" class="headerlink" title="​ImageData​"></a>​<code>ImageData</code>​</h4><p>　　一个 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/ImageData" title="&#96;ImageData&#96;"><code>ImageData</code></a>​ 对象是一个 JavaScript 对象，包含 <code>width</code>​，<code>height</code>​ 和 <code>data</code>​ 属性，分别表示图像宽度，高度和像素数据。 <code>data</code>​ 属性是一个一维数组，包含 <code>R，G，B，A，R，G，B，A</code>​ 这样格式的数据。每个 <code>R，G，B，A</code>​ 代表一个像素。可以通过 <code>&lt;canvas&gt;</code>​ API <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/createImageData" title="&#96;createImageData&#96;"><code>createImageData</code></a>​ 或 <code>ImageData</code>​ 构造函数来创建 <code>ImageData</code>​。</p>
 <h3 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h3><h4 id="ArrayBuffer​"><a href="#ArrayBuffer​" class="headerlink" title="ArrayBuffer​"></a><code>ArrayBuffer</code>​</h4><p>　　​<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer" title="&#96;ArrayBuffer&#96;"><code>ArrayBuffer</code></a>​ 是在浏览器中唯一一种访问二进制数据的方法。<code>ArrayBuffer</code>​ 代表图像的原始二进制数据缓冲区。我们无法读取和写入 <code>ArrayBuffer</code>​ ，只能将 <code>ArrayBuffer</code>​ 转换为 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/DataView" title="&#96;DataView&#96;"><code>DataView</code></a>​ 或 <span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIubW96aWxsYS5vcmcvemgtQ04vZG9jcy9XZWIvSmF2YVNjcmlwdC9SZWZlcmVuY2UvR2xvYmFsX09iamVjdHMvVHlwZWRBcnJheQ==" title="TypedArray">TypedArray<i class="fa fa-external-link-alt"></i></span> 来读取和写入二进制数据。</p>
 <h4 id="Buffer​"><a href="#Buffer​" class="headerlink" title="Buffer​"></a><code>Buffer</code>​</h4><p>　　​<a href="https://nodejs.org/api/buffer.html" title="&#96;Buffer&#96;"><code>Buffer</code></a>​ 是 Node.js 中特殊的一种 <code>Uint8Array</code>​，Node.js 对其进行了一些优化。</p>
-<h3 id="在-ArrayBuffer​，DataView​，TypedArray-和-Buffer​-之间转换"><a href="#在-ArrayBuffer​，DataView​，TypedArray-和-Buffer​-之间转换" class="headerlink" title="在 ArrayBuffer​，DataView​，TypedArray 和 Buffer​ 之间转换"></a>在 <code>ArrayBuffer</code>​，<code>DataView</code>​，TypedArray 和 <code>Buffer</code>​ 之间转换</h3><p>​<img data-src="/blog/./assets/image-20250212081014-ekwghax.png" alt="image">​</p>
-<h3 id="在-DOM，URL，Blob-File-，ImageData​-和-Buffer-之间转换"><a href="#在-DOM，URL，Blob-File-，ImageData​-和-Buffer-之间转换" class="headerlink" title="在 DOM，URL，Blob(File)，ImageData​ 和 Buffer 之间转换"></a>在 DOM，URL，Blob(File)，<code>ImageData</code>​ 和 Buffer 之间转换</h3><p>​<img data-src="/blog/./assets/image-20250212081032-avtgge0.png" alt="image">​</p>
-<h3 id="总结：更全的一图流​"><a href="#总结：更全的一图流​" class="headerlink" title="总结：更全的一图流​"></a>总结：更全的一图流<img data-src="/blog/./assets/e999ec2b844443469599017c7bd792fdtplv-73owjymdk6-jj-mark-v1_0_0_0_0_5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5YmN56uvX-aYpeesiw_q75-Photoroom%201-20250212081848-6geuy3r.png" alt="e999ec2b844443469599017c7bd792fdtplv-73owjymdk6-jj-mark-v1_0_0_0_0_5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5YmN56uvX-aYpeesiw_q75-Photoroom 1">​</h3>]]></content>
+<h3 id="在-ArrayBuffer​，DataView​，TypedArray-和-Buffer​-之间转换"><a href="#在-ArrayBuffer​，DataView​，TypedArray-和-Buffer​-之间转换" class="headerlink" title="在 ArrayBuffer​，DataView​，TypedArray 和 Buffer​ 之间转换"></a>在 <code>ArrayBuffer</code>​，<code>DataView</code>​，TypedArray 和 <code>Buffer</code>​ 之间转换</h3><p>​<img data-src="/blog/./images/assets/image-20250212081014-ekwghax.png" alt="image">​</p>
+<h3 id="在-DOM，URL，Blob-File-，ImageData​-和-Buffer-之间转换"><a href="#在-DOM，URL，Blob-File-，ImageData​-和-Buffer-之间转换" class="headerlink" title="在 DOM，URL，Blob(File)，ImageData​ 和 Buffer 之间转换"></a>在 DOM，URL，Blob(File)，<code>ImageData</code>​ 和 Buffer 之间转换</h3><p>​<img data-src="/blog/./images/assets/image-20250212081032-avtgge0.png" alt="image">​</p>
+<h3 id="总结：更全的一图流​"><a href="#总结：更全的一图流​" class="headerlink" title="总结：更全的一图流​"></a>总结：更全的一图流<img data-src="/blog/./images/assets/e999ec2b844443469599017c7bd792fdtplv-73owjymdk6-jj-mark-v1_0_0_0_0_5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5YmN56uvX-aYpeesiw_q75-Photoroom%201-20250212081848-6geuy3r.png" alt="image">​</h3>]]></content>
   </entry>
   <entry>
     <title>三次握手和四次挥手</title>
@@ -1370,26 +1370,6 @@
       </tags>
   </entry>
   <entry>
-    <title>如何缩小js代码</title>
-    <url>/blog/%E5%A6%82%E4%BD%95%E7%BC%A9%E5%B0%8Fjs%E4%BB%A3%E7%A0%81/</url>
-    <content><![CDATA[<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>相较于简写形式带来的代码体积减小，易于理解的代码书写方式能显著提升可维护性，因此在选择简写方案时需谨慎。</p>
-<h3 id="Arguments"><a href="#Arguments" class="headerlink" title="Arguments"></a>Arguments</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="built_in">setInterval</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;z&quot;</span>);</span><br><span class="line">&#125;, <span class="number">100</span>); <span class="comment">// before</span></span><br><span class="line"><span class="built_in">setInterval</span>(<span class="string">&#x27;console.log(&quot;z&quot;)&#x27;</span>, <span class="number">100</span>); <span class="comment">// after</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Variables"><a href="#Variables" class="headerlink" title="Variables"></a>Variables</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;&#125;; <span class="comment">// Object literal</span></span><br><span class="line"><span class="keyword">var</span> a = []; <span class="comment">// New Array</span></span><br><span class="line"><span class="keyword">var</span> r = <span class="regexp">/.*/</span>; <span class="comment">// New Regex</span></span><br><span class="line"><span class="keyword">var</span> s = <span class="string">&quot;&quot;</span> + <span class="number">0</span>; <span class="comment">// Convert to string</span></span><br><span class="line"><span class="keyword">var</span> n = +<span class="string">&quot;7&quot;</span>; <span class="comment">// Convert to number (7)</span></span><br><span class="line"><span class="keyword">var</span> b = !!b; <span class="comment">// Converts to a boolean</span></span><br><span class="line"><span class="keyword">var</span> f = ~~<span class="number">3.434</span>; <span class="comment">// Same as Math.floor(3.434)</span></span><br><span class="line"><span class="keyword">var</span> g = -~<span class="number">3.434</span>; <span class="comment">// Same as Math.ceil(3.434)</span></span><br><span class="line"><span class="keyword">var</span> x = <span class="number">5e3</span>; <span class="comment">// Same as 5000</span></span><br><span class="line"><span class="keyword">var</span> c = c || z; <span class="comment">// Coalesce, if c is null then set it to z.</span></span><br><span class="line"><span class="string">&quot;abcde&quot;</span>[<span class="number">1</span>]; <span class="comment">// charAt shorthand, results in &#x27;b&#x27;.</span></span><br><span class="line">+<span class="keyword">new</span> <span class="title class_">Date</span>(); <span class="comment">// Shorthand for (new Date()).getTime();</span></span><br><span class="line"><span class="title class_">Date</span>.<span class="title function_">now</span>(); <span class="comment">// Even shorter shorthand for the above</span></span><br><span class="line"><span class="keyword">var</span> a = x ? y : z; <span class="comment">// Ternary operator, short for: var a;if(x)&#123;a=y;&#125;else&#123;a=z;&#125;</span></span><br><span class="line">!<span class="number">0</span>; <span class="comment">// Shorthand for true</span></span><br><span class="line">!<span class="number">1</span>; <span class="comment">// Shorthand for false</span></span><br><span class="line"><span class="keyword">void</span> <span class="number">0</span>; <span class="comment">// Shorthand for undefined</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="隐式转换"><a href="#隐式转换" class="headerlink" title="隐式转换"></a>隐式转换</h4><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">a = <span class="string">&quot;30&quot;</span>;</span><br><span class="line">b = <span class="string">&quot;10&quot;</span>;</span><br><span class="line">c = a + b; <span class="comment">// failure</span></span><br><span class="line">c = <span class="built_in">parseInt</span>(a) + <span class="built_in">parseInt</span>(b); <span class="comment">// too long</span></span><br><span class="line"></span><br><span class="line">c = -(-a - b); <span class="comment">// try these</span></span><br><span class="line">c = ~~a + ~~b;</span><br><span class="line">c = +a + +b;</span><br><span class="line">c = a - -b;</span><br></pre></td></tr></table></figure>
-
-<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">hasAnF = <span class="string">&quot;This sentence has an f.&quot;</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;f&quot;</span>) &gt;= <span class="number">0</span>; <span class="comment">// before</span></span><br><span class="line">hasAnF = ~<span class="string">&quot;This sentence has an f.&quot;</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;f&quot;</span>); <span class="comment">// after</span></span><br><span class="line"><span class="comment">// ==================================</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Longhand</span></span><br><span class="line"><span class="keyword">if</span> (str.<span class="title function_">indexOf</span>(ndx) == -<span class="number">1</span>) &#123;</span><br><span class="line">  <span class="comment">// Char not found</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Shorthand</span></span><br><span class="line"><span class="keyword">if</span> (~str.<span class="title function_">indexOf</span>(ndx)) &#123;</span><br><span class="line">  <span class="comment">// Char not found.</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//===========================================</span></span><br><span class="line"></span><br><span class="line">rand10 = <span class="title class_">Math</span>.<span class="title function_">floor</span>(<span class="title class_">Math</span>.<span class="title function_">random</span>() * <span class="number">10</span>); <span class="comment">// before</span></span><br><span class="line">rand10 = <span class="number">0</span> | (<span class="title class_">Math</span>.<span class="title function_">random</span>() * <span class="number">10</span>); <span class="comment">// after</span></span><br><span class="line"><span class="comment">// ~ 优先级低于|</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//===========================================</span></span><br><span class="line"><span class="title class_">Math</span>.<span class="title function_">floor</span>(a / <span class="number">2</span>); <span class="comment">// before</span></span><br><span class="line">a &gt;&gt; <span class="number">1</span>; <span class="comment">// after</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Math</span>.<span class="title function_">floor</span>(a / <span class="number">4</span>); <span class="comment">// before</span></span><br><span class="line">a &gt;&gt; <span class="number">2</span>; <span class="comment">// after</span></span><br><span class="line"><span class="comment">//==========================================</span></span><br><span class="line"></span><br><span class="line">million = <span class="number">1000000</span>; <span class="comment">// before</span></span><br><span class="line">million = (<span class="number">1e6</span>)[ <span class="comment">// after</span></span><br><span class="line">  <span class="comment">//==========================================</span></span><br><span class="line"></span><br><span class="line">  (<span class="title class_">Infinity</span>, -<span class="title class_">Infinity</span>)</span><br><span class="line">][(<span class="number">1</span> / <span class="number">0</span>, -<span class="number">1</span> / <span class="number">0</span>)]; <span class="comment">// before // after</span></span><br><span class="line"><span class="comment">//=============================================</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">isFinite</span>(a))</span><br><span class="line">  <span class="keyword">if</span> (<span class="number">1</span> / a)</span><br><span class="line">    <span class="comment">// before</span></span><br><span class="line">    <span class="comment">// after</span></span><br><span class="line">    <span class="comment">//==========================================</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//使用当前日期生成随机整数</span></span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">Date</span>() &amp; <span class="number">1</span>; <span class="comment">// Equivalent to Math.random()&lt;0.5</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Date</span>() % <span class="number">1337</span>; <span class="comment">// Equivalent to Math.floor(Math.random()*1337))</span></span><br><span class="line"></span><br><span class="line">i = <span class="number">0</span> | (<span class="title class_">Math</span>.<span class="title function_">random</span>() * <span class="number">100</span>); <span class="comment">// before</span></span><br><span class="line">i = <span class="keyword">new</span> <span class="title class_">Date</span>() % <span class="number">100</span>; <span class="comment">// after</span></span><br><span class="line"><span class="comment">//=============================================</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="string"><a href="#string" class="headerlink" title="string"></a>string</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">html = <span class="string">&quot;&lt;a href=&#x27;&quot;</span> + url + <span class="string">&quot;&#x27;&gt;&quot;</span> + text + <span class="string">&quot;&lt;/a&gt;&quot;</span>; <span class="comment">// before</span></span><br><span class="line">html = text.<span class="title function_">link</span>(url); <span class="comment">// after</span></span><br><span class="line"><span class="comment">//&#x27;abc&#x27;.link(&#x27;www.baidu.com&#x27;) -&gt; &#x27;&lt;a href=&quot;www.baidu.com&quot;&gt;abc&lt;/a&gt;&#x27;</span></span><br><span class="line"><span class="comment">//==================================================</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Longhand</span></span><br><span class="line"><span class="string">&quot;myString&quot;</span>.<span class="title function_">charAt</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Shorthand</span></span><br><span class="line"><span class="string">&quot;myString&quot;</span>[<span class="number">0</span>]; <span class="comment">// returns &#x27;m&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Pretty useful for RGB declarations.</span></span><br><span class="line"><span class="string">&quot;rgb(&quot;</span> + (x + <span class="number">8</span>) + <span class="string">&quot;,&quot;</span> + (y - <span class="number">20</span>) + <span class="string">&quot;,&quot;</span> + z + <span class="string">&quot;)&quot;</span>; <span class="comment">// before</span></span><br><span class="line"><span class="string">&quot;rgb(&quot;</span> + [x + <span class="number">8</span>, y - <span class="number">20</span>, z] + <span class="string">&quot;)&quot;</span>; <span class="comment">// after</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;rgb(255,&quot;</span> + (y - <span class="number">20</span>) + <span class="string">&quot;,0)&quot;</span>; <span class="comment">// before</span></span><br><span class="line"><span class="string">&quot;rgb(255,&quot;</span> + [y - <span class="number">20</span>, <span class="string">&quot;0)&quot;</span>]; <span class="comment">// after</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Longhand</span></span><br><span class="line"><span class="keyword">var</span> big;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (x &gt; <span class="number">10</span>) &#123;</span><br><span class="line">  big = <span class="literal">true</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  big = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Shorthand</span></span><br><span class="line"><span class="keyword">var</span> big = (x &gt; <span class="number">10</span>) ? <span class="literal">true</span> : <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> big = (x &gt; <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//further nested examples</span></span><br><span class="line"><span class="keyword">var</span> x = <span class="number">3</span>,</span><br><span class="line">big = (x &gt; <span class="number">10</span>) ? <span class="string">&#x27;greater 10&#x27;</span> : (x &lt; <span class="number">5</span>) ? <span class="string">&#x27;less 5&#x27;</span> : <span class="string">&#x27;between 5 and 10&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(big); <span class="comment">// &quot;less 5&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> x = <span class="number">20</span>,</span><br><span class="line">big = &#123; <span class="attr">true</span>: x &gt; <span class="number">10</span>, <span class="literal">false</span> : x&lt; =<span class="number">10</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(big); <span class="comment">// &quot;Object &#123;true=true, false=false&#125;&quot;</span></span><br><span class="line"><span class="comment">//==================================================</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Longhand</span></span><br><span class="line"><span class="keyword">if</span>(myvar == <span class="number">1</span> || myvar == <span class="number">5</span> || myvar == <span class="number">7</span> || myvar == <span class="number">22</span>)  &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;ya&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Shorthand</span></span><br><span class="line">([<span class="number">1</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">22</span>].<span class="title function_">indexOf</span>(myvar) !=- <span class="number">1</span>) &amp;&amp; <span class="title function_">alert</span>(<span class="string">&#x27;yeah baby!&#x27;</span>);</span><br><span class="line"><span class="comment">//=====================================================</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Longhand</span></span><br><span class="line"><span class="keyword">if</span> (type === <span class="string">&#x27;aligator&#x27;</span>) &#123;</span><br><span class="line">  <span class="title function_">aligatorBehavior</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (type === <span class="string">&#x27;parrot&#x27;</span>) &#123;</span><br><span class="line">  <span class="title function_">parrotBehavior</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (type === <span class="string">&#x27;dolphin&#x27;</span>) &#123;</span><br><span class="line">  <span class="title function_">dolphinBehavior</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (type === <span class="string">&#x27;bulldog&#x27;</span>) &#123;</span><br><span class="line">  <span class="title function_">bulldogBehavior</span>();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Invalid animal &#x27;</span> + type);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Shorthand</span></span><br><span class="line"><span class="keyword">var</span> types = &#123;</span><br><span class="line">  <span class="attr">aligator</span>: aligatorBehavior,</span><br><span class="line">  <span class="attr">parrot</span>: parrotBehavior,</span><br><span class="line">  <span class="attr">dolphin</span>: dolphinBehavior,</span><br><span class="line">  <span class="attr">bulldog</span>: bulldogBehavior</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> func = types[type];</span><br><span class="line">(!func) &amp;&amp; <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Invalid animal &#x27;</span> + type); <span class="title function_">func</span>();</span><br><span class="line"><span class="comment">//========================================================</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Longhand</span></span><br><span class="line"><span class="keyword">if</span> (x == a) &#123;</span><br><span class="line"> x = b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (x == b) &#123;</span><br><span class="line"> x = a;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// x = 1, a = 1, b = 2</span></span><br><span class="line"><span class="comment">// 1st run: x = 2</span></span><br><span class="line"><span class="comment">// 2nd run: x = 1</span></span><br><span class="line"><span class="comment">// 3rd run: x = 2</span></span><br><span class="line"><span class="comment">// 4th run: x = 1</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Shorthand</span></span><br><span class="line">x = a ^ b ^ x;</span><br><span class="line"><span class="comment">//====================================================</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>js</category>
-      </categories>
-  </entry>
-  <entry>
     <title>如果一个npm包不满足需求，如何修改其部分功能</title>
     <url>/blog/%E5%A6%82%E6%9E%9C%E4%B8%80%E4%B8%AAnpm%E5%8C%85%E4%B8%8D%E6%BB%A1%E8%B6%B3%E9%9C%80%E6%B1%82%EF%BC%8C%E5%A6%82%E4%BD%95%E4%BF%AE%E6%94%B9%E5%85%B6%E9%83%A8%E5%88%86%E5%8A%9F%E8%83%BD/</url>
     <content><![CDATA[<h3 id="一、使用-Fork"><a href="#一、使用-Fork" class="headerlink" title="一、使用 Fork"></a>一、使用 Fork</h3><p>Fork 源代码，通过在 GitHub 上或其他托管平台上 Fork 第三方包的源代码库。对其源代码进行修改，修改完成后将修改后的包发布到 npm 上。如果你不希望它是公开的，那么你可以搭建一个 npm 的私有包。直接将项目中的包切换我们自己发布的包。</p>
@@ -1420,6 +1400,26 @@
 <p>这种方法的好处是，它提供了一个清晰的隔离层，使得第三方包的任何更新不会直接影响到你对功能的定制。同时，这也使得维护和升级第三方包变得更加容易，因为你只需要在封装层中做出相应的调整。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以上 4 种方式，通常提交 PR 和使用 Fork 是最推荐的，因为它们可以避免维护自定义修改所带来的长期负担。但是由于业务的紧急性，我们也可以选择后两种方式。</p>
 <p>‍</p>
+]]></content>
+      <categories>
+        <category>js</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>如何缩小js代码</title>
+    <url>/blog/%E5%A6%82%E4%BD%95%E7%BC%A9%E5%B0%8Fjs%E4%BB%A3%E7%A0%81/</url>
+    <content><![CDATA[<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>相较于简写形式带来的代码体积减小，易于理解的代码书写方式能显著提升可维护性，因此在选择简写方案时需谨慎。</p>
+<h3 id="Arguments"><a href="#Arguments" class="headerlink" title="Arguments"></a>Arguments</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="built_in">setInterval</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;z&quot;</span>);</span><br><span class="line">&#125;, <span class="number">100</span>); <span class="comment">// before</span></span><br><span class="line"><span class="built_in">setInterval</span>(<span class="string">&#x27;console.log(&quot;z&quot;)&#x27;</span>, <span class="number">100</span>); <span class="comment">// after</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Variables"><a href="#Variables" class="headerlink" title="Variables"></a>Variables</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;&#125;; <span class="comment">// Object literal</span></span><br><span class="line"><span class="keyword">var</span> a = []; <span class="comment">// New Array</span></span><br><span class="line"><span class="keyword">var</span> r = <span class="regexp">/.*/</span>; <span class="comment">// New Regex</span></span><br><span class="line"><span class="keyword">var</span> s = <span class="string">&quot;&quot;</span> + <span class="number">0</span>; <span class="comment">// Convert to string</span></span><br><span class="line"><span class="keyword">var</span> n = +<span class="string">&quot;7&quot;</span>; <span class="comment">// Convert to number (7)</span></span><br><span class="line"><span class="keyword">var</span> b = !!b; <span class="comment">// Converts to a boolean</span></span><br><span class="line"><span class="keyword">var</span> f = ~~<span class="number">3.434</span>; <span class="comment">// Same as Math.floor(3.434)</span></span><br><span class="line"><span class="keyword">var</span> g = -~<span class="number">3.434</span>; <span class="comment">// Same as Math.ceil(3.434)</span></span><br><span class="line"><span class="keyword">var</span> x = <span class="number">5e3</span>; <span class="comment">// Same as 5000</span></span><br><span class="line"><span class="keyword">var</span> c = c || z; <span class="comment">// Coalesce, if c is null then set it to z.</span></span><br><span class="line"><span class="string">&quot;abcde&quot;</span>[<span class="number">1</span>]; <span class="comment">// charAt shorthand, results in &#x27;b&#x27;.</span></span><br><span class="line">+<span class="keyword">new</span> <span class="title class_">Date</span>(); <span class="comment">// Shorthand for (new Date()).getTime();</span></span><br><span class="line"><span class="title class_">Date</span>.<span class="title function_">now</span>(); <span class="comment">// Even shorter shorthand for the above</span></span><br><span class="line"><span class="keyword">var</span> a = x ? y : z; <span class="comment">// Ternary operator, short for: var a;if(x)&#123;a=y;&#125;else&#123;a=z;&#125;</span></span><br><span class="line">!<span class="number">0</span>; <span class="comment">// Shorthand for true</span></span><br><span class="line">!<span class="number">1</span>; <span class="comment">// Shorthand for false</span></span><br><span class="line"><span class="keyword">void</span> <span class="number">0</span>; <span class="comment">// Shorthand for undefined</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="隐式转换"><a href="#隐式转换" class="headerlink" title="隐式转换"></a>隐式转换</h4><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">a = <span class="string">&quot;30&quot;</span>;</span><br><span class="line">b = <span class="string">&quot;10&quot;</span>;</span><br><span class="line">c = a + b; <span class="comment">// failure</span></span><br><span class="line">c = <span class="built_in">parseInt</span>(a) + <span class="built_in">parseInt</span>(b); <span class="comment">// too long</span></span><br><span class="line"></span><br><span class="line">c = -(-a - b); <span class="comment">// try these</span></span><br><span class="line">c = ~~a + ~~b;</span><br><span class="line">c = +a + +b;</span><br><span class="line">c = a - -b;</span><br></pre></td></tr></table></figure>
+
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">hasAnF = <span class="string">&quot;This sentence has an f.&quot;</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;f&quot;</span>) &gt;= <span class="number">0</span>; <span class="comment">// before</span></span><br><span class="line">hasAnF = ~<span class="string">&quot;This sentence has an f.&quot;</span>.<span class="title function_">indexOf</span>(<span class="string">&quot;f&quot;</span>); <span class="comment">// after</span></span><br><span class="line"><span class="comment">// ==================================</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Longhand</span></span><br><span class="line"><span class="keyword">if</span> (str.<span class="title function_">indexOf</span>(ndx) == -<span class="number">1</span>) &#123;</span><br><span class="line">  <span class="comment">// Char not found</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Shorthand</span></span><br><span class="line"><span class="keyword">if</span> (~str.<span class="title function_">indexOf</span>(ndx)) &#123;</span><br><span class="line">  <span class="comment">// Char not found.</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//===========================================</span></span><br><span class="line"></span><br><span class="line">rand10 = <span class="title class_">Math</span>.<span class="title function_">floor</span>(<span class="title class_">Math</span>.<span class="title function_">random</span>() * <span class="number">10</span>); <span class="comment">// before</span></span><br><span class="line">rand10 = <span class="number">0</span> | (<span class="title class_">Math</span>.<span class="title function_">random</span>() * <span class="number">10</span>); <span class="comment">// after</span></span><br><span class="line"><span class="comment">// ~ 优先级低于|</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//===========================================</span></span><br><span class="line"><span class="title class_">Math</span>.<span class="title function_">floor</span>(a / <span class="number">2</span>); <span class="comment">// before</span></span><br><span class="line">a &gt;&gt; <span class="number">1</span>; <span class="comment">// after</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Math</span>.<span class="title function_">floor</span>(a / <span class="number">4</span>); <span class="comment">// before</span></span><br><span class="line">a &gt;&gt; <span class="number">2</span>; <span class="comment">// after</span></span><br><span class="line"><span class="comment">//==========================================</span></span><br><span class="line"></span><br><span class="line">million = <span class="number">1000000</span>; <span class="comment">// before</span></span><br><span class="line">million = (<span class="number">1e6</span>)[ <span class="comment">// after</span></span><br><span class="line">  <span class="comment">//==========================================</span></span><br><span class="line"></span><br><span class="line">  (<span class="title class_">Infinity</span>, -<span class="title class_">Infinity</span>)</span><br><span class="line">][(<span class="number">1</span> / <span class="number">0</span>, -<span class="number">1</span> / <span class="number">0</span>)]; <span class="comment">// before // after</span></span><br><span class="line"><span class="comment">//=============================================</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">isFinite</span>(a))</span><br><span class="line">  <span class="keyword">if</span> (<span class="number">1</span> / a)</span><br><span class="line">    <span class="comment">// before</span></span><br><span class="line">    <span class="comment">// after</span></span><br><span class="line">    <span class="comment">//==========================================</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//使用当前日期生成随机整数</span></span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">Date</span>() &amp; <span class="number">1</span>; <span class="comment">// Equivalent to Math.random()&lt;0.5</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Date</span>() % <span class="number">1337</span>; <span class="comment">// Equivalent to Math.floor(Math.random()*1337))</span></span><br><span class="line"></span><br><span class="line">i = <span class="number">0</span> | (<span class="title class_">Math</span>.<span class="title function_">random</span>() * <span class="number">100</span>); <span class="comment">// before</span></span><br><span class="line">i = <span class="keyword">new</span> <span class="title class_">Date</span>() % <span class="number">100</span>; <span class="comment">// after</span></span><br><span class="line"><span class="comment">//=============================================</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="string"><a href="#string" class="headerlink" title="string"></a>string</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">html = <span class="string">&quot;&lt;a href=&#x27;&quot;</span> + url + <span class="string">&quot;&#x27;&gt;&quot;</span> + text + <span class="string">&quot;&lt;/a&gt;&quot;</span>; <span class="comment">// before</span></span><br><span class="line">html = text.<span class="title function_">link</span>(url); <span class="comment">// after</span></span><br><span class="line"><span class="comment">//&#x27;abc&#x27;.link(&#x27;www.baidu.com&#x27;) -&gt; &#x27;&lt;a href=&quot;www.baidu.com&quot;&gt;abc&lt;/a&gt;&#x27;</span></span><br><span class="line"><span class="comment">//==================================================</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Longhand</span></span><br><span class="line"><span class="string">&quot;myString&quot;</span>.<span class="title function_">charAt</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Shorthand</span></span><br><span class="line"><span class="string">&quot;myString&quot;</span>[<span class="number">0</span>]; <span class="comment">// returns &#x27;m&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Pretty useful for RGB declarations.</span></span><br><span class="line"><span class="string">&quot;rgb(&quot;</span> + (x + <span class="number">8</span>) + <span class="string">&quot;,&quot;</span> + (y - <span class="number">20</span>) + <span class="string">&quot;,&quot;</span> + z + <span class="string">&quot;)&quot;</span>; <span class="comment">// before</span></span><br><span class="line"><span class="string">&quot;rgb(&quot;</span> + [x + <span class="number">8</span>, y - <span class="number">20</span>, z] + <span class="string">&quot;)&quot;</span>; <span class="comment">// after</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;rgb(255,&quot;</span> + (y - <span class="number">20</span>) + <span class="string">&quot;,0)&quot;</span>; <span class="comment">// before</span></span><br><span class="line"><span class="string">&quot;rgb(255,&quot;</span> + [y - <span class="number">20</span>, <span class="string">&quot;0)&quot;</span>]; <span class="comment">// after</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h3><figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Longhand</span></span><br><span class="line"><span class="keyword">var</span> big;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (x &gt; <span class="number">10</span>) &#123;</span><br><span class="line">  big = <span class="literal">true</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  big = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Shorthand</span></span><br><span class="line"><span class="keyword">var</span> big = (x &gt; <span class="number">10</span>) ? <span class="literal">true</span> : <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> big = (x &gt; <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//further nested examples</span></span><br><span class="line"><span class="keyword">var</span> x = <span class="number">3</span>,</span><br><span class="line">big = (x &gt; <span class="number">10</span>) ? <span class="string">&#x27;greater 10&#x27;</span> : (x &lt; <span class="number">5</span>) ? <span class="string">&#x27;less 5&#x27;</span> : <span class="string">&#x27;between 5 and 10&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(big); <span class="comment">// &quot;less 5&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> x = <span class="number">20</span>,</span><br><span class="line">big = &#123; <span class="attr">true</span>: x &gt; <span class="number">10</span>, <span class="literal">false</span> : x&lt; =<span class="number">10</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(big); <span class="comment">// &quot;Object &#123;true=true, false=false&#125;&quot;</span></span><br><span class="line"><span class="comment">//==================================================</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Longhand</span></span><br><span class="line"><span class="keyword">if</span>(myvar == <span class="number">1</span> || myvar == <span class="number">5</span> || myvar == <span class="number">7</span> || myvar == <span class="number">22</span>)  &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;ya&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Shorthand</span></span><br><span class="line">([<span class="number">1</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">22</span>].<span class="title function_">indexOf</span>(myvar) !=- <span class="number">1</span>) &amp;&amp; <span class="title function_">alert</span>(<span class="string">&#x27;yeah baby!&#x27;</span>);</span><br><span class="line"><span class="comment">//=====================================================</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Longhand</span></span><br><span class="line"><span class="keyword">if</span> (type === <span class="string">&#x27;aligator&#x27;</span>) &#123;</span><br><span class="line">  <span class="title function_">aligatorBehavior</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (type === <span class="string">&#x27;parrot&#x27;</span>) &#123;</span><br><span class="line">  <span class="title function_">parrotBehavior</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (type === <span class="string">&#x27;dolphin&#x27;</span>) &#123;</span><br><span class="line">  <span class="title function_">dolphinBehavior</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (type === <span class="string">&#x27;bulldog&#x27;</span>) &#123;</span><br><span class="line">  <span class="title function_">bulldogBehavior</span>();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Invalid animal &#x27;</span> + type);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Shorthand</span></span><br><span class="line"><span class="keyword">var</span> types = &#123;</span><br><span class="line">  <span class="attr">aligator</span>: aligatorBehavior,</span><br><span class="line">  <span class="attr">parrot</span>: parrotBehavior,</span><br><span class="line">  <span class="attr">dolphin</span>: dolphinBehavior,</span><br><span class="line">  <span class="attr">bulldog</span>: bulldogBehavior</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> func = types[type];</span><br><span class="line">(!func) &amp;&amp; <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Invalid animal &#x27;</span> + type); <span class="title function_">func</span>();</span><br><span class="line"><span class="comment">//========================================================</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Longhand</span></span><br><span class="line"><span class="keyword">if</span> (x == a) &#123;</span><br><span class="line"> x = b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (x == b) &#123;</span><br><span class="line"> x = a;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// x = 1, a = 1, b = 2</span></span><br><span class="line"><span class="comment">// 1st run: x = 2</span></span><br><span class="line"><span class="comment">// 2nd run: x = 1</span></span><br><span class="line"><span class="comment">// 3rd run: x = 2</span></span><br><span class="line"><span class="comment">// 4th run: x = 1</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Shorthand</span></span><br><span class="line">x = a ^ b ^ x;</span><br><span class="line"><span class="comment">//====================================================</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>js</category>
@@ -1761,115 +1761,6 @@
       </categories>
   </entry>
   <entry>
-    <title>第一、二章：图形学概述、向量与线性代数</title>
-    <url>/blog/%E7%AC%AC%E4%B8%80%E3%80%81%E4%BA%8C%E7%AB%A0%EF%BC%9A%E5%9B%BE%E5%BD%A2%E5%AD%A6%E6%A6%82%E8%BF%B0%E3%80%81%E5%90%91%E9%87%8F%E4%B8%8E%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/</url>
-    <content><![CDATA[<h3 id="第一章-图形学概述"><a href="#第一章-图形学概述" class="headerlink" title="第一章 图形学概述"></a>第一章 图形学概述</h3><h4 id="1-图形学应用场景"><a href="#1-图形学应用场景" class="headerlink" title="1.图形学应用场景"></a>1.图形学应用场景</h4><p>游戏场景渲染、电影特效、动画、设计、可视化（人体三维扫描）、虚拟现实、数字绘图、模拟、GUI、字体排版等</p>
-<h4 id="2-图形学包含内容："><a href="#2-图形学包含内容：" class="headerlink" title="2.图形学包含内容："></a>2.图形学包含内容：</h4><ul>
-<li><p>数学：矩阵、曲线、曲面</p>
-</li>
-<li><p>物理学：光学、着色</p>
-</li>
-<li><p>描述、操作三维的不同形体</p>
-</li>
-<li><p>动画、仿真</p>
-</li>
-</ul>
-<h4 id="3-本课程包含的内容："><a href="#3-本课程包含的内容：" class="headerlink" title="3.本课程包含的内容："></a>3.本课程包含的内容：</h4><ul>
-<li><p>光栅化</p>
-<ul>
-<li>光栅化是把三维空间的几何形体显示在屏幕上，是实时图形学的主要应用。实时：每秒钟生成 30 帧，否则叫做离线</li>
-</ul>
-</li>
-<li><p>曲线、曲面</p>
-<ul>
-<li>如何表示一条光滑的曲线、如何表示曲面、怎么把简单曲面通过细分的方法得到更复杂的曲面，形状发生变化的时候面要如何变化，如何保持物体的拓扑结构</li>
-</ul>
-</li>
-<li><p>光线追踪</p>
-<ul>
-<li>实时光线追踪技术</li>
-</ul>
-</li>
-<li><p>动画&#x2F;模拟</p>
-</li>
-</ul>
-<h4 id="4-本课程不包含的内容："><a href="#4-本课程不包含的内容：" class="headerlink" title="4.本课程不包含的内容："></a>4.本课程不包含的内容：</h4><ul>
-<li><p>怎么使用 API</p>
-</li>
-<li><p>怎么做三维建模</p>
-</li>
-<li><p>计算机视觉：一切需要猜测的东西是计算机视觉（根据图像推测模型）。</p>
-<p>​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816202909-3znjtvt.png" alt="image">​​</p>
-<p>model 描述三维空间中形状的几何形体，或对于渲染而言描述它的材质、光照，把这些三维空间中有的东西转为一幅图（渲染），就是计算机图形学。此外，还包括纯三维空间的仿真，材质建模、材质与光线之间作用的研究等，都属于计算机图形学的范畴。</p>
-</li>
-</ul>
-<p>从一张图识别出各种模型（比如识别出照片里哪些是桌子、椅子），或者图形、视频处理（中间涉及到一些推测、推理）等是计算机视觉的范畴。</p>
-<p>某些场景下没有严格的边界，比如 AR 需要二者的结合。</p>
-<h3 id="第二章-向量与线性代数"><a href="#第二章-向量与线性代数" class="headerlink" title="第二章 向量与线性代数"></a>第二章 向量与线性代数</h3><h4 id="1-图形学依赖："><a href="#1-图形学依赖：" class="headerlink" title="1.图形学依赖："></a>1.图形学依赖：</h4><ul>
-<li><p>数学基础：线性代数、微积分、统计</p>
-</li>
-<li><p>数学基础：力学、光学</p>
-</li>
-<li><p>其他杂项：信号处理、数值分析</p>
-</li>
-<li><p>一点点美学</p>
-</li>
-</ul>
-<h4 id="2-向量（Vectors）"><a href="#2-向量（Vectors）" class="headerlink" title="2.向量（Vectors）"></a>2.向量（Vectors）</h4><p>向量表示两个内容：方向和长度，平移向量不会改变它（因为方向和长度不变）。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816202955-jjx4cx2.png" alt="image">​</p>
-<p>一个向量除它的长度可以得到一个长度为 1 的单位向量。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203024-1bw8l0i.png" alt="image">​</p>
-<h5 id="向量求和："><a href="#向量求和：" class="headerlink" title="向量求和："></a><strong>向量求和：</strong></h5><p>几何上：平行四边形法则、三角形法则。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203030-99fojmi.png" alt="image">​</p>
-<p>代数上：坐标相加（笛卡尔坐标系）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203036-px3g9cs.png" alt="image">​</p>
-<h5 id="向量点乘："><a href="#向量点乘：" class="headerlink" title="向量点乘："></a><strong>向量点乘：</strong></h5><p>可以通过点乘快速得到两个向量的夹角（特别是两个向量都是方向向量，点乘后直接得到夹角的余弦）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203046-yssyjz7.png" alt="image">​</p>
-<p><strong>点乘运算满足交换律、分配律和结合律</strong></p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203054-ozx0y20.png" alt="image">​</p>
-<p><strong>代数上的点乘即对应的坐标元素做乘积之后相加：</strong></p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203059-3o1v0i4.png" alt="image">​</p>
-<h5 id="点乘在图形学中的应用："><a href="#点乘在图形学中的应用：" class="headerlink" title="点乘在图形学中的应用："></a>点乘在图形学中的应用：</h5><ul>
-<li>找到两个向量（两个方向）之间的夹角。比如光照模型，计算光照到物体表面的法线等等</li>
-<li>找到一个向量到另一个向量上的投影，分解向量</li>
-<li>计算两个向量之间有多接近：夹角越小（点乘的结果越大）越接近。比如镜面反射计算高光点</li>
-<li>可以知道两个向量之间的方向是相同还是相反（正数相同、负数相反）<br>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203127-e9vs5ug.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203146-rmtlix3.png" alt="image">​</li>
-</ul>
-<h5 id="向量叉乘"><a href="#向量叉乘" class="headerlink" title="向量叉乘"></a><strong>向量叉乘</strong></h5><p>叉乘后的向量同时垂直于两个原向量，叉乘得到的向量方向符合右手螺旋定则。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203210-spvivvu.png" alt="image">​</p>
-<p>叉乘不满足交换律，需要加一个负号。但满足分配律和结合律。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203223-2lm3df8.png" alt="image">​</p>
-<p>代数上：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203230-6axkrx6.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203230-6axkrx6.png" alt="image">​​</p>
-<h5 id="叉乘在图形学中的应用："><a href="#叉乘在图形学中的应用：" class="headerlink" title="叉乘在图形学中的应用："></a>叉乘在图形学中的应用：</h5><ul>
-<li><p>判定左和右</p>
-</li>
-<li><p>判定内和外（三角形光栅化的基础）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203304-8s5o1zi.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203311-5841k86.png" alt="image">​​</p>
-</li>
-</ul>
-<h4 id="3-矩阵（Matrics）"><a href="#3-矩阵（Matrics）" class="headerlink" title="3.矩阵（Matrics）"></a>3.矩阵（Matrics）</h4><p>矩阵就是一堆数字，用 m 行 n 列的结构表示。</p>
-<p>图形学中，用矩阵实现一些移动、旋转的变换。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203320-z1jydy0.png" alt="image">​</p>
-<p>矩阵乘一个数就是把矩阵中每一个数字和该数字想乘得到一个矩阵。</p>
-<h5 id="矩阵乘积"><a href="#矩阵乘积" class="headerlink" title="矩阵乘积"></a><strong>矩阵乘积</strong></h5><p>一定要满足前一个矩阵的列数等于后一个矩阵的行数才能实现相乘。计算方式：乘出来的结果在 m 行 b 列就去找相乘的前一个矩阵的 m 行对应的值与后一个矩阵的 n 列对应的值一一相乘后再相加。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203329-p0untj0.png" alt="image">​</p>
-<p>矩阵不满足交换律，但满足结合率和分配律：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203336-mb007jo.png" alt="image">​</p>
-<p>矩阵和向量相乘：认为向量是一个 m 乘 1 的矩阵，则可以将任意一个 n 乘 m 的矩阵与向量相乘，基于该前提实现一个向量变换（比如相对一个坐标轴翻转）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203343-fbta21s.png" alt="image">​</p>
-<h5 id="矩阵转置"><a href="#矩阵转置" class="headerlink" title="矩阵转置"></a><strong>矩阵转置</strong></h5><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203349-3r4s0yl.png" alt="image">​</p>
-<h5 id="单位矩阵"><a href="#单位矩阵" class="headerlink" title="单位矩阵"></a><strong>单位矩阵</strong></h5><p>单位矩阵只有对角线上有元素。</p>
-<p>如果两个矩阵相乘为单位矩阵，则该两个矩阵互为逆矩阵。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203400-dl98u4q.png" alt="image">​</p>
-<p><strong>向量点乘和叉乘写成矩阵的形式（用在旋转的推导上）</strong></p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203405-yaiw812.png" alt="image">​</p>
-]]></content>
-      <categories>
-        <category>图形学</category>
-      </categories>
-  </entry>
-  <entry>
     <title>现代浏览器架构</title>
     <url>/blog/%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E6%9E%B6%E6%9E%84/</url>
     <content><![CDATA[<p>原文：<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuY2hyb21lLmNvbS9ibG9nL2luc2lkZS1icm93c2VyLXBhcnQxLw==" title="Inside look at modern web browser">Inside look at modern web browser<i class="fa fa-external-link-alt"></i></span></p>
@@ -2020,51 +1911,109 @@
       </categories>
   </entry>
   <entry>
-    <title>第七章：z-buffer和着色</title>
-    <url>/blog/%E7%AC%AC%E4%B8%83%E7%AB%A0%EF%BC%9Az-buffer%E5%92%8C%E7%9D%80%E8%89%B2/</url>
-    <content><![CDATA[<p>回顾上一课：</p>
-<ul>
-<li><p>光栅化一个三角形</p>
+    <title>第一、二章：图形学概述、向量与线性代数</title>
+    <url>/blog/%E7%AC%AC%E4%B8%80%E3%80%81%E4%BA%8C%E7%AB%A0%EF%BC%9A%E5%9B%BE%E5%BD%A2%E5%AD%A6%E6%A6%82%E8%BF%B0%E3%80%81%E5%90%91%E9%87%8F%E4%B8%8E%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/</url>
+    <content><![CDATA[<h3 id="第一章-图形学概述"><a href="#第一章-图形学概述" class="headerlink" title="第一章 图形学概述"></a>第一章 图形学概述</h3><h4 id="1-图形学应用场景"><a href="#1-图形学应用场景" class="headerlink" title="1.图形学应用场景"></a>1.图形学应用场景</h4><p>游戏场景渲染、电影特效、动画、设计、可视化（人体三维扫描）、虚拟现实、数字绘图、模拟、GUI、字体排版等</p>
+<h4 id="2-图形学包含内容："><a href="#2-图形学包含内容：" class="headerlink" title="2.图形学包含内容："></a>2.图形学包含内容：</h4><ul>
+<li><p>数学：矩阵、曲线、曲面</p>
 </li>
-<li><p>采样</p>
+<li><p>物理学：光学、着色</p>
 </li>
-<li><p>反走样</p>
+<li><p>描述、操作三维的不同形体</p>
+</li>
+<li><p>动画、仿真</p>
 </li>
 </ul>
-<p>可见性&#x2F;遮挡（把三角形画在屏幕上，同时遮挡关系是对的）：</p>
+<h4 id="3-本课程包含的内容："><a href="#3-本课程包含的内容：" class="headerlink" title="3.本课程包含的内容："></a>3.本课程包含的内容：</h4><ul>
+<li><p>光栅化</p>
 <ul>
-<li>z-buffer</li>
+<li>光栅化是把三维空间的几何形体显示在屏幕上，是实时图形学的主要应用。实时：每秒钟生成 30 帧，否则叫做离线</li>
 </ul>
-<p><strong>painter’s algorithm（画家算法）</strong></p>
-<p>所有物体按深度排序（O(nlogn)），先把远的画上去，再把近的画上去，近的就会遮挡远的。但这种方式无法解决深度上互相遮挡的问题。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210915-pvb608h.png" alt="image">​</p>
-<p><strong>z-buffer</strong></p>
-<p>通过深度缓存维护存储每个像素当前的最小深度</p>
-<p>同步生成最后的结果（frame buffer）和当前看到的场景的任何一个像素对应的深度（depth buffer）。</p>
-<p>假设场景的点到相机的距离表示深度z，且这个值始终是正的，z越小的距离越近，越大的距离越远。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210941-qrlgori.png" alt="image">​</p>
-<p>先假设深度图上每一个像素的深度都是无限远，遍历每一个三角形的每一个像素，如果遍历到的像素深度比当前深度图记录的深度浅，就把深度图上的深度替换为这个像素的深度，否则不变。</p>
-<p>假设每个三角形覆盖的像素是常数项，时间复杂度O(n)。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210946-n9bslnc.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210954-8g8lbbc.png" alt="image">​</p>
-<p>一般两个浮点数值不会一样，所以比较深度的时候一般不会出现深度一样的情况。</p>
-<p>MSAA采样的时候一个像素可能有多个采样点，所以是记录每个采样点的深度。</p>
-<p>透明物体处理不了深度。</p>
-<h4 id="着色（shading）"><a href="#着色（shading）" class="headerlink" title="着色（shading）"></a><strong>着色（shading）</strong></h4><p>对不同物体应用不同的材质。</p>
-<p>一个基础的着色模型（Blinn-Phong 反射模型）</p>
-<p>高光、漫反射、环境光</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211003-0egfb17.png" alt="image">​</p>
-<p>对于一个物体表面的点，定义一个法线方向、一个视线方向、一个光照方向，和一些物体表面的参数</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211128-xr0alxy.png" alt="image">​</p>
-<p>着色有局部性。不考虑其他的物体，只考虑自己。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211133-dna2cne.png" alt="image">​</p>
-<p>一个shading point周围的单位面积接收的能量和光照方向和发现方向夹角的余弦成正比。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211139-xxs0w84.png" alt="image">​</p>
-<p>点光源，光线传播，每个时刻到达一个新的球壳。假如半径为1的时候，光的强度为I，则半径为r的时候，强度变为I&#x2F;r²</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211145-vw9pz1f.png" alt="image">​</p>
-<p>从不同的角度观测同一个点的结果是一样的。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211149-t038nb0.png" alt="image">​</p>
-<p>k_(d)  漫反射的系数，表示吸收了（反射了）多少颜色颜色。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211154-nrtvz3z.png" alt="image">​</p>
+</li>
+<li><p>曲线、曲面</p>
+<ul>
+<li>如何表示一条光滑的曲线、如何表示曲面、怎么把简单曲面通过细分的方法得到更复杂的曲面，形状发生变化的时候面要如何变化，如何保持物体的拓扑结构</li>
+</ul>
+</li>
+<li><p>光线追踪</p>
+<ul>
+<li>实时光线追踪技术</li>
+</ul>
+</li>
+<li><p>动画&#x2F;模拟</p>
+</li>
+</ul>
+<h4 id="4-本课程不包含的内容："><a href="#4-本课程不包含的内容：" class="headerlink" title="4.本课程不包含的内容："></a>4.本课程不包含的内容：</h4><ul>
+<li><p>怎么使用 API</p>
+</li>
+<li><p>怎么做三维建模</p>
+</li>
+<li><p>计算机视觉：一切需要猜测的东西是计算机视觉（根据图像推测模型）。</p>
+<p>​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816202909-3znjtvt.png" alt="image">​​</p>
+<p>model 描述三维空间中形状的几何形体，或对于渲染而言描述它的材质、光照，把这些三维空间中有的东西转为一幅图（渲染），就是计算机图形学。此外，还包括纯三维空间的仿真，材质建模、材质与光线之间作用的研究等，都属于计算机图形学的范畴。</p>
+</li>
+</ul>
+<p>从一张图识别出各种模型（比如识别出照片里哪些是桌子、椅子），或者图形、视频处理（中间涉及到一些推测、推理）等是计算机视觉的范畴。</p>
+<p>某些场景下没有严格的边界，比如 AR 需要二者的结合。</p>
+<h3 id="第二章-向量与线性代数"><a href="#第二章-向量与线性代数" class="headerlink" title="第二章 向量与线性代数"></a>第二章 向量与线性代数</h3><h4 id="1-图形学依赖："><a href="#1-图形学依赖：" class="headerlink" title="1.图形学依赖："></a>1.图形学依赖：</h4><ul>
+<li><p>数学基础：线性代数、微积分、统计</p>
+</li>
+<li><p>数学基础：力学、光学</p>
+</li>
+<li><p>其他杂项：信号处理、数值分析</p>
+</li>
+<li><p>一点点美学</p>
+</li>
+</ul>
+<h4 id="2-向量（Vectors）"><a href="#2-向量（Vectors）" class="headerlink" title="2.向量（Vectors）"></a>2.向量（Vectors）</h4><p>向量表示两个内容：方向和长度，平移向量不会改变它（因为方向和长度不变）。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816202955-jjx4cx2.png" alt="image">​</p>
+<p>一个向量除它的长度可以得到一个长度为 1 的单位向量。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203024-1bw8l0i.png" alt="image">​</p>
+<h5 id="向量求和："><a href="#向量求和：" class="headerlink" title="向量求和："></a><strong>向量求和：</strong></h5><p>几何上：平行四边形法则、三角形法则。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203030-99fojmi.png" alt="image">​</p>
+<p>代数上：坐标相加（笛卡尔坐标系）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203036-px3g9cs.png" alt="image">​</p>
+<h5 id="向量点乘："><a href="#向量点乘：" class="headerlink" title="向量点乘："></a><strong>向量点乘：</strong></h5><p>可以通过点乘快速得到两个向量的夹角（特别是两个向量都是方向向量，点乘后直接得到夹角的余弦）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203046-yssyjz7.png" alt="image">​</p>
+<p><strong>点乘运算满足交换律、分配律和结合律</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203054-ozx0y20.png" alt="image">​</p>
+<p><strong>代数上的点乘即对应的坐标元素做乘积之后相加：</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203059-3o1v0i4.png" alt="image">​</p>
+<h5 id="点乘在图形学中的应用："><a href="#点乘在图形学中的应用：" class="headerlink" title="点乘在图形学中的应用："></a>点乘在图形学中的应用：</h5><ul>
+<li>找到两个向量（两个方向）之间的夹角。比如光照模型，计算光照到物体表面的法线等等</li>
+<li>找到一个向量到另一个向量上的投影，分解向量</li>
+<li>计算两个向量之间有多接近：夹角越小（点乘的结果越大）越接近。比如镜面反射计算高光点</li>
+<li>可以知道两个向量之间的方向是相同还是相反（正数相同、负数相反）<br>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203127-e9vs5ug.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203146-rmtlix3.png" alt="image">​</li>
+</ul>
+<h5 id="向量叉乘"><a href="#向量叉乘" class="headerlink" title="向量叉乘"></a><strong>向量叉乘</strong></h5><p>叉乘后的向量同时垂直于两个原向量，叉乘得到的向量方向符合右手螺旋定则。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203210-spvivvu.png" alt="image">​</p>
+<p>叉乘不满足交换律，需要加一个负号。但满足分配律和结合律。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203223-2lm3df8.png" alt="image">​</p>
+<p>代数上：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203230-6axkrx6.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203230-6axkrx6.png" alt="image">​​</p>
+<h5 id="叉乘在图形学中的应用："><a href="#叉乘在图形学中的应用：" class="headerlink" title="叉乘在图形学中的应用："></a>叉乘在图形学中的应用：</h5><ul>
+<li><p>判定左和右</p>
+</li>
+<li><p>判定内和外（三角形光栅化的基础）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203304-8s5o1zi.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203311-5841k86.png" alt="image">​​</p>
+</li>
+</ul>
+<h4 id="3-矩阵（Matrics）"><a href="#3-矩阵（Matrics）" class="headerlink" title="3.矩阵（Matrics）"></a>3.矩阵（Matrics）</h4><p>矩阵就是一堆数字，用 m 行 n 列的结构表示。</p>
+<p>图形学中，用矩阵实现一些移动、旋转的变换。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203320-z1jydy0.png" alt="image">​</p>
+<p>矩阵乘一个数就是把矩阵中每一个数字和该数字想乘得到一个矩阵。</p>
+<h5 id="矩阵乘积"><a href="#矩阵乘积" class="headerlink" title="矩阵乘积"></a><strong>矩阵乘积</strong></h5><p>一定要满足前一个矩阵的列数等于后一个矩阵的行数才能实现相乘。计算方式：乘出来的结果在 m 行 b 列就去找相乘的前一个矩阵的 m 行对应的值与后一个矩阵的 n 列对应的值一一相乘后再相加。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203329-p0untj0.png" alt="image">​</p>
+<p>矩阵不满足交换律，但满足结合率和分配律：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203336-mb007jo.png" alt="image">​</p>
+<p>矩阵和向量相乘：认为向量是一个 m 乘 1 的矩阵，则可以将任意一个 n 乘 m 的矩阵与向量相乘，基于该前提实现一个向量变换（比如相对一个坐标轴翻转）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203343-fbta21s.png" alt="image">​</p>
+<h5 id="矩阵转置"><a href="#矩阵转置" class="headerlink" title="矩阵转置"></a><strong>矩阵转置</strong></h5><p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203349-3r4s0yl.png" alt="image">​</p>
+<h5 id="单位矩阵"><a href="#单位矩阵" class="headerlink" title="单位矩阵"></a><strong>单位矩阵</strong></h5><p>单位矩阵只有对角线上有元素。</p>
+<p>如果两个矩阵相乘为单位矩阵，则该两个矩阵互为逆矩阵。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203400-dl98u4q.png" alt="image">​</p>
+<p><strong>向量点乘和叉乘写成矩阵的形式（用在旋转的推导上）</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816203405-yaiw812.png" alt="image">​</p>
 ]]></content>
       <categories>
         <category>图形学</category>
@@ -2122,6 +2071,57 @@
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204520-braqfca.png" alt="image">​</p>
 <h4 id="三维变换"><a href="#三维变换" class="headerlink" title="三维变换"></a>三维变换</h4><p>与 2 维类似</p>
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816204527-f0sng0l.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第七章：z-buffer和着色</title>
+    <url>/blog/%E7%AC%AC%E4%B8%83%E7%AB%A0%EF%BC%9Az-buffer%E5%92%8C%E7%9D%80%E8%89%B2/</url>
+    <content><![CDATA[<p>回顾上一课：</p>
+<ul>
+<li><p>光栅化一个三角形</p>
+</li>
+<li><p>采样</p>
+</li>
+<li><p>反走样</p>
+</li>
+</ul>
+<p>可见性&#x2F;遮挡（把三角形画在屏幕上，同时遮挡关系是对的）：</p>
+<ul>
+<li>z-buffer</li>
+</ul>
+<p><strong>painter’s algorithm（画家算法）</strong></p>
+<p>所有物体按深度排序（O(nlogn)），先把远的画上去，再把近的画上去，近的就会遮挡远的。但这种方式无法解决深度上互相遮挡的问题。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210915-pvb608h.png" alt="image">​</p>
+<p><strong>z-buffer</strong></p>
+<p>通过深度缓存维护存储每个像素当前的最小深度</p>
+<p>同步生成最后的结果（frame buffer）和当前看到的场景的任何一个像素对应的深度（depth buffer）。</p>
+<p>假设场景的点到相机的距离表示深度z，且这个值始终是正的，z越小的距离越近，越大的距离越远。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210941-qrlgori.png" alt="image">​</p>
+<p>先假设深度图上每一个像素的深度都是无限远，遍历每一个三角形的每一个像素，如果遍历到的像素深度比当前深度图记录的深度浅，就把深度图上的深度替换为这个像素的深度，否则不变。</p>
+<p>假设每个三角形覆盖的像素是常数项，时间复杂度O(n)。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210946-n9bslnc.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816210954-8g8lbbc.png" alt="image">​</p>
+<p>一般两个浮点数值不会一样，所以比较深度的时候一般不会出现深度一样的情况。</p>
+<p>MSAA采样的时候一个像素可能有多个采样点，所以是记录每个采样点的深度。</p>
+<p>透明物体处理不了深度。</p>
+<h4 id="着色（shading）"><a href="#着色（shading）" class="headerlink" title="着色（shading）"></a><strong>着色（shading）</strong></h4><p>对不同物体应用不同的材质。</p>
+<p>一个基础的着色模型（Blinn-Phong 反射模型）</p>
+<p>高光、漫反射、环境光</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211003-0egfb17.png" alt="image">​</p>
+<p>对于一个物体表面的点，定义一个法线方向、一个视线方向、一个光照方向，和一些物体表面的参数</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211128-xr0alxy.png" alt="image">​</p>
+<p>着色有局部性。不考虑其他的物体，只考虑自己。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211133-dna2cne.png" alt="image">​</p>
+<p>一个shading point周围的单位面积接收的能量和光照方向和发现方向夹角的余弦成正比。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211139-xxs0w84.png" alt="image">​</p>
+<p>点光源，光线传播，每个时刻到达一个新的球壳。假如半径为1的时候，光的强度为I，则半径为r的时候，强度变为I&#x2F;r²</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211145-vw9pz1f.png" alt="image">​</p>
+<p>从不同的角度观测同一个点的结果是一样的。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211149-t038nb0.png" alt="image">​</p>
+<p>k_(d)  漫反射的系数，表示吸收了（反射了）多少颜色颜色。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211154-nrtvz3z.png" alt="image">​</p>
 ]]></content>
       <categories>
         <category>图形学</category>
@@ -2352,146 +2352,6 @@
       </categories>
   </entry>
   <entry>
-    <title>第二十章：颜色和感知</title>
-    <url>/blog/%E7%AC%AC%E4%BA%8C%E5%8D%81%E7%AB%A0%EF%BC%9A%E9%A2%9C%E8%89%B2%E5%92%8C%E6%84%9F%E7%9F%A5/</url>
-    <content><![CDATA[<p>颜色和感知（Color and Perception）</p>
-<p>本节课内容：<br>完成上节课的光场</p>
-<p>颜色</p>
-<ul>
-<li>什么是颜色</li>
-<li>颜色感知</li>
-<li>颜色再现&#x2F;匹配</li>
-<li>颜色空间</li>
-</ul>
-<p>光场（Light Field&#x2F;Lumigraph）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212149-biusqbv.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212153-wripzwk.png" alt="image">​</p>
-<p>我们看到的世界，可以用眼前的一块幕布，来模拟我们在各个方向看到的光照</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212159-t1z7726.png" alt="image">​</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMUplNHkxZTdnMS8/dmRfc291cmNlPWQ2YzE1ZjViZDQ5YjFjZGJiNDIyN2U1ZGMyOWE1NjY2">碟中谍 4 里全息投影<i class="fa fa-external-link-alt"></i></span></p>
-<p>全光函数描述我们能看到的所有东西</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212207-lkbdvwz.png" alt="image">​</p>
-<p>在某个方向看到的光照</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212212-j59oo2d.png" alt="image">​</p>
-<p>加上了波长的参数，可以看到彩色的</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212217-ljy981o.png" alt="image">​</p>
-<p>加上时间的参数，可以看到电影</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212222-ldyl2kk.png" alt="image">​</p>
-<p>再加上空间的参数，在不同位置看到的，可以看到全息电影</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212226-knvbyjb.png" alt="image">​</p>
-<p>最后把函数理解成在任何位置，往任何方向看，在任何时间，看到不同的颜色。这个 7 维的函数就叫做全光函数。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212230-8jqyzha.png" alt="image">​</p>
-<p>可以从全光函数提取一部分信息出来，用来表示复杂的光。光场就是全光函数的一个小部分。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212235-c9ukq57.png" alt="image">​</p>
-<p>定义光线：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212239-1alvcnu.png" alt="image">​</p>
-<p>可以是起点 + 方向，或者是取光线上的任意两点</p>
-<p>重点是需要二维的位置和二维的方向</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212244-vhro91v.png" alt="image">​</p>
-<p>根据光路可逆性，要描述一个物体能被看到的所有情况，即描述这个物体在包围盒上任何一个位置往各个方向过去的光线</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212249-2w9ir16.png" alt="image">​</p>
-<p>光场即在任何一个位置往任何一个方向去的光的强度</p>
-<p>首先三维物体的表面在一个二维的空间中，可以用（u,v）两个变量表示位置，任何一个空间中的方向都可以用（θ，φ）表示，所以光场是一个四维的函数。</p>
-<p>可以从光场中直接提取到任意一个位置看向一个物体的光强度</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212257-vy1ra6a.png" alt="image">​</p>
-<p>可以简化一点，我们不需要知道光场表示的是什么东西，我们只需要知道盒子上表面任意一个点往任意一个方向（观测点）发出的光的强度（前提是观测点不在盒子内部）。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212303-kuret66.png" alt="image">​</p>
-<p>更进一步，可以取一个平面，平面右边是发光的物体，光线会穿过平面。我们可以忽略平面右边的东西，对平面上任意一个点，只需要知道方向就可以。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212310-6saigsp.png" alt="image">​</p>
-<p>也可以用两个平面来定义光场，两个平面各取一个点确定方向：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212315-x788fiz.png" alt="image">​</p>
-<p>用(u,v)和(s,t)来确定光场：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212319-2ex6d8z.png" alt="image">​</p>
-<p>对于两个平面的参数化方法有不同的处理方式：<br />可以固定一个(s,t)，让（u,v）变化：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212324-9sw3nfv.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212327-hp3bgqm.png" alt="image">​</p>
-<p>上图中的上图是从(u,v)平面上找到一个点看向(s,t)平面的所有方向，得到从这个点的方向看过去的物体的全貌</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212332-i285fqr.png" alt="image">​</p>
-<p>下图是从(s,t)平面上找一个点，看向(u,v)平面，这里可以理解为(u,v)平面所有方向看向(s,t)同一个点得到的图像。</p>
-<p>类似于苍蝇的复眼，光照射到一个像素点上是不同方向的光混合起来的，这里在光前面用一个透镜，就可以把光分开，把一个像素不同方向上光分别记录在不同的位置。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212336-lz08vc2.png" alt="image">​</p>
-<h5 id="光场照相机"><a href="#光场照相机" class="headerlink" title="光场照相机"></a><strong>光场照相机</strong></h5><p>先拍照，后期再重新聚焦</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212347-x5da9aq.png" alt="image">​</p>
-<p>光场相机就是用透镜把光分开，一个像素的 irradiance 现在分开记录到一块区域上的 radiance。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212353-tcfytv2.png" alt="image">​</p>
-<p>光场相机还原照片，可以选择一个方向，计算这个方向上像素点接受的光照，这样就可以模拟相机移动。</p>
-<p>重新聚焦和移动相机位置一个道理，光场已经记录了所有方向所有位置的光照信息，只需要选取聚焦对应的方向和位置就可以计算得到。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212358-9q7c6jb.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212402-0ncmilv.png" alt="image">​</p>
-<p>光场照相机的缺陷：</p>
-<ul>
-<li>分辨率不足。以前的一个像素要用很多个像素去记录，对胶片要求很高</li>
-<li>高成本。透镜非常精密，实现需要巨大的成本</li>
-<li>如果要记录更精密的方向信息，位置信息就会丢失的更多（复眼如果圆圈更大，那么圆圈的数量就更少）</li>
-</ul>
-<p>Physical Basis of Color</p>
-<p>颜色是很多基本颜色混合得到的结果</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212412-2xr85v6.png" alt="image">​</p>
-<p>不同颜色的光有不同的波长，图形学关心的通常是可见光的光谱</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212417-e5ouu5i.png" alt="image">​</p>
-<p>谱功率密度就是描述光在任何一个波长的分布是多少</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212422-03r38eq.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212425-yb4zoad.png" alt="image">​</p>
-<p>不同的光有不同的 SPD</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212432-lf9bskw.png" alt="image">​</p>
-<p>SPD 有线性的性质</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212438-83o4esf.png" alt="image">​</p>
-<p>颜色是什么？<br />颜色是人的感知</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212443-9dw0i6f.png" alt="image">​</p>
-<p>人眼的构造：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212448-xrm3hz7.png" alt="image">​</p>
-<p>肌肉会拉扯晶状体改变焦距</p>
-<p>视网膜上有感光细胞</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212453-bfvlha9.png" alt="image">​</p>
-<p>RodCell 棒状细胞，感知光的强度，不感知颜色。用棒状细胞可以得到一个灰度图</p>
-<p>Cones 锥形细胞，感知颜色。锥形细胞内部又分成三种不同的锥形细胞（S，M，L），感应不同范围的波长。</p>
-<p>曲线线叫做响应曲线，即给不同的光会有多强的反应。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212459-wha2myo.png" alt="image">​</p>
-<p>不同的人这些细胞的分布非常不一样</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212503-qagx39w.png" alt="image">​</p>
-<p>把响应曲线和感应到的 SPD 做积分，得到三个数 S、M、L，就是人感知到的颜色，而不是光本身的 SPD。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212509-8gmpyoq.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212514-6wx4ip4.png" alt="image">​</p>
-<p>同色异谱</p>
-<p>光谱不一样，但是人感知到的颜色一样</p>
-<p>通过调和光谱，使得得到的颜色和看到的另一种颜色一样，就是 color mapping 的过程</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212523-a1oxy8r.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212527-jsnrcem.png" alt="image">​</p>
-<p>比如在显示器上显示一个太阳，混合的光谱可以和真实的完全不一样，但最后的颜色是一样的：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212533-rbxf13f.png" alt="image">​</p>
-<p>计算机的成像系统是加色系统<br />把 R、G、B 各自乘上不同的强度再混合起来（画画是减色系统，把各种颜色调和到一起最后会变成黑色）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212538-8531v6x.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212542-vi4gdg1.png" alt="image">​</p>
-<p>混色实验：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212547-dggcuc4.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212550-3k8imeq.png" alt="image">​</p>
-<p>但有一些颜色会怎么混两边颜色都不一样</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212555-61dtj1f.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212559-vg15b9h.png" alt="image">​</p>
-<p>这个时候给左边的颜色加一个颜色，相当于右边的颜色减了一个颜色（真实情况下不能减，因为是加色系统）</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212605-w9725m9.png" alt="image">​</p>
-<p><strong>CIE RGB</strong></p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212611-z91bpi2.png" alt="image">​</p>
-<p>实验测算三种波长的光混出一个波长，得到一个匹配函数：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212616-ko9pk3o.png" alt="image">​</p>
-<p>给任何一种实际光的光谱，把每个波长需要多少 R、G、B 都算出来，然后做积分把颜色表示出来</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212620-zgaxgwj.png" alt="image">​</p>
-<p><strong>颜色空间</strong></p>
-<p>sRGB（标准 RGB）</p>
-<p>RGB 形成的颜色空间色域是有限的</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212625-gk3f7b7.png" alt="image">​</p>
-<p>A Universal Color Space: CIE XYZ</p>
-<p>定义颜色匹配函数，和 RGB 匹配函数不一样，不是实验测出来的匹配系统</p>
-<p>特别的 Y 本身还表示亮度​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212630-bzmd3o3.png" alt="image">​</p>
-<p>可视化 XYZ 系统得到的所有颜色，但是三维的不好显示，所以把 X、Y、Z 做归一化处理，Y 表示亮度，所以把 Y 固定成某一个数，让 X、Z 发生变化，显示的图显示小写的（x, y），看到的形状就叫做色域。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212636-wfe51o6.png" alt="image">​</p>
-<p>色域的中心是白色，是最不纯的颜色，最纯的颜色在边界上。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212642-qtjx9m0.png" alt="image">​</p>
-<p>不同的颜色空间表示的色域是不一样的：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212647-r2sokkt.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212653-57wp5tt.png" alt="image">​​</p>
-<p>HSV Color Space​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212708-u7dxdkg.png" alt="image">​</p>
-<p>通过色调选不同的颜色，通过饱和度选偏白还是偏这个颜色，亮度决定偏黑还是偏这个颜色​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212713-94ok1ay.png" alt="image">​</p>
-<p>CIELAB 空间<br />轴上任意两端端颜色都是互补色：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212719-iuoilio.png" alt="image">​</p>
-<p>互补色（实验得到的，人的大脑的定义）：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212723-3qotxdc.png" alt="image">​</p>
-<p>盯住下图的中心点十秒后切换到另一张白色的图上，会看到互补色：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212727-ny6h0qm.png" alt="image">​</p>
-<p>颜色是感知，所以看到的颜色有多强是感觉的：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212731-0aa227f.png" alt="image">​</p>
-<h5 id="​​​​​​减色系统"><a href="#​​​​​​减色系统" class="headerlink" title="​​​​​​减色系统"></a>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212740-uorj6m5.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212746-pbyyamz.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212750-d2843g9.png" alt="image">​减色系统</h5><p>**CMYK **</p>
-<p>打印上混合各种颜色，所有颜色混起来变成黑色。这里面虽然黑色可以由其他颜色混合得到，但是考虑打印成本，都会带上一个黑色：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212757-g32nl7k.png" alt="image">​</p>
-]]></content>
-      <categories>
-        <category>图形学</category>
-      </categories>
-  </entry>
-  <entry>
     <title>第二十二章：动画和仿真</title>
     <url>/blog/%E7%AC%AC%E4%BA%8C%E5%8D%81%E4%BA%8C%E7%AB%A0%EF%BC%9A%E5%8A%A8%E7%94%BB%E5%92%8C%E4%BB%BF%E7%9C%9F/</url>
     <content><![CDATA[<p>动画和仿真</p>
@@ -2651,68 +2511,140 @@
       </categories>
   </entry>
   <entry>
-    <title>第五章：光栅化</title>
-    <url>/blog/%E7%AC%AC%E4%BA%94%E7%AB%A0%EF%BC%9A%E5%85%89%E6%A0%85%E5%8C%96/</url>
-    <content><![CDATA[<h3 id="光栅化（三角形）"><a href="#光栅化（三角形）" class="headerlink" title="光栅化（三角形）"></a>光栅化（三角形）</h3><p>上节课提到了观测变换：包含视图变换和投影变换。当完成观测矩阵变换后，下一步需要怎么绘制到屏幕上？这就是光栅化</p>
-<p>上节课提到透视投影转换为正交投影，近平面和远平面 z 轴位置不变，远平面大小变成和近平面一样大。</p>
-<p>正交投影里：x 轴定义左（l）和右（r），y 轴定义上（t）和下（b），z 轴定义远（f）和近（n）。</p>
-<h4 id="锥体定义"><a href="#锥体定义" class="headerlink" title="锥体定义"></a><strong>锥体定义</strong></h4><p>n 和 f 在正交投影和透视投影里面都是一样的，我们认为是已知的。做正交投影时我们把锥体 frustum 变成一个长方体，那么怎么定义这个 frustum？<br>假设我们从相机出发，看向一个区域，首先我们给这个近的平面可以定义一个出一个高度和宽度（高宽比），再定义一个视角（field of view，表示可以看到的角度范围）</p>
-<p>下图中平面的上下两条边中点到相机的连线（红线）所夹的角度是竖直方向的可视角度，这个角度用于定义看到的世界。比如广角相机这个角度就比较大，角度越小透视投影就越不明显，比如可以拍到很远的物体。</p>
-<p>同理可推出水平可视角度：相机和左右两条变中点连线所夹的角度。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205535-vbh78yk.png" alt="image">​</p>
-<p>长宽比和垂直可视角可以和做正交投影的长方体转为同一个概念。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205542-jgbgghv.png" alt="image">​</p>
-<p>经过 MVP 投影后，我们会得到一个（-1，1）的三次方的立方形，接着我们要将它绘制到屏幕上。</p>
-<h4 id="屏幕是什么"><a href="#屏幕是什么" class="headerlink" title="屏幕是什么"></a><strong>屏幕是什么</strong></h4><p>1.是一个二维数组，数组的每一个元素是一个像素（pixel）</p>
-<p>2.屏幕分辨率表示像素的多少</p>
-<p>3.屏幕是一个典型的光栅成像设备</p>
-<p>光栅（Raster）是德语里的屏幕的意思，光栅化即把东西画到屏幕上的过程。</p>
-<p>pixel 表示 picture element</p>
-<p>这门课里，我们把像素认为是一个个的小方块（实际的像素比这复杂得多），每一个方块表示一个颜色，一个像素里的颜色都不会变化。一般像素的颜色可以划分为不同的等级（0-255），用 RGB 表示。</p>
-<h4 id="屏幕的空间"><a href="#屏幕的空间" class="headerlink" title="屏幕的空间"></a><strong>屏幕的空间</strong></h4><p>认为屏幕左下角是原点，向右是 x，向上是 y。像素的坐标都是写成 x，y 的形式，用整数坐标来表示。如果一个屏幕的分别率是 width*height，那么所有的像素可以用（0, 0）到（width-1，height-1）来表示，所有像素的中心在(x+0.5, y+0.5)上，屏幕覆盖的范围为(0, 0)到（width, height）。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205553-c8jkudl.png" alt="image">​</p>
-<p>接下来需要把[-1,1]³ 映射到屏幕上，先不管 z 轴，[-1,1]² 转换为[0,width]和[0,height]。<br />先做缩放，然后要保持原点不变，所以还要做一个平移。这个变换被称为视口变换。<br />接下来要把所有的结果打散成像素，画到屏幕上。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205559-q7eeqc8.png" alt="image">​</p>
-<h4 id="成像设备"><a href="#成像设备" class="headerlink" title="成像设备"></a><strong>成像设备</strong></h4><p>早期的 CRT（Cathode Ray Tube）显示设备：</p>
-<p>成像原理：阴极射线管，电子加速后穿过显示设备，然后做偏转，电子打到屏幕上成像。</p>
-<p>成像的过程就是，通过扫描的方式，在屏幕上一行行的画线。提高扫描的速度：隔行扫描<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205606-7s6i94p.png" alt="image">​</p>
-<p>现在的显示设备：</p>
-<p>LCD（Liquid Crystal Display）显示设置</p>
-<p>把内存（比如显存）中的一块区域映射到屏幕上。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205616-c7cac97.png" alt="image">​</p>
-<p>液晶会通过自己的不同排布影响光的偏振方向</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205622-nhs1qm2.png" alt="image">​</p>
-<p>LED 显示设备（发光二极管）</p>
-<p>墨水屏（电压使得黑白墨水翻转， 刷新率很低）</p>
-<h4 id="怎么在成像设备上绘制"><a href="#怎么在成像设备上绘制" class="headerlink" title="怎么在成像设备上绘制"></a><strong>怎么在成像设备上绘制</strong></h4><p>成像即把变换后得到的多边形的顶点打散到各个像素上</p>
-<p>三角形</p>
+    <title>第二十章：颜色和感知</title>
+    <url>/blog/%E7%AC%AC%E4%BA%8C%E5%8D%81%E7%AB%A0%EF%BC%9A%E9%A2%9C%E8%89%B2%E5%92%8C%E6%84%9F%E7%9F%A5/</url>
+    <content><![CDATA[<p>颜色和感知（Color and Perception）</p>
+<p>本节课内容：<br>完成上节课的光场</p>
+<p>颜色</p>
 <ul>
-<li>三角形是最基础的多边形，任何多边形都可以拆成三角形</li>
-<li>三角形内部一定是平面的</li>
-<li>三角形内外定义一定是清晰的</li>
-<li>只要定义三角形的三个顶点，就可以做到一个顶点属性到另一个顶点属性的插值</li>
+<li>什么是颜色</li>
+<li>颜色感知</li>
+<li>颜色再现&#x2F;匹配</li>
+<li>颜色空间</li>
 </ul>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205632-lpzpswt.png" alt="image">​</p>
-<p>当三角形的边只有一部分覆盖到像素，怎么判断是不是要绘制，即判断像素中心点和三角形的关系？</p>
-<h5 id="采样"><a href="#采样" class="headerlink" title="采样"></a><strong>采样</strong></h5><p>把一个函数离散化的过程（给不同的 x 计算不同的函数值）</p>
-<p>用像素中心进行采样，定义不同的函数在像素中心的值</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205641-tuh5fok.png" alt="image">​</p>
-<p>定义一个 inside 的含义，给定任意（x,y）坐标，判定它是否在在三角形内，在三角形里其值为 1，不在则值为 0。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205650-sboxc7r.png" alt="image"></p>
-<p><img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205658-f0rr1m5.png" alt="image">​</p>
-<p>通过叉积的计算可以判断一个点是否在三角形内部</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205703-eu5ow97.png" alt="image">​</p>
-<p>如果有一个点正好在三角形的边界上，自己定义一个标准，不同的 API 可能有不同的标准。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205711-gg1og3r.png" alt="image">​</p>
-<p>不需要对屏幕上的所有像素做光栅化，只需要找到三角形的包围盒。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205716-nqlmtil.png" alt="image">​</p>
-<p>更快的方式是只找每一行的最左和最右。</p>
-<h5 id="实际的像素"><a href="#实际的像素" class="headerlink" title="实际的像素"></a><strong>实际的像素</strong></h5><p>bayer pattern（右侧的）绿色出现的频率最高，因为人眼对绿色更敏感</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205724-ybsurob.png" alt="image">​</p>
-<p>打印和屏幕相反，打印是一个减色系统（因为颜色越多越黑），但是屏幕 rgb 值越高，越亮，越靠近白色</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205729-8qixj10.png" alt="image">​</p>
-<p>光栅化后，由于颜色均匀的填在像素格子里，就会形成锯齿，采样率不够高会导致锯齿更明显，造成走样问题。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205734-cz8ulpy.png" alt="image">​</p>
+<p>光场（Light Field&#x2F;Lumigraph）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212149-biusqbv.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212153-wripzwk.png" alt="image">​</p>
+<p>我们看到的世界，可以用眼前的一块幕布，来模拟我们在各个方向看到的光照</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212159-t1z7726.png" alt="image">​</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMUplNHkxZTdnMS8/dmRfc291cmNlPWQ2YzE1ZjViZDQ5YjFjZGJiNDIyN2U1ZGMyOWE1NjY2">碟中谍 4 里全息投影<i class="fa fa-external-link-alt"></i></span></p>
+<p>全光函数描述我们能看到的所有东西</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212207-lkbdvwz.png" alt="image">​</p>
+<p>在某个方向看到的光照</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212212-j59oo2d.png" alt="image">​</p>
+<p>加上了波长的参数，可以看到彩色的</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212217-ljy981o.png" alt="image">​</p>
+<p>加上时间的参数，可以看到电影</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212222-ldyl2kk.png" alt="image">​</p>
+<p>再加上空间的参数，在不同位置看到的，可以看到全息电影</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212226-knvbyjb.png" alt="image">​</p>
+<p>最后把函数理解成在任何位置，往任何方向看，在任何时间，看到不同的颜色。这个 7 维的函数就叫做全光函数。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212230-8jqyzha.png" alt="image">​</p>
+<p>可以从全光函数提取一部分信息出来，用来表示复杂的光。光场就是全光函数的一个小部分。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212235-c9ukq57.png" alt="image">​</p>
+<p>定义光线：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212239-1alvcnu.png" alt="image">​</p>
+<p>可以是起点 + 方向，或者是取光线上的任意两点</p>
+<p>重点是需要二维的位置和二维的方向</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212244-vhro91v.png" alt="image">​</p>
+<p>根据光路可逆性，要描述一个物体能被看到的所有情况，即描述这个物体在包围盒上任何一个位置往各个方向过去的光线</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212249-2w9ir16.png" alt="image">​</p>
+<p>光场即在任何一个位置往任何一个方向去的光的强度</p>
+<p>首先三维物体的表面在一个二维的空间中，可以用（u,v）两个变量表示位置，任何一个空间中的方向都可以用（θ，φ）表示，所以光场是一个四维的函数。</p>
+<p>可以从光场中直接提取到任意一个位置看向一个物体的光强度</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212257-vy1ra6a.png" alt="image">​</p>
+<p>可以简化一点，我们不需要知道光场表示的是什么东西，我们只需要知道盒子上表面任意一个点往任意一个方向（观测点）发出的光的强度（前提是观测点不在盒子内部）。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212303-kuret66.png" alt="image">​</p>
+<p>更进一步，可以取一个平面，平面右边是发光的物体，光线会穿过平面。我们可以忽略平面右边的东西，对平面上任意一个点，只需要知道方向就可以。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212310-6saigsp.png" alt="image">​</p>
+<p>也可以用两个平面来定义光场，两个平面各取一个点确定方向：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212315-x788fiz.png" alt="image">​</p>
+<p>用(u,v)和(s,t)来确定光场：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212319-2ex6d8z.png" alt="image">​</p>
+<p>对于两个平面的参数化方法有不同的处理方式：<br />可以固定一个(s,t)，让（u,v）变化：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212324-9sw3nfv.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212327-hp3bgqm.png" alt="image">​</p>
+<p>上图中的上图是从(u,v)平面上找到一个点看向(s,t)平面的所有方向，得到从这个点的方向看过去的物体的全貌</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212332-i285fqr.png" alt="image">​</p>
+<p>下图是从(s,t)平面上找一个点，看向(u,v)平面，这里可以理解为(u,v)平面所有方向看向(s,t)同一个点得到的图像。</p>
+<p>类似于苍蝇的复眼，光照射到一个像素点上是不同方向的光混合起来的，这里在光前面用一个透镜，就可以把光分开，把一个像素不同方向上光分别记录在不同的位置。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212336-lz08vc2.png" alt="image">​</p>
+<h5 id="光场照相机"><a href="#光场照相机" class="headerlink" title="光场照相机"></a><strong>光场照相机</strong></h5><p>先拍照，后期再重新聚焦</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212347-x5da9aq.png" alt="image">​</p>
+<p>光场相机就是用透镜把光分开，一个像素的 irradiance 现在分开记录到一块区域上的 radiance。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212353-tcfytv2.png" alt="image">​</p>
+<p>光场相机还原照片，可以选择一个方向，计算这个方向上像素点接受的光照，这样就可以模拟相机移动。</p>
+<p>重新聚焦和移动相机位置一个道理，光场已经记录了所有方向所有位置的光照信息，只需要选取聚焦对应的方向和位置就可以计算得到。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212358-9q7c6jb.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212402-0ncmilv.png" alt="image">​</p>
+<p>光场照相机的缺陷：</p>
+<ul>
+<li>分辨率不足。以前的一个像素要用很多个像素去记录，对胶片要求很高</li>
+<li>高成本。透镜非常精密，实现需要巨大的成本</li>
+<li>如果要记录更精密的方向信息，位置信息就会丢失的更多（复眼如果圆圈更大，那么圆圈的数量就更少）</li>
+</ul>
+<p>Physical Basis of Color</p>
+<p>颜色是很多基本颜色混合得到的结果</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212412-2xr85v6.png" alt="image">​</p>
+<p>不同颜色的光有不同的波长，图形学关心的通常是可见光的光谱</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212417-e5ouu5i.png" alt="image">​</p>
+<p>谱功率密度就是描述光在任何一个波长的分布是多少</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212422-03r38eq.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212425-yb4zoad.png" alt="image">​</p>
+<p>不同的光有不同的 SPD</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212432-lf9bskw.png" alt="image">​</p>
+<p>SPD 有线性的性质</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212438-83o4esf.png" alt="image">​</p>
+<p>颜色是什么？<br />颜色是人的感知</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212443-9dw0i6f.png" alt="image">​</p>
+<p>人眼的构造：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212448-xrm3hz7.png" alt="image">​</p>
+<p>肌肉会拉扯晶状体改变焦距</p>
+<p>视网膜上有感光细胞</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212453-bfvlha9.png" alt="image">​</p>
+<p>RodCell 棒状细胞，感知光的强度，不感知颜色。用棒状细胞可以得到一个灰度图</p>
+<p>Cones 锥形细胞，感知颜色。锥形细胞内部又分成三种不同的锥形细胞（S，M，L），感应不同范围的波长。</p>
+<p>曲线线叫做响应曲线，即给不同的光会有多强的反应。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212459-wha2myo.png" alt="image">​</p>
+<p>不同的人这些细胞的分布非常不一样</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212503-qagx39w.png" alt="image">​</p>
+<p>把响应曲线和感应到的 SPD 做积分，得到三个数 S、M、L，就是人感知到的颜色，而不是光本身的 SPD。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212509-8gmpyoq.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212514-6wx4ip4.png" alt="image">​</p>
+<p>同色异谱</p>
+<p>光谱不一样，但是人感知到的颜色一样</p>
+<p>通过调和光谱，使得得到的颜色和看到的另一种颜色一样，就是 color mapping 的过程</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212523-a1oxy8r.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212527-jsnrcem.png" alt="image">​</p>
+<p>比如在显示器上显示一个太阳，混合的光谱可以和真实的完全不一样，但最后的颜色是一样的：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212533-rbxf13f.png" alt="image">​</p>
+<p>计算机的成像系统是加色系统<br />把 R、G、B 各自乘上不同的强度再混合起来（画画是减色系统，把各种颜色调和到一起最后会变成黑色）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212538-8531v6x.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212542-vi4gdg1.png" alt="image">​</p>
+<p>混色实验：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212547-dggcuc4.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212550-3k8imeq.png" alt="image">​</p>
+<p>但有一些颜色会怎么混两边颜色都不一样</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212555-61dtj1f.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212559-vg15b9h.png" alt="image">​</p>
+<p>这个时候给左边的颜色加一个颜色，相当于右边的颜色减了一个颜色（真实情况下不能减，因为是加色系统）</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212605-w9725m9.png" alt="image">​</p>
+<p><strong>CIE RGB</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212611-z91bpi2.png" alt="image">​</p>
+<p>实验测算三种波长的光混出一个波长，得到一个匹配函数：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212616-ko9pk3o.png" alt="image">​</p>
+<p>给任何一种实际光的光谱，把每个波长需要多少 R、G、B 都算出来，然后做积分把颜色表示出来</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212620-zgaxgwj.png" alt="image">​</p>
+<p><strong>颜色空间</strong></p>
+<p>sRGB（标准 RGB）</p>
+<p>RGB 形成的颜色空间色域是有限的</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212625-gk3f7b7.png" alt="image">​</p>
+<p>A Universal Color Space: CIE XYZ</p>
+<p>定义颜色匹配函数，和 RGB 匹配函数不一样，不是实验测出来的匹配系统</p>
+<p>特别的 Y 本身还表示亮度​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212630-bzmd3o3.png" alt="image">​</p>
+<p>可视化 XYZ 系统得到的所有颜色，但是三维的不好显示，所以把 X、Y、Z 做归一化处理，Y 表示亮度，所以把 Y 固定成某一个数，让 X、Z 发生变化，显示的图显示小写的（x, y），看到的形状就叫做色域。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212636-wfe51o6.png" alt="image">​</p>
+<p>色域的中心是白色，是最不纯的颜色，最纯的颜色在边界上。​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212642-qtjx9m0.png" alt="image">​</p>
+<p>不同的颜色空间表示的色域是不一样的：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212647-r2sokkt.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212653-57wp5tt.png" alt="image">​​</p>
+<p>HSV Color Space​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212708-u7dxdkg.png" alt="image">​</p>
+<p>通过色调选不同的颜色，通过饱和度选偏白还是偏这个颜色，亮度决定偏黑还是偏这个颜色​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212713-94ok1ay.png" alt="image">​</p>
+<p>CIELAB 空间<br />轴上任意两端端颜色都是互补色：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212719-iuoilio.png" alt="image">​</p>
+<p>互补色（实验得到的，人的大脑的定义）：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212723-3qotxdc.png" alt="image">​</p>
+<p>盯住下图的中心点十秒后切换到另一张白色的图上，会看到互补色：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212727-ny6h0qm.png" alt="image">​</p>
+<p>颜色是感知，所以看到的颜色有多强是感觉的：​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212731-0aa227f.png" alt="image">​</p>
+<h5 id="​​​​​​减色系统"><a href="#​​​​​​减色系统" class="headerlink" title="​​​​​​减色系统"></a>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212740-uorj6m5.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212746-pbyyamz.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212750-d2843g9.png" alt="image">​减色系统</h5><p>**CMYK **</p>
+<p>打印上混合各种颜色，所有颜色混起来变成黑色。这里面虽然黑色可以由其他颜色混合得到，但是考虑打印成本，都会带上一个黑色：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817212757-g32nl7k.png" alt="image">​</p>
 ]]></content>
       <categories>
         <category>图形学</category>
@@ -2787,6 +2719,74 @@
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211741-8eowj5b.png" alt="image">​</p>
 <p>这种重复使用依旧衔接的很好的纹理叫做 tiled textures。</p>
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816211746-qu6dqrd.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第五章：光栅化</title>
+    <url>/blog/%E7%AC%AC%E4%BA%94%E7%AB%A0%EF%BC%9A%E5%85%89%E6%A0%85%E5%8C%96/</url>
+    <content><![CDATA[<h3 id="光栅化（三角形）"><a href="#光栅化（三角形）" class="headerlink" title="光栅化（三角形）"></a>光栅化（三角形）</h3><p>上节课提到了观测变换：包含视图变换和投影变换。当完成观测矩阵变换后，下一步需要怎么绘制到屏幕上？这就是光栅化</p>
+<p>上节课提到透视投影转换为正交投影，近平面和远平面 z 轴位置不变，远平面大小变成和近平面一样大。</p>
+<p>正交投影里：x 轴定义左（l）和右（r），y 轴定义上（t）和下（b），z 轴定义远（f）和近（n）。</p>
+<h4 id="锥体定义"><a href="#锥体定义" class="headerlink" title="锥体定义"></a><strong>锥体定义</strong></h4><p>n 和 f 在正交投影和透视投影里面都是一样的，我们认为是已知的。做正交投影时我们把锥体 frustum 变成一个长方体，那么怎么定义这个 frustum？<br>假设我们从相机出发，看向一个区域，首先我们给这个近的平面可以定义一个出一个高度和宽度（高宽比），再定义一个视角（field of view，表示可以看到的角度范围）</p>
+<p>下图中平面的上下两条边中点到相机的连线（红线）所夹的角度是竖直方向的可视角度，这个角度用于定义看到的世界。比如广角相机这个角度就比较大，角度越小透视投影就越不明显，比如可以拍到很远的物体。</p>
+<p>同理可推出水平可视角度：相机和左右两条变中点连线所夹的角度。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205535-vbh78yk.png" alt="image">​</p>
+<p>长宽比和垂直可视角可以和做正交投影的长方体转为同一个概念。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205542-jgbgghv.png" alt="image">​</p>
+<p>经过 MVP 投影后，我们会得到一个（-1，1）的三次方的立方形，接着我们要将它绘制到屏幕上。</p>
+<h4 id="屏幕是什么"><a href="#屏幕是什么" class="headerlink" title="屏幕是什么"></a><strong>屏幕是什么</strong></h4><p>1.是一个二维数组，数组的每一个元素是一个像素（pixel）</p>
+<p>2.屏幕分辨率表示像素的多少</p>
+<p>3.屏幕是一个典型的光栅成像设备</p>
+<p>光栅（Raster）是德语里的屏幕的意思，光栅化即把东西画到屏幕上的过程。</p>
+<p>pixel 表示 picture element</p>
+<p>这门课里，我们把像素认为是一个个的小方块（实际的像素比这复杂得多），每一个方块表示一个颜色，一个像素里的颜色都不会变化。一般像素的颜色可以划分为不同的等级（0-255），用 RGB 表示。</p>
+<h4 id="屏幕的空间"><a href="#屏幕的空间" class="headerlink" title="屏幕的空间"></a><strong>屏幕的空间</strong></h4><p>认为屏幕左下角是原点，向右是 x，向上是 y。像素的坐标都是写成 x，y 的形式，用整数坐标来表示。如果一个屏幕的分别率是 width*height，那么所有的像素可以用（0, 0）到（width-1，height-1）来表示，所有像素的中心在(x+0.5, y+0.5)上，屏幕覆盖的范围为(0, 0)到（width, height）。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205553-c8jkudl.png" alt="image">​</p>
+<p>接下来需要把[-1,1]³ 映射到屏幕上，先不管 z 轴，[-1,1]² 转换为[0,width]和[0,height]。<br />先做缩放，然后要保持原点不变，所以还要做一个平移。这个变换被称为视口变换。<br />接下来要把所有的结果打散成像素，画到屏幕上。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205559-q7eeqc8.png" alt="image">​</p>
+<h4 id="成像设备"><a href="#成像设备" class="headerlink" title="成像设备"></a><strong>成像设备</strong></h4><p>早期的 CRT（Cathode Ray Tube）显示设备：</p>
+<p>成像原理：阴极射线管，电子加速后穿过显示设备，然后做偏转，电子打到屏幕上成像。</p>
+<p>成像的过程就是，通过扫描的方式，在屏幕上一行行的画线。提高扫描的速度：隔行扫描<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205606-7s6i94p.png" alt="image">​</p>
+<p>现在的显示设备：</p>
+<p>LCD（Liquid Crystal Display）显示设置</p>
+<p>把内存（比如显存）中的一块区域映射到屏幕上。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205616-c7cac97.png" alt="image">​</p>
+<p>液晶会通过自己的不同排布影响光的偏振方向</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205622-nhs1qm2.png" alt="image">​</p>
+<p>LED 显示设备（发光二极管）</p>
+<p>墨水屏（电压使得黑白墨水翻转， 刷新率很低）</p>
+<h4 id="怎么在成像设备上绘制"><a href="#怎么在成像设备上绘制" class="headerlink" title="怎么在成像设备上绘制"></a><strong>怎么在成像设备上绘制</strong></h4><p>成像即把变换后得到的多边形的顶点打散到各个像素上</p>
+<p>三角形</p>
+<ul>
+<li>三角形是最基础的多边形，任何多边形都可以拆成三角形</li>
+<li>三角形内部一定是平面的</li>
+<li>三角形内外定义一定是清晰的</li>
+<li>只要定义三角形的三个顶点，就可以做到一个顶点属性到另一个顶点属性的插值</li>
+</ul>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205632-lpzpswt.png" alt="image">​</p>
+<p>当三角形的边只有一部分覆盖到像素，怎么判断是不是要绘制，即判断像素中心点和三角形的关系？</p>
+<h5 id="采样"><a href="#采样" class="headerlink" title="采样"></a><strong>采样</strong></h5><p>把一个函数离散化的过程（给不同的 x 计算不同的函数值）</p>
+<p>用像素中心进行采样，定义不同的函数在像素中心的值</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205641-tuh5fok.png" alt="image">​</p>
+<p>定义一个 inside 的含义，给定任意（x,y）坐标，判定它是否在在三角形内，在三角形里其值为 1，不在则值为 0。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205650-sboxc7r.png" alt="image"></p>
+<p><img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205658-f0rr1m5.png" alt="image">​</p>
+<p>通过叉积的计算可以判断一个点是否在三角形内部</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205703-eu5ow97.png" alt="image">​</p>
+<p>如果有一个点正好在三角形的边界上，自己定义一个标准，不同的 API 可能有不同的标准。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205711-gg1og3r.png" alt="image">​</p>
+<p>不需要对屏幕上的所有像素做光栅化，只需要找到三角形的包围盒。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205716-nqlmtil.png" alt="image">​</p>
+<p>更快的方式是只找每一行的最左和最右。</p>
+<h5 id="实际的像素"><a href="#实际的像素" class="headerlink" title="实际的像素"></a><strong>实际的像素</strong></h5><p>bayer pattern（右侧的）绿色出现的频率最高，因为人眼对绿色更敏感</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205724-ybsurob.png" alt="image">​</p>
+<p>打印和屏幕相反，打印是一个减色系统（因为颜色越多越黑），但是屏幕 rgb 值越高，越亮，越靠近白色</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205729-8qixj10.png" alt="image">​</p>
+<p>光栅化后，由于颜色均匀的填在像素格子里，就会形成锯齿，采样率不够高会导致锯齿更明显，造成走样问题。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230816205734-cz8ulpy.png" alt="image">​</p>
 ]]></content>
       <categories>
         <category>图形学</category>
@@ -3610,6 +3610,111 @@
       </categories>
   </entry>
   <entry>
+    <title>第十六章：Ray tracing4 蒙特卡洛路径追踪</title>
+    <url>/blog/%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0%EF%BC%9ARay%20tracing4%20%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E8%B7%AF%E5%BE%84%E8%BF%BD%E8%B8%AA/</url>
+    <content><![CDATA[<p>Ray tracing4 蒙特卡洛路径追踪</p>
+<p>回顾上节课</p>
+<ul>
+<li><p>辐射度量学</p>
+</li>
+<li><p>光线传播</p>
+<ul>
+<li>反射方程</li>
+<li>渲染方程</li>
+</ul>
+</li>
+<li><p>全局光照</p>
+</li>
+<li><p>概率论复习</p>
+</li>
+</ul>
+<p>本节课：</p>
+<ul>
+<li>简短的 review</li>
+<li>蒙特卡洛积分</li>
+<li>路径追踪</li>
+</ul>
+<p>review</p>
+<p><strong>渲染方程</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205531-83rv7sy.png" alt="image">​</p>
+<p><strong>概率论</strong></p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205535-nn8mt4j.png" alt="image">​</p>
+<h4 id="蒙特卡洛积分"><a href="#蒙特卡洛积分" class="headerlink" title="蒙特卡洛积分"></a><strong>蒙特卡洛积分</strong></h4><p>在 a、b 随机采样，找到一个 x 对应的 f(x)，用 f(x)从 a 到 b 围出一个矩形。做多次采样，平均采样的结果，得到一个定积分的值。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205540-t4ojzq6.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205550-00utws4.png" alt="image">​</p>
+<p>如果是均匀的采样，采样的 PDF 是一个常数：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205555-9eais6i.png" alt="image">​</p>
+<p>对于均匀的采样，蒙特卡洛的积分结果是：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205559-tliff6d.png" alt="image">​</p>
+<p>更通用的情况，不是均匀采样，即 x 的概率密度不是常数，可以通用的表示为：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205607-vnbr1ms.png" alt="image">​</p>
+<p>越多的采样，得到的结果越准。</p>
+<p>在 x 上积分，就得在 x 上采样。</p>
+<h4 id="Path-Tracing"><a href="#Path-Tracing" class="headerlink" title="Path Tracing"></a><strong>Path Tracing</strong></h4><p>使用 Path Tracing 的原因是 whitted-style ray tracing 有一些不符合真实物理，需要提升这种算法。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205617-c2ktegr.png" alt="image">​</p>
+<p>1.whitted-style ray tracing 无法处理磨砂材质的反射，他会认为反射光还朝着镜面反射的方向，而这是不对的：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205622-knaufp2.png" alt="image">​<br />2.whitted-style ray tracing 认为光线打到漫反射到物体就停下来了，但真实的光线还会继续传播</p>
+<p>color-bleeding 一个面反射的光到了另一个漫反射的面上，反射面的颜色流到了被反射的面上</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205628-bm6typt.png" alt="image">​</p>
+<p>whitted-style ray tracing 是错的，但是渲染方程是对的。渲染方程包含了两个问题：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205638-gfyefht.png" alt="image">​</p>
+<p>1.对一个半球求解积分</p>
+<p>2.递归的问题</p>
+<p>可以用蒙特卡洛积分解渲染方程。<br />考虑一个像素点在直接光照下：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205648-r38amiu.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205652-iip2l0f.png" alt="image">​</p>
+<p>简单的做一个均匀的采样</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205658-5yq8i2l.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205702-0ffxy3l.png" alt="image">​</p>
+<p>只考虑直接光照：随机选择一个方向从着色点发出一条射线，如果打到了光源，就把光源的贡献算出来，没打到光源的就不算</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205711-d1r1f2z.png" alt="image">​</p>
+<p>如果是间接光照，Q 点打到 P 点的光照，就相当于 P 点有一个相机看向 Q 点，在 Q 点算出来的直接光照。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205715-8dbw019.png" alt="image">​</p>
+<p>这样可以写出一个递归的算法：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205720-wx6na2p.png" alt="image">​</p>
+<p>但这样会有一些问题<br />1.光线的弹射数量会爆炸</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205724-i7iaqsi.png" alt="image">​</p>
+<p>N&#x3D;1，弹射的数量才不会爆炸。所以，每次只选择一个方向进行采样，这个就叫做路径追踪：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205731-qxnsgdr.png" alt="image">​</p>
+<p>每个像素会有 n 条路径，把 n 条路径的着色结果加起来求平均：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205735-6m6z6ga.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205739-lfzqw6u.png" alt="image">​</p>
+<p>2.递归不会停下来</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205744-7h52x56.png" alt="image">​</p>
+<p>如果限制弹射次数，又会有能量损失。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205749-z4fnpg5.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205754-chsottt.png" alt="image">​​</p>
+<p>于是引入了俄罗斯轮盘赌，以一定的概率决定是不是要停止追踪</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205801-6chp5iw.png" alt="image">​</p>
+<p>最终期望的结果就是正确的结果：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205805-03knfxn.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205809-9y2hisg.png" alt="image">​</p>
+<p>现在可以得到正确的结果，但不够高效：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205813-hnjhhaa.png" alt="image">​</p>
+<p>光源小的情况下，很多 ray 会被浪费：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205817-u9fk3ck.png" alt="image">​</p>
+<p>因此我们考虑对光源采样，从光源随机打出一条射线到着色点。</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205822-f9m6prp.png" alt="image">​<br />但前面提过蒙特卡洛在 x 上采样就得在 x 上积分，但是渲染方程是对立体角积分，但采样是在光源上采样。</p>
+<p>因此，需要把渲染方程写成对光源积分的形式。</p>
+<p>先找到 dA 和 dω 的关系：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205827-c82ijcq.png" alt="image">​</p>
+<p>均匀地对光源采样：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205831-kbeuy6l.png" alt="image">​</p>
+<p>最后把这个光照分为两部分：光源直接照射的部分和其他反射的部分</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205835-ucrghfd.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205843-1o6qtbp.png" alt="image">​</p>
+<p>还有一个问题，需要计算光源被挡住的情况：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205848-1f26j0x.png" alt="image">​</p>
+<p>比较过去和现代的 raytracing<br />过去特指 whitted-style ray tracing，现在是指光线传播问题的一些解决方法的大集合：</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205856-2ebebql.png" alt="image">​</p>
+<p>还有一些没提到的问题：</p>
+<p>怎么对半球均匀采样</p>
+<p>怎么选择采样的 pdf（重要采样）</p>
+<p>怎么生成真正均匀的随机数</p>
+<p>能不能把光源采样和半球采样结合起来</p>
+<p>把经过像素的每条光线的采样结果做平均时是怎么做平均，是否需要加权</p>
+<p>算出来的 radiance 是怎么转换为颜色的</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205907-g9han7u.png" alt="image">​</p>
+<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205912-hurhd9o.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205924-czqjir5.png" alt="image">​</p>
+]]></content>
+      <categories>
+        <category>图形学</category>
+      </categories>
+  </entry>
+  <entry>
     <title>第十四章：Ray tracing2 加速结构、辐射度量学</title>
     <url>/blog/%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0%EF%BC%9ARay%20tracing2%20%E5%8A%A0%E9%80%9F%E7%BB%93%E6%9E%84%E3%80%81%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6/</url>
     <content><![CDATA[<p>Ray Tracing 2</p>
@@ -3779,111 +3884,6 @@
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205018-foe19s0.png" alt="image">​</p>
 <p>小知识：现代 LED 灯上标注的瓦数不是真实的，而是对应于白炽灯的瓦数，LED 实际瓦数更低。</p>
 <p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205022-d5s39qt.png" alt="image">​</p>
-]]></content>
-      <categories>
-        <category>图形学</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>第十六章：Ray tracing4 蒙特卡洛路径追踪</title>
-    <url>/blog/%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0%EF%BC%9ARay%20tracing4%20%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E8%B7%AF%E5%BE%84%E8%BF%BD%E8%B8%AA/</url>
-    <content><![CDATA[<p>Ray tracing4 蒙特卡洛路径追踪</p>
-<p>回顾上节课</p>
-<ul>
-<li><p>辐射度量学</p>
-</li>
-<li><p>光线传播</p>
-<ul>
-<li>反射方程</li>
-<li>渲染方程</li>
-</ul>
-</li>
-<li><p>全局光照</p>
-</li>
-<li><p>概率论复习</p>
-</li>
-</ul>
-<p>本节课：</p>
-<ul>
-<li>简短的 review</li>
-<li>蒙特卡洛积分</li>
-<li>路径追踪</li>
-</ul>
-<p>review</p>
-<p><strong>渲染方程</strong></p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205531-83rv7sy.png" alt="image">​</p>
-<p><strong>概率论</strong></p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205535-nn8mt4j.png" alt="image">​</p>
-<h4 id="蒙特卡洛积分"><a href="#蒙特卡洛积分" class="headerlink" title="蒙特卡洛积分"></a><strong>蒙特卡洛积分</strong></h4><p>在 a、b 随机采样，找到一个 x 对应的 f(x)，用 f(x)从 a 到 b 围出一个矩形。做多次采样，平均采样的结果，得到一个定积分的值。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205540-t4ojzq6.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205550-00utws4.png" alt="image">​</p>
-<p>如果是均匀的采样，采样的 PDF 是一个常数：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205555-9eais6i.png" alt="image">​</p>
-<p>对于均匀的采样，蒙特卡洛的积分结果是：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205559-tliff6d.png" alt="image">​</p>
-<p>更通用的情况，不是均匀采样，即 x 的概率密度不是常数，可以通用的表示为：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205607-vnbr1ms.png" alt="image">​</p>
-<p>越多的采样，得到的结果越准。</p>
-<p>在 x 上积分，就得在 x 上采样。</p>
-<h4 id="Path-Tracing"><a href="#Path-Tracing" class="headerlink" title="Path Tracing"></a><strong>Path Tracing</strong></h4><p>使用 Path Tracing 的原因是 whitted-style ray tracing 有一些不符合真实物理，需要提升这种算法。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205617-c2ktegr.png" alt="image">​</p>
-<p>1.whitted-style ray tracing 无法处理磨砂材质的反射，他会认为反射光还朝着镜面反射的方向，而这是不对的：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205622-knaufp2.png" alt="image">​<br />2.whitted-style ray tracing 认为光线打到漫反射到物体就停下来了，但真实的光线还会继续传播</p>
-<p>color-bleeding 一个面反射的光到了另一个漫反射的面上，反射面的颜色流到了被反射的面上</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205628-bm6typt.png" alt="image">​</p>
-<p>whitted-style ray tracing 是错的，但是渲染方程是对的。渲染方程包含了两个问题：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205638-gfyefht.png" alt="image">​</p>
-<p>1.对一个半球求解积分</p>
-<p>2.递归的问题</p>
-<p>可以用蒙特卡洛积分解渲染方程。<br />考虑一个像素点在直接光照下：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205648-r38amiu.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205652-iip2l0f.png" alt="image">​</p>
-<p>简单的做一个均匀的采样</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205658-5yq8i2l.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205702-0ffxy3l.png" alt="image">​</p>
-<p>只考虑直接光照：随机选择一个方向从着色点发出一条射线，如果打到了光源，就把光源的贡献算出来，没打到光源的就不算</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205711-d1r1f2z.png" alt="image">​</p>
-<p>如果是间接光照，Q 点打到 P 点的光照，就相当于 P 点有一个相机看向 Q 点，在 Q 点算出来的直接光照。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205715-8dbw019.png" alt="image">​</p>
-<p>这样可以写出一个递归的算法：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205720-wx6na2p.png" alt="image">​</p>
-<p>但这样会有一些问题<br />1.光线的弹射数量会爆炸</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205724-i7iaqsi.png" alt="image">​</p>
-<p>N&#x3D;1，弹射的数量才不会爆炸。所以，每次只选择一个方向进行采样，这个就叫做路径追踪：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205731-qxnsgdr.png" alt="image">​</p>
-<p>每个像素会有 n 条路径，把 n 条路径的着色结果加起来求平均：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205735-6m6z6ga.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205739-lfzqw6u.png" alt="image">​</p>
-<p>2.递归不会停下来</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205744-7h52x56.png" alt="image">​</p>
-<p>如果限制弹射次数，又会有能量损失。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205749-z4fnpg5.png" alt="image">​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205754-chsottt.png" alt="image">​​</p>
-<p>于是引入了俄罗斯轮盘赌，以一定的概率决定是不是要停止追踪</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205801-6chp5iw.png" alt="image">​</p>
-<p>最终期望的结果就是正确的结果：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205805-03knfxn.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205809-9y2hisg.png" alt="image">​</p>
-<p>现在可以得到正确的结果，但不够高效：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205813-hnjhhaa.png" alt="image">​</p>
-<p>光源小的情况下，很多 ray 会被浪费：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205817-u9fk3ck.png" alt="image">​</p>
-<p>因此我们考虑对光源采样，从光源随机打出一条射线到着色点。</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205822-f9m6prp.png" alt="image">​<br />但前面提过蒙特卡洛在 x 上采样就得在 x 上积分，但是渲染方程是对立体角积分，但采样是在光源上采样。</p>
-<p>因此，需要把渲染方程写成对光源积分的形式。</p>
-<p>先找到 dA 和 dω 的关系：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205827-c82ijcq.png" alt="image">​</p>
-<p>均匀地对光源采样：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205831-kbeuy6l.png" alt="image">​</p>
-<p>最后把这个光照分为两部分：光源直接照射的部分和其他反射的部分</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205835-ucrghfd.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205843-1o6qtbp.png" alt="image">​</p>
-<p>还有一个问题，需要计算光源被挡住的情况：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205848-1f26j0x.png" alt="image">​</p>
-<p>比较过去和现代的 raytracing<br />过去特指 whitted-style ray tracing，现在是指光线传播问题的一些解决方法的大集合：</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205856-2ebebql.png" alt="image">​</p>
-<p>还有一些没提到的问题：</p>
-<p>怎么对半球均匀采样</p>
-<p>怎么选择采样的 pdf（重要采样）</p>
-<p>怎么生成真正均匀的随机数</p>
-<p>能不能把光源采样和半球采样结合起来</p>
-<p>把经过像素的每条光线的采样结果做平均时是怎么做平均，是否需要加权</p>
-<p>算出来的 radiance 是怎么转换为颜色的</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205907-g9han7u.png" alt="image">​</p>
-<p>​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205912-hurhd9o.png" alt="image">​​<img data-src="/blog/./images/%E5%9B%BE%E5%BD%A2%E5%AD%A6/image-20230817205924-czqjir5.png" alt="image">​</p>
 ]]></content>
       <categories>
         <category>图形学</category>
