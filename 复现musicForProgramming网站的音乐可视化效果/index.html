@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js"></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E5%A4%8D%E7%8E%B0musicForProgramming%E7%BD%91%E7%AB%99%E7%9A%84%E9%9F%B3%E4%B9%90%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%88%E6%9E%9C/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E5%A4%8D%E7%8E%B0musicForProgramming%E7%BD%91%E7%AB%99%E7%9A%84%E9%9F%B3%E4%B9%90%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%88%E6%9E%9C/","path":"复现musicForProgramming网站的音乐可视化效果/","title":"复现 musicforprogramming.net 的音乐可视化效果"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>复现 musicforprogramming.net 的音乐可视化效果 | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">63</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%8D%E7%8E%B0-musicforprogramming-net-%E7%9A%84%E9%9F%B3%E4%B9%90%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%88%E6%9E%9C"><span class="nav-number">1.</span> <span class="nav-text">复现 musicforprogramming.net 的音乐可视化效果</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML-%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">HTML 结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript-%E9%80%BB%E8%BE%91"><span class="nav-number">1.2.</span> <span class="nav-text">JavaScript 逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%88%E6%9E%9C"><span class="nav-number">1.3.</span> <span class="nav-text">可视化效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.4.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rion"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rion</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E8%99%9A%E5%81%87%E7%9A%84%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95/" rel="bookmark">
+        <time class="popular-posts-time">2021-08-31</time>
+        <br>
+      虚假的洗牌算法
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/React-%E2%80%9CKey%E2%80%9D/" rel="bookmark">
+        <time class="popular-posts-time">2023-08-24</time>
+        <br>
+      React “Key”
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%A4%8D%E7%8E%B0musicForProgramming%E7%BD%91%E7%AB%99%E7%9A%84%E9%9F%B3%E4%B9%90%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%88%E6%9E%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="复现 musicforprogramming.net 的音乐可视化效果 | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          复现 musicforprogramming.net 的音乐可视化效果
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-28 19:51:18" itemprop="dateCreated datePublished" datetime="2025-02-28T19:51:18+00:00">2025-02-28</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="复现-musicforprogramming-net-的音乐可视化效果"><a href="#复现-musicforprogramming-net-的音乐可视化效果" class="headerlink" title="复现 musicforprogramming.net 的音乐可视化效果"></a>复现 musicforprogramming.net 的音乐可视化效果</h1><p>最近，我尝试复现了 <span class="exturl" data-url="aHR0cHM6Ly9tdXNpY2ZvcnByb2dyYW1taW5nLm5ldC9sYXRlc3Qv">musicforprogramming.net<i class="fa fa-external-link-alt"></i></span> 网站上的音乐可视化效果。这个网站为程序员提供了一个独特的音乐播放体验，伴随着音乐的播放，屏幕上会显示动态的 ASCII 艺术效果。本文将详细介绍如何通过 HTML、CSS 和 JavaScript 来实现这一效果。</p>
+<h2 id="HTML-结构"><a href="#HTML-结构" class="headerlink" title="HTML 结构"></a>HTML 结构</h2><p>在 <code>index.html</code> 文件中，我们定义了一个简单的网页结构。页面包含一个音频播放器（目前被注释掉了）和四个 <code>&lt;span&gt;</code> 元素，用于显示不同颜色的 ASCII 艺术效果。此外，还有一个播放按钮，用于控制音乐的播放和暂停。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>musicforprogramming<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;style.css&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;pad grey pr-0 pb-0 pt-0&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;fuschia&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">class</span>=<span class="string">&quot;fuschia&quot;</span>&gt;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;orange&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">class</span>=<span class="string">&quot;orange&quot;</span>&gt;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;yellow&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">class</span>=<span class="string">&quot;yellow&quot;</span>&gt;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;green&quot;</span> <span class="attr">class</span>=<span class="string">&quot;green&quot;</span>&gt;</span>________________________________<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&quot;play&quot;</span> <span class="attr">class</span>=<span class="string">&quot;green hover&quot;</span> <span class="attr">disabled:true</span>=<span class="string">&quot;false&quot;</span>&gt;</span>[play]<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;index.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="JavaScript-逻辑"><a href="#JavaScript-逻辑" class="headerlink" title="JavaScript 逻辑"></a>JavaScript 逻辑</h2><p><code>index.js</code> 文件包含了实现音乐播放和可视化效果的核心逻辑。我们使用 <code>AudioContext</code> 和 <code>AnalyserNode</code> 来处理音频数据，并通过 <code>requestAnimationFrame</code> 实现动态的可视化效果。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取页面上的元素</span></span><br><span class="line"><span class="keyword">const</span> F = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;fuschia&quot;</span>); <span class="comment">// 获取紫色区域的元素</span></span><br><span class="line"><span class="keyword">const</span> O = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;orange&quot;</span>); <span class="comment">// 获取橙色区域的元素</span></span><br><span class="line"><span class="keyword">const</span> Y = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;yellow&quot;</span>); <span class="comment">// 获取黄色区域的元素</span></span><br><span class="line"><span class="keyword">const</span> G = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;green&quot;</span>);   <span class="comment">// 获取绿色区域的元素</span></span><br><span class="line"><span class="keyword">const</span> play = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;play&quot;</span>); <span class="comment">// 获取播放按钮元素</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建音频上下文和音频对象</span></span><br><span class="line"><span class="keyword">const</span> audioCtx = <span class="keyword">new</span> <span class="title class_">AudioContext</span>(); <span class="comment">// 创建音频上下文</span></span><br><span class="line"><span class="keyword">const</span> audio = <span class="keyword">new</span> <span class="title class_">Audio</span>(<span class="string">&#x27;./daoxiang.mp3&#x27;</span>); <span class="comment">// 创建音频对象，加载音频文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 为播放按钮添加点击事件监听器</span></span><br><span class="line">play.<span class="title function_">addEventListener</span>(<span class="string">&#x27;click&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!audio.<span class="property">paused</span>) &#123; <span class="comment">// 如果音频正在播放</span></span><br><span class="line">        audio.<span class="title function_">pause</span>(); <span class="comment">// 暂停音频</span></span><br><span class="line">        play.<span class="property">innerText</span> = <span class="string">&quot;[play]&quot;</span>; <span class="comment">// 将按钮文本改为 &quot;[play]&quot;</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    audio.<span class="title function_">play</span>(); <span class="comment">// 播放音频</span></span><br><span class="line">    play.<span class="property">innerText</span> = <span class="string">&quot;[pause]&quot;</span>; <span class="comment">// 将按钮文本改为 &quot;[pause]&quot;</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建音频分析器</span></span><br><span class="line"><span class="keyword">const</span> analyser = audioCtx.<span class="title function_">createAnalyser</span>(); <span class="comment">// 创建音频分析器</span></span><br><span class="line">analyser.<span class="property">minDecibels</span> = -<span class="number">114</span>; <span class="comment">// 设置分析器的最小分贝值</span></span><br><span class="line">analyser.<span class="property">maxDecibels</span> = -<span class="number">30</span>;  <span class="comment">// 设置分析器的最大分贝值</span></span><br><span class="line">analyser.<span class="property">fftSize</span> = <span class="number">2048</span>;     <span class="comment">// 设置 FFT（快速傅里叶变换）的大小</span></span><br><span class="line">analyser.<span class="property">smoothingTimeConstant</span> = <span class="number">.666</span>; <span class="comment">// 设置平滑时间常数，控制音频数据的平滑程度</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置音频属性</span></span><br><span class="line">audio.<span class="property">type</span> = <span class="string">&quot;audio/mp3&quot;</span>; <span class="comment">// 设置音频类型</span></span><br><span class="line">audio.<span class="property">crossOrigin</span> = <span class="string">&quot;anonymous&quot;</span>; <span class="comment">// 设置跨域属性，允许跨域请求</span></span><br><span class="line">audio.<span class="property">volume</span> = <span class="number">.5</span>; <span class="comment">// 设置音频音量</span></span><br><span class="line">audio.<span class="property">autoplay</span> = <span class="literal">true</span>; <span class="comment">// 设置音频自动播放</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 当音频可以播放时，执行以下操作</span></span><br><span class="line">audio.<span class="title function_">addEventListener</span>(<span class="string">&#x27;canplaythrough&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 创建音频源节点</span></span><br><span class="line">    <span class="keyword">const</span> source = audioCtx.<span class="title function_">createMediaElementSource</span>(audio);</span><br><span class="line">    <span class="comment">// 创建增益节点（用于控制音量）</span></span><br><span class="line">    <span class="keyword">const</span> gainNode = audioCtx.<span class="title function_">createGain</span>();</span><br><span class="line">    <span class="comment">// 将音频源连接到分析器</span></span><br><span class="line">    source.<span class="title function_">connect</span>(analyser);</span><br><span class="line">    <span class="comment">// 将音频源连接到增益节点</span></span><br><span class="line">    source.<span class="title function_">connect</span>(gainNode);</span><br><span class="line">    <span class="comment">// 将增益节点连接到音频上下文的输出（通常是扬声器）</span></span><br><span class="line">    gainNode.<span class="title function_">connect</span>(audioCtx.<span class="property">destination</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建一个数组来存储频率数据</span></span><br><span class="line">    <span class="keyword">const</span> dataArray = <span class="keyword">new</span> <span class="title class_">Uint8Array</span>(analyser.<span class="property">frequencyBinCount</span>);</span><br><span class="line">    <span class="comment">// 调用可视化函数，开始渲染音频可视化效果</span></span><br><span class="line">    <span class="title function_">visualize</span>(dataArray);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 可视化函数，用于渲染音频的 ASCII 艺术效果</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">visualize</span>(<span class="params">dataArray</span>) &#123;</span><br><span class="line">    <span class="comment">// 获取当前频率数据</span></span><br><span class="line">    analyser.<span class="title function_">getByteFrequencyData</span>(dataArray);</span><br><span class="line">    <span class="comment">// 初始化四个颜色的 ASCII 字符串</span></span><br><span class="line">    <span class="keyword">let</span> fuschia = <span class="string">&quot;&quot;</span>, orange = <span class="string">&quot;&quot;</span>, yellow = <span class="string">&quot;&quot;</span>, green = <span class="string">&quot;&quot;</span>,</span><br><span class="line">        index = <span class="number">0</span>, adjustValue = -<span class="number">40</span>, multiplier = <span class="number">1.08</span>, offset = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遍历频率数据，生成 ASCII 字符</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">32</span>; i++) &#123;</span><br><span class="line">        <span class="comment">// 计算当前字符的索引，把当前频率数据映射到字符集范围中</span></span><br><span class="line">        index = <span class="title class_">Math</span>.<span class="title function_">max</span>(dataArray[~~offset + i] + adjustValue &gt;&gt; <span class="number">3</span>, <span class="number">0</span>);</span><br><span class="line">        offset *= multiplier; <span class="comment">// 调整偏移量</span></span><br><span class="line">        adjustValue += <span class="number">1.5</span>;    <span class="comment">// 调整值</span></span><br><span class="line">        multiplier += <span class="number">.01</span>;    <span class="comment">// 调整乘数</span></span><br><span class="line">        <span class="comment">// 根据索引从字符集中选择字符</span></span><br><span class="line">        fuschia += <span class="string">&quot;                       _.-•:*^º&#x27;&quot;</span>[index];</span><br><span class="line">        orange += <span class="string">&quot;               _.-•:*^º&#x27;        &quot;</span>[index];</span><br><span class="line">        yellow += <span class="string">&quot;       _.-•:*^º&#x27;                &quot;</span>[index];</span><br><span class="line">        green += <span class="string">&quot;_.-•:*^º&#x27;                       &quot;</span>[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将生成的 ASCII 字符显示在页面上</span></span><br><span class="line">    F.<span class="property">innerText</span> = fuschia;</span><br><span class="line">    O.<span class="property">innerText</span> = orange;</span><br><span class="line">    Y.<span class="property">innerText</span> = yellow;</span><br><span class="line">    G.<span class="property">innerText</span> = green;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 requestAnimationFrame 递归调用 visualize 函数，实现动态效果</span></span><br><span class="line">    <span class="title function_">requestAnimationFrame</span>(<span class="function">() =&gt;</span> <span class="title function_">visualize</span>(dataArray));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="可视化效果"><a href="#可视化效果" class="headerlink" title="可视化效果"></a>可视化效果</h2><p>在 <code>visualize</code> 函数中，我们通过分析音频的频率数据，动态生成 ASCII 字符并将其显示在页面上。每个 <code>&lt;span&gt;</code> 元素对应不同的颜色和字符集，从而在页面上呈现出动态的视觉效果。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过这个项目，我们成功复现了 musicforprogramming.net 的音乐可视化效果。这个项目不仅展示了如何使用 Web Audio API 处理音频数据，还展示了如何通过 JavaScript 和 HTML 实现动态的视觉效果。希望这篇文章对你有所帮助，欢迎在评论区分享你的想法和改进建议。</p>
+<p>你可以访问 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4vbXVzaWNmb3Jwcm9ncmFtbWluZw==">GitHub 仓库<i class="fa fa-external-link-alt"></i></span> 查看完整的代码和效果展示。</p>
+<p>Happy coding! 🎵</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E4%B8%80%E5%9B%BE%E6%90%9E%E6%87%82%20Unit8Array%20ImageData%20Blob/" rel="prev" title="一图搞懂 Unit8Array ImageData Blob">
+                  <i class="fa fa-angle-left"></i> 一图搞懂 Unit8Array ImageData Blob
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rion</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">75k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">4:33</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/sidebar.js"></script><script src="/blog/js/next-boot.js"></script><script src="/blog/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/blog/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js"></script>
+
+  <script src="/blog/js/third-party/pace.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/2.3.0/quicklink.umd.js" integrity="sha256-yvJQOINiH9fWemHn0vCA5lsHWJaHs6/ZmO+1Ft04SvM=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/%E5%A4%8D%E7%8E%B0musicForProgramming%E7%BD%91%E7%AB%99%E7%9A%84%E9%9F%B3%E4%B9%90%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%88%E6%9E%9C/"}</script>
+  <script src="/blog/js/third-party/quicklink.js"></script>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>
