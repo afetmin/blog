@@ -136,6 +136,8 @@ function visualize(dataArray) {
 
 在 `visualize` 函数中，我们通过分析音频的频率数据，动态生成 ASCII 字符并将其显示在页面上。每个 `<span>` 元素对应不同的颜色和字符集，从而在页面上呈现出动态的视觉效果。
 
+<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=114146322417714&bvid=BV1qiQEYQEaJ&cid=28818932980&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+
 ## 总结
 
 通过这个项目，我们成功复现了 musicforprogramming.net 的音乐可视化效果。这个项目不仅展示了如何使用 Web Audio API 处理音频数据，还展示了如何通过 JavaScript 和 HTML 实现动态的视觉效果。希望这篇文章对你有所帮助，欢迎在评论区分享你的想法和改进建议。
