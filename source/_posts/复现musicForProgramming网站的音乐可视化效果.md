@@ -2,6 +2,7 @@
 title: 复现 musicforprogramming.net 的音乐可视化效果
 date: 2025-02-28 19:51:18
 categories: js
+description: 本文将详细介绍如何通过 HTML、CSS 和 JavaScript 来实现 musicforprogramming.net 网站上的音乐可视化效果。
 ---
 
 最近，我尝试复现了 [musicforprogramming.net](https://musicforprogramming.net/latest/) 网站上的音乐可视化效果。这个网站为程序员提供了一个独特的音乐播放体验，伴随着音乐的播放，屏幕上会显示动态的 ASCII 艺术效果。本文将详细介绍如何通过 HTML、CSS 和 JavaScript 来实现这一效果。
