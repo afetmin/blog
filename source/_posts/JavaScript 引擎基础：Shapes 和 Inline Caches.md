@@ -22,7 +22,7 @@ tags: js
 
 　　这一切都得从你所写的 JavaScript 代码开始说起。JavaScript 引擎在解析源码后将其转换为抽象语法树（AST）。基于 AST，解释器便可以开始工作并产生字节码。非常棒！此时引擎正在执行 JavaScript 代码。
 
-![](assets/2018-06-17-Shapes-ICs-1-20250731195703-lfum55d.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-1-20250731195703-lfum55d.svg)​
 
 　　为了使它执行得更快，可以将字节码与分析数据（profiling data）一起发给优化编译器。优化编译器根据已有的分析数据做出特定假设，然后生成高度优化的机器码。
 
@@ -34,23 +34,23 @@ tags: js
 
 　　一般来说，（所有 JavaSciript 引擎）都有一个包含解释器和优化编译器的处理流程。其中，解释器可以快速生成未优化的字节码，而优化编译器会需要更长的时间，以便最终生成高度优化的机器码。
 
-![](assets/2018-06-17-Shapes-ICs-2-20250731195703-o1810gl.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-2-20250731195703-o1810gl.svg)​
 
 　　这个通用流程几乎与在 Chrome 和 Node.js 中使用的 V8 引擎工作流程一致：
 
-![](assets/2018-06-17-Shapes-ICs-3-20250731195703-h5g7tbi.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-3-20250731195703-h5g7tbi.svg)​
 
 　　V8 中的解释器被称作 Ignition，它负责生成并执行字节码。当它运行字节码时会收集分析数据，而它之后可以被用于加快（代码）执行的速度。当一个函数变得 ​*hot*​，例如它经常被调用，生成的字节码和分析数据则会被传给 TurboFan——我们的优化编译器，它会依据分析数据生成高度优化的机器码。
 
-![](assets/2018-06-17-Shapes-ICs-4-20250731195703-bvqiple.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-4-20250731195703-bvqiple.svg)​
 
 　　SpiderMonkey，在 Firefox 和 [SpiderNode](https://github.com/mozilla/spidernode) 中使用的 Mozilla 的 JavaScript 引擎，则有一些不同的地方。它们有两个优化编译器。解释器将代码解释给 Baseline 编译器，该编译器可以生成部分优化的代码。 结合运行代码时收集的分析数据，IonMonkey 编译器可以生成高度优化的代码。 如果尝试优化失败，IonMonkey 将回退到 Baseline 阶段的代码。
 
-![](assets/2018-06-17-Shapes-ICs-5-20250731195703-glc434n.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-5-20250731195703-glc434n.svg)​
 
 　　Chakra，用于 Edge 和 [Node-ChakraCore](https://github.com/nodejs/node-chakracore) 两个项目的微软 JavaScript 引擎，也有类似两个优化编译器的设置。解释器将代码优化成 SimpleJIT——其中 JIT 代表 Just-In-Time 编译器——它可以生成部分优化的代码。 结合分析数据，FullJIT 可以生成更深入优化的代码。
 
-![](assets/2018-06-17-Shapes-ICs-6-20250731195703-aeps8wd.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-6-20250731195703-aeps8wd.svg)​
 
 　　JavaScriptCore（缩写为 JSC），Apple 的 JavaScript 引擎，被用于 Safari 和 React Native 两个项目中，它通过三种不同的优化编译器使效果达到极致。低级解释器 LLInt 将代码解释后传递给 Baseline 编译器，而（经过 Baseline 编译器）优化后的代码便传给了 DFG 编译器，（在 DFG 编译器处理后）结果最终传给了 FTL 编译器进行处理。
 
@@ -66,7 +66,7 @@ tags: js
 
 　　ECMAScript 规范基本上将所有对象定义为由字符串键值映射到 *[property 属性](https://tc39.github.io/ecma262/#sec-property-attributes)* 的字典。
 
-![](assets/2018-06-17-Shapes-ICs-7-20250731195703-77b6v0c.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-7-20250731195703-77b6v0c.svg)​
 
 　　除 `[[Value]]`​ 外，规范还定义了如下属性：
 
@@ -99,13 +99,13 @@ array.length; // → 3
 
 　　JavaScript 在定义数组的方式上和对象类似。例如，包括数组索引的所有键值都明确地表示为字符串。 数组中的第一个元素存储在键值为 ‘0’ 的位置下。
 
-![](assets/2018-06-17-Shapes-ICs-8-20250731195703-qojnacg.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-8-20250731195703-qojnacg.svg)​
 
 　　​`'length'`​ 属性恰好是另一个不可枚举且不可配置的属性。
 
 　　一个元素一旦被添加到数组中，JavaScript 便会自动更新 `'length'`​ 属性的 `[[Value]]`​ 属性值。
 
-![](assets/2018-06-17-Shapes-ICs-9-20250731195703-6bss0jc.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-9-20250731195703-6bss0jc.svg)​
 
 　　一般来说，数组的行为与对象也非常相似。
 
@@ -155,17 +155,17 @@ logX(object2);
 
 　　假设我们有一个具有属性 `x`​ 和 `y`​ 的对象，它使用我们前面讨论过的字典数据结构：它包含用字符串表示的键值，而它们指向各自的属性值。
 
-![](assets/2018-06-17-Shapes-ICs-10-20250731195703-9xiyl9c.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-10-20250731195703-9xiyl9c.svg)​
 
 　　如果你访问某个属性，例如 `object.y`​，JavaScript 引擎会在 `JSObject`​ 中查找键值 `'y'`​，然后加载相应的属性值，最后返回 `[[Value]]`​。
 
 　　但这些属性值在内存中是如何存储的呢？我们是否应该将它们存储为 `JSObject`​ 的一部分？假设我们稍后会遇到更多同形状的对象，那么在 `JSObject`​ 自身存储包含属性名和属性值的完整字典便是很浪费（空间）的，因为对具有相同形状的所有对象我们都重复了一遍属性名称。 它太冗余且引入了不必要的内存使用。 作为优化，引擎将对象的 `Shape`​ 分开存储。
 
-![](assets/2018-06-17-Shapes-ICs-11-20250731195703-1kibgs1.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-11-20250731195703-1kibgs1.svg)​
 
 　　​`Shape`​ 包含除 `[[Value]]`​ 之外的所有属性名和其余特性。相反，`Shape`​ 包含 `JSObject`​ 内部值的偏移量，以便 JavaScript 引擎知道去哪查找具体值。每个具有相同形状的 `JSObject`​ 都指向这个 `Shape`​ 实例。 现在每个 `JSObject`​ 只需要存储对这个对象来说唯一的那些值。
 
-![](assets/2018-06-17-Shapes-ICs-12-20250731195703-velqwtf.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-12-20250731195703-velqwtf.svg)​
 
 　　当我们有多个对象时，优势变得清晰可见。无论有多少个对象，只要它们具有相同的形状，我们只需要将它们的形状与键值属性信息存储一次！
 
@@ -191,13 +191,13 @@ object.y = 6;
 
 　　在 JavaScript 引擎中，shapes 的表现形式被称作 ​*transition 链*​。以下展示一个示例：
 
-![](assets/2018-06-17-Shapes-ICs-13-20250731195703-2r9o102.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-13-20250731195703-2r9o102.svg)​
 
 　　该对象在初始化时没有任何属性，因此它指向一个空的 shape。下一个语句为该对象添加值为 `5`​ 的属性 `“x”`​，所以 JavaScript 引擎转向一个包含属性 `“x”`​ 的 Shape，并向 `JSObject`​ 的第一个偏移量为 0 处添加了一个值 `5`​。 接下来一个语句添加了一个属性 `'y'`​，引擎便转向另一个包含 `'x'`​ 和 `'y'`​ 的 Shape，并将值 `6`​ 附加到 `JSObject`​（位于偏移量 `1`​ 处）。
 
 　　我们甚至不需要为每个 Shape 存储完整的属性表。相反，每个 Shape 只需要知道它引入的新属性。 例如在此例中，我们不必在最后一个 Shape 中存储关于 `'x'`​ 的信息，因为它可以在更早的链上被找到。要做到这一点，每一个 Shape 都会与其之前的 Shape 相连：
 
-![](assets/2018-06-17-Shapes-ICs-14-20250731195703-73xvy14.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-14-20250731195703-73xvy14.svg)​
 
 　　如果你在 JavaScript 代码中写到了 `o.x`​，则 JavaScript 引擎会沿着 transition 链去查找属性 `“x”`​，直到找到引入属性 `“x”` ​的 Shape。
 
@@ -212,7 +212,7 @@ object2.y = 6;
 
 　　在这种情况下我们便必须进行分支操作，此时我们最终会得到一个 *transition 树* 而不是 transition 链：
 
-![](assets/2018-06-17-Shapes-ICs-15-20250731195703-c89n4qh.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-15-20250731195703-c89n4qh.svg)​
 
 　　在这里，我们创建一个空对象 `a`​，然后为它添加一个属性 `'x'`​。 我们最终得到一个包含单个值的 `JSObject`​，以及两个 Shapes：空 Shape 和仅包含属性 `x` ​的 Shape。
 
@@ -230,7 +230,7 @@ const object2 = { x: 6 };
 
 　　在 `object2`​ 一例中，直接生成具有属性 `x`​ 的对象是有意义的，而不是从空对象开始然后进行 transition 连接。
 
-![](assets/2018-06-17-Shapes-ICs-16-20250731195703-xacgv8w.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-16-20250731195703-xacgv8w.svg)​
 
 　　包含属性 `'x'`​ 的对象字面量从包含 `'x'`​ 的 shape 开始，可以有效地跳过空的 shape。V8 和 SpiderMonkey （至少）正是这么做的。这种优化缩短了 transition 链，并使得从字面量构造对象更加高效。
 
@@ -250,21 +250,21 @@ function getX(o) {
 
 　　如果我们在 JSC 中执行这个函数，它会生成如下字节码：
 
-![](assets/2018-06-17-Shapes-ICs-17-20250731195703-j1tl617.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-17-20250731195703-j1tl617.svg)​
 
 　　指令一 `get_by_id`​ 从第一个参数（`arg1`​）中加载属性 `'x'`​ 值并将其存储到地址 `loc0`​ 中。 第二条指令返回我们存储到 `loc0`​ 中的内容。
 
 　　JSC 还在 `get_by_id`​ 指令中嵌入了 Inline Cache，它由两个未初始化的插槽组成。
 
-![](assets/2018-06-17-Shapes-ICs-18-20250731195703-4wsoybd.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-18-20250731195703-4wsoybd.svg)​
 
 　　现在让我们假设我们用对象 `{x：'a'}`​ 调用 `getX`​ 函数。正如我们所知，这个对象有一个包含属性 `'x'`​ 的 Shape，该 Shape 存储了属性 `x`​ 的偏移量和其他特性。当你第一次执行该函数时，`get_by_id`​ 指令将查找属性 `'x'`​，然后发现其值存储在偏移量 `0`​ 处。
 
-![](assets/2018-06-17-Shapes-ICs-19-20250731195703-4rre9gv.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-19-20250731195703-4rre9gv.svg)​
 
 　　嵌入到 `get_by_id`​ 指令中的 IC 存储该属性的 shape 和偏移量：
 
-![](assets/2018-06-17-Shapes-ICs-20-20250731195703-wspc1xs.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-20-20250731195703-wspc1xs.svg)​
 
 　　对于后续运行，IC 只需要对比 shape，如果它与以前相同，只需从记忆的偏移量处加载该属性值。具体来说，如果 JavaScript 引擎看到一个对象的 shape 之前被 IC 记录过，它则不再需要接触属性信息——而是完全可以跳过昂贵的属性信息查找（过程）。这比每次查找属性要快得多。
 
@@ -282,11 +282,11 @@ const array = [
 
 　　引擎存储了数组长度（`1`​），并指向包含 `offset`​ 和 `'length'`​ 特性属性的 Shape。
 
-![](assets/2018-06-17-Shapes-ICs-21-20250731195703-a7oh50b.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-21-20250731195703-a7oh50b.svg)​
 
 　　这与我们之前见过的类似……但数组值存储在哪里呢？
 
-![](assets/2018-06-17-Shapes-ICs-22-20250731195703-q246gty.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-22-20250731195703-q246gty.svg)​
 
 　　每个数组都有一个单独的 ​*elements backing store*​，其中包含所有数组索引的属性值。JavaScript 引擎不必为数组元素存储任何属性特性，因为它们通常都是可写的，可枚举的以及可配置的。
 
@@ -310,7 +310,7 @@ const array = Object.defineProperty(
 
 　　在这种边缘情况下，JavaScript 引擎会将全部的 elements backing store 表示为一个由数组下标映射到属性特性的字典。
 
-![](assets/2018-06-17-Shapes-ICs-23-20250731195703-3uvsw23.svg)​
+![](./images/assets/2018-06-17-Shapes-ICs-23-20250731195703-3uvsw23.svg)​
 
 　　即使只有一个数组元素具有非默认属性，整个数组的 backing store 处理也会进入这种缓慢而低效的模式。
 
