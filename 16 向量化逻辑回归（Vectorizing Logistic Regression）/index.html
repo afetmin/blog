@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.26.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/16%20%E5%90%91%E9%87%8F%E5%8C%96%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%EF%BC%88Vectorizing%20Logistic%20Regression%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/16%20%E5%90%91%E9%87%8F%E5%8C%96%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%EF%BC%88Vectorizing%20Logistic%20Regression%EF%BC%89/","path":"16 向量化逻辑回归（Vectorizing Logistic Regression）/","title":"16 向量化逻辑回归（Vectorizing Logistic Regression）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>16 向量化逻辑回归（Vectorizing Logistic Regression） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/16%20%E5%90%91%E9%87%8F%E5%8C%96%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%EF%BC%88Vectorizing%20Logistic%20Regression%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">87</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8E%AF-%E6%A0%B8%E5%BF%83%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">🎯 核心目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1%EF%B8%8F%E2%83%A3-%E4%BC%A0%E7%BB%9F%E6%96%B9%E6%B3%95-vs-%E5%90%91%E9%87%8F%E5%8C%96%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">1️⃣ 传统方法 vs 向量化方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9D%8C-%E4%BC%A0%E7%BB%9F%E6%96%B9%E6%B3%95%EF%BC%88%E4%BD%8E%E6%95%88%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">❌ 传统方法（低效）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E5%90%91%E9%87%8F%E5%8C%96%E6%96%B9%E6%B3%95%EF%BC%88%E9%AB%98%E6%95%88%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">✅ 向量化方法（高效）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%EF%B8%8F%E2%83%A3-%E6%95%B0%E6%8D%AE%E8%A1%A8%E7%A4%BA%EF%BC%9A%E4%BB%8E%E5%90%91%E9%87%8F%E5%88%B0%E7%9F%A9%E9%98%B5"><span class="nav-number">3.</span> <span class="nav-text">2️⃣ 数据表示：从向量到矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%EF%B8%8F%E2%83%A3-%E5%90%91%E9%87%8F%E5%8C%96%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="nav-number">4.</span> <span class="nav-text">3️⃣ 向量化前向传播</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-1%EF%BC%9A%E8%AE%A1%E7%AE%97%E6%89%80%E6%9C%89-z-i-%E2%86%92-%E5%BE%97%E5%88%B0%E5%90%91%E9%87%8F-Z"><span class="nav-number">4.1.</span> <span class="nav-text">步骤 1：计算所有 $z^{(i)}$ → 得到向量 $Z$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-2%EF%BC%9A%E8%AE%A1%E7%AE%97%E6%89%80%E6%9C%89%E6%BF%80%E6%B4%BB%E5%80%BC-a-i-%E2%86%92-%E5%BE%97%E5%88%B0%E5%90%91%E9%87%8F-A"><span class="nav-number">4.2.</span> <span class="nav-text">步骤 2：计算所有激活值 $a^{(i)}$ → 得到向量 $A$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%EF%B8%8F%E2%83%A3-Python-NumPy-%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%B8%80%E8%A1%8C%E4%BB%A3%E7%A0%81%EF%BC%81%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">4️⃣ Python &#x2F; NumPy 实现（一行代码！）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%EF%B8%8F%E2%83%A3-%E5%85%B3%E9%94%AE%E4%BC%98%E5%8A%BF%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">5️⃣ 关键优势总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%EF%B8%8F%E2%83%A3-%E5%90%8E%E7%BB%AD%E9%A2%84%E5%91%8A%EF%BC%9A%E5%90%91%E9%87%8F%E5%8C%96%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="nav-number">7.</span> <span class="nav-text">6️⃣ 后续预告：向量化反向传播</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-%E6%80%BB%E7%BB%93%E8%A6%81%E7%82%B9%EF%BC%88Key-Takeaways%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">📌 总结要点（Key Takeaways）</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rion"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rion</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">87</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/11%20%E4%BD%BF%E7%94%A8%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%B1%82%E5%AF%BC%EF%BC%88Derivatives%20with%20a%20Computation%20Graph%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      11 使用计算图求导（Derivatives with a Computation Graph）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/17%20%E5%90%91%E9%87%8F%E5%8C%96%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97%EF%BC%88Vectorizing%20Logistic%20Regression_s%20Gradient%20Computation%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-15</time>
+        <br>
+      17 向量化逻辑回归的梯度计算（Vectorizing Logistic Regression's Gradient Computation）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/12%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20for%20Logistic%20Regression%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      12 逻辑回归的梯度下降（Gradient Descent for Logistic Regression）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/18%20Python%20%E4%B8%AD%E7%9A%84%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6%EF%BC%88Broadcasting%20in%20Python%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-15</time>
+        <br>
+      18 Python 中的广播机制（Broadcasting in Python）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/10%20%E8%AE%A1%E7%AE%97%E5%9B%BE%EF%BC%88Computation%20Graph%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      10 计算图（Computation Graph）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/16%20%E5%90%91%E9%87%8F%E5%8C%96%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%EF%BC%88Vectorizing%20Logistic%20Regression%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="16 向量化逻辑回归（Vectorizing Logistic Regression） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          16 向量化逻辑回归（Vectorizing Logistic Regression）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-08 19:50:52" itemprop="dateCreated datePublished" datetime="2025-12-08T19:50:52+00:00">2025-12-08</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>891</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="🎯-核心目标"><a href="#🎯-核心目标" class="headerlink" title="🎯 核心目标"></a>🎯 核心目标</h3><p>　　在不使用任何显式 <code>for</code>​ 循环的前提下，<strong>一次性对整个训练集</strong>（共 $M$ 个样本）进行前向传播（forward propagation）和激活值计算，从而大幅提升计算效率。这是深度学习中<strong>向量化</strong>（vectorization）的核心思想。</p>
+<hr>
+<h2 id="1️⃣-传统方法-vs-向量化方法"><a href="#1️⃣-传统方法-vs-向量化方法" class="headerlink" title="1️⃣ 传统方法 vs 向量化方法"></a>1️⃣ 传统方法 vs 向量化方法</h2><h3 id="❌-传统方法（低效）"><a href="#❌-传统方法（低效）" class="headerlink" title="❌ 传统方法（低效）"></a>❌ 传统方法（低效）</h3><p>　　对于每个训练样本 $x^{(i)} \in \mathbb{R}^{n_x}$，依次计算：</p>
+<p>$$<br>z^{(i)} &#x3D; w^T x^{(i)} + b \<br>a^{(i)} &#x3D; \sigma(z^{(i)}) &#x3D; \frac{1}{1 + e^{-z^{(i)}}}<br>$$</p>
+<p>　　需要循环 $M$ 次 → 时间复杂度高，无法利用现代 CPU&#x2F;GPU 的并行能力。</p>
+<h3 id="✅-向量化方法（高效）"><a href="#✅-向量化方法（高效）" class="headerlink" title="✅ 向量化方法（高效）"></a>✅ 向量化方法（高效）</h3><p>　　将所有训练样本<strong>堆叠成矩阵</strong>，一次性完成全部计算。</p>
+<hr>
+<h2 id="2️⃣-数据表示：从向量到矩阵"><a href="#2️⃣-数据表示：从向量到矩阵" class="headerlink" title="2️⃣ 数据表示：从向量到矩阵"></a>2️⃣ 数据表示：从向量到矩阵</h2><ul>
+<li><p>单个输入样本：$x^{(i)} \in \mathbb{R}^{n_x}$</p>
+</li>
+<li><p>将 $M$ 个样本横向堆叠成 <strong>输入矩阵</strong> $X$：</p>
+<p>$$<br>X &#x3D; \begin{bmatrix}<br>\vert &amp; \vert &amp; &amp; \vert \<br>x^{(1)} &amp; x^{(2)} &amp; \cdots &amp; x^{(M)} \<br>\vert &amp; \vert &amp; &amp; \vert<br>\end{bmatrix} \in \mathbb{R}^{n_x \times M}<br>$$</p>
+</li>
+</ul>
+<blockquote>
+<p>💡 注意：每一列是一个样本（column-major），这是深度学习中的标准约定。</p>
+</blockquote>
+<hr>
+<h2 id="3️⃣-向量化前向传播"><a href="#3️⃣-向量化前向传播" class="headerlink" title="3️⃣ 向量化前向传播"></a>3️⃣ 向量化前向传播</h2><h3 id="步骤-1：计算所有-z-i-→-得到向量-Z"><a href="#步骤-1：计算所有-z-i-→-得到向量-Z" class="headerlink" title="步骤 1：计算所有 $z^{(i)}$ → 得到向量 $Z$"></a>步骤 1：计算所有 $z^{(i)}$ → 得到向量 $Z$</h3><p>　　我们希望一次性计算：</p>
+<p>$$<br>Z &#x3D; \begin{bmatrix} z^{(1)} &amp; z^{(2)} &amp; \cdots &amp; z^{(M)} \end{bmatrix} \in \mathbb{R}^{1 \times M}<br>$$</p>
+<p>　　利用矩阵运算：</p>
+<p>$$<br>Z &#x3D; w^T X + b<br>$$</p>
+<p>　　其中：</p>
+<ul>
+<li>$w \in \mathbb{R}^{n_x}$ 是权重向量</li>
+<li>$w^T X \in \mathbb{R}^{1 \times M}$：每一列是 $w^T x^{(i)}$</li>
+<li>$b \in \mathbb{R}$ 是标量偏置</li>
+</ul>
+<blockquote>
+<p>🔍 <strong>广播机制</strong>（Broadcasting）<br>虽然 $b$ 是标量，但在 NumPy 中执行 <code>w.T @ X + b</code> 时，Python 会自动将 $b$ 广播为形状 $(1, M)$ 的行向量 $[b, b, \dots, b]$，然后逐元素相加。</p>
+</blockquote>
+<h3 id="步骤-2：计算所有激活值-a-i-→-得到向量-A"><a href="#步骤-2：计算所有激活值-a-i-→-得到向量-A" class="headerlink" title="步骤 2：计算所有激活值 $a^{(i)}$ → 得到向量 $A$"></a>步骤 2：计算所有激活值 $a^{(i)}$ → 得到向量 $A$</h3><p>　　定义 sigmoid 函数作用于整个矩阵（<strong>向量化 sigmoid</strong>）：</p>
+<p>$$<br>A &#x3D; \sigma(Z) &#x3D; \frac{1}{1 + e^{-Z}} \quad \text{（逐元素应用）}<br>$$</p>
+<p>　　结果：</p>
+<p>$$<br>A &#x3D; \begin{bmatrix} a^{(1)} &amp; a^{(2)} &amp; \cdots &amp; a^{(M)} \end{bmatrix} \in \mathbb{R}^{1 \times M}<br>$$</p>
+<hr>
+<h2 id="4️⃣-Python-NumPy-实现（一行代码！）"><a href="#4️⃣-Python-NumPy-实现（一行代码！）" class="headerlink" title="4️⃣ Python &#x2F; NumPy 实现（一行代码！）"></a>4️⃣ Python &#x2F; NumPy 实现（一行代码！）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 假设：</span></span><br><span class="line"><span class="comment"># X.shape = (n_x, M)</span></span><br><span class="line"><span class="comment"># w.shape = (n_x, 1) 或 (n_x,) —— 但通常用 (n_x, 1)</span></span><br><span class="line"><span class="comment"># b is a scalar</span></span><br><span class="line"></span><br><span class="line">Z = np.dot(w.T, X) + b          <span class="comment"># shape: (1, M)</span></span><br><span class="line">A = <span class="number">1</span> / (<span class="number">1</span> + np.exp(-Z))        <span class="comment"># vectorized sigmoid, shape: (1, M)</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>✅ 这两行代码就完成了对整个训练集的前向传播，<strong>无任何 for 循环</strong>！</p>
+</blockquote>
+<hr>
+<h2 id="5️⃣-关键优势总结"><a href="#5️⃣-关键优势总结" class="headerlink" title="5️⃣ 关键优势总结"></a>5️⃣ 关键优势总结</h2><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>传统方法</th>
+<th>向量化方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>循环次数</td>
+<td>$M$ 次</td>
+<td>0 次</td>
+</tr>
+<tr>
+<td>计算效率</td>
+<td>低（串行）</td>
+<td>高（并行）</td>
+</tr>
+<tr>
+<td>代码简洁性</td>
+<td>冗长</td>
+<td>极简（1~2 行）</td>
+</tr>
+<tr>
+<td>可扩展性</td>
+<td>难以扩展到深层网络</td>
+<td>天然适用于神经网络</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="6️⃣-后续预告：向量化反向传播"><a href="#6️⃣-后续预告：向量化反向传播" class="headerlink" title="6️⃣ 后续预告：向量化反向传播"></a>6️⃣ 后续预告：向量化反向传播</h2><p>　　课程提到，<strong>反向传播</strong>（backward propagation）同样可以向量化：</p>
+<ul>
+<li><p>一次性计算所有样本的梯度 $\frac{\partial \mathcal{L}}{\partial w}$ 和 $\frac{\partial \mathcal{L}}{\partial b}$</p>
+</li>
+<li><p>利用 $dZ &#x3D; A - Y$（其中 $Y$ 是真实标签矩阵）</p>
+</li>
+<li><p>最终得到：</p>
+<p>$$<br>dw &#x3D; \frac{1}{M} X (A - Y)^T \<br>db &#x3D; \frac{1}{M} \sum_{i&#x3D;1}^M (a^{(i)} - y^{(i)})<br>$$</p>
+</li>
+</ul>
+<blockquote>
+<p>这部分将在下一节详细讲解。</p>
+</blockquote>
+<hr>
+<h2 id="📌-总结要点（Key-Takeaways）"><a href="#📌-总结要点（Key-Takeaways）" class="headerlink" title="📌 总结要点（Key Takeaways）"></a>📌 总结要点（Key Takeaways）</h2><ol>
+<li><p><strong>向量化是深度学习高效计算的基石</strong>。</p>
+</li>
+<li><p>将训练样本按列堆叠成矩阵 $X \in \mathbb{R}^{n_x \times M}$。</p>
+</li>
+<li><p>前向传播可写为：</p>
+<p> $$<br> Z &#x3D; w^T X + b,\quad A &#x3D; \sigma(Z)<br> $$</p>
+</li>
+<li><p>利用 NumPy 的<strong>广播机制</strong>和<strong>向量化函数</strong>，避免显式循环。</p>
+</li>
+<li><p>此方法可无缝推广到多层神经网络。</p>
+</li>
+</ol>
+<hr>
+<p>　　如果你正在学习深度学习编程，强烈建议你在 Jupyter Notebook 中亲手实现这个向量化逻辑回归，并与 for 循环版本对比速度（可用 <code>%timeit</code>），你会直观感受到向量化的威力！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/15%20%E6%9B%B4%E5%A4%9A%E5%90%91%E9%87%8F%E5%8C%96%E7%A4%BA%E4%BE%8B%EF%BC%88More%20Vectorization%20Examples%EF%BC%89/" rel="prev" title="15 更多向量化示例（More Vectorization Examples）">
+                  <i class="fa fa-angle-left"></i> 15 更多向量化示例（More Vectorization Examples）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/17%20%E5%90%91%E9%87%8F%E5%8C%96%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97%EF%BC%88Vectorizing%20Logistic%20Regression_s%20Gradient%20Computation%EF%BC%89/" rel="next" title="17 向量化逻辑回归的梯度计算（Vectorizing Logistic Regression&#39;s Gradient Computation）">
+                  17 向量化逻辑回归的梯度计算（Vectorizing Logistic Regression's Gradient Computation） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rion</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">101k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">6:09</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

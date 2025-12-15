@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.26.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/05%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/05%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/","path":"05 逻辑回归/","title":"05 逻辑回归"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>05 逻辑回归 | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/05%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">87</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%AF%BE%E7%A8%8B%E5%86%85%E5%AE%B9%E8%AF%A6%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">一、课程内容详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%EF%BC%88Logistic-Regression%EF%BC%89%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">1. 逻辑回归（Logistic Regression）简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%B8%BA%E4%BD%95%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">2. 为何不能直接使用线性回归？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A0%B8%E5%BF%83%EF%BC%9ASigmoid-%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.</span> <span class="nav-text">3. 逻辑回归的核心：Sigmoid 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Sigmoid-%E5%87%BD%E6%95%B0%E6%80%A7%E8%B4%A8%EF%BC%9A"><span class="nav-number">1.3.1.</span> <span class="nav-text">Sigmoid 函数性质：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E"><span class="nav-number">1.4.</span> <span class="nav-text">4. 参数说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87"><span class="nav-number">1.5.</span> <span class="nav-text">5. 学习目标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%AF%BE%E7%A8%8B%E6%A0%B8%E5%BF%83%E8%A6%81%E7%82%B9%E6%80%BB%E7%BB%93"><span class="nav-number">2.</span> <span class="nav-text">二、课程核心要点总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E8%A1%A5%E5%85%85%E8%AF%B4%E6%98%8E"><span class="nav-number">3.</span> <span class="nav-text">四、补充说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8E%AF-%E5%AE%83%E6%98%AF%E5%B9%B2%E5%95%A5%E7%9A%84%EF%BC%9F"><span class="nav-number">3.1.</span> <span class="nav-text">🎯 它是干啥的？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9D%8C-%E4%B8%BA%E5%95%A5%E4%B8%8D%E8%83%BD%E7%94%A8%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%EF%BC%9F"><span class="nav-number">3.2.</span> <span class="nav-text">❌ 为啥不能用线性回归？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%A8-%E6%A0%B8%E5%BF%83%E6%AD%A6%E5%99%A8%EF%BC%9ASigmoid-%E5%87%BD%E6%95%B0"><span class="nav-number">3.3.</span> <span class="nav-text">✨ 核心武器：Sigmoid 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%A0-%E6%A8%A1%E5%9E%8B%E6%80%8E%E4%B9%88%E7%AE%97%E9%A2%84%E6%B5%8B%E7%BB%93%E6%9E%9C%EF%BC%9F"><span class="nav-number">3.4.</span> <span class="nav-text">🧠 模型怎么算预测结果？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%94%A7-%E5%8F%82%E6%95%B0%E9%95%BF%E4%BB%80%E4%B9%88%E6%A0%B7%EF%BC%9F"><span class="nav-number">3.5.</span> <span class="nav-text">🔧 参数长什么样？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%9A-%E6%8E%A5%E4%B8%8B%E6%9D%A5%E8%A6%81%E5%AD%A6%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">3.6.</span> <span class="nav-text">📚 接下来要学什么？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%A9-%E8%B6%85%E5%85%BC%E5%AE%B9%E4%B8%AD%E6%96%87%E8%84%91%E5%9B%BE"><span class="nav-number">4.</span> <span class="nav-text">🧩 超兼容中文脑图</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rion"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rion</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">87</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/13%20%E5%9C%A8%20m%20%E4%B8%AA%E6%A0%B7%E6%9C%AC%E4%B8%8A%E6%89%A7%E8%A1%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20on%20m%20Examples%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      13 在 m 个样本上执行梯度下降（Gradient Descent on m Examples）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/20%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-15</time>
+        <br>
+      20 逻辑回归代价函数详解
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/07%20%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      07 梯度下降（Gradient Descent）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/15%20%E6%9B%B4%E5%A4%9A%E5%90%91%E9%87%8F%E5%8C%96%E7%A4%BA%E4%BE%8B%EF%BC%88More%20Vectorization%20Examples%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      15 更多向量化示例（More Vectorization Examples）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/14%20%E5%90%91%E9%87%8F%E5%8C%96%EF%BC%88Vectorization%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      14 向量化（Vectorization）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/05%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="05 逻辑回归 | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          05 逻辑回归
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-02 19:34:28" itemprop="dateCreated datePublished" datetime="2025-12-02T19:34:28+00:00">2025-12-02</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="一、课程内容详解"><a href="#一、课程内容详解" class="headerlink" title="一、课程内容详解"></a>一、课程内容详解</h2><h3 id="1-逻辑回归（Logistic-Regression）简介"><a href="#1-逻辑回归（Logistic-Regression）简介" class="headerlink" title="1. 逻辑回归（Logistic Regression）简介"></a>1. 逻辑回归（Logistic Regression）简介</h3><ul>
+<li><p><strong>适用场景</strong>：监督学习中的<strong>二分类问题</strong>，即标签 $y \in {0, 1}$。</p>
+</li>
+<li><p><strong>目标</strong>：给定输入特征向量 $\mathbf{x} \in \mathbb{R}^{n_x}$，模型输出预测值 $\hat{y}$，表示：</p>
+<p>$$<br>\hat{y} &#x3D; P(y &#x3D; 1 \mid \mathbf{x})<br>$$</p>
+<p>即在给定输入 $\mathbf{x}$ 的条件下，$y &#x3D; 1$ 的概率。</p>
+</li>
+</ul>
+<h3 id="2-为何不能直接使用线性回归？"><a href="#2-为何不能直接使用线性回归？" class="headerlink" title="2. 为何不能直接使用线性回归？"></a>2. 为何不能直接使用线性回归？</h3><ul>
+<li><p>若令 $\hat{y} &#x3D; \mathbf{w}^\top \mathbf{x} + b$，则：</p>
+<ul>
+<li>输出可能 <strong>小于 0</strong> 或 <strong>大于 1</strong>；</li>
+<li>不符合概率定义（概率必须在 $[0, 1]$ 区间内）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-逻辑回归的核心：Sigmoid-函数"><a href="#3-逻辑回归的核心：Sigmoid-函数" class="headerlink" title="3. 逻辑回归的核心：Sigmoid 函数"></a>3. 逻辑回归的核心：Sigmoid 函数</h3><ul>
+<li><p>引入 <strong>Sigmoid 激活函数</strong>：</p>
+<p>$$<br>\sigma(z) &#x3D; \frac{1}{1 + e^{-z}}<br>$$</p>
+</li>
+<li><p>定义 $z &#x3D; \mathbf{w}^\top \mathbf{x} + b$，则最终预测为：</p>
+<p>$$<br>\hat{y} &#x3D; \sigma(\mathbf{w}^\top \mathbf{x} + b)<br>$$</p>
+</li>
+</ul>
+<h4 id="Sigmoid-函数性质："><a href="#Sigmoid-函数性质：" class="headerlink" title="Sigmoid 函数性质："></a>Sigmoid 函数性质：</h4><ul>
+<li>当 $z \to +\infty$，$\sigma(z) \to 1$</li>
+<li>当 $z \to -\infty$，$\sigma(z) \to 0$</li>
+<li>当 $z &#x3D; 0$，$\sigma(0) &#x3D; 0.5$</li>
+</ul>
+<h3 id="4-参数说明"><a href="#4-参数说明" class="headerlink" title="4. 参数说明"></a>4. 参数说明</h3><ul>
+<li><strong>权重向量</strong>：$\mathbf{w} \in \mathbb{R}^{n_x}$</li>
+<li><strong>偏置项</strong>：$b \in \mathbb{R}$</li>
+<li>在本课程中，<strong>不采用将</strong> <strong>$b$</strong> <strong>合并进</strong> <strong>$\mathbf{w}$</strong> <strong>的方式</strong>（即不引入 $x_0 &#x3D; 1$ 的技巧），而是将 $\mathbf{w}$ 与 $b$ 作为独立参数处理<a href="5">ty-reference</a>。</li>
+</ul>
+<h3 id="5-学习目标"><a href="#5-学习目标" class="headerlink" title="5. 学习目标"></a>5. 学习目标</h3><ul>
+<li>通过训练数据学习最优的 $\mathbf{w}$ 和 $b$，使得 $\hat{y}$ 尽可能接近真实标签 $y$。</li>
+<li>为此，需要定义一个<strong>损失函数（Loss Function）</strong>  和<strong>成本函数（Cost Function）</strong> （将在后续视频讲解）。</li>
+</ul>
+<hr>
+<h2 id="二、课程核心要点总结"><a href="#二、课程核心要点总结" class="headerlink" title="二、课程核心要点总结"></a>二、课程核心要点总结</h2><table>
+<thead>
+<tr>
+<th>要点</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>任务类型</strong></td>
+<td>二分类（Binary Classification）</td>
+</tr>
+<tr>
+<td><strong>输入</strong></td>
+<td>特征向量 $\mathbf{x} \in \mathbb{R}^{n_x}$</td>
+</tr>
+<tr>
+<td><strong>输出</strong></td>
+<td>预测概率 $\hat{y} &#x3D; P(y&#x3D;1 \mid \mathbf{x}) \in [0,1]$</td>
+</tr>
+<tr>
+<td><strong>模型结构</strong></td>
+<td>$\hat{y} &#x3D; \sigma(\mathbf{w}^\top \mathbf{x} + b)$</td>
+</tr>
+<tr>
+<td><strong>激活函数</strong></td>
+<td>Sigmoid: $\sigma(z) &#x3D; \dfrac{1}{1 + e^{-z}}$</td>
+</tr>
+<tr>
+<td><strong>参数形式</strong></td>
+<td>$\mathbf{w}$ 与 $b$ 分离，不合并</td>
+</tr>
+<tr>
+<td><strong>后续步骤</strong></td>
+<td>定义损失函数 → 优化参数 → 训练模型</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="四、补充说明"><a href="#四、补充说明" class="headerlink" title="四、补充说明"></a>四、补充说明</h2><ul>
+<li>逻辑回归虽然名为“回归”，但本质是<strong>最简单的神经网络模型</strong>，仅包含一个神经元（带 Sigmoid 激活）<a href="6">ty-reference</a>。</li>
+<li>它是构建更复杂神经网络（如多层感知机、深度网络）的基础单元<a href="1">ty-reference</a>。</li>
+<li>在实际深度学习框架（如 PyTorch、TensorFlow）中，逻辑回归常作为分类任务的入门案例<a href="5">ty-reference</a>。</li>
+</ul>
+<hr>
+<h3 id="🎯-它是干啥的？"><a href="#🎯-它是干啥的？" class="headerlink" title="🎯 它是干啥的？"></a>🎯 它是干啥的？</h3><ul>
+<li><strong>解决二分类问题</strong>：比如判断一张图是不是猫（是&#x2F;不是）、邮件是不是垃圾邮件（是&#x2F;否）。</li>
+<li><strong>输出一个概率</strong>：不是直接说“是”或“不是”，而是告诉你“有 85% 的可能是猫”。</li>
+</ul>
+<hr>
+<h3 id="❌-为啥不能用线性回归？"><a href="#❌-为啥不能用线性回归？" class="headerlink" title="❌ 为啥不能用线性回归？"></a>❌ 为啥不能用线性回归？</h3><p>　　想象一下：</p>
+<ul>
+<li>线性回归会说：“这张图是猫的概率是 <strong>1.5</strong>” 😱</li>
+<li>或者：“概率是  <strong>-0.3</strong>”？？？这根本说不通！</li>
+</ul>
+<p>　　✅ 概率必须在 <strong>0 到 1 之间</strong>！所以需要一个“聪明”的函数来帮忙。</p>
+<hr>
+<h3 id="✨-核心武器：Sigmoid-函数"><a href="#✨-核心武器：Sigmoid-函数" class="headerlink" title="✨ 核心武器：Sigmoid 函数"></a>✨ 核心武器：Sigmoid 函数</h3><ul>
+<li><p>它长得像一条平滑的“S”曲线。</p>
+</li>
+<li><p>特点：</p>
+<ul>
+<li>输入很大 → 输出接近 <strong>1</strong></li>
+<li>输入很小（负得很多）→ 输出接近 <strong>0</strong></li>
+<li>输入是 0 → 输出正好是 <strong>0.5</strong></li>
+</ul>
+</li>
+</ul>
+<p>　　👉 这样就能把任意数字“压缩”到 0～1 之间，完美表示概率！</p>
+<hr>
+<h3 id="🧠-模型怎么算预测结果？"><a href="#🧠-模型怎么算预测结果？" class="headerlink" title="🧠 模型怎么算预测结果？"></a>🧠 模型怎么算预测结果？</h3><ol>
+<li>先计算一个中间值：<br> <strong>权重 × 输入特征 + 偏置</strong><br> （专业点叫：线性组合）</li>
+<li>把这个值丢进 Sigmoid 函数，得到最终预测概率！</li>
+</ol>
+<blockquote>
+<p>💡 举个例子：<br>输入是一张图片 → 提取 1000 个特征 → 乘上对应的 1000 个权重 → 加上偏置 → 过 Sigmoid → 输出“是猫的概率”</p>
+</blockquote>
+<hr>
+<h3 id="🔧-参数长什么样？"><a href="#🔧-参数长什么样？" class="headerlink" title="🔧 参数长什么样？"></a>🔧 参数长什么样？</h3><ul>
+<li><strong>权重（weights）</strong> ：和输入特征一样多，每个特征都有一个“重要程度”。</li>
+<li><strong>偏置（bias）</strong> ：一个单独的数，用来微调结果。</li>
+<li>⚠️ 注意：本课程里，<strong>权重和偏置是分开存的</strong>，不搞“合并技巧”，更清晰！</li>
+</ul>
+<hr>
+<h3 id="📚-接下来要学什么？"><a href="#📚-接下来要学什么？" class="headerlink" title="📚 接下来要学什么？"></a>📚 接下来要学什么？</h3><ul>
+<li>如何判断模型好不好？→ <strong>定义损失函数（比如交叉熵）</strong></li>
+<li>怎么让模型变聪明？→ <strong>用梯度下降调整参数</strong></li>
+<li>最终目标：让预测概率越来越接近真实标签！</li>
+</ul>
+<hr>
+<h2 id="🧩-超兼容中文脑图"><a href="#🧩-超兼容中文脑图" class="headerlink" title="🧩 超兼容中文脑图"></a>🧩 超兼容中文脑图</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mindmap</span><br><span class="line">  root((逻辑回归))</span><br><span class="line">    用途</span><br><span class="line">      用于二分类问题</span><br><span class="line">      比如识别是不是猫</span><br><span class="line">    输出内容</span><br><span class="line">      输出一个概率值</span><br><span class="line">      范围在零到一之间</span><br><span class="line">    为什么不用线性回归</span><br><span class="line">      线性结果可能小于零</span><br><span class="line">      也可能大于一</span><br><span class="line">      不符合概率定义</span><br><span class="line">    核心方法</span><br><span class="line">      先算线性组合</span><br><span class="line">        权重乘以输入特征</span><br><span class="line">        再加上偏置</span><br><span class="line">      然后套上Sigmoid函数</span><br><span class="line">        把结果压到零到一</span><br><span class="line">    Sigmoid特点</span><br><span class="line">      输入很大时输出接近一</span><br><span class="line">      输入很小时输出接近零</span><br><span class="line">      输入为零时输出零点五</span><br><span class="line">    模型参数</span><br><span class="line">      权重向量</span><br><span class="line">        和输入特征数量相同</span><br><span class="line">      偏置项</span><br><span class="line">        一个单独的数字</span><br><span class="line">      权重和偏置分开处理</span><br><span class="line">    下一步</span><br><span class="line">      定义损失函数</span><br><span class="line">      优化参数</span><br><span class="line">      训练模型</span><br></pre></td></tr></table></figure>
+
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/04%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%20%E2%80%94%20%E4%BA%8C%E5%85%83%E5%88%86%E7%B1%BB%EF%BC%88Binary%20Classification%EF%BC%89/" rel="prev" title="04 神经网络编程基础 — 二元分类（Binary Classification）">
+                  <i class="fa fa-angle-left"></i> 04 神经网络编程基础 — 二元分类（Binary Classification）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/06%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E6%88%90%E6%9C%AC%E5%87%BD%E6%95%B0/" rel="next" title="06 逻辑回归成本函数">
+                  06 逻辑回归成本函数 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rion</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">101k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">6:09</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

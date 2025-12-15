@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.26.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/04%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%20%E2%80%94%20%E4%BA%8C%E5%85%83%E5%88%86%E7%B1%BB%EF%BC%88Binary%20Classification%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/04%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%20%E2%80%94%20%E4%BA%8C%E5%85%83%E5%88%86%E7%B1%BB%EF%BC%88Binary%20Classification%EF%BC%89/","path":"04 神经网络编程基础 — 二元分类（Binary Classification）/","title":"04 神经网络编程基础 — 二元分类（Binary Classification）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>04 神经网络编程基础 — 二元分类（Binary Classification） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/04%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%20%E2%80%94%20%E4%BA%8C%E5%85%83%E5%88%86%E7%B1%BB%EF%BC%88Binary%20Classification%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">87</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%AF%BE%E7%A8%8B%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">一、课程概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%A0%B8%E5%BF%83%E5%86%85%E5%AE%B9%E8%AF%A6%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">二、核心内容详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%BA%8C%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98%E8%AE%BE%E5%AE%9A%EF%BC%88Binary-Classification-Problem%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">1. 二分类问题设定（Binary Classification Problem）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8E%E7%AC%A6%E5%8F%B7%E7%BA%A6%E5%AE%9A%EF%BC%88Notation%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">2. 数据集与符号约定（Notation）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E6%95%99%E5%AD%A6%EF%BC%9F"><span class="nav-number">2.3.</span> <span class="nav-text">3. 为什么用逻辑回归教学？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E6%A0%B8%E5%BF%83%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E9%A2%84%E5%91%8A"><span class="nav-number">2.4.</span> <span class="nav-text">4. 核心编程思想预告</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE"><span class="nav-number">3.</span> <span class="nav-text">三、学习建议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81Mermaid-%E8%84%91%E5%9B%BE"><span class="nav-number">4.</span> <span class="nav-text">四、Mermaid 脑图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">五、总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rion"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rion</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">87</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/13%20%E5%9C%A8%20m%20%E4%B8%AA%E6%A0%B7%E6%9C%AC%E4%B8%8A%E6%89%A7%E8%A1%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20on%20m%20Examples%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      13 在 m 个样本上执行梯度下降（Gradient Descent on m Examples）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/20%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-15</time>
+        <br>
+      20 逻辑回归代价函数详解
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/07%20%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      07 梯度下降（Gradient Descent）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/15%20%E6%9B%B4%E5%A4%9A%E5%90%91%E9%87%8F%E5%8C%96%E7%A4%BA%E4%BE%8B%EF%BC%88More%20Vectorization%20Examples%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      15 更多向量化示例（More Vectorization Examples）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/19%20%E9%81%BF%E5%85%8D%20NumPy%20%E4%B8%AD%E7%9A%84%E2%80%9C%E7%A7%A91%E6%95%B0%E7%BB%84%E2%80%9D%EF%BC%88Rank-1%20Array%EF%BC%89%E9%99%B7%E9%98%B1/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-15</time>
+        <br>
+      19 避免 NumPy 中的“秩1数组”（Rank-1 Array）陷阱
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/04%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%20%E2%80%94%20%E4%BA%8C%E5%85%83%E5%88%86%E7%B1%BB%EF%BC%88Binary%20Classification%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="04 神经网络编程基础 — 二元分类（Binary Classification） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          04 神经网络编程基础 — 二元分类（Binary Classification）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-01 21:22:26" itemprop="dateCreated datePublished" datetime="2025-12-01T21:22:26+00:00">2025-12-01</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><hr>
+<h3 id="一、课程概述"><a href="#一、课程概述" class="headerlink" title="一、课程概述"></a>一、课程概述</h3><p>　　本节课是深度学习入门系列的第一部分，重点介绍<strong>神经网络编程的基本范式</strong>，并通过<strong>逻辑回归（Logistic Regression）</strong>  这一简单但核心的模型，讲解以下关键思想：</p>
+<ul>
+<li><strong>向量化（Vectorization）</strong> ：避免使用显式的 <code>for</code> 循环遍历训练样本，而是通过矩阵运算一次性处理整个训练集。</li>
+<li><strong>前向传播（Forward Propagation）与反向传播（Backward Propagation）</strong> ：神经网络计算的两个基本阶段。</li>
+<li><strong>数据表示与符号约定（Notation）</strong> ：为后续构建更复杂的神经网络打下基础。</li>
+</ul>
+<blockquote>
+<p>💡 即使你已经熟悉逻辑回归，本节仍会引入新的工程视角和实现技巧。</p>
+</blockquote>
+<hr>
+<h3 id="二、核心内容详解"><a href="#二、核心内容详解" class="headerlink" title="二、核心内容详解"></a>二、核心内容详解</h3><h4 id="1-二分类问题设定（Binary-Classification-Problem）"><a href="#1-二分类问题设定（Binary-Classification-Problem）" class="headerlink" title="1. 二分类问题设定（Binary Classification Problem）"></a>1. 二分类问题设定（Binary Classification Problem）</h4><ul>
+<li><p><strong>任务目标</strong>：给定一张图像，判断是否为“猫”。</p>
+<ul>
+<li>若是猫 → 输出标签 $y &#x3D; 1$</li>
+<li>若不是猫 → 输出标签 $y &#x3D; 0$</li>
+</ul>
+</li>
+<li><p><strong>图像在计算机中的表示</strong>：</p>
+<ul>
+<li>彩色图像 &#x3D; 3 个通道（Red, Green, Blue）</li>
+<li>假设图像尺寸为 $64 \times 64$ 像素</li>
+<li>则每个通道是一个 $64 \times 64$ 的矩阵</li>
+<li>总像素数 &#x3D; $64 \times 64 \times 3 &#x3D; 12,!288$</li>
+</ul>
+</li>
+<li><p><strong>特征向量</strong> <strong>$\mathbf{x}$</strong> <strong>的构造</strong>：</p>
+<ul>
+<li>将所有 RGB 像素值“展平”（flatten &#x2F; unroll）成一个列向量</li>
+<li>得到输入特征向量 $\mathbf{x} \in \mathbb{R}^{12288}$</li>
+<li>记作：$n_x &#x3D; 12288$，有时简写为 $n$</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>✅ 目标：学习一个函数 $f: \mathbf{x} \rightarrow y \in {0, 1}$</p>
+</blockquote>
+<hr>
+<h4 id="2-数据集与符号约定（Notation）"><a href="#2-数据集与符号约定（Notation）" class="headerlink" title="2. 数据集与符号约定（Notation）"></a>2. 数据集与符号约定（Notation）</h4><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$(x^{(i)}, y^{(i)})$</td>
+<td>第 $i$ 个训练样本（注意上标不是幂）</td>
+</tr>
+<tr>
+<td>$m$</td>
+<td>训练样本总数（有时写作 $m_{\text{train}}$）</td>
+</tr>
+<tr>
+<td>$m_{\text{test}}$</td>
+<td>测试集样本数量</td>
+</tr>
+<tr>
+<td>$\mathbf{X}$</td>
+<td>所有训练输入组成的矩阵，维度为 $n_x \times m$<br />每一列是一个样本：$\mathbf{X} &#x3D; [x^{(1)}\ x^{(2)}\ \cdots\ x^{(m)}]$</td>
+</tr>
+<tr>
+<td>$\mathbf{Y}$</td>
+<td>所有标签组成的矩阵，维度为 $1 \times m$<br />$\mathbf{Y} &#x3D; [y^{(1)}\ y^{(2)}\ \cdots\ y^{(m)}]$</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔑 关键工程实践：<strong>将不同样本的数据按列堆叠（column-wise stacking）</strong> ，便于向量化计算。</p>
+</blockquote>
+<ul>
+<li><p>在 Python 中：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">X.shape  <span class="comment"># (nx, m)</span></span><br><span class="line">Y.shape  <span class="comment"># (1, m)</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<blockquote>
+<p>⚠️ 注意：有些教材按行堆叠（$x^{(i)T}$ 作为行），但本课程采用<strong>列堆叠</strong>，更适配深度学习框架（如 NumPy、TensorFlow）。</p>
+</blockquote>
+<hr>
+<h4 id="3-为什么用逻辑回归教学？"><a href="#3-为什么用逻辑回归教学？" class="headerlink" title="3. 为什么用逻辑回归教学？"></a>3. 为什么用逻辑回归教学？</h4><ul>
+<li><p>逻辑回归是<strong>最简单的神经网络（单神经元）</strong></p>
+</li>
+<li><p>它天然支持<strong>二分类</strong></p>
+</li>
+<li><p>可清晰展示：</p>
+<ul>
+<li>损失函数（Loss Function）</li>
+<li>梯度下降（Gradient Descent）</li>
+<li>前向&#x2F;反向传播流程</li>
+</ul>
+</li>
+<li><p>为后续多层神经网络奠定基础</p>
+</li>
+</ul>
+<hr>
+<h4 id="4-核心编程思想预告"><a href="#4-核心编程思想预告" class="headerlink" title="4. 核心编程思想预告"></a>4. 核心编程思想预告</h4><ul>
+<li><p><strong>避免 for 循环</strong>：利用 NumPy 等库进行<strong>向量化运算</strong>，大幅提升效率。</p>
+</li>
+<li><p><strong>计算分两步</strong>：</p>
+<ol>
+<li><strong>前向传播（Forward Prop）</strong> ：计算预测值 $\hat{y}$</li>
+<li><strong>反向传播（Backward Prop）</strong> ：计算梯度，更新参数</li>
+</ol>
+</li>
+<li><p>这种模式将在深层网络中反复出现。</p>
+</li>
+</ul>
+<hr>
+<h3 id="三、学习建议"><a href="#三、学习建议" class="headerlink" title="三、学习建议"></a>三、学习建议</h3><ul>
+<li>动手实现逻辑回归的向量化版本（不用 for 循环）</li>
+<li>熟记符号约定（$\mathbf{X}, \mathbf{Y}, m, n_x$）</li>
+<li>理解“列堆叠”为何更适合 GPU&#x2F;并行计算</li>
+<li>下一节将正式推导逻辑回归的数学与代码</li>
+</ul>
+<hr>
+<h3 id="四、Mermaid-脑图"><a href="#四、Mermaid-脑图" class="headerlink" title="四、Mermaid 脑图"></a>四、Mermaid 脑图</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mindmap</span><br><span class="line">  root(神经网络编程基础)</span><br><span class="line">    二分类问题</span><br><span class="line">      输入 图像尺寸64乘64乘3</span><br><span class="line">      输出 标签y为1表示猫</span><br><span class="line">      输出 标签y为0表示非猫</span><br><span class="line">      特征向量x</span><br><span class="line">        维度nx为12288</span><br><span class="line">        由RGB像素展平得到</span><br><span class="line">    数据表示</span><br><span class="line">      单个训练样本 记作x上标i和y上标i</span><br><span class="line">      训练样本总数 m</span><br><span class="line">      测试样本总数 mTest</span><br><span class="line">    矩阵约定</span><br><span class="line">      输入矩阵X</span><br><span class="line">        所有样本按列堆叠</span><br><span class="line">        第1列是x上标1</span><br><span class="line">        第m列是x上标m</span><br><span class="line">        矩阵形状 nx行m列</span><br><span class="line">      标签矩阵Y</span><br><span class="line">        所有标签按列堆叠</span><br><span class="line">        第1列是y上标1</span><br><span class="line">        第m列是y上标m</span><br><span class="line">        矩阵形状 1行m列</span><br><span class="line">      工程惯例 每一列对应一个样本</span><br><span class="line">    编程范式</span><br><span class="line">      向量化计算</span><br><span class="line">        避免使用for循环</span><br><span class="line">        使用矩阵或张量整体运算</span><br><span class="line">      前向传播</span><br><span class="line">        计算预测值yHat</span><br><span class="line">      反向传播</span><br><span class="line">        计算损失对参数的梯度</span><br><span class="line">        更新模型参数</span><br><span class="line">    教学工具 逻辑回归</span><br><span class="line">      本质是单神经元模型</span><br><span class="line">      专用于二分类任务</span><br><span class="line">      为深层神经网络打基础</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h3><p>　　本节课虽以“逻辑回归”为载体，实则传授了<strong>现代深度学习工程的核心范式</strong>：<br><strong>向量化 + 列堆叠数据 + 前&#x2F;后向传播分离</strong>。<br>掌握这些，就等于拿到了进入神经网络世界的第一把钥匙 🔑。</p>
+<p>　　建议结合代码练习（如用 NumPy 实现无循环的逻辑回归），加深理解。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E6%9D%B0%E5%BC%97%E9%87%8C%C2%B7%E8%BE%9B%E9%A1%BF%E6%B7%B1%E5%BA%A6%E8%AE%BF%E8%B0%88/" rel="prev" title="杰弗里·辛顿深度访谈">
+                  <i class="fa fa-angle-left"></i> 杰弗里·辛顿深度访谈
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/05%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/" rel="next" title="05 逻辑回归">
+                  05 逻辑回归 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rion</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">101k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">6:09</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

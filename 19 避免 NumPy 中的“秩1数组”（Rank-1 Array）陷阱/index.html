@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.26.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/19%20%E9%81%BF%E5%85%8D%20NumPy%20%E4%B8%AD%E7%9A%84%E2%80%9C%E7%A7%A91%E6%95%B0%E7%BB%84%E2%80%9D%EF%BC%88Rank-1%20Array%EF%BC%89%E9%99%B7%E9%98%B1/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/19%20%E9%81%BF%E5%85%8D%20NumPy%20%E4%B8%AD%E7%9A%84%E2%80%9C%E7%A7%A91%E6%95%B0%E7%BB%84%E2%80%9D%EF%BC%88Rank-1%20Array%EF%BC%89%E9%99%B7%E9%98%B1/","path":"19 避免 NumPy 中的“秩1数组”（Rank-1 Array）陷阱/","title":"19 避免 NumPy 中的“秩1数组”（Rank-1 Array）陷阱"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>19 避免 NumPy 中的“秩1数组”（Rank-1 Array）陷阱 | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/19%20%E9%81%BF%E5%85%8D%20NumPy%20%E4%B8%AD%E7%9A%84%E2%80%9C%E7%A7%A91%E6%95%B0%E7%BB%84%E2%80%9D%EF%BC%88Rank-1%20Array%EF%BC%89%E9%99%B7%E9%98%B1/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">87</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%97%AE%E9%A2%98%E8%83%8C%E6%99%AF%EF%BC%9ANumPy-%E7%9A%84%E7%81%B5%E6%B4%BB%E6%80%A7%E6%98%AF%E4%B8%80%E6%8A%8A%E5%8F%8C%E5%88%83%E5%89%91"><span class="nav-number">1.</span> <span class="nav-text">1. 问题背景：NumPy 的灵活性是一把双刃剑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%85%B3%E9%94%AE%E9%97%AE%E9%A2%98%EF%BC%9A%E4%BB%80%E4%B9%88%E6%98%AF%E2%80%9C%E7%A7%A91%E6%95%B0%E7%BB%84%E2%80%9D%EF%BC%88Rank-1-Array%EF%BC%89%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">2. 关键问题：什么是“秩1数组”（Rank-1 Array）？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A8%E7%8E%B0%E5%BC%82%E5%B8%B8%E7%9A%84%E4%BE%8B%E5%AD%90%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">表现异常的例子：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%AD%A3%E7%A1%AE%E5%81%9A%E6%B3%95%EF%BC%9A%E6%98%BE%E5%BC%8F%E4%BD%BF%E7%94%A8%E4%BA%8C%E7%BB%B4%E5%90%91%E9%87%8F%EF%BC%88%E5%88%97%E5%90%91%E9%87%8F%E6%88%96%E8%A1%8C%E5%90%91%E9%87%8F%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">3. 正确做法：显式使用二维向量（列向量或行向量）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%9C%85-%E6%8E%A8%E8%8D%90%E5%86%99%E6%B3%95%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">✅ 推荐写法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94%E6%95%88%E6%9E%9C%EF%BC%9A"><span class="nav-number">3.2.</span> <span class="nav-text">对比效果：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%EF%BC%9A%E9%98%B2%E5%BE%A1%E6%80%A7%E7%BC%96%E7%A8%8B%EF%BC%88Defensive-Programming%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">4. 实用技巧：防御性编程（Defensive Programming）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%BD%BF%E7%94%A8-assert-%E6%98%BE%E5%BC%8F%E6%A3%80%E6%9F%A5%E5%BD%A2%E7%8A%B6"><span class="nav-number">4.1.</span> <span class="nav-text">(1) 使用 assert 显式检查形状</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E9%81%87%E5%88%B0%E7%A7%A91%E6%95%B0%E7%BB%84%EF%BC%9F%E7%AB%8B%E5%8D%B3-reshape%EF%BC%81"><span class="nav-number">4.2.</span> <span class="nav-text">(2) 遇到秩1数组？立即 reshape！</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%80%BB%E7%BB%93%EF%BC%9A%E4%B8%89%E6%9D%A1%E9%BB%84%E9%87%91%E5%87%86%E5%88%99"><span class="nav-number">5.</span> <span class="nav-text">5. 总结：三条黄金准则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E5%9C%A8%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%89%B9%E5%88%AB%E9%87%8D%E8%A6%81%EF%BC%9F"><span class="nav-number">6.</span> <span class="nav-text">6. 为什么这在神经网络中特别重要？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%84%EF%BC%9A%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C%E5%AF%B9%E7%85%A7%E8%A1%A8"><span class="nav-number">7.</span> <span class="nav-text">附：常见操作对照表</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rion"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rion</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">87</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/13%20%E5%9C%A8%20m%20%E4%B8%AA%E6%A0%B7%E6%9C%AC%E4%B8%8A%E6%89%A7%E8%A1%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20on%20m%20Examples%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      13 在 m 个样本上执行梯度下降（Gradient Descent on m Examples）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/20%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-15</time>
+        <br>
+      20 逻辑回归代价函数详解
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/07%20%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      07 梯度下降（Gradient Descent）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/15%20%E6%9B%B4%E5%A4%9A%E5%90%91%E9%87%8F%E5%8C%96%E7%A4%BA%E4%BE%8B%EF%BC%88More%20Vectorization%20Examples%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      15 更多向量化示例（More Vectorization Examples）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/14%20%E5%90%91%E9%87%8F%E5%8C%96%EF%BC%88Vectorization%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      14 向量化（Vectorization）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/19%20%E9%81%BF%E5%85%8D%20NumPy%20%E4%B8%AD%E7%9A%84%E2%80%9C%E7%A7%A91%E6%95%B0%E7%BB%84%E2%80%9D%EF%BC%88Rank-1%20Array%EF%BC%89%E9%99%B7%E9%98%B1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="19 避免 NumPy 中的“秩1数组”（Rank-1 Array）陷阱 | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          19 避免 NumPy 中的“秩1数组”（Rank-1 Array）陷阱
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-15 20:34:24" itemprop="dateCreated datePublished" datetime="2025-12-15T20:34:24+00:00">2025-12-15</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>721</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="1-问题背景：NumPy-的灵活性是一把双刃剑"><a href="#1-问题背景：NumPy-的灵活性是一把双刃剑" class="headerlink" title="1. 问题背景：NumPy 的灵活性是一把双刃剑"></a>1. 问题背景：NumPy 的灵活性是一把双刃剑</h3><ul>
+<li><strong>优点</strong>：Python + NumPy 提供了强大的<strong>广播机制</strong>（broadcasting），使得代码简洁、表达力强。</li>
+<li><strong>缺点</strong>：过度灵活可能导致<strong>隐蔽的 bug</strong>，尤其在向量维度处理上容易出错。</li>
+</ul>
+<blockquote>
+<p>例如：将列向量与行向量相加，本应报错，但 NumPy 会自动广播并返回一个矩阵，而非报错。</p>
+</blockquote>
+<hr>
+<h3 id="2-关键问题：什么是“秩1数组”（Rank-1-Array）？"><a href="#2-关键问题：什么是“秩1数组”（Rank-1-Array）？" class="headerlink" title="2. 关键问题：什么是“秩1数组”（Rank-1 Array）？"></a>2. 关键问题：什么是“秩1数组”（Rank-1 Array）？</h3><p>　　当你执行：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = np.random.randn(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>​<code>a.shape</code>​ 返回的是 <code>(5,)</code>​ —— 这是一个 <strong>秩为1的数组</strong>（rank-1 array）。</li>
+<li>它<strong>既不是行向量也不是列向量</strong>，行为不一致，容易引发混淆。</li>
+</ul>
+<h4 id="表现异常的例子："><a href="#表现异常的例子：" class="headerlink" title="表现异常的例子："></a>表现异常的例子：</h4><ul>
+<li>​<code>a.T</code>​（转置）看起来和 <code>a</code> 完全一样。</li>
+<li>​<code>np.dot(a, a.T)</code>​ 返回一个<strong>标量</strong>（scalar），而不是你可能预期的 $5 \times 5$ 外积矩阵。</li>
+</ul>
+<blockquote>
+<p>💡 原因：NumPy 将 <code>(5,)</code> 视为一维数组，点积默认计算内积（inner product）。</p>
+</blockquote>
+<hr>
+<h3 id="3-正确做法：显式使用二维向量（列向量或行向量）"><a href="#3-正确做法：显式使用二维向量（列向量或行向量）" class="headerlink" title="3. 正确做法：显式使用二维向量（列向量或行向量）"></a>3. 正确做法：显式使用二维向量（列向量或行向量）</h3><h4 id="✅-推荐写法："><a href="#✅-推荐写法：" class="headerlink" title="✅ 推荐写法："></a>✅ 推荐写法：</h4><ul>
+<li><p><strong>列向量</strong>（column vector）：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = np.random.randn(<span class="number">5</span>, <span class="number">1</span>)  <span class="comment"># shape: (5, 1)</span></span><br></pre></td></tr></table></figure></li>
+<li><p><strong>行向量</strong>（row vector）：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = np.random.randn(<span class="number">1</span>, <span class="number">5</span>)  <span class="comment"># shape: (1, 5)</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="对比效果："><a href="#对比效果：" class="headerlink" title="对比效果："></a>对比效果：</h4><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>秩1数组 <code>(5,)</code></th>
+<th>列向量 <code>(5,1)</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>​<code>a.T</code></td>
+<td>仍是 <code>(5,)</code>，无变化</td>
+<td>变为 <code>(1,5)</code> 行向量</td>
+</tr>
+<tr>
+<td>​<code>a @ a.T</code>​ 或 <code>np.dot(a, a.T)</code></td>
+<td>标量（内积）</td>
+<td>$5 \times 5$ 矩阵（外积）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>外积公式（outer product）：</p>
+<p>若 $\mathbf{a} \in \mathbb{R}^{n \times 1}$，则</p>
+<p>$$<br>\mathbf{a} \mathbf{a}^\top \in \mathbb{R}^{n \times n}<br>$$</p>
+</blockquote>
+<hr>
+<h3 id="4-实用技巧：防御性编程（Defensive-Programming）"><a href="#4-实用技巧：防御性编程（Defensive-Programming）" class="headerlink" title="4. 实用技巧：防御性编程（Defensive Programming）"></a>4. 实用技巧：防御性编程（Defensive Programming）</h3><h4 id="1-使用-assert-显式检查形状"><a href="#1-使用-assert-显式检查形状" class="headerlink" title="(1) 使用 assert 显式检查形状"></a>(1) 使用 <code>assert</code> 显式检查形状</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assert</span> a.shape == (<span class="number">5</span>, <span class="number">1</span>), <span class="string">&quot;a must be a column vector&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>不仅能<strong>提前捕获错误</strong>，还能作为<strong>代码文档</strong>，提高可读性。</li>
+</ul>
+<h4 id="2-遇到秩1数组？立即-reshape！"><a href="#2-遇到秩1数组？立即-reshape！" class="headerlink" title="(2) 遇到秩1数组？立即 reshape！"></a>(2) 遇到秩1数组？立即 <code>reshape</code>！</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = a.reshape(<span class="number">5</span>, <span class="number">1</span>)   <span class="comment"># 强制转为列向量</span></span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line">a = a.reshape(<span class="number">1</span>, <span class="number">5</span>)   <span class="comment"># 强制转为行向量</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>即使输入是 <code>(5,)</code>​，<code>reshape</code> 后行为就变得可预测。</p>
+</blockquote>
+<hr>
+<h3 id="5-总结：三条黄金准则"><a href="#5-总结：三条黄金准则" class="headerlink" title="5. 总结：三条黄金准则"></a>5. 总结：三条黄金准则</h3><ol>
+<li><p><strong>永远不要使用秩1数组</strong>（shape 为 <code>(n,)</code> 的数组）。</p>
+</li>
+<li><p><strong>始终明确向量方向</strong>：</p>
+<ul>
+<li>列向量：<code>(n, 1)</code></li>
+<li>行向量：<code>(1, n)</code></li>
+</ul>
+</li>
+<li><p><strong>多用</strong> <strong>​<code>assert</code>​</strong>​ <strong>和</strong> <strong>​<code>reshape</code>​</strong>：</p>
+<ul>
+<li>​<code>assert</code> 用于验证维度；</li>
+<li>​<code>reshape</code> 用于标准化输入。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="6-为什么这在神经网络中特别重要？"><a href="#6-为什么这在神经网络中特别重要？" class="headerlink" title="6. 为什么这在神经网络中特别重要？"></a>6. 为什么这在神经网络中特别重要？</h3><p>　　在深度学习中，我们频繁进行如下操作：</p>
+<ul>
+<li>权重矩阵乘法：$\mathbf{W} \mathbf{x}$</li>
+<li>损失函数计算：$\ell(\mathbf{y}, \hat{\mathbf{y}})$</li>
+<li>梯度更新：$\mathbf{W} :&#x3D; \mathbf{W} - \alpha \nabla_{\mathbf{W}} \mathcal{L}$</li>
+</ul>
+<p>　　若向量维度不明确，广播机制可能导致：</p>
+<ul>
+<li>意外的维度扩展</li>
+<li>梯度计算错误</li>
+<li>模型无法收敛</li>
+</ul>
+<blockquote>
+<p>✅ 显式维度 &#x3D; 更少 bug + 更高可复现性</p>
+</blockquote>
+<hr>
+<h3 id="附：常见操作对照表"><a href="#附：常见操作对照表" class="headerlink" title="附：常见操作对照表"></a>附：常见操作对照表</h3><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>秩1数组 <code>(5,)</code></th>
+<th>列向量 <code>(5,1)</code></th>
+<th>行向量 <code>(1,5)</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>转置 <code>.T</code></td>
+<td>​<code>(5,)</code>（不变）</td>
+<td>​<code>(1,5)</code></td>
+<td>​<code>(5,1)</code></td>
+</tr>
+<tr>
+<td>​<code>a @ a.T</code></td>
+<td>标量（内积）</td>
+<td>$5 \times 5$ 矩阵</td>
+<td>$1 \times 1$ 标量</td>
+</tr>
+<tr>
+<td>​<code>a.T @ a</code></td>
+<td>标量</td>
+<td>$1 \times 1$ 标量</td>
+<td>$5 \times 5$ 矩阵</td>
+</tr>
+<tr>
+<td>广播加法 <code>a + b</code></td>
+<td>易出错</td>
+<td>行为明确</td>
+<td>行为明确</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/18%20Python%20%E4%B8%AD%E7%9A%84%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6%EF%BC%88Broadcasting%20in%20Python%EF%BC%89/" rel="prev" title="18 Python 中的广播机制（Broadcasting in Python）">
+                  <i class="fa fa-angle-left"></i> 18 Python 中的广播机制（Broadcasting in Python）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/20%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/" rel="next" title="20 逻辑回归代价函数详解">
+                  20 逻辑回归代价函数详解 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rion</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">101k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">6:09</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>
