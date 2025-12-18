@@ -128,7 +128,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">87</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">92</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -193,7 +193,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/blog/archives/">
-          <span class="site-state-item-count">87</span>
+          <span class="site-state-item-count">92</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -247,7 +247,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/15%20%E6%9B%B4%E5%A4%9A%E5%90%91%E9%87%8F%E5%8C%96%E7%A4%BA%E4%BE%8B%EF%BC%88More%20Vectorization%20Examples%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/20%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.jpg">
@@ -265,7 +265,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/15%20%E6%9B%B4%E5%A4%9A%E5%90%91%E9%87%8F%E5%8C%96%E7%A4%BA%E4%BE%8B%EF%BC%88More%20Vectorization%20Examples%EF%BC%89/" class="post-title-link" itemprop="url">15 更多向量化示例（More Vectorization Examples）</a>
+          <a href="/blog/20%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/" class="post-title-link" itemprop="url">20 逻辑回归代价函数详解</a>
         </h2>
 
         <div class="post-meta-container">
@@ -276,7 +276,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-08 19:47:48" itemprop="dateCreated datePublished" datetime="2025-12-08T19:47:48+00:00">2025-12-08</time>
+      <time title="创建时间：2025-12-15 20:34:57" itemprop="dateCreated datePublished" datetime="2025-12-15T20:34:57+00:00">2025-12-15</time>
     </span>
 
   
@@ -286,7 +286,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>923</span>
+      <span>850</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -304,12 +304,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="一、核心思想：避免显式-for-循环"><a href="#一、核心思想：避免显式-for-循环" class="headerlink" title="一、核心思想：避免显式 for 循环"></a>一、核心思想：避免显式 for 循环</h3><blockquote>
-<p><strong>黄金法则（Rule of Thumb）</strong> ：<br>在编写神经网络或回归模型时，<strong>尽可能避免使用显式的 for 循环</strong>。<br>虽然有时无法完全消除循环，但只要能用 NumPy 等库的<strong>内置向量化函数</strong>替代，代码速度通常会显著提升。</p>
-</blockquote>
+          <h3 id="1-逻辑回归的基本形式"><a href="#1-逻辑回归的基本形式" class="headerlink" title="1. 逻辑回归的基本形式"></a>1. 逻辑回归的基本形式</h3><p>　　在逻辑回归中，我们对输入特征向量 $\mathbf{x} \in \mathbb{R}^n$ 做如下预测：</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/15%20%E6%9B%B4%E5%A4%9A%E5%90%91%E9%87%8F%E5%8C%96%E7%A4%BA%E4%BE%8B%EF%BC%88More%20Vectorization%20Examples%EF%BC%89/#more" rel="contents">
+              <a class="btn" href="/blog/20%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -340,7 +338,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/14%20%E5%90%91%E9%87%8F%E5%8C%96%EF%BC%88Vectorization%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/19%20%E9%81%BF%E5%85%8D%20NumPy%20%E4%B8%AD%E7%9A%84%E2%80%9C%E7%A7%A91%E6%95%B0%E7%BB%84%E2%80%9D%EF%BC%88Rank-1%20Array%EF%BC%89%E9%99%B7%E9%98%B1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.jpg">
@@ -358,7 +356,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/14%20%E5%90%91%E9%87%8F%E5%8C%96%EF%BC%88Vectorization%EF%BC%89/" class="post-title-link" itemprop="url">14 向量化（Vectorization）</a>
+          <a href="/blog/19%20%E9%81%BF%E5%85%8D%20NumPy%20%E4%B8%AD%E7%9A%84%E2%80%9C%E7%A7%A91%E6%95%B0%E7%BB%84%E2%80%9D%EF%BC%88Rank-1%20Array%EF%BC%89%E9%99%B7%E9%98%B1/" class="post-title-link" itemprop="url">19 避免 NumPy 中的“秩1数组”（Rank-1 Array）陷阱</a>
         </h2>
 
         <div class="post-meta-container">
@@ -369,7 +367,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-08 19:44:16" itemprop="dateCreated datePublished" datetime="2025-12-08T19:44:16+00:00">2025-12-08</time>
+      <time title="创建时间：2025-12-15 20:34:24" itemprop="dateCreated datePublished" datetime="2025-12-15T20:34:24+00:00">2025-12-15</time>
     </span>
 
   
@@ -379,7 +377,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>851</span>
+      <span>721</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -397,10 +395,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="1-什么是向量化？"><a href="#1-什么是向量化？" class="headerlink" title="1. 什么是向量化？"></a>1. 什么是向量化？</h3><p>　　<strong>向量化</strong> 是指<strong>避免在代码中使用显式的 for 循环</strong>，转而使用高度优化的矩阵&#x2F;向量运算（如 NumPy 中的内置函数），从而大幅提升计算效率。</p>
+          <h3 id="1-问题背景：NumPy-的灵活性是一把双刃剑"><a href="#1-问题背景：NumPy-的灵活性是一把双刃剑" class="headerlink" title="1. 问题背景：NumPy 的灵活性是一把双刃剑"></a>1. 问题背景：NumPy 的灵活性是一把双刃剑</h3><ul>
+<li><strong>优点</strong>：Python + NumPy 提供了强大的<strong>广播机制</strong>（broadcasting），使得代码简洁、表达力强。</li>
+<li><strong>缺点</strong>：过度灵活可能导致<strong>隐蔽的 bug</strong>，尤其在向量维度处理上容易出错。</li>
+</ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/14%20%E5%90%91%E9%87%8F%E5%8C%96%EF%BC%88Vectorization%EF%BC%89/#more" rel="contents">
+              <a class="btn" href="/blog/19%20%E9%81%BF%E5%85%8D%20NumPy%20%E4%B8%AD%E7%9A%84%E2%80%9C%E7%A7%A91%E6%95%B0%E7%BB%84%E2%80%9D%EF%BC%88Rank-1%20Array%EF%BC%89%E9%99%B7%E9%98%B1/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -431,7 +432,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/dL%EF%BC%8Fdz%20%E7%9A%84%E6%8E%A8%E5%AF%BC/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/18%20Python%20%E4%B8%AD%E7%9A%84%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6%EF%BC%88Broadcasting%20in%20Python%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.jpg">
@@ -449,7 +450,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/dL%EF%BC%8Fdz%20%E7%9A%84%E6%8E%A8%E5%AF%BC/" class="post-title-link" itemprop="url">dL／dz 的推导</a>
+          <a href="/blog/18%20Python%20%E4%B8%AD%E7%9A%84%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6%EF%BC%88Broadcasting%20in%20Python%EF%BC%89/" class="post-title-link" itemprop="url">18 Python 中的广播机制（Broadcasting in Python）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -460,7 +461,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-08 08:21:25" itemprop="dateCreated datePublished" datetime="2025-12-08T08:21:25+00:00">2025-12-08</time>
+      <time title="创建时间：2025-12-15 20:32:08" itemprop="dateCreated datePublished" datetime="2025-12-15T20:32:08+00:00">2025-12-15</time>
     </span>
 
   
@@ -470,98 +471,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>318</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="🎯-目标"><a href="#🎯-目标" class="headerlink" title="🎯 目标"></a>🎯 目标</h3><p>　　推导在二分类逻辑回归（使用 sigmoid 激活函数 + 交叉熵损失）中，损失函数 $L$ 对线性输出 $z$ 的导数：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/dL%EF%BC%8Fdz%20%E7%9A%84%E6%8E%A8%E5%AF%BC/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/13%20%E5%9C%A8%20m%20%E4%B8%AA%E6%A0%B7%E6%9C%AC%E4%B8%8A%E6%89%A7%E8%A1%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20on%20m%20Examples%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-      <meta itemprop="name" content="Rion">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="DevDino 🦖">
-      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | DevDino 🦖">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/13%20%E5%9C%A8%20m%20%E4%B8%AA%E6%A0%B7%E6%9C%AC%E4%B8%8A%E6%89%A7%E8%A1%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20on%20m%20Examples%EF%BC%89/" class="post-title-link" itemprop="url">13 在 m 个样本上执行梯度下降（Gradient Descent on m Examples）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-08 08:14:43" itemprop="dateCreated datePublished" datetime="2025-12-08T08:14:43+00:00">2025-12-08</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1k</span>
+      <span>1.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -579,10 +489,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="🎯-课程目标"><a href="#🎯-课程目标" class="headerlink" title="🎯 课程目标"></a>🎯 课程目标</h2><p>　　本节课程的核心目标是：</p>
+          <h3 id="一、广播机制的作用"><a href="#一、广播机制的作用" class="headerlink" title="一、广播机制的作用"></a>一、广播机制的作用</h3><p>　　广播（Broadcasting）是 NumPy 中一种强大的机制，它允许对不同形状的数组进行算术运算，而无需显式地编写 <code>for</code> 循环。这不仅能显著提升代码运行速度，还能使代码更加简洁、易读。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/13%20%E5%9C%A8%20m%20%E4%B8%AA%E6%A0%B7%E6%9C%AC%E4%B8%8A%E6%89%A7%E8%A1%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20on%20m%20Examples%EF%BC%89/#more" rel="contents">
+              <a class="btn" href="/blog/18%20Python%20%E4%B8%AD%E7%9A%84%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6%EF%BC%88Broadcasting%20in%20Python%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -613,7 +523,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/12%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20for%20Logistic%20Regression%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/17%20%E5%90%91%E9%87%8F%E5%8C%96%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97%EF%BC%88Vectorizing%20Logistic%20Regression_s%20Gradient%20Computation%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.jpg">
@@ -631,7 +541,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/12%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20for%20Logistic%20Regression%EF%BC%89/" class="post-title-link" itemprop="url">12 逻辑回归的梯度下降（Gradient Descent for Logistic Regression）</a>
+          <a href="/blog/17%20%E5%90%91%E9%87%8F%E5%8C%96%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97%EF%BC%88Vectorizing%20Logistic%20Regression_s%20Gradient%20Computation%EF%BC%89/" class="post-title-link" itemprop="url">17 向量化逻辑回归的梯度计算（Vectorizing Logistic Regression's Gradient Computation）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -642,7 +552,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-08 07:57:27" itemprop="dateCreated datePublished" datetime="2025-12-08T07:57:27+00:00">2025-12-08</time>
+      <time title="创建时间：2025-12-15 20:19:28" itemprop="dateCreated datePublished" datetime="2025-12-15T20:19:28+00:00">2025-12-15</time>
     </span>
 
   
@@ -652,7 +562,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>865</span>
+      <span>837</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -670,11 +580,101 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>‍</p>
-<h3 id="1-逻辑回归模型回顾"><a href="#1-逻辑回归模型回顾" class="headerlink" title="1. 逻辑回归模型回顾"></a>1. 逻辑回归模型回顾</h3>
+          <h3 id="一、背景回顾"><a href="#一、背景回顾" class="headerlink" title="一、背景回顾"></a>一、背景回顾</h3><p>　　在上一节中，我们已经学会了如何通过<strong>向量化</strong>一次性计算整个训练集上的预测值：</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/12%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20for%20Logistic%20Regression%EF%BC%89/#more" rel="contents">
+              <a class="btn" href="/blog/17%20%E5%90%91%E9%87%8F%E5%8C%96%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97%EF%BC%88Vectorizing%20Logistic%20Regression_s%20Gradient%20Computation%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/16%20%E5%90%91%E9%87%8F%E5%8C%96%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%EF%BC%88Vectorizing%20Logistic%20Regression%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/16%20%E5%90%91%E9%87%8F%E5%8C%96%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%EF%BC%88Vectorizing%20Logistic%20Regression%EF%BC%89/" class="post-title-link" itemprop="url">16 向量化逻辑回归（Vectorizing Logistic Regression）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-08 19:50:52" itemprop="dateCreated datePublished" datetime="2025-12-08T19:50:52+00:00">2025-12-08</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>891</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="🎯-核心目标"><a href="#🎯-核心目标" class="headerlink" title="🎯 核心目标"></a>🎯 核心目标</h3><p>　　在不使用任何显式 <code>for</code>​ 循环的前提下，<strong>一次性对整个训练集</strong>（共 $M$ 个样本）进行前向传播（forward propagation）和激活值计算，从而大幅提升计算效率。这是深度学习中<strong>向量化</strong>（vectorization）的核心思想。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/16%20%E5%90%91%E9%87%8F%E5%8C%96%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%EF%BC%88Vectorizing%20Logistic%20Regression%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -698,7 +698,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/blog/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/18/">18</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/blog/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/blog/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/19/">19</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/blog/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -721,14 +721,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">101k</span>
+    <span title="站点总字数">106k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:09</span>
+    <span title="站点阅读时长">6:25</span>
   </span>
 </div>
 

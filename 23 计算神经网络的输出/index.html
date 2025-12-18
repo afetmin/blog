@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.26.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/23%20%E8%AE%A1%E7%AE%97%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E8%BE%93%E5%87%BA/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/23%20%E8%AE%A1%E7%AE%97%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E8%BE%93%E5%87%BA/","path":"23 计算神经网络的输出/","title":"23 计算神经网络的输出"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>23 计算神经网络的输出 | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/23%20%E8%AE%A1%E7%AE%97%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E8%BE%93%E5%87%BA/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">92</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E5%9B%9E%E9%A1%BE"><span class="nav-number">1.</span> <span class="nav-text">1. 神经网络结构回顾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%8D%95%E4%B8%AA%E7%A5%9E%E7%BB%8F%E5%85%83%E7%9A%84%E8%AE%A1%E7%AE%97%EF%BC%88%E7%B1%BB%E6%AF%94%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">2. 单个神经元的计算（类比逻辑回归）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%9A%90%E8%97%8F%E5%B1%82%E7%9A%84%E9%80%90%E8%8A%82%E7%82%B9%E8%AE%A1%E7%AE%97%EF%BC%88%E9%9D%9E%E5%90%91%E9%87%8F%E5%8C%96%E5%BD%A2%E5%BC%8F%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">3. 隐藏层的逐节点计算（非向量化形式）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%90%91%E9%87%8F%E5%8C%96%EF%BC%9A%E9%AB%98%E6%95%88%E8%AE%A1%E7%AE%97%E6%95%B4%E4%B8%AA%E9%9A%90%E8%97%8F%E5%B1%82"><span class="nav-number">4.</span> <span class="nav-text">4. 向量化：高效计算整个隐藏层</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E5%8F%82%E6%95%B0%E7%9F%A9%E9%98%B5%E5%92%8C%E5%90%91%E9%87%8F%EF%BC%9A"><span class="nav-number">4.1.</span> <span class="nav-text">定义参数矩阵和向量：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%91%E9%87%8F%E5%8C%96%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD%EF%BC%88%E9%9A%90%E8%97%8F%E5%B1%82%EF%BC%89%EF%BC%9A"><span class="nav-number">4.2.</span> <span class="nav-text">向量化前向传播（隐藏层）：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E8%BE%93%E5%87%BA%E5%B1%82%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="nav-number">5.</span> <span class="nav-text">5. 输出层的计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%95%B4%E4%BD%93%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD%E6%B5%81%E7%A8%8B%EF%BC%88%E5%8D%95%E6%A0%B7%E6%9C%AC%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">6. 整体前向传播流程（单样本）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E7%AC%A6%E5%8F%B7%E7%BA%A6%E5%AE%9A%E8%A1%A5%E5%85%85"><span class="nav-number">7.</span> <span class="nav-text">7. 符号约定补充</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E4%B8%8B%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%89%B9%E9%87%8F%E5%90%91%E9%87%8F%E5%8C%96%EF%BC%88%E5%A4%84%E7%90%86%E5%A4%9A%E4%B8%AA%E6%A0%B7%E6%9C%AC%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">8. 下一步：批量向量化（处理多个样本）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E6%80%BB%E7%BB%93%E8%A6%81%E7%82%B9"><span class="nav-number">9.</span> <span class="nav-text">✅ 总结要点</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rion"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rion</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/25%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%90%91%E9%87%8F%E5%8C%96%E5%AE%9E%E7%8E%B0%EF%BC%88Vectorized%20Implementation%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-17</time>
+        <br>
+      25 神经网络中的向量化实现（Vectorized Implementation）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/13%20%E5%9C%A8%20m%20%E4%B8%AA%E6%A0%B7%E6%9C%AC%E4%B8%8A%E6%89%A7%E8%A1%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20on%20m%20Examples%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      13 在 m 个样本上执行梯度下降（Gradient Descent on m Examples）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/21%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-17</time>
+        <br>
+      21 神经网络概述
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/20%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-15</time>
+        <br>
+      20 逻辑回归代价函数详解
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/07%20%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      07 梯度下降（Gradient Descent）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/23%20%E8%AE%A1%E7%AE%97%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E8%BE%93%E5%87%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="23 计算神经网络的输出 | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          23 计算神经网络的输出
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-17 19:43:01" itemprop="dateCreated datePublished" datetime="2025-12-17T19:43:01+00:00">2025-12-17</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>890</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="1-神经网络结构回顾"><a href="#1-神经网络结构回顾" class="headerlink" title="1. 神经网络结构回顾"></a>1. 神经网络结构回顾</h3><ul>
+<li><p>考虑一个 <strong>具有一个隐藏层</strong> 的神经网络：</p>
+<ul>
+<li>输入层：3 个特征 → $\mathbf{x} &#x3D; [x_1, x_2, x_3]^\top \in \mathbb{R}^3$</li>
+<li>隐藏层：4 个神经元（节点）</li>
+<li>输出层：1 个神经元（用于二分类，输出 $\hat{y}$）</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>💡 注：这种网络被称为  <strong>“两层神经网络”</strong> （因为只计带参数的层：隐藏层 + 输出层）。</p>
+</blockquote>
+<hr>
+<h3 id="2-单个神经元的计算（类比逻辑回归）"><a href="#2-单个神经元的计算（类比逻辑回归）" class="headerlink" title="2. 单个神经元的计算（类比逻辑回归）"></a>2. 单个神经元的计算（类比逻辑回归）</h3><p>　　每个神经元执行两步计算：</p>
+<ol>
+<li><p><strong>线性组合</strong>：</p>
+<p> $$<br> z &#x3D; \mathbf{w}^\top \mathbf{x} + b<br> $$</p>
+</li>
+<li><p><strong>激活函数（Sigmoid）</strong> ：</p>
+<p> $$<br> a &#x3D; \sigma(z) &#x3D; \frac{1}{1 + e^{-z}}<br> $$</p>
+</li>
+</ol>
+<p>　　这与逻辑回归完全一致。神经网络就是将这一过程 <strong>在多个神经元上重复</strong>。</p>
+<hr>
+<h3 id="3-隐藏层的逐节点计算（非向量化形式）"><a href="#3-隐藏层的逐节点计算（非向量化形式）" class="headerlink" title="3. 隐藏层的逐节点计算（非向量化形式）"></a>3. 隐藏层的逐节点计算（非向量化形式）</h3><p>　　对隐藏层第 $i$ 个神经元（$i &#x3D; 1,2,3,4$）：</p>
+<p>$$<br>z^{[1]}_i &#x3D; (\mathbf{w}^{[1]}_i)^\top \mathbf{x} + b^{[1]}_i<br>$$</p>
+<p>$$<br>a^{[1]}_i &#x3D; \sigma(z^{[1]}_i)<br>$$</p>
+<p>　　其中：</p>
+<ul>
+<li>上标 $[1]$ 表示 <strong>第 1 层（隐藏层）</strong></li>
+<li>下标 $i$ 表示该层的第 $i$ 个神经元</li>
+</ul>
+<hr>
+<h3 id="4-向量化：高效计算整个隐藏层"><a href="#4-向量化：高效计算整个隐藏层" class="headerlink" title="4. 向量化：高效计算整个隐藏层"></a>4. 向量化：高效计算整个隐藏层</h3><p>　　为了避免 for 循环，我们将所有神经元的计算 <strong>向量化</strong>。</p>
+<h4 id="定义参数矩阵和向量："><a href="#定义参数矩阵和向量：" class="headerlink" title="定义参数矩阵和向量："></a>定义参数矩阵和向量：</h4><ul>
+<li><p>权重矩阵 $\mathbf{W}^{[1]} \in \mathbb{R}^{4 \times 3}$：</p>
+<p>$$<br>\mathbf{W}^{[1]} &#x3D;<br>\begin{bmatrix}<br>(\mathbf{w}^{[1]}_1)^\top \<br>(\mathbf{w}^{[1]}_2)^\top \<br>(\mathbf{w}^{[1]}_3)^\top \<br>(\mathbf{w}^{[1]}_4)^\top<br>\end{bmatrix}<br>$$</p>
+</li>
+<li><p>偏置向量 $\mathbf{b}^{[1]} \in \mathbb{R}^{4 \times 1}$：</p>
+<p>$$<br>\mathbf{b}^{[1]} &#x3D;<br>\begin{bmatrix}<br>b^{[1]}_1 \<br>b^{[1]}_2 \<br>b^{[1]}_3 \<br>b^{[1]}_4<br>\end{bmatrix}<br>$$</p>
+</li>
+</ul>
+<h4 id="向量化前向传播（隐藏层）："><a href="#向量化前向传播（隐藏层）：" class="headerlink" title="向量化前向传播（隐藏层）："></a>向量化前向传播（隐藏层）：</h4><p>$$<br>\mathbf{z}^{[1]} &#x3D; \mathbf{W}^{[1]} \mathbf{x} + \mathbf{b}^{[1]} \quad \in \mathbb{R}^{4 \times 1}<br>$$</p>
+<p>$$<br>\mathbf{a}^{[1]} &#x3D; \sigma(\mathbf{z}^{[1]}) \quad \text{（Sigmoid 逐元素作用）}<br>$$</p>
+<blockquote>
+<p>✅ 尺寸验证：</p>
+<ul>
+<li>$\mathbf{W}^{[1]}$: $4 \times 3$</li>
+<li>$\mathbf{x}$: $3 \times 1$</li>
+<li>$\mathbf{b}^{[1]}$: $4 \times 1$</li>
+<li>$\mathbf{z}^{[1]}, \mathbf{a}^{[1]}$: $4 \times 1$</li>
+</ul>
+</blockquote>
+<hr>
+<h3 id="5-输出层的计算"><a href="#5-输出层的计算" class="headerlink" title="5. 输出层的计算"></a>5. 输出层的计算</h3><p>　　输出层只有一个神经元，其参数为：</p>
+<ul>
+<li>$\mathbf{w}^{[2]} \in \mathbb{R}^{1 \times 4}$</li>
+<li>$b^{[2]} \in \mathbb{R}$</li>
+</ul>
+<p>　　计算：</p>
+<p>$$<br>z^{[2]} &#x3D; \mathbf{w}^{[2]} \mathbf{a}^{[1]} + b^{[2]} \quad \in \mathbb{R}<br>$$</p>
+<p>$$<br>a^{[2]} &#x3D; \sigma(z^{[2]}) &#x3D; \hat{y}<br>$$</p>
+<blockquote>
+<p>🔁 注意：这里 $\mathbf{w}^{[2]}$ 是行向量，因此无需转置。</p>
+</blockquote>
+<blockquote>
+<p>💡 类比：输出层等价于以 $\mathbf{a}^{[1]}$ 为输入的 <strong>逻辑回归模型</strong>。</p>
+</blockquote>
+<hr>
+<h3 id="6-整体前向传播流程（单样本）"><a href="#6-整体前向传播流程（单样本）" class="headerlink" title="6. 整体前向传播流程（单样本）"></a>6. 整体前向传播流程（单样本）</h3><p>　　给定输入 $\mathbf{x} \in \mathbb{R}^3$，神经网络输出 $\hat{y}$ 的完整计算步骤为：</p>
+<p>$$<br>\begin{aligned}<br>\mathbf{z}^{[1]} &amp;&#x3D; \mathbf{W}^{[1]} \mathbf{x} + \mathbf{b}^{[1]} \<br>\mathbf{a}^{[1]} &amp;&#x3D; \sigma(\mathbf{z}^{[1]}) \<br>z^{[2]} &amp;&#x3D; \mathbf{w}^{[2]} \mathbf{a}^{[1]} + b^{[2]} \<br>a^{[2]} &amp;&#x3D; \sigma(z^{[2]}) &#x3D; \hat{y}<br>\end{aligned}<br>$$</p>
+<blockquote>
+<p>✅ 这就是 <strong>4 行代码</strong> 实现整个神经网络的前向传播！</p>
+</blockquote>
+<hr>
+<h3 id="7-符号约定补充"><a href="#7-符号约定补充" class="headerlink" title="7. 符号约定补充"></a>7. 符号约定补充</h3><ul>
+<li>输入可记作：$\mathbf{a}^{[0]} &#x3D; \mathbf{x}$</li>
+<li>最终输出：$\hat{y} &#x3D; a^{[2]}$</li>
+<li>激活函数 $\sigma(\cdot)$ 在向量上是 <strong>逐元素应用</strong></li>
+</ul>
+<hr>
+<h3 id="8-下一步：批量向量化（处理多个样本）"><a href="#8-下一步：批量向量化（处理多个样本）" class="headerlink" title="8. 下一步：批量向量化（处理多个样本）"></a>8. 下一步：批量向量化（处理多个样本）</h3><p>　　虽然本视频只讨论 <strong>单个训练样本</strong>，但实际训练中我们会将 $m$ 个样本堆叠成矩阵：</p>
+<ul>
+<li>$\mathbf{X} &#x3D; [\mathbf{x}^{(1)}, \mathbf{x}^{(2)}, \dots, \mathbf{x}^{(m)}] \in \mathbb{R}^{3 \times m}$</li>
+<li>相应地，$\mathbf{Z}^{[1]}, \mathbf{A}^{[1]}$ 等也变成 $4 \times m$ 矩阵</li>
+</ul>
+<p>　　这将在下一节讲解，核心思想是 <strong>用矩阵运算一次性计算所有样本</strong>，极大提升效率。</p>
+<hr>
+<h2 id="✅-总结要点"><a href="#✅-总结要点" class="headerlink" title="✅ 总结要点"></a>✅ 总结要点</h2><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>神经元计算</strong></td>
+<td>$z &#x3D; \mathbf{w}^\top \mathbf{x} + b$, $a &#x3D; \sigma(z)$</td>
+</tr>
+<tr>
+<td><strong>向量化动机</strong></td>
+<td>避免 for 循环，利用矩阵运算加速</td>
+</tr>
+<tr>
+<td><strong>隐藏层输出</strong></td>
+<td>$\mathbf{a}^{[1]} &#x3D; \sigma(\mathbf{W}^{[1]} \mathbf{x} + \mathbf{b}^{[1]})$</td>
+</tr>
+<tr>
+<td><strong>输出层</strong></td>
+<td>本质是逻辑回归，输入为隐藏层激活值</td>
+</tr>
+<tr>
+<td><strong>符号规范</strong></td>
+<td>上标 $[l]$ 表示层，下标 $i$ 表示神经元</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/22%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/" rel="prev" title="22 神经网络结构概述">
+                  <i class="fa fa-angle-left"></i> 22 神经网络结构概述
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/24%20%E5%A4%9A%E6%A0%B7%E6%9C%AC%E5%90%91%E9%87%8F%E5%8C%96%EF%BC%88Vectorizing%20Across%20Multiple%20Examples%EF%BC%89/" rel="next" title="24 多样本向量化（Vectorizing Across Multiple Examples）">
+                  24 多样本向量化（Vectorizing Across Multiple Examples） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rion</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">106k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">6:25</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

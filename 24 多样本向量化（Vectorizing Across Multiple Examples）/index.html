@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.26.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/24%20%E5%A4%9A%E6%A0%B7%E6%9C%AC%E5%90%91%E9%87%8F%E5%8C%96%EF%BC%88Vectorizing%20Across%20Multiple%20Examples%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/24%20%E5%A4%9A%E6%A0%B7%E6%9C%AC%E5%90%91%E9%87%8F%E5%8C%96%EF%BC%88Vectorizing%20Across%20Multiple%20Examples%EF%BC%89/","path":"24 多样本向量化（Vectorizing Across Multiple Examples）/","title":"24 多样本向量化（Vectorizing Across Multiple Examples）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>24 多样本向量化（Vectorizing Across Multiple Examples） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/24%20%E5%A4%9A%E6%A0%B7%E6%9C%AC%E5%90%91%E9%87%8F%E5%8C%96%EF%BC%88Vectorizing%20Across%20Multiple%20Examples%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">92</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%83%8C%E6%99%AF%E5%9B%9E%E9%A1%BE%EF%BC%9A%E5%8D%95%E4%B8%AA%E6%A0%B7%E6%9C%AC%E7%9A%84%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="nav-number">1.</span> <span class="nav-text">1. 背景回顾：单个样本的前向传播</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%97%AE%E9%A2%98%EF%BC%9A%E9%80%90%E4%B8%AA%E5%A4%84%E7%90%86%E6%95%88%E7%8E%87%E4%BD%8E"><span class="nav-number">2.</span> <span class="nav-text">2. 问题：逐个处理效率低</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A%E5%90%91%E9%87%8F%E5%8C%96%EF%BC%88Vectorization%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">3. 解决方案：向量化（Vectorization）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-%E6%95%B0%E6%8D%AE%E7%9F%A9%E9%98%B5%E5%AE%9A%E4%B9%89"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 数据矩阵定义</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%90%91%E9%87%8F%E5%8C%96%E5%90%8E%E7%9A%84%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD%E5%85%AC%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">4. 向量化后的前向传播公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6%E8%AF%B4%E6%98%8E%EF%BC%88Broadcasting%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">5. 广播机制说明（Broadcasting）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%80%BB%E7%BB%93%EF%BC%9A%E5%90%91%E9%87%8F%E5%8C%96%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">6.</span> <span class="nav-text">6. 总结：向量化的优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E8%A1%A5%E5%85%85%EF%BC%9A%E7%AC%A6%E5%8F%B7%E8%A7%84%E8%8C%83%E5%9B%9E%E9%A1%BE"><span class="nav-number">7.</span> <span class="nav-text">7. 补充：符号规范回顾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E7%BB%93%E8%AF%AD"><span class="nav-number">8.</span> <span class="nav-text">✅ 结语</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rion"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rion</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">92</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/17%20%E5%90%91%E9%87%8F%E5%8C%96%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97%EF%BC%88Vectorizing%20Logistic%20Regression_s%20Gradient%20Computation%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-15</time>
+        <br>
+      17 向量化逻辑回归的梯度计算（Vectorizing Logistic Regression's Gradient Computation）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/16%20%E5%90%91%E9%87%8F%E5%8C%96%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%EF%BC%88Vectorizing%20Logistic%20Regression%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      16 向量化逻辑回归（Vectorizing Logistic Regression）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/23%20%E8%AE%A1%E7%AE%97%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E8%BE%93%E5%87%BA/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-17</time>
+        <br>
+      23 计算神经网络的输出
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/25%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%90%91%E9%87%8F%E5%8C%96%E5%AE%9E%E7%8E%B0%EF%BC%88Vectorized%20Implementation%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-17</time>
+        <br>
+      25 神经网络中的向量化实现（Vectorized Implementation）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/18%20Python%20%E4%B8%AD%E7%9A%84%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6%EF%BC%88Broadcasting%20in%20Python%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-15</time>
+        <br>
+      18 Python 中的广播机制（Broadcasting in Python）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/24%20%E5%A4%9A%E6%A0%B7%E6%9C%AC%E5%90%91%E9%87%8F%E5%8C%96%EF%BC%88Vectorizing%20Across%20Multiple%20Examples%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="24 多样本向量化（Vectorizing Across Multiple Examples） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          24 多样本向量化（Vectorizing Across Multiple Examples）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-17 19:43:52" itemprop="dateCreated datePublished" datetime="2025-12-17T19:43:52+00:00">2025-12-17</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>952</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="1-背景回顾：单个样本的前向传播"><a href="#1-背景回顾：单个样本的前向传播" class="headerlink" title="1. 背景回顾：单个样本的前向传播"></a>1. 背景回顾：单个样本的前向传播</h3><p>　　在上一节课中，我们学习了如何对<strong>单个训练样本</strong> $x^{(i)}$ 进行前向传播，计算一个含<strong>一个隐藏层</strong>的神经网络的输出 $\hat{y}^{(i)} &#x3D; a^{<a href="i">2</a>}$。其计算步骤如下：</p>
+<p>$$<br>\begin{aligned}<br>z^{<a href="i">1</a>} &amp;&#x3D; W^{[1]} x^{(i)} + b^{[1]} \<br>a^{<a href="i">1</a>} &amp;&#x3D; \sigma\left(z^{<a href="i">1</a>}\right) \<br>z^{<a href="i">2</a>} &amp;&#x3D; W^{[2]} a^{<a href="i">1</a>} + b^{[2]} \<br>a^{<a href="i">2</a>} &amp;&#x3D; \sigma\left(z^{<a href="i">2</a>}\right) &#x3D; \hat{y}^{(i)}<br>\end{aligned}<br>$$</p>
+<p>　　其中：</p>
+<ul>
+<li>$x^{(i)} \in \mathbb{R}^{n_x}$ 是第 $i$ 个训练样本；</li>
+<li>$W^{[l]}$ 和 $b^{[l]}$ 是第 $l$ 层的权重和偏置；</li>
+<li>$\sigma(\cdot)$ 是激活函数（如 sigmoid）；</li>
+<li>上标 $[l]$ 表示第 $l$ 层，上标 $(i)$ 表示第 $i$ 个训练样本。</li>
+</ul>
+<hr>
+<h3 id="2-问题：逐个处理效率低"><a href="#2-问题：逐个处理效率低" class="headerlink" title="2. 问题：逐个处理效率低"></a>2. 问题：逐个处理效率低</h3><p>　　若共有 $m$ 个训练样本，则朴素实现需循环 $m$ 次：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, m+<span class="number">1</span>):</span><br><span class="line">    z[<span class="number">1</span>](i) = W[<span class="number">1</span>] @ x(i) + b[<span class="number">1</span>]</span><br><span class="line">    a[<span class="number">1</span>](i) = sigma(z[<span class="number">1</span>](i))</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+
+<p>　　这种写法<strong>计算效率低</strong>，无法利用现代硬件（如 GPU）的并行能力。</p>
+<hr>
+<h3 id="3-解决方案：向量化（Vectorization）"><a href="#3-解决方案：向量化（Vectorization）" class="headerlink" title="3. 解决方案：向量化（Vectorization）"></a>3. 解决方案：向量化（Vectorization）</h3><p>　　我们将所有训练样本<strong>按列堆叠</strong>成矩阵，从而一次性完成所有样本的前向传播。</p>
+<h4 id="3-1-数据矩阵定义"><a href="#3-1-数据矩阵定义" class="headerlink" title="3.1 数据矩阵定义"></a>3.1 数据矩阵定义</h4><ul>
+<li><p>输入矩阵：</p>
+<p>$$<br>X &#x3D; \begin{bmatrix}<br>| &amp; | &amp; &amp; | \<br>x^{(1)} &amp; x^{(2)} &amp; \cdots &amp; x^{(m)} \<br>| &amp; | &amp; &amp; |<br>\end{bmatrix} \in \mathbb{R}^{n_x \times m}<br>$$</p>
+</li>
+<li><p>类似地，定义中间变量矩阵：</p>
+<p>$$<br>Z^{[1]} &#x3D; \begin{bmatrix}<br>| &amp; | &amp; &amp; | \<br>z^{<a href="1">1</a>} &amp; z^{<a href="2">1</a>} &amp; \cdots &amp; z^{<a href="m">1</a>} \<br>| &amp; | &amp; &amp; |<br>\end{bmatrix} \in \mathbb{R}^{n^{[1]} \times m}<br>$$</p>
+<p>$$<br>A^{[1]} &#x3D; \begin{bmatrix}<br>| &amp; | &amp; &amp; | \<br>a^{<a href="1">1</a>} &amp; a^{<a href="2">1</a>} &amp; \cdots &amp; a^{<a href="m">1</a>} \<br>| &amp; | &amp; &amp; |<br>\end{bmatrix} \in \mathbb{R}^{n^{[1]} \times m}<br>$$</p>
+</li>
+</ul>
+<blockquote>
+<p>✅ <strong>关键约定</strong>：</p>
+<ul>
+<li><strong>水平方向（列）</strong> ：不同训练样本（从左到右是样本 1 到 $m$）；</li>
+<li><strong>垂直方向（行）</strong> ：不同神经元（从上到下是第 1 个到第 $n^{[l]}$ 个隐藏单元）。</li>
+</ul>
+</blockquote>
+<hr>
+<h3 id="4-向量化后的前向传播公式"><a href="#4-向量化后的前向传播公式" class="headerlink" title="4. 向量化后的前向传播公式"></a>4. 向量化后的前向传播公式</h3><p>　　将单样本公式中的小写字母（向量）替换为大写字母（矩阵），即可得到<strong>完全向量化的批量计算</strong>：</p>
+<p>$$<br>\begin{aligned}<br>Z^{[1]} &amp;&#x3D; W^{[1]} X + b^{[1]} \<br>A^{[1]} &amp;&#x3D; \sigma\left(Z^{[1]}\right) \<br>Z^{[2]} &amp;&#x3D; W^{[2]} A^{[1]} + b^{[2]} \<br>A^{[2]} &amp;&#x3D; \sigma\left(Z^{[2]}\right)<br>\end{aligned}<br>$$</p>
+<blockquote>
+<p>🔍 注意：这里的加法 $W^{[1]}X + b^{[1]}$ 中，$b^{[1]}$ 是一个列向量（$\in \mathbb{R}^{n^{[1]} \times 1}$），但在 NumPy 等框架中会自动进行<strong>广播（broadcasting）</strong> ，将其加到每一列上，等价于对每个样本加上相同的偏置。</p>
+</blockquote>
+<hr>
+<h3 id="5-广播机制说明（Broadcasting）"><a href="#5-广播机制说明（Broadcasting）" class="headerlink" title="5. 广播机制说明（Broadcasting）"></a>5. 广播机制说明（Broadcasting）</h3><p>　　例如，设：</p>
+<ul>
+<li>$W^{[1]} \in \mathbb{R}^{n^{[1]} \times n_x}$</li>
+<li>$X \in \mathbb{R}^{n_x \times m}$</li>
+<li>$b^{[1]} \in \mathbb{R}^{n^{[1]} \times 1}$</li>
+</ul>
+<p>　　则：</p>
+<ul>
+<li>$W^{[1]} X \in \mathbb{R}^{n^{[1]} \times m}$</li>
+<li>$b^{[1]}$ 会被广播为 $\mathbb{R}^{n^{[1]} \times m}$，每列都是 $b^{[1]}$</li>
+</ul>
+<p>　　因此：</p>
+<p>$$<br>Z^{[1]}[:, i] &#x3D; W^{[1]} x^{(i)} + b^{[1]} \quad \text{对所有 } i&#x3D;1,\dots,m<br>$$</p>
+<p>　　这正是我们想要的！</p>
+<hr>
+<h3 id="6-总结：向量化的优势"><a href="#6-总结：向量化的优势" class="headerlink" title="6. 总结：向量化的优势"></a>6. 总结：向量化的优势</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>是否使用循环</th>
+<th>计算效率</th>
+<th>代码简洁性</th>
+<th>是否适合 GPU</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>朴素实现</td>
+<td>是（for 循环）</td>
+<td>低</td>
+<td>差</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>向量化</td>
+<td>否</td>
+<td>高（并行）</td>
+<td>好</td>
+<td>✅</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>💡 <strong>重要提示</strong>：深度学习框架（如 TensorFlow、PyTorch）内部高度依赖此类向量化操作。掌握此技巧是写出高效、正确模型的基础。</p>
+</blockquote>
+<hr>
+<h3 id="7-补充：符号规范回顾"><a href="#7-补充：符号规范回顾" class="headerlink" title="7. 补充：符号规范回顾"></a>7. 补充：符号规范回顾</h3><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$x^{(i)}$</td>
+<td>第 $i$ 个训练样本（列向量）</td>
+</tr>
+<tr>
+<td>$X$</td>
+<td>所有训练样本组成的矩阵（$n_x \times m$）</td>
+</tr>
+<tr>
+<td>$a^{<a href="i">l</a>}$</td>
+<td>第 $i$ 个样本在第 $l$ 层的激活值</td>
+</tr>
+<tr>
+<td>$A^{[l]}$</td>
+<td>所有样本在第 $l$ 层的激活矩阵（$n^{[l]} \times m$）</td>
+</tr>
+<tr>
+<td>$W^{[l]}$</td>
+<td>第 $l$ 层的权重矩阵（$n^{[l]} \times n^{[l-1]}$）</td>
+</tr>
+<tr>
+<td>$b^{[l]}$</td>
+<td>第 $l$ 层的偏置向量（$n^{[l]} \times 1$）</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="✅-结语"><a href="#✅-结语" class="headerlink" title="✅ 结语"></a>✅ 结语</h3><p>　　通过将训练样本按列堆叠，并将单样本前向传播公式直接推广到矩阵形式，我们实现了<strong>无循环、高效率的批量前向传播</strong>。这一思想不仅适用于两层神经网络，也适用于更深的网络和更复杂的架构，是深度学习工程实践的核心技能之一。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/23%20%E8%AE%A1%E7%AE%97%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E8%BE%93%E5%87%BA/" rel="prev" title="23 计算神经网络的输出">
+                  <i class="fa fa-angle-left"></i> 23 计算神经网络的输出
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/25%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%90%91%E9%87%8F%E5%8C%96%E5%AE%9E%E7%8E%B0%EF%BC%88Vectorized%20Implementation%EF%BC%89/" rel="next" title="25 神经网络中的向量化实现（Vectorized Implementation）">
+                  25 神经网络中的向量化实现（Vectorized Implementation） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rion</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">106k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">6:25</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>
