@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/11%20%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%9D%83%E9%87%8D%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%88Weight%20Initialization%20for%20Deep%20Networks%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/11%20%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%9D%83%E9%87%8D%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%88Weight%20Initialization%20for%20Deep%20Networks%EF%BC%89/","path":"11 深度神经网络的权重初始化（Weight Initialization for Deep Networks）/","title":"11 深度神经网络的权重初始化（Weight Initialization for Deep Networks）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>11 深度神经网络的权重初始化（Weight Initialization for Deep Networks） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/11%20%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%9D%83%E9%87%8D%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%88Weight%20Initialization%20for%20Deep%20Networks%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">143</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%A0-%E8%AF%BE%E7%A8%8B%E6%A0%B8%E5%BF%83%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">🧠 课程核心目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%8D-1-%E5%8D%95%E7%A5%9E%E7%BB%8F%E5%85%83%E7%A4%BA%E4%BE%8B%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">🔍 1. 单神经元示例分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9A%A0%EF%B8%8F-%E9%97%AE%E9%A2%98"><span class="nav-number">2.1.</span> <span class="nav-text">⚠️ 问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E7%9B%B4%E8%A7%89%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">2.2.</span> <span class="nav-text">✅ 直觉解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%90-2-%E6%8E%A8%E5%B9%BF%E5%88%B0%E6%B7%B1%E5%BA%A6%E7%BD%91%E7%BB%9C"><span class="nav-number">3.</span> <span class="nav-text">📐 2. 推广到深度网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%AA-3-%E4%B8%8D%E5%90%8C%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E5%AF%B9%E5%BA%94%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E7%AD%96%E7%95%A5"><span class="nav-number">4.</span> <span class="nav-text">🧪 3. 不同激活函数对应的初始化策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-ReLU-%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%EF%BC%88%E6%9C%80%E5%B8%B8%E7%94%A8%EF%BC%89"><span class="nav-number">4.1.</span> <span class="nav-text">(1) ReLU 激活函数（最常用）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Tanh-Sigmoid-%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">4.2.</span> <span class="nav-text">(2) Tanh &#x2F; Sigmoid 激活函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%85%B6%E4%BB%96%E5%8F%98%E4%BD%93%EF%BC%88%E8%BE%83%E5%B0%91%E7%94%A8%EF%BC%89"><span class="nav-number">4.3.</span> <span class="nav-text">(3) 其他变体（较少用）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9A%99%EF%B8%8F-4-%E5%AE%9E%E8%B7%B5%E5%BB%BA%E8%AE%AE%E4%B8%8E%E8%B6%85%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98"><span class="nav-number">5.</span> <span class="nav-text">⚙️ 4. 实践建议与超参数调优</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E6%80%BB%E7%BB%93%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%89%E6%95%88%EF%BC%9F"><span class="nav-number">6.</span> <span class="nav-text">✅ 总结：为什么有效？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%98-%E5%85%AC%E5%BC%8F%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="nav-number">7.</span> <span class="nav-text">📘 公式速查表</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rion"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rion</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">143</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/25%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%90%91%E9%87%8F%E5%8C%96%E5%AE%9E%E7%8E%B0%EF%BC%88Vectorized%20Implementation%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-17</time>
+        <br>
+      25 神经网络中的向量化实现（Vectorized Implementation）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/23%20%E8%AE%A1%E7%AE%97%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E8%BE%93%E5%87%BA/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-17</time>
+        <br>
+      23 计算神经网络的输出
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/06%20Dropout%20%E6%AD%A3%E5%88%99%E5%8C%96/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-26</time>
+        <br>
+      06 Dropout 正则化
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/30%20%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%9B%B4%E8%A7%89%EF%BC%88Backpropagation%20Intuition%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-21</time>
+        <br>
+      30 反向传播直觉（Backpropagation Intuition）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/27%20%E4%B8%BA%E4%BB%80%E4%B9%88%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%BF%85%E9%A1%BB%E4%BD%BF%E7%94%A8%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%EF%BC%9F/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-21</time>
+        <br>
+      27 为什么神经网络必须使用非线性激活函数？
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/11%20%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%9D%83%E9%87%8D%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%88Weight%20Initialization%20for%20Deep%20Networks%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="11 深度神经网络的权重初始化（Weight Initialization for Deep Networks） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          11 深度神经网络的权重初始化（Weight Initialization for Deep Networks）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-01 20:42:48" itemprop="dateCreated datePublished" datetime="2026-01-01T20:42:48+00:00">2026-01-01</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>920</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="🧠-课程核心目标"><a href="#🧠-课程核心目标" class="headerlink" title="🧠 课程核心目标"></a>🧠 课程核心目标</h2><p>　　解决深度神经网络训练中的 <strong>梯度消失（vanishing gradients）</strong>  和 <strong>梯度爆炸（exploding gradients）</strong>  问题。<br>虽然权重初始化不能完全消除该问题，但<strong>合理的初始化策略能显著缓解</strong>，从而提升训练稳定性和收敛速度。</p>
+<hr>
+<h2 id="🔍-1-单神经元示例分析"><a href="#🔍-1-单神经元示例分析" class="headerlink" title="🔍 1. 单神经元示例分析"></a>🔍 1. 单神经元示例分析</h2><p>　　考虑一个单神经元模型：</p>
+<ul>
+<li><p>输入：$x_1, x_2, \dots, x_n$（共 $n$ 个特征）</p>
+</li>
+<li><p>权重：$w_1, w_2, \dots, w_n$</p>
+</li>
+<li><p>偏置设为 0（简化分析）：$b &#x3D; 0$</p>
+</li>
+<li><p>线性组合：</p>
+<p>$$<br>z &#x3D; \sum_{i&#x3D;1}^{n} w_i x_i &#x3D; \mathbf{w}^\top \mathbf{x}<br>$$</p>
+</li>
+<li><p>激活输出：$a &#x3D; g(z)$</p>
+</li>
+</ul>
+<h3 id="⚠️-问题"><a href="#⚠️-问题" class="headerlink" title="⚠️ 问题"></a>⚠️ 问题</h3><p>　　若 $w_i$ 初始化过大 → $z$ 过大 → 激活函数饱和（如 sigmoid&#x2F;tanh）→ 梯度接近 0（<strong>梯度消失</strong>）<br>若 $w_i$ 初始化过小 → $z$ 接近 0 → 梯度极小 → 学习缓慢<br>若层数很深，误差会逐层放大或缩小 → <strong>梯度爆炸&#x2F;消失</strong></p>
+<h3 id="✅-直觉解决方案"><a href="#✅-直觉解决方案" class="headerlink" title="✅ 直觉解决方案"></a>✅ 直觉解决方案</h3><ul>
+<li>$z$ 是 $n$ 项之和，因此每项 $w_i x_i$ 应“小一点”，避免总和过大或过小。</li>
+<li>若输入 $x_i$ 满足：$\mathbb{E}[x_i] \approx 0$，$\mathrm{Var}(x_i) \approx 1$</li>
+<li>则希望：$\mathrm{Var}(z) \approx 1$</li>
+</ul>
+<p>　　由于：</p>
+<p>$$<br>\mathrm{Var}(z) &#x3D; \mathrm{Var}\left( \sum_{i&#x3D;1}^n w_i x_i \right) &#x3D; \sum_{i&#x3D;1}^n \mathrm{Var}(w_i x_i) &#x3D; \sum_{i&#x3D;1}^n \mathrm{Var}(w_i) \cdot \mathrm{Var}(x_i)<br>$$</p>
+<p>　　若 $w_i \sim \mathcal{N}(0, \sigma^2)$，且 $\mathrm{Var}(x_i) &#x3D; 1$，则：</p>
+<p>$$<br>\mathrm{Var}(z) &#x3D; n \cdot \sigma^2<br>$$</p>
+<p>　　令 $\mathrm{Var}(z) &#x3D; 1$ ⇒ $\sigma^2 &#x3D; \frac{1}{n}$</p>
+<hr>
+<h2 id="📐-2-推广到深度网络"><a href="#📐-2-推广到深度网络" class="headerlink" title="📐 2. 推广到深度网络"></a>📐 2. 推广到深度网络</h2><p>　　对于第 $l$ 层（layer $l$）：</p>
+<ul>
+<li><p>输入来自前一层的激活值：$\mathbf{a}^{[l-1]} \in \mathbb{R}^{n^{[l-1]}}$</p>
+</li>
+<li><p>权重矩阵：$\mathbf{W}^{[l]} \in \mathbb{R}^{n^{[l]} \times n^{[l-1]}}$</p>
+</li>
+<li><p>初始化建议：</p>
+<p>$$<br>\mathbf{W}^{[l]} &#x3D; \texttt{np.random.randn}(n^{[l]}, n^{[l-1]}) \times \sqrt{\frac{k}{n^{[l-1]}}}<br>$$</p>
+<p>其中 $k$ 取决于激活函数类型。</p>
+</li>
+</ul>
+<hr>
+<h2 id="🧪-3-不同激活函数对应的初始化策略"><a href="#🧪-3-不同激活函数对应的初始化策略" class="headerlink" title="🧪 3. 不同激活函数对应的初始化策略"></a>🧪 3. 不同激活函数对应的初始化策略</h2><h3 id="1-ReLU-激活函数（最常用）"><a href="#1-ReLU-激活函数（最常用）" class="headerlink" title="(1) ReLU 激活函数（最常用）"></a>(1) ReLU 激活函数（最常用）</h3><ul>
+<li><p>推荐使用 <strong>He 初始化（He Initialization）</strong></p>
+<p>$$<br>\mathbf{W}^{[l]} \sim \mathcal{N}\left(0, \frac{2}{n^{[l-1]}}\right)<br>$$</p>
+<p>即：</p>
+<p>$$<br>\mathbf{W}^{[l]} &#x3D; \texttt{np.random.randn}(\cdots) \times \sqrt{\frac{2}{n^{[l-1]}}}<br>$$</p>
+</li>
+</ul>
+<blockquote>
+<p>💡 理由：ReLU 会使一半神经元输出为 0，有效方差减半，因此需将方差加倍以补偿。</p>
+</blockquote>
+<hr>
+<h3 id="2-Tanh-Sigmoid-激活函数"><a href="#2-Tanh-Sigmoid-激活函数" class="headerlink" title="(2) Tanh &#x2F; Sigmoid 激活函数"></a>(2) Tanh &#x2F; Sigmoid 激活函数</h3><ul>
+<li><p>推荐使用 <strong>Xavier 初始化（Glorot Initialization）</strong></p>
+<p>$$<br>\mathbf{W}^{[l]} \sim \mathcal{N}\left(0, \frac{1}{n^{[l-1]}}\right)<br>$$</p>
+<p>即：</p>
+<p>$$<br>\mathbf{W}^{[l]} &#x3D; \texttt{np.random.randn}(\cdots) \times \sqrt{\frac{1}{n^{[l-1]}}}<br>$$</p>
+</li>
+</ul>
+<blockquote>
+<p>📚 由 Xavier Glorot &amp; Yoshua Bengio (2010) 提出，适用于对称激活函数（如 tanh）。</p>
+</blockquote>
+<hr>
+<h3 id="3-其他变体（较少用）"><a href="#3-其他变体（较少用）" class="headerlink" title="(3) 其他变体（较少用）"></a>(3) 其他变体（较少用）</h3><ul>
+<li><p>Yoshua Bengio 团队提出更复杂的初始化（如考虑前后层维度平均）：</p>
+<p>$$<br>\mathbf{W}^{[l]} \sim \mathcal{N}\left(0, \frac{2}{n^{[l-1]} + n^{[l]}}\right)<br>$$</p>
+<p>但在实践中，<strong>He 初始化（ReLU）和 Xavier 初始化（tanh）已足够有效</strong>。</p>
+</li>
+</ul>
+<hr>
+<h2 id="⚙️-4-实践建议与超参数调优"><a href="#⚙️-4-实践建议与超参数调优" class="headerlink" title="⚙️ 4. 实践建议与超参数调优"></a>⚙️ 4. 实践建议与超参数调优</h2><ul>
+<li><p><strong>默认选择</strong>：</p>
+<ul>
+<li>使用 ReLU → 用 He 初始化（$\sqrt{2 &#x2F; n^{[l-1]}}$）</li>
+<li>使用 Tanh → 用 Xavier 初始化（$\sqrt{1 &#x2F; n^{[l-1]}}$）</li>
+</ul>
+</li>
+<li><p><strong>可调超参数</strong>：</p>
+<ul>
+<li><p>可引入缩放因子 $\alpha$：</p>
+<p>$$<br>\mathbf{W}^{[l]} &#x3D; \texttt{np.random.randn}(\cdots) \times \alpha \cdot \sqrt{\frac{2}{n^{[l-1]}}}<br>$$</p>
+</li>
+<li><p>将 $\alpha$ 作为超参数进行微调（但通常影响较小）</p>
+</li>
+</ul>
+</li>
+<li><p><strong>优先级</strong>：权重初始化重要，但<strong>不如学习率、网络结构、批量大小等关键</strong>，属于“第二梯队”调参项。</p>
+</li>
+</ul>
+<hr>
+<h2 id="✅-总结：为什么有效？"><a href="#✅-总结：为什么有效？" class="headerlink" title="✅ 总结：为什么有效？"></a>✅ 总结：为什么有效？</h2><p>　　合理初始化使每一层的 <strong>输入和输出保持相似的尺度（scale）</strong> ，从而：</p>
+<ul>
+<li>防止 $z^{[l]}$ 过大或过小</li>
+<li>保持激活值在非饱和区</li>
+<li>使梯度在反向传播中既不爆炸也不消失</li>
+<li><strong>显著提升深度网络的可训练性</strong></li>
+</ul>
+<hr>
+<h2 id="📘-公式速查表"><a href="#📘-公式速查表" class="headerlink" title="📘 公式速查表"></a>📘 公式速查表</h2><table>
+<thead>
+<tr>
+<th>激活函数</th>
+<th>初始化方差</th>
+<th>初始化代码（Python）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ReLU</td>
+<td>$\displaystyle \frac{2}{n^{[l-1]}}$</td>
+<td>​<code>np.random.randn(...) * np.sqrt(2 / n_prev)</code></td>
+</tr>
+<tr>
+<td>Tanh</td>
+<td>$\displaystyle \frac{1}{n^{[l-1]}}$</td>
+<td>​<code>np.random.randn(...) * np.sqrt(1 / n_prev)</code></td>
+</tr>
+</tbody></table>
+<p>　　其中 $n^{[l-1]}$ 表示第 $l-1$ 层的神经元数量（即当前层的输入维度）。</p>
+<p>　　‍</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/10%20%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1%E4%B8%8E%E6%A2%AF%E5%BA%A6%E7%88%86%E7%82%B8%E9%97%AE%E9%A2%98%EF%BC%88Vanishing%20%EF%BC%8F%20Exploding%20Gradients%EF%BC%89/" rel="prev" title="10 梯度消失与梯度爆炸问题（Vanishing ／ Exploding Gradients）">
+                  <i class="fa fa-angle-left"></i> 10 梯度消失与梯度爆炸问题（Vanishing ／ Exploding Gradients）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/12%20%E6%A2%AF%E5%BA%A6%E7%9A%84%E6%95%B0%E5%80%BC%E8%BF%91%E4%BC%BC%EF%BC%88Numerical%20Approximation%20of%20Gradients%EF%BC%89/" rel="next" title="12 梯度的数值近似（Numerical Approximation of Gradients）">
+                  12 梯度的数值近似（Numerical Approximation of Gradients） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rion</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">160k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">9:43</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

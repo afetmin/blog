@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/15%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%20%E2%80%94%E2%80%94%20Mini-batch%20Gradient%20Descent%EF%BC%88%E5%B0%8F%E6%89%B9%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/15%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%20%E2%80%94%E2%80%94%20Mini-batch%20Gradient%20Descent%EF%BC%88%E5%B0%8F%E6%89%B9%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%89/","path":"15 优化算法 —— Mini-batch Gradient Descent（小批量梯度下降）/","title":"15 优化算法 —— Mini-batch Gradient Descent（小批量梯度下降）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>15 优化算法 —— Mini-batch Gradient Descent（小批量梯度下降） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/15%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%20%E2%80%94%E2%80%94%20Mini-batch%20Gradient%20Descent%EF%BC%88%E5%B0%8F%E6%89%B9%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">143</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%83%8C%E6%99%AF%E4%B8%8E%E5%8A%A8%E6%9C%BA"><span class="nav-number">1.</span> <span class="nav-text">一、背景与动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Mini-batch-%E7%9A%84%E5%88%92%E5%88%86%E4%B8%8E%E7%AC%A6%E5%8F%B7%E7%BA%A6%E5%AE%9A"><span class="nav-number">2.</span> <span class="nav-text">二、Mini-batch 的划分与符号约定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81Mini-batch-Gradient-Descent-%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.</span> <span class="nav-text">三、Mini-batch Gradient Descent 算法步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%B8%8E%E5%85%B6%E4%BB%96%E6%96%B9%E6%B3%95%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="nav-number">4.</span> <span class="nav-text">四、与其他方法的对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5%E6%BE%84%E6%B8%85"><span class="nav-number">5.</span> <span class="nav-text">五、关键概念澄清</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">六、总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rion"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rion</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">143</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/16%20%E4%BA%86%E8%A7%A3%E5%B0%8F%E6%89%B9%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-02</time>
+        <br>
+      16 了解小批量梯度下降法
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/30%20Batch%20Normalization%20%E4%B8%BA%E4%BD%95%E6%9C%89%E6%95%88%EF%BC%9F/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-05</time>
+        <br>
+      30 Batch Normalization 为何有效？
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/23%20%E5%AD%A6%E4%B9%A0%E7%8E%87%E8%A1%B0%E5%87%8F%EF%BC%88Learning%20Rate%20Decay%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-05</time>
+        <br>
+      23 学习率衰减（Learning Rate Decay）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/31%20%E6%B5%8B%E8%AF%95%E6%97%B6%E7%9A%84%20Batch%20Normalization%EF%BC%88Batch%20Norm%20at%20Test%20Time%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-05</time>
+        <br>
+      31 测试时的 Batch Normalization（Batch Norm at Test Time）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/19%20%E6%8C%87%E6%95%B0%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87%E4%B8%AD%E7%9A%84%E5%81%8F%E5%B7%AE%E4%BF%AE%E6%AD%A3%EF%BC%88Bias%20Correction%20in%20Exponentially%20Weighted%20Averages%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-02</time>
+        <br>
+      19 指数加权平均中的偏差修正（Bias Correction in Exponentially Weighted Averages）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/15%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%20%E2%80%94%E2%80%94%20Mini-batch%20Gradient%20Descent%EF%BC%88%E5%B0%8F%E6%89%B9%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="15 优化算法 —— Mini-batch Gradient Descent（小批量梯度下降） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          15 优化算法 —— Mini-batch Gradient Descent（小批量梯度下降）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-02 10:33:44" itemprop="dateCreated datePublished" datetime="2026-01-02T10:33:44+00:00">2026-01-02</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>727</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="一、背景与动机"><a href="#一、背景与动机" class="headerlink" title="一、背景与动机"></a>一、背景与动机</h3><p>　　深度学习通常在大规模数据集上训练神经网络。若使用<strong>全批量梯度下降（Batch Gradient Descent）</strong> ，每次参数更新需遍历全部 $m$ 个训练样本：</p>
+<p>$$<br>\theta :&#x3D; \theta - \alpha \nabla_\theta J(\theta; X, Y)<br>$$</p>
+<p>　　其中 $X \in \mathbb{R}^{n_x \times m}$，$Y \in \mathbb{R}^{1 \times m}$。当 $m$ 极大（如 $5 \times 10^6$）时，单次梯度计算代价高昂，训练效率低下。</p>
+<p>　　为加速训练，引入 <strong>Mini-batch Gradient Descent</strong>：在处理完一小部分数据后即更新参数，实现更频繁的迭代。</p>
+<hr>
+<h3 id="二、Mini-batch-的划分与符号约定"><a href="#二、Mini-batch-的划分与符号约定" class="headerlink" title="二、Mini-batch 的划分与符号约定"></a>二、Mini-batch 的划分与符号约定</h3><p>　　将训练集 ${X, Y}$ 划分为 $T &#x3D; \frac{m}{b}$ 个 mini-batches，其中 $b$ 为 mini-batch 大小（如 $b &#x3D; 1000$）。</p>
+<ul>
+<li><p>第 $t$ 个 mini-batch 的输入和标签记为：</p>
+<p>$$<br>X^{{t}} \in \mathbb{R}^{n_x \times b}, \quad Y^{{t}} \in \mathbb{R}^{1 \times b}<br>$$</p>
+</li>
+<li><p>符号区分：</p>
+<ul>
+<li>$x^{(i)}$：第 $i$ 个训练样本（圆括号）</li>
+<li>$W^{[l]}$：第 $l$ 层的权重（方括号）</li>
+<li>$X^{{t}}$：第 $t$ 个 mini-batch（花括号）</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="三、Mini-batch-Gradient-Descent-算法步骤"><a href="#三、Mini-batch-Gradient-Descent-算法步骤" class="headerlink" title="三、Mini-batch Gradient Descent 算法步骤"></a>三、Mini-batch Gradient Descent 算法步骤</h3><p>　　对每个 epoch（完整遍历训练集一次），执行以下流程：</p>
+<ol>
+<li><p><strong>前向传播</strong>（在第 $t$ 个 mini-batch 上）：</p>
+<p>$$<br>\begin{aligned}<br>Z^{[1]} &amp;&#x3D; W^{[1]} X^{{t}} + b^{[1]} \<br>A^{[1]} &amp;&#x3D; g^{[1]}(Z^{[1]}) \<br>&amp;\vdots \<br>A^{[L]} &amp;&#x3D; g^{[L]}(Z^{[L]})<br>\end{aligned}<br>$$</p>
+</li>
+<li><p><strong>计算 mini-batch 损失</strong>：</p>
+<p>$$<br>J^{{t}} &#x3D; \frac{1}{b} \sum_{i&#x3D;1}^{b} \mathcal{L}\left( \hat{y}^{(i)}, y^{(i)} \right) + \frac{\lambda}{2b} \sum_{l&#x3D;1}^{L} |W^{[l]}|_F^2<br>$$</p>
+<p>其中 $\hat{y}^{(i)}$ 和 $y^{(i)}$ 来自 $X^{{t}}$ 与 $Y^{{t}}$，$|\cdot|_F$ 表示 Frobenius 范数。</p>
+</li>
+<li><p><strong>反向传播</strong>：基于 $(X^{{t}}, Y^{{t}})$ 计算梯度 $\nabla_{W^{[l]}} J^{{t}}$ 和 $\nabla_{b^{[l]}} J^{{t}}$。</p>
+</li>
+<li><p><strong>参数更新</strong>：</p>
+<p>$$<br>\begin{aligned}<br>W^{[l]} &amp;:&#x3D; W^{[l]} - \alpha \cdot \nabla_{W^{[l]}} J^{{t}} \<br>b^{[l]} &amp;:&#x3D; b^{[l]} - \alpha \cdot \nabla_{b^{[l]}} J^{{t}}<br>\end{aligned}<br>$$</p>
+</li>
+</ol>
+<p>　　重复上述过程 $t &#x3D; 1, 2, \dots, T$，完成一个 epoch。每个 epoch 包含 $T &#x3D; m&#x2F;b$ 次参数更新。</p>
+<hr>
+<h3 id="四、与其他方法的对比"><a href="#四、与其他方法的对比" class="headerlink" title="四、与其他方法的对比"></a>四、与其他方法的对比</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>每次更新所用样本数</th>
+<th>向量化效率</th>
+<th>更新频率</th>
+<th>收敛行为</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Batch GD</td>
+<td>$m$（全集）</td>
+<td>高（但 $m$ 过大时受限）</td>
+<td>1 次&#x2F;epoch</td>
+<td>平滑但极慢</td>
+</tr>
+<tr>
+<td>Stochastic GD (SGD)</td>
+<td>1</td>
+<td>低（难以向量化）</td>
+<td>$m$ 次&#x2F;epoch</td>
+<td>噪声大，震荡</td>
+</tr>
+<tr>
+<td><strong>Mini-batch GD</strong></td>
+<td>$b$（如 64–1024）</td>
+<td><strong>高（GPU 友好）</strong></td>
+<td>$m&#x2F;b$ 次&#x2F;epoch</td>
+<td><strong>稳定且高效</strong> ✅</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="五、关键概念澄清"><a href="#五、关键概念澄清" class="headerlink" title="五、关键概念澄清"></a>五、关键概念澄清</h3><ul>
+<li><strong>Epoch</strong>：模型遍历整个训练集一次。</li>
+<li><strong>Iteration &#x2F; Step</strong>：一次基于单个 mini-batch 的参数更新。</li>
+<li><strong>Mini-batch size</strong> <strong>$b$</strong>：典型值为 2 的幂（如 64, 128, 256, 512, 1024），以匹配硬件内存对齐和并行计算优化。</li>
+</ul>
+<hr>
+<h3 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h3><ol>
+<li>Mini-batch Gradient Descent 通过<strong>分块处理数据</strong>，在保持向量化效率的同时显著提升训练速度。</li>
+<li>每个 mini-batch 内仍使用<strong>完整的前向&#x2F;反向传播流程</strong>，仅作用于子集数据。</li>
+<li>相比 Batch GD，它在<strong>一个 epoch 内完成多次参数更新</strong>，加速收敛。</li>
+<li>它是现代深度学习框架（如 TensorFlow、PyTorch）中<strong>默认采用的优化策略基础</strong>。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E7%BA%A6%E4%B9%A6%E4%BA%9A%C2%B7%E6%9C%AC%E5%90%89%E5%A5%A5%E8%AE%BF%E8%B0%88/" rel="prev" title="约书亚·本吉奥访谈">
+                  <i class="fa fa-angle-left"></i> 约书亚·本吉奥访谈
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/16%20%E4%BA%86%E8%A7%A3%E5%B0%8F%E6%89%B9%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95/" rel="next" title="16 了解小批量梯度下降法">
+                  16 了解小批量梯度下降法 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rion</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">160k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">9:43</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/04%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E5%8C%96%EF%BC%88Regularization%20in%20Neural%20Networks%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/04%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E5%8C%96%EF%BC%88Regularization%20in%20Neural%20Networks%EF%BC%89/","path":"04 神经网络中的正则化（Regularization in Neural Networks）/","title":"04 神经网络中的正则化（Regularization in Neural Networks）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>04 神经网络中的正则化（Regularization in Neural Networks） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/04%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E5%8C%96%EF%BC%88Regularization%20in%20Neural%20Networks%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">143</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E6%AD%A3%E5%88%99%E5%8C%96%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">一、为什么需要正则化？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E4%B8%AD%E7%9A%84-L2-%E6%AD%A3%E5%88%99%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">二、逻辑回归中的 L2 正则化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%8E%9F%E5%A7%8B%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%EF%BC%88%E6%97%A0%E6%AD%A3%E5%88%99%E5%8C%96%EF%BC%89%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">1. 原始损失函数（无正则化）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%8A%A0%E5%85%A5-L2-%E6%AD%A3%E5%88%99%E5%8C%96%E5%90%8E%E7%9A%84%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%EF%BC%9A"><span class="nav-number">2.2.</span> <span class="nav-text">2. 加入 L2 正则化后的损失函数：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-L1-%E6%AD%A3%E5%88%99%E5%8C%96%EF%BC%88%E8%A1%A5%E5%85%85%E7%9F%A5%E8%AF%86%EF%BC%89%EF%BC%9A"><span class="nav-number">2.3.</span> <span class="nav-text">3. L1 正则化（补充知识）：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84-L2-%E6%AD%A3%E5%88%99%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">三、神经网络中的 L2 正则化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%80%BB%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%EF%BC%88%E5%90%AB-L2-%E6%AD%A3%E5%88%99%E5%8C%96%EF%BC%89%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">1. 神经网络的总损失函数（含 L2 正则化）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%9B%B4%E6%96%B0%E8%A7%84%E5%88%99%EF%BC%88%E5%B8%A6%E6%AD%A3%E5%88%99%E5%8C%96%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">2. 梯度下降更新规则（带正则化）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E6%AD%A3%E5%88%99%E5%8C%96%E5%8F%82%E6%95%B0-lambda-%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">四、如何选择正则化参数 $\lambda$？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%80%BB%E7%BB%93%E8%A6%81%E7%82%B9%EF%BC%88Key-Takeaways%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">五、总结要点（Key Takeaways）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%BB%B6%E4%BC%B8%E6%80%9D%E8%80%83%EF%BC%88%E9%A2%84%E5%91%8A%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">六、延伸思考（预告）</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rion"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rion</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">143</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/05%20%E4%B8%BA%E4%BB%80%E4%B9%88%E6%AD%A3%E5%88%99%E5%8C%96%E8%83%BD%E5%87%8F%E5%B0%91%E8%BF%87%E6%8B%9F%E5%90%88%EF%BC%9F/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-26</time>
+        <br>
+      05 为什么正则化能减少过拟合？
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/11%20%E4%BD%BF%E7%94%A8%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%B1%82%E5%AF%BC%EF%BC%88Derivatives%20with%20a%20Computation%20Graph%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      11 使用计算图求导（Derivatives with a Computation Graph）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/23%20%E5%AD%A6%E4%B9%A0%E7%8E%87%E8%A1%B0%E5%87%8F%EF%BC%88Learning%20Rate%20Decay%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-05</time>
+        <br>
+      23 学习率衰减（Learning Rate Decay）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/12%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20for%20Logistic%20Regression%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      12 逻辑回归的梯度下降（Gradient Descent for Logistic Regression）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/03%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E9%85%8D%E6%96%B9%EF%BC%88Basic%20Recipe%20for%20Machine%20Learning%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-26</time>
+        <br>
+      03 机器学习基本配方（Basic Recipe for Machine Learning）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/04%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E5%8C%96%EF%BC%88Regularization%20in%20Neural%20Networks%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="04 神经网络中的正则化（Regularization in Neural Networks） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          04 神经网络中的正则化（Regularization in Neural Networks）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-26 16:51:36" itemprop="dateCreated datePublished" datetime="2025-12-26T16:51:36+00:00">2025-12-26</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="一、为什么需要正则化？"><a href="#一、为什么需要正则化？" class="headerlink" title="一、为什么需要正则化？"></a>一、为什么需要正则化？</h3><ul>
+<li><p><strong>问题背景</strong>：当神经网络出现<strong>过拟合（overfitting）</strong> 时，表现为在训练集上表现很好，但在开发集&#x2F;测试集上误差较大 → 这是典型的<strong>高方差（high variance）</strong> 问题。</p>
+</li>
+<li><p><strong>解决思路</strong>：</p>
+<ul>
+<li>获取更多训练数据（可靠但成本高）</li>
+<li><strong>使用正则化（Regularization）</strong> ：更常用、更经济的方法</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>✅ 正则化通过在损失函数中加入惩罚项，限制模型复杂度，从而缓解过拟合。</p>
+</blockquote>
+<hr>
+<h3 id="二、逻辑回归中的-L2-正则化"><a href="#二、逻辑回归中的-L2-正则化" class="headerlink" title="二、逻辑回归中的 L2 正则化"></a>二、逻辑回归中的 L2 正则化</h3><h4 id="1-原始损失函数（无正则化）："><a href="#1-原始损失函数（无正则化）：" class="headerlink" title="1. 原始损失函数（无正则化）："></a>1. 原始损失函数（无正则化）：</h4><p>　　对于逻辑回归，目标是最小化经验风险：</p>
+<p>$$<br>J(w, b) &#x3D; \frac{1}{m} \sum_{i&#x3D;1}^{m} \mathcal{L}(\hat{y}^{(i)}, y^{(i)})<br>$$</p>
+<p>　　其中 $w \in \mathbb{R}^{n_x}$ 是权重向量，$b \in \mathbb{R}$ 是偏置。</p>
+<h4 id="2-加入-L2-正则化后的损失函数："><a href="#2-加入-L2-正则化后的损失函数：" class="headerlink" title="2. 加入 L2 正则化后的损失函数："></a>2. 加入 L2 正则化后的损失函数：</h4><p>$$<br>J_{\text{reg}}(w, b) &#x3D; \frac{1}{m} \sum_{i&#x3D;1}^{m} \mathcal{L}(\hat{y}^{(i)}, y^{(i)}) + \frac{\lambda}{2m} |w|_2^2<br>$$</p>
+<p>　　其中：</p>
+<ul>
+<li>$\lambda &gt; 0$：<strong>正则化超参数（regularization parameter）</strong></li>
+<li>$|w|<em>2^2 &#x3D; \sum</em>{j&#x3D;1}^{n_x} w_j^2 &#x3D; w^\top w$：L2 范数的平方（欧几里得范数）</li>
+</ul>
+<blockquote>
+<p>🔍 <strong>为什么不正则化</strong> <strong>$b$</strong>？<br>因为 $b$ 只是一个标量，而 $w$ 是高维向量。在大多数情况下，正则化 $b$ 对整体影响微乎其微，通常省略。</p>
+</blockquote>
+<h4 id="3-L1-正则化（补充知识）："><a href="#3-L1-正则化（补充知识）：" class="headerlink" title="3. L1 正则化（补充知识）："></a>3. L1 正则化（补充知识）：</h4><p>$$<br>J_{\text{reg}}^{\text{L1}}(w, b) &#x3D; \frac{1}{m} \sum_{i&#x3D;1}^{m} \mathcal{L}(\hat{y}^{(i)}, y^{(i)}) + \frac{\lambda}{m} |w|_1<br>$$</p>
+<p>　　其中 $|w|<em>1 &#x3D; \sum</em>{j&#x3D;1}^{n_x} |w_j|$</p>
+<ul>
+<li><strong>特点</strong>：会使 $w$ 变得<strong>稀疏（sparse）</strong> （很多元素为 0）</li>
+<li><strong>用途</strong>：理论上可用于模型压缩，但实践中效果有限</li>
+<li><strong>主流选择</strong>：<strong>L2 正则化更常用</strong></li>
+</ul>
+<blockquote>
+<p>💡 在 Python 编程中，由于 <code>lambda</code>​ 是保留关键字，通常用 <code>lambd</code> 表示该超参数。</p>
+</blockquote>
+<hr>
+<h3 id="三、神经网络中的-L2-正则化"><a href="#三、神经网络中的-L2-正则化" class="headerlink" title="三、神经网络中的 L2 正则化"></a>三、神经网络中的 L2 正则化</h3><h4 id="1-神经网络的总损失函数（含-L2-正则化）："><a href="#1-神经网络的总损失函数（含-L2-正则化）：" class="headerlink" title="1. 神经网络的总损失函数（含 L2 正则化）："></a>1. 神经网络的总损失函数（含 L2 正则化）：</h4><p>　　设网络有 $L$ 层，参数为 ${W^{[1]}, b^{[1]}, \dots, W^{[L]}, b^{[L]}}$，则：</p>
+<p>$$<br>J_{\text{reg}} &#x3D; \frac{1}{m} \sum_{i&#x3D;1}^{m} \mathcal{L}(\hat{y}^{(i)}, y^{(i)}) + \frac{\lambda}{2m} \sum_{l&#x3D;1}^{L} |W^{[l]}|_F^2<br>$$</p>
+<p>　　其中：</p>
+<ul>
+<li>$|W^{[l]}|<em>F^2 &#x3D; \sum</em>{i&#x3D;1}^{n^{[l-1]}} \sum_{j&#x3D;1}^{n^{[l]}} \left(W_{ij}^{[l]}\right)^2$</li>
+<li>这称为 <strong>Frobenius 范数（弗罗贝尼乌斯范数）</strong> ，是矩阵的 L2 范数推广</li>
+</ul>
+<blockquote>
+<p>⚠️ 注意：同样通常<strong>不正则化偏置项</strong> <strong>$b^{[l]}$</strong>，理由同上。</p>
+</blockquote>
+<h4 id="2-梯度下降更新规则（带正则化）"><a href="#2-梯度下降更新规则（带正则化）" class="headerlink" title="2. 梯度下降更新规则（带正则化）"></a>2. 梯度下降更新规则（带正则化）</h4><ul>
+<li><p><strong>原始梯度（无正则化）</strong> ：</p>
+<p>$$<br>dW^{[l]} &#x3D; \frac{\partial J}{\partial W^{[l]}} \quad \text{（来自反向传播）}<br>$$</p>
+</li>
+<li><p><strong>加入 L2 正则化后的新梯度</strong>：</p>
+<p>$$<br>dW^{[l]}_{\text{new}} &#x3D; dW^{[l]} + \frac{\lambda}{m} W^{[l]}<br>$$</p>
+</li>
+<li><p><strong>参数更新</strong>：</p>
+<p>$$<br>W^{[l]} :&#x3D; W^{[l]} - \alpha \cdot dW^{[l]}_{\text{new}} &#x3D; W^{[l]} - \alpha \left( dW^{[l]} + \frac{\lambda}{m} W^{[l]} \right)<br>$$</p>
+<p>整理得：</p>
+<p>$$<br>W^{[l]} :&#x3D; \left(1 - \frac{\alpha \lambda}{m} \right) W^{[l]} - \alpha \cdot dW^{[l]}<br>$$</p>
+</li>
+</ul>
+<blockquote>
+<p>🔑 <strong>关键洞察</strong>：<br>第一项 $\left(1 - \frac{\alpha \lambda}{m} \right) W^{[l]}$ 相当于对权重进行<strong>缩放（shrinkage）</strong> ，使其逐渐变小 → 因此 L2 正则化也被称为 <strong>权重衰减（Weight Decay）</strong> 。</p>
+</blockquote>
+<hr>
+<h3 id="四、如何选择正则化参数-lambda-？"><a href="#四、如何选择正则化参数-lambda-？" class="headerlink" title="四、如何选择正则化参数 $\lambda$？"></a>四、如何选择正则化参数 $\lambda$？</h3><ul>
+<li><p>$\lambda$ 是一个<strong>超参数（hyperparameter）</strong></p>
+</li>
+<li><p>通常通过<strong>交叉验证（cross-validation）</strong>  或 <strong>开发集（dev set）</strong>  来调优</p>
+</li>
+<li><p>目标：在<strong>训练误差</strong>和<strong>泛化能力</strong>之间取得平衡</p>
+<ul>
+<li>$\lambda$ 太小 → 正则化效果弱，可能仍过拟合</li>
+<li>$\lambda$ 太大 → 模型过于简单，可能导致<strong>欠拟合（underfitting）</strong></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="五、总结要点（Key-Takeaways）"><a href="#五、总结要点（Key-Takeaways）" class="headerlink" title="五、总结要点（Key Takeaways）"></a>五、总结要点（Key Takeaways）</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>目的</strong></td>
+<td>防止过拟合，提升泛化能力</td>
+</tr>
+<tr>
+<td><strong>核心思想</strong></td>
+<td>在损失函数中加入对参数大小的惩罚</td>
+</tr>
+<tr>
+<td><strong>常用方法</strong></td>
+<td><strong>L2 正则化（主流）</strong> ，L1 正则化（较少用）</td>
+</tr>
+<tr>
+<td><strong>公式（神经网络）</strong></td>
+<td>$J_{\text{reg}} &#x3D; J + \frac{\lambda}{2m} \sum_l |W^{[l]}|_F^2$</td>
+</tr>
+<tr>
+<td><strong>实现方式</strong></td>
+<td>反向传播梯度 + $\frac{\lambda}{m} W^{[l]}$</td>
+</tr>
+<tr>
+<td><strong>别名</strong></td>
+<td>L2 正则化 &#x3D; <strong>Weight Decay（权重衰减）</strong></td>
+</tr>
+<tr>
+<td><strong>调参</strong></td>
+<td>$\lambda$ 通过开发集或交叉验证选择</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="六、延伸思考（预告）"><a href="#六、延伸思考（预告）" class="headerlink" title="六、延伸思考（预告）"></a>六、延伸思考（预告）</h3><blockquote>
+<p>下一讲将深入探讨：<strong>为什么正则化能防止过拟合？</strong><br>直观理解：正则化限制了模型的“自由度”，迫使网络学习更平滑、更简单的函数，从而避免对训练噪声过度拟合。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/03%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E9%85%8D%E6%96%B9%EF%BC%88Basic%20Recipe%20for%20Machine%20Learning%EF%BC%89/" rel="prev" title="03 机器学习基本配方（Basic Recipe for Machine Learning）">
+                  <i class="fa fa-angle-left"></i> 03 机器学习基本配方（Basic Recipe for Machine Learning）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/05%20%E4%B8%BA%E4%BB%80%E4%B9%88%E6%AD%A3%E5%88%99%E5%8C%96%E8%83%BD%E5%87%8F%E5%B0%91%E8%BF%87%E6%8B%9F%E5%90%88%EF%BC%9F/" rel="next" title="05 为什么正则化能减少过拟合？">
+                  05 为什么正则化能减少过拟合？ <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rion</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">160k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">9:43</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

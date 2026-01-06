@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/22%20Adam%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%EF%BC%88Adam%20Optimization%20Algorithm%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/22%20Adam%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%EF%BC%88Adam%20Optimization%20Algorithm%EF%BC%89/","path":"22 Adam 优化算法（Adam Optimization Algorithm）/","title":"22 Adam 优化算法（Adam Optimization Algorithm）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>22 Adam 优化算法（Adam Optimization Algorithm） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/22%20Adam%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%EF%BC%88Adam%20Optimization%20Algorithm%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">143</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">✅ 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%A0-Adam-%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">🧠 Adam 算法原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%94%81-%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B%EF%BC%88%E4%BC%AA%E4%BB%A3%E7%A0%81-%E5%85%AC%E5%BC%8F%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">🔁 算法流程（伪代码 + 公式）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.1.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC-T-%E6%AC%A1%E8%BF%AD%E4%BB%A3%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.1.2.</span> <span class="nav-text">第 T 次迭代步骤</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%9B%A0%EF%B8%8F-%E8%B6%85%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%E5%BB%BA%E8%AE%AE"><span class="nav-number">3.</span> <span class="nav-text">🛠️ 超参数设置建议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9A-%E5%90%8D%E7%A7%B0%E6%9D%A5%E6%BA%90%EF%BC%9AAdam-Adaptive-Moment-Estimation"><span class="nav-number">4.</span> <span class="nav-text">📚 名称来源：Adam &#x3D; Adaptive Moment Estimation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%84-%E6%80%BB%E7%BB%93%E5%AF%B9%E6%AF%94%E8%A1%A8"><span class="nav-number">5.</span> <span class="nav-text">🔄 总结对比表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-%E5%85%B3%E9%94%AE%E4%BC%98%E5%8A%BF"><span class="nav-number">6.</span> <span class="nav-text">📌 关键优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E9%99%84%E5%8A%A0%E7%9F%A5%E8%AF%86%E6%89%A9%E5%B1%95"><span class="nav-number">7.</span> <span class="nav-text">✅ 附加知识扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%81%8F%E5%B7%AE%E6%A0%A1%E6%AD%A3%EF%BC%9F"><span class="nav-number">7.1.</span> <span class="nav-text">为什么需要偏差校正？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%95%E6%97%B6%E4%B8%8D%E7%94%A8-Adam%EF%BC%9F"><span class="nav-number">7.2.</span> <span class="nav-text">何时不用 Adam？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%BE-%E6%9C%80%E7%BB%88%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%E5%8F%A5%E8%AF%9D%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">🧾 最终总结（一句话）</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rion"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rion</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">143</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/11%20%E4%BD%BF%E7%94%A8%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%B1%82%E5%AF%BC%EF%BC%88Derivatives%20with%20a%20Computation%20Graph%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      11 使用计算图求导（Derivatives with a Computation Graph）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/21%20RMSprop%EF%BC%88Root%20Mean%20Square%20Propagation%EF%BC%89%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-02</time>
+        <br>
+      21 RMSprop（Root Mean Square Propagation） 优化算法
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/18%20%E4%BA%86%E8%A7%A3%E6%8C%87%E6%95%B0%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-02</time>
+        <br>
+      18 了解指数加权平均
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/12%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20for%20Logistic%20Regression%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      12 逻辑回归的梯度下降（Gradient Descent for Logistic Regression）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/20%20%E5%8A%A8%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%EF%BC%88Gradient%20Descent%20with%20Momentum%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-02</time>
+        <br>
+      20 动量梯度下降法（Gradient Descent with Momentum）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/22%20Adam%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%EF%BC%88Adam%20Optimization%20Algorithm%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="22 Adam 优化算法（Adam Optimization Algorithm） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          22 Adam 优化算法（Adam Optimization Algorithm）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-02 11:16:03" itemprop="dateCreated datePublished" datetime="2026-01-02T11:16:03+00:00">2026-01-02</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="✅-简介"><a href="#✅-简介" class="headerlink" title="✅ 简介"></a>✅ 简介</h3><p>　　在深度学习的发展历程中，许多研究人员提出了新的优化算法，但大多数仅在特定问题上表现良好，缺乏泛化能力。因此，社区对新优化算法持谨慎态度。</p>
+<p>　　而 <strong>Adam（Adaptive Moment Estimation）</strong>  是少数被广泛验证、适用于多种神经网络架构的有效优化算法之一。它结合了：</p>
+<ul>
+<li><strong>动量法（Momentum）</strong></li>
+<li><strong>RMSProp</strong></li>
+</ul>
+<p>　　从而实现了快速且稳定的训练效果。</p>
+<blockquote>
+<p>🔍 推荐理由：Adam 被广泛使用，性能稳定，是训练神经网络时的首选优化器之一。</p>
+</blockquote>
+<hr>
+<h2 id="🧠-Adam-算法原理"><a href="#🧠-Adam-算法原理" class="headerlink" title="🧠 Adam 算法原理"></a>🧠 Adam 算法原理</h2><p>　　Adam 是一种自适应学习率的优化算法，其核心思想是：</p>
+<blockquote>
+<p>同时计算梯度的一阶矩（均值）和二阶矩（未中心化的方差），并利用这两个估计来动态调整每个参数的学习率。</p>
+</blockquote>
+<hr>
+<h3 id="🔁-算法流程（伪代码-公式）"><a href="#🔁-算法流程（伪代码-公式）" class="headerlink" title="🔁 算法流程（伪代码 + 公式）"></a>🔁 算法流程（伪代码 + 公式）</h3><h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Vdw = 0      # 动量项（一阶矩）</span><br><span class="line">Sdw = 0      # RMSProp 项（二阶矩）</span><br><span class="line">Vdb = 0</span><br><span class="line">Sdb = 0</span><br></pre></td></tr></table></figure>
+
+<h4 id="第-T-次迭代步骤"><a href="#第-T-次迭代步骤" class="headerlink" title="第 T 次迭代步骤"></a>第 T 次迭代步骤</h4><ol>
+<li><p><strong>计算当前 mini-batch 的梯度</strong></p>
+<p>$$<br>dw, db \leftarrow \frac{\partial J}{\partial w}, \frac{\partial J}{\partial b}<br>$$</p>
+</li>
+<li><p><strong>更新动量项（一阶矩估计）——类似 Momentum</strong></p>
+<p>$$<br>v_{dw} &#x3D; \beta_1 v_{dw} + (1 - \beta_1) dw<br>$$</p>
+<p>$$<br>v_{db} &#x3D; \beta_1 v_{db} + (1 - \beta_1) db<br>$$</p>
+</li>
+<li><p><strong>更新 RMSProp 项（二阶矩估计）</strong></p>
+<p>$$<br>s_{dw} &#x3D; \beta_2 s_{dw} + (1 - \beta_2) dw^2<br>$$</p>
+<p>$$<br>s_{db} &#x3D; \beta_2 s_{db} + (1 - \beta_2) db^2<br>$$</p>
+<blockquote>
+<p>⚠️ 注意：<code>dw²</code> 表示逐元素平方（element-wise squaring）</p>
+</blockquote>
+</li>
+<li><p><strong>偏差校正（Bias Correction）</strong><br>由于初始时刻 <code>v</code>​ 和 <code>s</code> 都为 0，导致前几轮估计有偏，需进行校正：</p>
+<p>$$<br>v_{dw}^{\text{corrected}} &#x3D; \frac{v_{dw}}{1 - \beta_1^T}<br>$$</p>
+<p>$$<br>v_{db}^{\text{corrected}} &#x3D; \frac{v_{db}}{1 - \beta_1^T}<br>$$</p>
+<p>$$<br>s_{dw}^{\text{corrected}} &#x3D; \frac{s_{dw}}{1 - \beta_2^T}<br>$$</p>
+<p>$$<br>s_{db}^{\text{corrected}} &#x3D; \frac{s_{db}}{1 - \beta_2^T}<br>$$</p>
+</li>
+<li><p><strong>参数更新</strong></p>
+<p>$$<br>w :&#x3D; w - \alpha \cdot \frac{v_{dw}^{\text{corrected}}}{\sqrt{s_{dw}^{\text{corrected}}} + \epsilon}<br>$$</p>
+<p>$$<br>b :&#x3D; b - \alpha \cdot \frac{v_{db}^{\text{corrected}}}{\sqrt{s_{db}^{\text{corrected}}} + \epsilon}<br>$$</p>
+</li>
+</ol>
+<hr>
+<h2 id="🛠️-超参数设置建议"><a href="#🛠️-超参数设置建议" class="headerlink" title="🛠️ 超参数设置建议"></a>🛠️ 超参数设置建议</h2><table>
+<thead>
+<tr>
+<th>超参数</th>
+<th>建议值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\alpha$</td>
+<td>需调参（如 $10^{-3}$ ~ $10^{-1}$）</td>
+<td>学习率，最关键超参数</td>
+</tr>
+<tr>
+<td>$\beta_1$</td>
+<td>0.9</td>
+<td>一阶矩衰减率（动量系数）</td>
+</tr>
+<tr>
+<td>$\beta_2$</td>
+<td>0.999</td>
+<td>二阶矩衰减率（RMSProp 系数）</td>
+</tr>
+<tr>
+<td>$\epsilon$</td>
+<td>$10^{-8}$</td>
+<td>小常数，防止除零</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>✅ 实践建议：</p>
+<ul>
+<li>$\beta_1$、$\beta_2$、$\epsilon$ 通常使用默认值。</li>
+<li>只需调整 $\alpha$ 即可获得良好效果。</li>
+<li>很少有人手动调节 $\beta_1$、$\beta_2$ 或 $\epsilon$。</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="📚-名称来源：Adam-Adaptive-Moment-Estimation"><a href="#📚-名称来源：Adam-Adaptive-Moment-Estimation" class="headerlink" title="📚 名称来源：Adam &#x3D; Adaptive Moment Estimation"></a>📚 名称来源：Adam &#x3D; Adaptive Moment Estimation</h2><ul>
+<li><strong>第一阶矩（First Moment）</strong> ：由 $\beta_1$ 计算，表示梯度的指数加权平均 → 近似均值。</li>
+<li><strong>第二阶矩（Second Moment）</strong> ：由 $\beta_2$ 计算，表示梯度平方的指数加权平均 → 近似方差。</li>
+</ul>
+<p>　　因此：</p>
+<p>$$<br>\text{Adam} &#x3D; \text{Adaptive Moment Estimation}<br>$$</p>
+<blockquote>
+<p>💡 注：虽然名字叫 Adam，但与研究者 Adam Coates 无关（只是巧合）。</p>
+</blockquote>
+<hr>
+<h2 id="🔄-总结对比表"><a href="#🔄-总结对比表" class="headerlink" title="🔄 总结对比表"></a>🔄 总结对比表</h2><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>是否包含动量</th>
+<th>是否自适应学习率</th>
+<th>是否需要调参多</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SGD</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅（需调 α）</td>
+</tr>
+<tr>
+<td>Momentum</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>RMSProp</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Adam</strong></td>
+<td>✅</td>
+<td>✅</td>
+<td>❌（基本用默认）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>✅ Adam &#x3D; Momentum + RMSProp 的融合体，兼具两者优点。</p>
+</blockquote>
+<hr>
+<h2 id="📌-关键优势"><a href="#📌-关键优势" class="headerlink" title="📌 关键优势"></a>📌 关键优势</h2><ol>
+<li><strong>收敛快</strong>：结合动量加速方向，同时抑制震荡。</li>
+<li><strong>鲁棒性强</strong>：适用于不同架构的神经网络。</li>
+<li><strong>超参数少</strong>：只需调一个学习率即可。</li>
+<li><strong>无需手动归一化</strong>：自动调整各参数的学习速率。</li>
+</ol>
+<hr>
+<h2 id="✅-附加知识扩展"><a href="#✅-附加知识扩展" class="headerlink" title="✅ 附加知识扩展"></a>✅ 附加知识扩展</h2><h3 id="为什么需要偏差校正？"><a href="#为什么需要偏差校正？" class="headerlink" title="为什么需要偏差校正？"></a>为什么需要偏差校正？</h3><ul>
+<li>初始阶段：$v_{dw} &#x3D; 0$，但真实梯度不为零 → 估计偏低。</li>
+<li>经过若干步后，随着 $T$ 增大，$\beta_1^T \to 0$，校正因子趋于 1。</li>
+<li>校正使早期更新更准确。</li>
+</ul>
+<h3 id="何时不用-Adam？"><a href="#何时不用-Adam？" class="headerlink" title="何时不用 Adam？"></a>何时不用 Adam？</h3><ul>
+<li>如果你追求极致性能（如训练超大规模模型），可以考虑 <strong>AdamW</strong>、<strong>Lion</strong>、<strong>AdaFactor</strong> 等变种。</li>
+<li>对于简单线性模型，SGD 有时更优。</li>
+</ul>
+<hr>
+<h2 id="🧾-最终总结（一句话）"><a href="#🧾-最终总结（一句话）" class="headerlink" title="🧾 最终总结（一句话）"></a>🧾 最终总结（一句话）</h2><blockquote>
+<p><strong>Adam 是一种结合动量和自适应学习率的高效优化算法，通过估计梯度的一阶和二阶矩实现快速收敛，是现代深度学习中最常用、最可靠的优化器之一。</strong></p>
+</blockquote>
+<hr>
+<p>　　✅ 推荐你在实践中优先尝试 Adam，配合合理的学习率调度（后续视频将讲“学习率衰减”），可显著提升训练效率。</p>
+<p>　　‍</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/21%20RMSprop%EF%BC%88Root%20Mean%20Square%20Propagation%EF%BC%89%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" rel="prev" title="21 RMSprop（Root Mean Square Propagation） 优化算法">
+                  <i class="fa fa-angle-left"></i> 21 RMSprop（Root Mean Square Propagation） 优化算法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/23%20%E5%AD%A6%E4%B9%A0%E7%8E%87%E8%A1%B0%E5%87%8F%EF%BC%88Learning%20Rate%20Decay%EF%BC%89/" rel="next" title="23 学习率衰减（Learning Rate Decay）">
+                  23 学习率衰减（Learning Rate Decay） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rion</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">160k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">9:43</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

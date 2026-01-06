@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/09%20%E8%BE%93%E5%85%A5%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%88Normalizing%20Inputs%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/09%20%E8%BE%93%E5%85%A5%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%88Normalizing%20Inputs%EF%BC%89/","path":"09 输入归一化（Normalizing Inputs）/","title":"09 输入归一化（Normalizing Inputs）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>09 输入归一化（Normalizing Inputs） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/09%20%E8%BE%93%E5%85%A5%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%88Normalizing%20Inputs%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">143</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%BD%92%E4%B8%80%E5%8C%96%E8%BE%93%E5%85%A5%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">一、为什么要归一化输入？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%A6%82%E4%BD%95%E5%BD%92%E4%B8%80%E5%8C%96%E8%BE%93%E5%85%A5%EF%BC%9F%EF%BC%88%E4%B8%A4%E6%AD%A5%E6%B3%95%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">二、如何归一化输入？（两步法）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E9%9B%B6%E5%9D%87%E5%80%BC%E5%8C%96%EF%BC%88Zero-centering%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">第一步：零均值化（Zero-centering）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%BD%92%E4%B8%80%E5%8C%96%E6%96%B9%E5%B7%AE%EF%BC%88Normalize-Variance%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">第二步：归一化方差（Normalize Variance）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E9%87%8D%E8%A6%81%E5%AE%9E%E8%B7%B5%E5%BB%BA%E8%AE%AE%EF%BC%9A%E8%AE%AD%E7%BB%83%E9%9B%86%E4%B8%8E%E6%B5%8B%E8%AF%95%E9%9B%86%E5%BF%85%E9%A1%BB%E7%94%A8%E7%9B%B8%E5%90%8C%E7%9A%84-boldsymbol-mu-%E5%92%8C-boldsymbol-sigma"><span class="nav-number">3.</span> <span class="nav-text">三、重要实践建议：训练集与测试集必须用相同的 $\boldsymbol{\mu}$ 和 $\boldsymbol{\sigma}$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%BD%95%E6%97%B6%E9%9C%80%E8%A6%81%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">四、何时需要归一化？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%AF%B9%E4%BC%98%E5%8C%96%E8%BF%87%E7%A8%8B%E7%9A%84%E5%BD%B1%E5%93%8D%EF%BC%88%E7%9B%B4%E8%A7%82%E5%9B%BE%E7%A4%BA%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">五、对优化过程的影响（直观图示）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%80%BB%E7%BB%93%E8%A6%81%E7%82%B9%EF%BC%88Key-Takeaways%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">六、总结要点（Key Takeaways）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%84%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%BD%92%E4%B8%80%E5%8C%96%E5%85%AC%E5%BC%8F%EF%BC%88%E6%A0%87%E5%87%86%E5%8C%96-Z-score-Normalization%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">附：常用归一化公式（标准化 &#x2F; Z-score Normalization）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%8E%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0%E7%9A%84%E5%BD%A2%E7%8A%B6%E8%AF%B4%E8%B5%B7"><span class="nav-number">7.1.</span> <span class="nav-text">一、从代价函数的形状说起</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rion"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rion</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">143</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/25%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%90%91%E9%87%8F%E5%8C%96%E5%AE%9E%E7%8E%B0%EF%BC%88Vectorized%20Implementation%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-17</time>
+        <br>
+      25 神经网络中的向量化实现（Vectorized Implementation）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/23%20%E8%AE%A1%E7%AE%97%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E8%BE%93%E5%87%BA/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-17</time>
+        <br>
+      23 计算神经网络的输出
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/30%20%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%9B%B4%E8%A7%89%EF%BC%88Backpropagation%20Intuition%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-21</time>
+        <br>
+      30 反向传播直觉（Backpropagation Intuition）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/27%20%E4%B8%BA%E4%BB%80%E4%B9%88%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%BF%85%E9%A1%BB%E4%BD%BF%E7%94%A8%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%EF%BC%9F/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-21</time>
+        <br>
+      27 为什么神经网络必须使用非线性激活函数？
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/13%20%E5%9C%A8%20m%20%E4%B8%AA%E6%A0%B7%E6%9C%AC%E4%B8%8A%E6%89%A7%E8%A1%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20on%20m%20Examples%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      13 在 m 个样本上执行梯度下降（Gradient Descent on m Examples）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/09%20%E8%BE%93%E5%85%A5%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%88Normalizing%20Inputs%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="09 输入归一化（Normalizing Inputs） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          09 输入归一化（Normalizing Inputs）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-01 20:18:27" itemprop="dateCreated datePublished" datetime="2026-01-01T20:18:27+00:00">2026-01-01</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="一、为什么要归一化输入？"><a href="#一、为什么要归一化输入？" class="headerlink" title="一、为什么要归一化输入？"></a>一、为什么要归一化输入？</h3><p>　　在训练神经网络时，<strong>如果输入特征的尺度（scale）差异很大</strong>（例如一个特征范围是 $[0, 1]$，另一个是 $[1, 1000]$），会导致：</p>
+<ul>
+<li><strong>代价函数（Cost Function）形状非常“细长”</strong> （elongated bowl），等高线呈椭圆形；</li>
+<li>梯度下降（Gradient Descent）会<strong>来回震荡</strong>，收敛速度慢；</li>
+<li>需要使用<strong>很小的学习率</strong>，否则容易发散。</li>
+</ul>
+<p>　　而<strong>归一化后</strong>，各特征具有相似的尺度（如均值为 0，方差为 1），代价函数更接近<strong>圆形&#x2F;球形</strong>，梯度下降能<strong>更快、更直接地收敛到最小值</strong>。</p>
+<blockquote>
+<p>💡 直观理解：想象在一个又长又窄的山谷里找最低点 vs 在一个圆形碗底找最低点——后者显然更容易！</p>
+</blockquote>
+<hr>
+<h3 id="二、如何归一化输入？（两步法）"><a href="#二、如何归一化输入？（两步法）" class="headerlink" title="二、如何归一化输入？（两步法）"></a>二、如何归一化输入？（两步法）</h3><p>　　假设训练集有 $m$ 个样本，每个样本的输入特征为 $\mathbf{x}^{(i)} \in \mathbb{R}^n$（$n$ 为特征维度）。</p>
+<h4 id="第一步：零均值化（Zero-centering）"><a href="#第一步：零均值化（Zero-centering）" class="headerlink" title="第一步：零均值化（Zero-centering）"></a>第一步：<strong>零均值化（Zero-centering）</strong></h4><p>　　计算训练集所有样本的<strong>均值向量</strong>：</p>
+<p>$$<br>\boldsymbol{\mu} &#x3D; \frac{1}{m} \sum_{i&#x3D;1}^{m} \mathbf{x}^{(i)}<br>$$</p>
+<p>　　然后对每个样本减去均值：</p>
+<p>$$<br>\mathbf{x}^{(i)} :&#x3D; \mathbf{x}^{(i)} - \boldsymbol{\mu}<br>$$</p>
+<blockquote>
+<p>✅ 此时所有特征的均值为 0。</p>
+</blockquote>
+<h4 id="第二步：归一化方差（Normalize-Variance）"><a href="#第二步：归一化方差（Normalize-Variance）" class="headerlink" title="第二步：归一化方差（Normalize Variance）"></a>第二步：<strong>归一化方差（Normalize Variance）</strong></h4><p>　　计算每个特征的<strong>方差</strong>（注意：此时均值已为 0，所以方差就是平方的均值）：</p>
+<p>$$<br>\boldsymbol{\sigma}^2 &#x3D; \frac{1}{m} \sum_{i&#x3D;1}^{m} \left( \mathbf{x}^{(i)} \right)^2<br>$$</p>
+<blockquote>
+<p>这里的平方是<strong>逐元素平方（element-wise squaring）</strong> ，结果 $\boldsymbol{\sigma}^2$ 是一个 $n$ 维向量，每个元素对应一个特征的方差。</p>
+</blockquote>
+<p>　　然后对每个样本除以标准差（或方差的平方根）：</p>
+<p>$$<br>\mathbf{x}^{(i)} :&#x3D; \frac{\mathbf{x}^{(i)}}{\boldsymbol{\sigma}}<br>$$</p>
+<blockquote>
+<p>注意：实际实现中通常除以 $\boldsymbol{\sigma}$（标准差），而不是 $\boldsymbol{\sigma}^2$。课程中表述略有简化，但意图是让每个特征的<strong>方差变为 1</strong>。</p>
+</blockquote>
+<blockquote>
+<p>✅ 归一化后，每个特征满足：</p>
+<p>$$<br>\text{mean} &#x3D; 0,\quad \text{variance} &#x3D; 1<br>$$</p>
+</blockquote>
+<hr>
+<h3 id="三、重要实践建议：训练集与测试集必须用相同的-boldsymbol-mu-和-boldsymbol-sigma"><a href="#三、重要实践建议：训练集与测试集必须用相同的-boldsymbol-mu-和-boldsymbol-sigma" class="headerlink" title="三、重要实践建议：训练集与测试集必须用相同的 $\boldsymbol{\mu}$ 和 $\boldsymbol{\sigma}$"></a>三、重要实践建议：训练集与测试集必须用<strong>相同的</strong> $\boldsymbol{\mu}$ 和 $\boldsymbol{\sigma}$</h3><ul>
+<li><strong>$\boldsymbol{\mu}$</strong> <strong>和</strong> <strong>$\boldsymbol{\sigma}$</strong> <strong>必须仅从训练集计算得出</strong>；</li>
+<li><strong>测试集（或验证集）必须使用训练集的</strong> <strong>$\boldsymbol{\mu}$</strong> <strong>和</strong> <strong>$\boldsymbol{\sigma}$</strong> <strong>进行归一化</strong>；</li>
+<li><strong>绝不能</strong>分别对训练集和测试集单独计算各自的均值和方差。</li>
+</ul>
+<blockquote>
+<p>❗ 原因：训练和测试数据必须经过<strong>完全相同的预处理变换</strong>，否则会引入分布偏移（distribution shift），影响模型泛化能力。</p>
+</blockquote>
+<hr>
+<h3 id="四、何时需要归一化？"><a href="#四、何时需要归一化？" class="headerlink" title="四、何时需要归一化？"></a>四、何时需要归一化？</h3><table>
+<thead>
+<tr>
+<th>特征尺度情况</th>
+<th>是否需要归一化</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>所有特征都在相似范围（如 $[-1,1]$, $[0,2]$）</td>
+<td>❌ 可选</td>
+<td>影响不大，但归一化也无害</td>
+</tr>
+<tr>
+<td>特征尺度差异巨大（如 $[0,1]$ vs $[1,1000]$）</td>
+<td>✅ 强烈推荐</td>
+<td>能显著加速训练、提升稳定性</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>✅ <strong>经验法则</strong>：如果你不确定是否需要归一化，<strong>就做归一化</strong>！它几乎从不有害，且常常带来好处。</p>
+</blockquote>
+<hr>
+<h3 id="五、对优化过程的影响（直观图示）"><a href="#五、对优化过程的影响（直观图示）" class="headerlink" title="五、对优化过程的影响（直观图示）"></a>五、对优化过程的影响（直观图示）</h3><ul>
+<li><strong>未归一化</strong>：代价函数 $J(\mathbf{w}, b)$ 的等高线是<strong>细长椭圆</strong> → 梯度下降路径曲折、缓慢；</li>
+<li><strong>归一化后</strong>：等高线接近<strong>圆形</strong> → 梯度下降可沿直线快速收敛。</li>
+</ul>
+<blockquote>
+<p>⚠️ 虽然实际参数 $\mathbf{w}$ 是高维的，无法可视化，但二维类比足以说明核心思想。</p>
+</blockquote>
+<hr>
+<h3 id="六、总结要点（Key-Takeaways）"><a href="#六、总结要点（Key-Takeaways）" class="headerlink" title="六、总结要点（Key Takeaways）"></a>六、总结要点（Key Takeaways）</h3><ol>
+<li><strong>输入归一化 &#x3D; 零均值 + 单位方差</strong>；</li>
+<li>使用<strong>训练集统计量</strong>（$\boldsymbol{\mu}, \boldsymbol{\sigma}$）处理<strong>所有数据</strong>（包括测试集）；</li>
+<li>归一化使代价函数更“圆”，<strong>加速梯度下降收敛</strong>；</li>
+<li>当特征尺度差异大时，归一化<strong>至关重要</strong>；</li>
+<li>即使尺度相近，归一化也是<strong>安全且推荐的做法</strong>。</li>
+</ol>
+<hr>
+<h3 id="附：常用归一化公式（标准化-Z-score-Normalization）"><a href="#附：常用归一化公式（标准化-Z-score-Normalization）" class="headerlink" title="附：常用归一化公式（标准化 &#x2F; Z-score Normalization）"></a>附：常用归一化公式（标准化 &#x2F; Z-score Normalization）</h3><p>　　对于第 $j$ 个特征：</p>
+<p>$$<br>x_j^{(i)} \leftarrow \frac{x_j^{(i)} - \mu_j}{\sigma_j}<br>$$</p>
+<p>　　其中：</p>
+<ul>
+<li>$\mu_j &#x3D; \frac{1}{m} \sum_{i&#x3D;1}^m x_j^{(i)}$</li>
+<li>$\sigma_j &#x3D; \sqrt{ \frac{1}{m} \sum_{i&#x3D;1}^m (x_j^{(i)} - \mu_j)^2 }$</li>
+</ul>
+<blockquote>
+<p>这就是机器学习中最常用的 <strong>Standardization（标准化）</strong>  方法。</p>
+</blockquote>
+<blockquote>
+<p>[!NOTE] ✏️ 为什么震荡<br><strong>当特征尺度差异很大时，代价函数在不同参数方向上的“陡峭程度”极不均衡，导致梯度方向严重偏离最速下降路径，从而产生横向震荡。</strong></p>
+<h4 id="一、从代价函数的形状说起"><a href="#一、从代价函数的形状说起" class="headerlink" title="一、从代价函数的形状说起"></a>一、从代价函数的形状说起</h4><p>假设你有两个输入特征 x1​ 和 x2​，其中：</p>
+<ul>
+<li>x1​∈[0,1000]（比如“房屋面积”，单位：平方米）</li>
+<li>x2​∈[0,1]（比如“房间数量归一化值”）</li>
+</ul>
+<p>那么，在神经网络中，对应的权重为 w1​ 和 w2​。</p>
+<p>由于 x1​ 的数值远大于 x2​，​<strong>微小的 w1 变化就会引起输出的巨大变化</strong>，而 w2​ 需要较大变化才能产生同等影响。</p>
+<p>这导致代价函数 J(w1​,w2​) 在 w1​ 方向非常“陡峭”，而在 w2​ 方向非常“平缓”。</p>
+<p>👉 结果：​<strong>等高线图是一个非常细长的椭圆</strong>，长轴沿 w2​ 方向，短轴沿 w1​ 方向。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/08%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%85%B6%E4%BB%96%E6%AD%A3%E5%88%99%E5%8C%96%E6%96%B9%E6%B3%95/" rel="prev" title="08 神经网络中的其他正则化方法">
+                  <i class="fa fa-angle-left"></i> 08 神经网络中的其他正则化方法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/10%20%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1%E4%B8%8E%E6%A2%AF%E5%BA%A6%E7%88%86%E7%82%B8%E9%97%AE%E9%A2%98%EF%BC%88Vanishing%20%EF%BC%8F%20Exploding%20Gradients%EF%BC%89/" rel="next" title="10 梯度消失与梯度爆炸问题（Vanishing ／ Exploding Gradients）">
+                  10 梯度消失与梯度爆炸问题（Vanishing ／ Exploding Gradients） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rion</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">160k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">9:43</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

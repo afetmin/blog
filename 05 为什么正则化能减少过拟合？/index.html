@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/05%20%E4%B8%BA%E4%BB%80%E4%B9%88%E6%AD%A3%E5%88%99%E5%8C%96%E8%83%BD%E5%87%8F%E5%B0%91%E8%BF%87%E6%8B%9F%E5%90%88%EF%BC%9F/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/05%20%E4%B8%BA%E4%BB%80%E4%B9%88%E6%AD%A3%E5%88%99%E5%8C%96%E8%83%BD%E5%87%8F%E5%B0%91%E8%BF%87%E6%8B%9F%E5%90%88%EF%BC%9F/","path":"05 为什么正则化能减少过拟合？/","title":"05 为什么正则化能减少过拟合？"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>05 为什么正则化能减少过拟合？ | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/05%20%E4%B8%BA%E4%BB%80%E4%B9%88%E6%AD%A3%E5%88%99%E5%8C%96%E8%83%BD%E5%87%8F%E5%B0%91%E8%BF%87%E6%8B%9F%E5%90%88%EF%BC%9F/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">143</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%A0-%E4%B8%80%E3%80%81%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%AD%A3%E5%88%99%E5%8C%96%E8%83%BD%E5%87%8F%E5%B0%91%E8%BF%87%E6%8B%9F%E5%90%88%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">🧠 一、核心问题：为什么正则化能减少过拟合？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%87%E6%8B%9F%E5%90%88%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="nav-number">1.1.</span> <span class="nav-text">过拟合的本质</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%90-%E4%BA%8C%E3%80%81L2-%E6%AD%A3%E5%88%99%E5%8C%96%EF%BC%88%E6%9D%83%E9%87%8D%E8%A1%B0%E5%87%8F%EF%BC%89%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%BD%A2%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">📐 二、L2 正则化（权重衰减）的基本形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%8D-%E4%B8%89%E3%80%81%E7%9B%B4%E8%A7%89%E8%A7%A3%E9%87%8A%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88-L2-%E6%AD%A3%E5%88%99%E5%8C%96%E6%9C%89%E6%95%88%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">🔍 三、直觉解释：为什么 L2 正则化有效？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E8%A7%89-1%EF%B8%8F%E2%83%A3%EF%BC%9A%E7%AD%89%E6%95%88%E4%BA%8E%E7%AE%80%E5%8C%96%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84"><span class="nav-number">3.1.</span> <span class="nav-text">直觉 1️⃣：等效于简化网络结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E8%A7%89-2%EF%B8%8F%E2%83%A3%EF%BC%9A%E4%BD%BF%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E4%BF%9D%E6%8C%81%E5%9C%A8%E7%BA%BF%E6%80%A7%E5%8C%BA%E5%9F%9F"><span class="nav-number">3.2.</span> <span class="nav-text">直觉 2️⃣：使激活函数保持在线性区域</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9A%99%EF%B8%8F-%E5%9B%9B%E3%80%81%E5%AE%9E%E7%8E%B0%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">4.</span> <span class="nav-text">⚙️ 四、实现注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%97%B6%E7%9A%84%E6%88%90%E6%9C%AC%E5%87%BD%E6%95%B0%E7%9B%91%E6%8E%A7"><span class="nav-number">4.1.</span> <span class="nav-text">调试梯度下降时的成本函数监控</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%84-%E4%BA%94%E3%80%81%E4%B8%8E%E5%85%B6%E4%BB%96%E6%AD%A3%E5%88%99%E5%8C%96%E6%96%B9%E6%B3%95%E7%9A%84%E5%AF%B9%E6%AF%94%EF%BC%88%E9%A2%84%E5%91%8A%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">🔄 五、与其他正则化方法的对比（预告）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E6%80%BB%E7%BB%93%E8%A6%81%E7%82%B9"><span class="nav-number">6.</span> <span class="nav-text">✅ 总结要点</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rion"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rion</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">143</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/04%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E5%8C%96%EF%BC%88Regularization%20in%20Neural%20Networks%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-26</time>
+        <br>
+      04 神经网络中的正则化（Regularization in Neural Networks）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/07%20%E4%BA%86%E8%A7%A3%20Drop%20out/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-01</time>
+        <br>
+      07 了解 Drop out
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/14%20%E6%A2%AF%E5%BA%A6%E6%A3%80%E6%9F%A5%EF%BC%88Gradient%20Checking%EF%BC%89%E5%AE%9E%E7%8E%B0%E8%A6%81%E7%82%B9/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-01</time>
+        <br>
+      14 梯度检查（Gradient Checking）实现要点
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/06%20Dropout%20%E6%AD%A3%E5%88%99%E5%8C%96/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-26</time>
+        <br>
+      06 Dropout 正则化
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/08%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%85%B6%E4%BB%96%E6%AD%A3%E5%88%99%E5%8C%96%E6%96%B9%E6%B3%95/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-01</time>
+        <br>
+      08 神经网络中的其他正则化方法
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/05%20%E4%B8%BA%E4%BB%80%E4%B9%88%E6%AD%A3%E5%88%99%E5%8C%96%E8%83%BD%E5%87%8F%E5%B0%91%E8%BF%87%E6%8B%9F%E5%90%88%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="05 为什么正则化能减少过拟合？ | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          05 为什么正则化能减少过拟合？
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-26 17:02:33" itemprop="dateCreated datePublished" datetime="2025-12-26T17:02:33+00:00">2025-12-26</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>917</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="🧠-一、核心问题：为什么正则化能减少过拟合？"><a href="#🧠-一、核心问题：为什么正则化能减少过拟合？" class="headerlink" title="🧠 一、核心问题：为什么正则化能减少过拟合？"></a>🧠 一、核心问题：为什么正则化能减少过拟合？</h2><h3 id="过拟合的本质"><a href="#过拟合的本质" class="headerlink" title="过拟合的本质"></a>过拟合的本质</h3><ul>
+<li>在训练大型&#x2F;深层神经网络时，模型具有极强的拟合能力（高方差），容易在训练集上表现极好，但在验证&#x2F;测试集上泛化能力差。</li>
+<li>正则化通过<strong>限制模型复杂度</strong>，使其更“简单”，从而提升泛化性能。</li>
+</ul>
+<hr>
+<h2 id="📐-二、L2-正则化（权重衰减）的基本形式"><a href="#📐-二、L2-正则化（权重衰减）的基本形式" class="headerlink" title="📐 二、L2 正则化（权重衰减）的基本形式"></a>📐 二、L2 正则化（权重衰减）的基本形式</h2><p>　　原始损失函数（无正则化）：</p>
+<p>$$<br>J(W, b) &#x3D; \frac{1}{m} \sum_{i&#x3D;1}^{m} \mathcal{L}(\hat{y}^{(i)}, y^{(i)})<br>$$</p>
+<p>　　加入 L2 正则化后的总成本函数：</p>
+<p>$$<br>J_{\text{reg}}(W, b) &#x3D; \frac{1}{m} \sum_{i&#x3D;1}^{m} \mathcal{L}(\hat{y}^{(i)}, y^{(i)}) + \frac{\lambda}{2m} \sum_{l&#x3D;1}^{L} |W^{[l]}|_F^2<br>$$</p>
+<p>　　其中：</p>
+<ul>
+<li>$\lambda$：正则化强度超参数（越大，惩罚越强）</li>
+<li>$|W^{[l]}|<em>F^2 &#x3D; \sum</em>{i,j} (W^{[l]}_{ij})^2$ 是 Frobenius 范数（即所有权重的平方和）</li>
+<li>$L$：网络层数</li>
+</ul>
+<blockquote>
+<p>✅ 注意：通常不对偏置项 $b$ 正则化，因为其数量远少于权重，影响小。</p>
+</blockquote>
+<hr>
+<h2 id="🔍-三、直觉解释：为什么-L2-正则化有效？"><a href="#🔍-三、直觉解释：为什么-L2-正则化有效？" class="headerlink" title="🔍 三、直觉解释：为什么 L2 正则化有效？"></a>🔍 三、直觉解释：为什么 L2 正则化有效？</h2><h3 id="直觉-1️⃣：等效于简化网络结构"><a href="#直觉-1️⃣：等效于简化网络结构" class="headerlink" title="直觉 1️⃣：等效于简化网络结构"></a>直觉 1️⃣：<strong>等效于简化网络结构</strong></h3><ul>
+<li>当 $\lambda$ 很大时，为最小化成本函数，优化器会迫使权重 $W^{[l]} \to 0$。</li>
+<li>虽然<strong>并非真正“关闭”某些神经元</strong>（不像 Dropout），但每个隐藏单元的贡献被显著削弱。</li>
+<li>整体效果类似于一个<strong>更小、更简单的网络</strong>，从而降低模型复杂度，减少过拟合。</li>
+</ul>
+<blockquote>
+<p>💡 类比：极端情况下，若所有 $W \approx 0$，网络退化为近似线性模型（如逻辑回归），无法拟合复杂非线性边界。</p>
+</blockquote>
+<hr>
+<h3 id="直觉-2️⃣：使激活函数保持在线性区域"><a href="#直觉-2️⃣：使激活函数保持在线性区域" class="headerlink" title="直觉 2️⃣：使激活函数保持在线性区域"></a>直觉 2️⃣：<strong>使激活函数保持在线性区域</strong></h3><p>　　假设使用 <strong>tanh 激活函数</strong>：</p>
+<ul>
+<li>tanh 在 $z \approx 0$ 附近近似线性；</li>
+<li>若权重 $W$ 很小 → $z &#x3D; Wx + b$ 的值也较小 → 激活函数工作在线性区；</li>
+<li>多层线性变换的组合仍是线性的 → 整个网络近似为<strong>线性模型</strong>。</li>
+</ul>
+<p>　　因此：</p>
+<ul>
+<li>网络无法学习高度非线性的决策边界；</li>
+<li>避免了对训练数据中噪声或异常点的过度拟合；</li>
+<li>泛化能力增强。</li>
+</ul>
+<blockquote>
+<p>📌 关键结论：<strong>L2 正则化通过抑制权重大小，限制了网络的非线性表达能力，从而防止过拟合。</strong></p>
+</blockquote>
+<hr>
+<h2 id="⚙️-四、实现注意事项"><a href="#⚙️-四、实现注意事项" class="headerlink" title="⚙️ 四、实现注意事项"></a>⚙️ 四、实现注意事项</h2><h3 id="调试梯度下降时的成本函数监控"><a href="#调试梯度下降时的成本函数监控" class="headerlink" title="调试梯度下降时的成本函数监控"></a>调试梯度下降时的成本函数监控</h3><ul>
+<li>在使用正则化后，<strong>总成本函数</strong> <strong>$J_{\text{reg}}$</strong> <strong>必须包含正则项</strong>。</li>
+<li>若只绘制原始损失（不含正则项），可能看到成本函数<strong>不单调下降</strong>，误判为 bug。</li>
+<li>正确做法：在调试时始终监控完整的 $J_{\text{reg}}$。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 伪代码示例</span></span><br><span class="line">cost = compute_loss(y_pred, y_true) + (<span class="keyword">lambda</span> / (<span class="number">2</span>*m)) * sum_of_squared_weights</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🔄-五、与其他正则化方法的对比（预告）"><a href="#🔄-五、与其他正则化方法的对比（预告）" class="headerlink" title="🔄 五、与其他正则化方法的对比（预告）"></a>🔄 五、与其他正则化方法的对比（预告）</h2><ul>
+<li><strong>L2 正则化</strong>：最常用，通过惩罚大权重实现平滑。</li>
+<li><strong>Dropout</strong>：随机“关闭”部分神经元，强制网络不依赖特定神经元（将在下一讲介绍）。</li>
+<li>两者常结合使用，进一步提升泛化能力。</li>
+</ul>
+<hr>
+<h2 id="✅-总结要点"><a href="#✅-总结要点" class="headerlink" title="✅ 总结要点"></a>✅ 总结要点</h2><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>目标</strong></td>
+<td>减少过拟合（高方差），提升泛化</td>
+</tr>
+<tr>
+<td><strong>方法</strong></td>
+<td>L2 正则化（权重衰减）</td>
+</tr>
+<tr>
+<td><strong>数学形式</strong></td>
+<td>$J_{\text{reg}} &#x3D; J + \frac{\lambda}{2m} \sum |W|_F^2$</td>
+</tr>
+<tr>
+<td><strong>核心机制</strong></td>
+<td>抑制权重过大 → 降低模型复杂度</td>
+</tr>
+<tr>
+<td><strong>两种直觉</strong></td>
+<td>1. 等效简化网络；2. 使激活函数线性化</td>
+</tr>
+<tr>
+<td><strong>实现注意</strong></td>
+<td>调试时必须用含正则项的完整成本函数</td>
+</tr>
+</tbody></table>
+<hr>
+<p>　　通过本节学习，你应理解：<strong>正则化不是“魔法”，而是通过控制模型容量（capacity）来平衡偏差与方差</strong>。合理选择 $\lambda$，可在“欠拟合”与“过拟合”之间找到最佳平衡点。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/04%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E5%8C%96%EF%BC%88Regularization%20in%20Neural%20Networks%EF%BC%89/" rel="prev" title="04 神经网络中的正则化（Regularization in Neural Networks）">
+                  <i class="fa fa-angle-left"></i> 04 神经网络中的正则化（Regularization in Neural Networks）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/06%20Dropout%20%E6%AD%A3%E5%88%99%E5%8C%96/" rel="next" title="06 Dropout 正则化">
+                  06 Dropout 正则化 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rion</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">160k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">9:43</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

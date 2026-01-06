@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/14%20%E6%A2%AF%E5%BA%A6%E6%A3%80%E6%9F%A5%EF%BC%88Gradient%20Checking%EF%BC%89%E5%AE%9E%E7%8E%B0%E8%A6%81%E7%82%B9/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/14%20%E6%A2%AF%E5%BA%A6%E6%A3%80%E6%9F%A5%EF%BC%88Gradient%20Checking%EF%BC%89%E5%AE%9E%E7%8E%B0%E8%A6%81%E7%82%B9/","path":"14 梯度检查（Gradient Checking）实现要点/","title":"14 梯度检查（Gradient Checking）实现要点"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>14 梯度检查（Gradient Checking）实现要点 | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/14%20%E6%A2%AF%E5%BA%A6%E6%A3%80%E6%9F%A5%EF%BC%88Gradient%20Checking%EF%BC%89%E5%AE%9E%E7%8E%B0%E8%A6%81%E7%82%B9/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">143</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%AA-%E6%A2%AF%E5%BA%A6%E6%A3%80%E6%9F%A5%EF%BC%88Gradient-Checking%EF%BC%89%E5%AE%9E%E7%8E%B0%E8%A6%81%E7%82%B9%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">🧪 梯度检查（Gradient Checking）实现要点总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%B8%8F%E2%83%A3-%E4%BB%85%E7%94%A8%E4%BA%8E%E8%B0%83%E8%AF%95%EF%BC%8C%E4%B8%8D%E8%A6%81%E5%9C%A8%E8%AE%AD%E7%BB%83%E4%B8%AD%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">1️⃣ 仅用于调试，不要在训练中使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%EF%B8%8F%E2%83%A3-%E6%A2%AF%E5%BA%A6%E6%A3%80%E6%9F%A5%E5%A4%B1%E8%B4%A5%E6%97%B6%EF%BC%8C%E9%80%90%E7%BB%84%E4%BB%B6%E6%8E%92%E6%9F%A5%E9%94%99%E8%AF%AF"><span class="nav-number">1.2.</span> <span class="nav-text">2️⃣ 梯度检查失败时，逐组件排查错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%EF%B8%8F%E2%83%A3-%E5%8C%85%E5%90%AB%E6%AD%A3%E5%88%99%E5%8C%96%E9%A1%B9%EF%BC%88%E5%A6%82%E6%9E%9C%E4%BD%BF%E7%94%A8%E4%BA%86%E6%AD%A3%E5%88%99%E5%8C%96%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">3️⃣ 包含正则化项（如果使用了正则化）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%EF%B8%8F%E2%83%A3-%E6%A2%AF%E5%BA%A6%E6%A3%80%E6%9F%A5%E4%B8%8E-Dropout-%E4%B8%8D%E5%85%BC%E5%AE%B9"><span class="nav-number">1.4.</span> <span class="nav-text">4️⃣ 梯度检查与 Dropout 不兼容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%EF%B8%8F%E2%83%A3-%E6%B3%A8%E6%84%8F%EF%BC%9A%E6%A2%AF%E5%BA%A6%E6%A3%80%E6%9F%A5%E5%8F%AF%E8%83%BD%E5%9C%A8%E5%88%9D%E5%A7%8B%E5%8C%96%E6%97%B6%E9%80%9A%E8%BF%87%EF%BC%8C%E4%BD%86%E5%9C%A8%E8%AE%AD%E7%BB%83%E5%90%8E%E6%9C%9F%E5%A4%B1%E6%95%88"><span class="nav-number">1.5.</span> <span class="nav-text">5️⃣ 注意：梯度检查可能在初始化时通过，但在训练后期失效</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E6%80%BB%E7%BB%93%EF%BC%9A%E6%A2%AF%E5%BA%A6%E6%A3%80%E6%9F%A5%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E6%B8%85%E5%8D%95"><span class="nav-number">2.</span> <span class="nav-text">✅ 总结：梯度检查最佳实践清单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-%E8%A1%A5%E5%85%85%EF%BC%9A%E6%A2%AF%E5%BA%A6%E7%9B%B8%E4%BC%BC%E5%BA%A6%E5%88%A4%E6%96%AD%E6%A0%87%E5%87%86"><span class="nav-number">3.</span> <span class="nav-text">📌 补充：梯度相似度判断标准</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rion"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rion</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">143</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/12%20%E6%A2%AF%E5%BA%A6%E7%9A%84%E6%95%B0%E5%80%BC%E8%BF%91%E4%BC%BC%EF%BC%88Numerical%20Approximation%20of%20Gradients%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-01</time>
+        <br>
+      12 梯度的数值近似（Numerical Approximation of Gradients）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/13%20%E6%A2%AF%E5%BA%A6%E6%A3%80%E6%9F%A5%EF%BC%88Gradient%20Checking%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-01</time>
+        <br>
+      13 梯度检查（Gradient Checking）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/19%20%E6%8C%87%E6%95%B0%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87%E4%B8%AD%E7%9A%84%E5%81%8F%E5%B7%AE%E4%BF%AE%E6%AD%A3%EF%BC%88Bias%20Correction%20in%20Exponentially%20Weighted%20Averages%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-02</time>
+        <br>
+      19 指数加权平均中的偏差修正（Bias Correction in Exponentially Weighted Averages）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/18%20%E4%BA%86%E8%A7%A3%E6%8C%87%E6%95%B0%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-02</time>
+        <br>
+      18 了解指数加权平均
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/07%20%E4%BA%86%E8%A7%A3%20Drop%20out/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-01</time>
+        <br>
+      07 了解 Drop out
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/14%20%E6%A2%AF%E5%BA%A6%E6%A3%80%E6%9F%A5%EF%BC%88Gradient%20Checking%EF%BC%89%E5%AE%9E%E7%8E%B0%E8%A6%81%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="14 梯度检查（Gradient Checking）实现要点 | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          14 梯度检查（Gradient Checking）实现要点
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-01 21:04:52" itemprop="dateCreated datePublished" datetime="2026-01-01T21:04:52+00:00">2026-01-01</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>912</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="🧪-梯度检查（Gradient-Checking）实现要点总结"><a href="#🧪-梯度检查（Gradient-Checking）实现要点总结" class="headerlink" title="🧪 梯度检查（Gradient Checking）实现要点总结"></a>🧪 梯度检查（Gradient Checking）实现要点总结</h2><p>　　梯度检查是验证神经网络反向传播（Backpropagation）实现是否正确的关键调试工具。它通过数值微分近似计算梯度，并与反向传播得到的解析梯度进行比较。以下是实际应用中的核心注意事项：</p>
+<hr>
+<h3 id="1️⃣-仅用于调试，不要在训练中使用"><a href="#1️⃣-仅用于调试，不要在训练中使用" class="headerlink" title="1️⃣ 仅用于调试，不要在训练中使用"></a>1️⃣ <strong>仅用于调试，不要在训练中使用</strong></h3><ul>
+<li><p><strong>原因</strong>：数值梯度计算非常耗时。</p>
+<p>对于参数向量 $\theta$ 的每个分量 $\theta_i$，数值梯度近似为：</p>
+<p>$$<br>\frac{\partial J}{\partial \theta_i} \approx \frac{J(\theta_1, \dots, \theta_i + \varepsilon, \dots) - J(\theta_1, \dots, \theta_i - \varepsilon, \dots)}{2\varepsilon}<br>$$</p>
+<p>其中 $\varepsilon$ 是一个很小的数（如 $10^{-7}$）。</p>
+</li>
+<li><p><strong>实践建议</strong>：</p>
+<ul>
+<li>训练时 <strong>只用反向传播</strong> 计算梯度（高效）。</li>
+<li><strong>仅在开发&#x2F;调试阶段</strong> 运行一次梯度检查，确认反向传播实现无误后关闭。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="2️⃣-梯度检查失败时，逐组件排查错误"><a href="#2️⃣-梯度检查失败时，逐组件排查错误" class="headerlink" title="2️⃣ 梯度检查失败时，逐组件排查错误"></a>2️⃣ <strong>梯度检查失败时，逐组件排查错误</strong></h3><ul>
+<li><p>若整体梯度不匹配，不要只看总误差，而应<strong>检查每个参数分量</strong>：</p>
+<ul>
+<li>参数 $\theta$ 通常由权重 $W^{[l]}$ 和偏置 $b^{[l]}$ 拼接而成。</li>
+<li>分别对比 $dW^{[l]}$ 和 $db^{[l]}$ 的数值梯度与解析梯度。</li>
+</ul>
+</li>
+<li><p><strong>示例</strong>：</p>
+<ul>
+<li>如果所有 $db^{[l]}$ 的误差很大，但 $dW^{[l]}$ 接近，则 bug 可能出在偏置的反向传播实现中。</li>
+<li>反之亦然。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>🔍 此方法虽不能直接定位 bug，但能大幅缩小排查范围。</p>
+</blockquote>
+<hr>
+<h3 id="3️⃣-包含正则化项（如果使用了正则化）"><a href="#3️⃣-包含正则化项（如果使用了正则化）" class="headerlink" title="3️⃣ 包含正则化项（如果使用了正则化）"></a>3️⃣ <strong>包含正则化项（如果使用了正则化）</strong></h3><ul>
+<li><p>若损失函数包含 L2 正则化：</p>
+<p>$$<br>J(\theta) &#x3D; \frac{1}{m} \sum_{i&#x3D;1}^m \mathcal{L}^{(i)} + \frac{\lambda}{2m} \sum_{l} |W^{[l]}|_F^2<br>$$</p>
+<p>其中 $|W^{[l]}|<em>F^2 &#x3D; \sum</em>{i,j} (W^{[l]}_{ij})^2$ 是 Frobenius 范数平方。</p>
+</li>
+<li><p><strong>关键点</strong>：</p>
+<ul>
+<li>数值梯度和解析梯度都必须基于<strong>完整的</strong> <strong>$J(\theta)$</strong>（含正则项）。</li>
+<li>忽略正则项会导致梯度不匹配，即使反向传播逻辑正确。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="4️⃣-梯度检查与-Dropout-不兼容"><a href="#4️⃣-梯度检查与-Dropout-不兼容" class="headerlink" title="4️⃣ 梯度检查与 Dropout 不兼容"></a>4️⃣ <strong>梯度检查与 Dropout 不兼容</strong></h3><ul>
+<li><p><strong>原因</strong>：</p>
+<ul>
+<li>Dropout 在每次前向传播中随机“关闭”部分神经元，相当于在优化一个<strong>随机动态变化的模型</strong>。</li>
+<li>不存在一个固定的、可微的损失函数 $J(\theta)$ 供数值梯度计算。</li>
+</ul>
+</li>
+<li><p><strong>解决方案</strong>：</p>
+<ul>
+<li><strong>关闭 Dropout</strong>（设 <code>keep_prob = 1.0</code>）进行梯度检查。</li>
+<li>验证无 Dropout 时的实现正确后，再开启 Dropout。</li>
+<li>（高级技巧）可固定 dropout 掩码（mask）进行检查，但实践中很少使用。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>✅ 推荐流程：<strong>先关 dropout → 梯度检查 → 开 dropout → 正常训练</strong></p>
+</blockquote>
+<hr>
+<h3 id="5️⃣-注意：梯度检查可能在初始化时通过，但在训练后期失效"><a href="#5️⃣-注意：梯度检查可能在初始化时通过，但在训练后期失效" class="headerlink" title="5️⃣ 注意：梯度检查可能在初始化时通过，但在训练后期失效"></a>5️⃣ <strong>注意：梯度检查可能在初始化时通过，但在训练后期失效</strong></h3><ul>
+<li><p><strong>潜在风险</strong>：</p>
+<ul>
+<li>反向传播实现在参数接近 0（如随机初始化）时正确，但在参数变大后出现数值不稳定或逻辑错误。</li>
+</ul>
+</li>
+<li><p><strong>应对策略</strong>（较少用，但值得了解）：</p>
+<ol>
+<li>在随机初始化后运行一次梯度检查。</li>
+<li>训练若干轮（使 $W, b$ 远离 0）。</li>
+<li>再次运行梯度检查，验证梯度一致性。</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>⚠️ 虽然这种情况罕见，但在复杂模型中仍需警惕。</p>
+</blockquote>
+<hr>
+<h2 id="✅-总结：梯度检查最佳实践清单"><a href="#✅-总结：梯度检查最佳实践清单" class="headerlink" title="✅ 总结：梯度检查最佳实践清单"></a>✅ 总结：梯度检查最佳实践清单</h2><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>建议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>何时使用</strong></td>
+<td>仅调试阶段，训练中禁用</td>
+</tr>
+<tr>
+<td><strong>正则化</strong></td>
+<td>确保 $J(\theta)$ 包含正则项</td>
+</tr>
+<tr>
+<td><strong>Dropout</strong></td>
+<td>关闭后再做梯度检查</td>
+</tr>
+<tr>
+<td><strong>错误排查</strong></td>
+<td>按 $dW$ &#x2F; $db$ &#x2F; 层级 分组件比对</td>
+</tr>
+<tr>
+<td><strong>时机选择</strong></td>
+<td>可在初始化和训练中期各检查一次</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="📌-补充：梯度相似度判断标准"><a href="#📌-补充：梯度相似度判断标准" class="headerlink" title="📌 补充：梯度相似度判断标准"></a>📌 补充：梯度相似度判断标准</h2><p>　　通常使用<strong>相对误差（Relative Error）</strong>  判断梯度是否匹配：</p>
+<p>$$<br>\text{error} &#x3D; \frac{| \nabla_{\text{approx}} - \nabla_{\text{analytic}} |<em>2}{| \nabla</em>{\text{approx}} |<em>2 + | \nabla</em>{\text{analytic}} |_2}<br>$$</p>
+<ul>
+<li>error &lt; $10^{-7}$：优秀</li>
+<li>error &lt; $10^{-5}$：可接受（尤其含 ReLU 等不可导点）</li>
+<li>error &gt; $10^{-3}$：很可能存在 bug</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/13%20%E6%A2%AF%E5%BA%A6%E6%A3%80%E6%9F%A5%EF%BC%88Gradient%20Checking%EF%BC%89/" rel="prev" title="13 梯度检查（Gradient Checking）">
+                  <i class="fa fa-angle-left"></i> 13 梯度检查（Gradient Checking）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/%E7%BA%A6%E4%B9%A6%E4%BA%9A%C2%B7%E6%9C%AC%E5%90%89%E5%A5%A5%E8%AE%BF%E8%B0%88/" rel="next" title="约书亚·本吉奥访谈">
+                  约书亚·本吉奥访谈 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rion</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">160k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">9:43</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>
