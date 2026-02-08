@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A52/01%20%E8%BF%9B%E8%A1%8C%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90%EF%BC%88Carrying%20out%20error%20analysis%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A52/01%20%E8%BF%9B%E8%A1%8C%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90%EF%BC%88Carrying%20out%20error%20analysis%EF%BC%89/","path":"机器学习策略2/01 进行误差分析（Carrying out error analysis）/","title":"01 进行误差分析（Carrying out error analysis）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>01 进行误差分析（Carrying out error analysis） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A52/01%20%E8%BF%9B%E8%A1%8C%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90%EF%BC%88Carrying%20out%20error%20analysis%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">13</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">165</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#01-%E8%BF%9B%E8%A1%8C%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90%EF%BC%88Carrying-out-error-analysis%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">01 进行误差分析（Carrying out error analysis）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90%EF%BC%88Error-Analysis%EF%BC%89%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">一、什么是误差分析（Error Analysis）？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9A%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">二、为什么要做误差分析？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">三、误差分析的标准流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-1%EF%BC%9A%E6%94%B6%E9%9B%86%E9%94%99%E8%AF%AF%E6%A0%B7%E6%9C%AC"><span class="nav-number">1.3.1.</span> <span class="nav-text">步骤 1：收集错误样本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-2%EF%BC%9A%E4%BA%BA%E5%B7%A5%E9%80%90%E4%B8%AA%E6%A3%80%E6%9F%A5"><span class="nav-number">1.3.2.</span> <span class="nav-text">步骤 2：人工逐个检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-3%EF%BC%9A%E5%BB%BA%E7%AB%8B%E5%88%86%E6%9E%90%E8%A1%A8%E6%A0%BC%EF%BC%88%E6%8E%A8%E8%8D%90%E7%94%B5%E5%AD%90%E8%A1%A8%E6%A0%BC%EF%BC%89"><span class="nav-number">1.3.3.</span> <span class="nav-text">步骤 3：建立分析表格（推荐电子表格）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-4%EF%BC%9A%E7%BB%9F%E8%AE%A1%E5%90%84%E7%B1%BB%E9%94%99%E8%AF%AF%E5%8D%A0%E6%AF%94"><span class="nav-number">1.3.4.</span> <span class="nav-text">步骤 4：统计各类错误占比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90%E7%BB%93%E6%9E%9C%E5%81%9A%E5%86%B3%E7%AD%96%EF%BC%9F"><span class="nav-number">1.4.</span> <span class="nav-text">四、如何利用误差分析结果做决策？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%AE%A1%E7%AE%97%E6%80%A7%E8%83%BD%E6%8F%90%E5%8D%87%E4%B8%8A%E9%99%90%EF%BC%88Performance-Ceiling%EF%BC%89"><span class="nav-number">1.4.1.</span> <span class="nav-text">1. 计算性能提升上限（Performance Ceiling）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%8A%A8%E6%80%81%E5%8F%91%E7%8E%B0%E6%96%B0%E9%94%99%E8%AF%AF%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.4.2.</span> <span class="nav-text">2. 动态发现新错误类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%BB%BA%E8%AE%AE"><span class="nav-number">1.5.</span> <span class="nav-text">五、误差分析的实践建议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%95%B0%E5%AD%A6%E8%A1%A8%E8%BE%BE%EF%BC%88KaTeX-%E5%85%BC%E5%AE%B9%EF%BC%89"><span class="nav-number">1.6.</span> <span class="nav-text">六、数学表达（KaTeX 兼容）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E6%80%BB%E7%BB%93%EF%BC%9A%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90%E7%9A%84%E6%A0%B8%E5%BF%83%E4%BB%B7%E5%80%BC"><span class="nav-number">1.7.</span> <span class="nav-text">七、总结：误差分析的核心价值</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rion"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rion</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">165</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/09%20%E5%AF%BC%E6%95%B0%EF%BC%88Derivatives%EF%BC%89%E7%9A%84%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3%E4%B8%8E%E5%AE%9E%E4%BE%8B/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      09 导数（Derivatives）的直观理解与实例
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A51/10%20%E7%90%86%E8%A7%A3%E4%BA%BA%E7%B1%BB%E6%B0%B4%E5%B9%B3%E8%A1%A8%E7%8E%B0%EF%BC%88Understanding%20human-level%20performance%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-11</time>
+        <br>
+      10 理解人类水平表现（Understanding human-level performance）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A52/01%20%E8%BF%9B%E8%A1%8C%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90%EF%BC%88Carrying%20out%20error%20analysis%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="01 进行误差分析（Carrying out error analysis） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          01 进行误差分析（Carrying out error analysis）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-18 10:27:01" itemprop="dateCreated datePublished" datetime="2026-01-18T10:27:01+00:00">2026-01-18</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="01-进行误差分析（Carrying-out-error-analysis）"><a href="#01-进行误差分析（Carrying-out-error-analysis）" class="headerlink" title="01 进行误差分析（Carrying out error analysis）"></a>01 进行误差分析（Carrying out error analysis）</h1><h2 id="一、什么是误差分析（Error-Analysis）？"><a href="#一、什么是误差分析（Error-Analysis）？" class="headerlink" title="一、什么是误差分析（Error Analysis）？"></a>一、什么是误差分析（Error Analysis）？</h2><p><strong>误差分析</strong> 是在开发机器学习系统（尤其是监督学习模型）时，通过<strong>人工检查模型在开发集上出错的样本</strong>，来判断哪些错误类型最常见、哪些改进方向最具潜力的一种<strong>定性+定量分析方法</strong>。</p>
+<blockquote>
+<p>✅ <strong>核心目的</strong>：避免盲目投入大量时间优化一个对整体性能提升微乎其微的问题。</p>
+</blockquote>
+<hr>
+<h2 id="二、为什么要做误差分析？"><a href="#二、为什么要做误差分析？" class="headerlink" title="二、为什么要做误差分析？"></a>二、为什么要做误差分析？</h2><ul>
+<li>当你的模型性能尚未达到人类水平（或业务目标）时，<strong>人类可以轻松识别出错原因</strong>。</li>
+<li>机器学习项目常面临多个潜在改进方向（如处理狗、模糊图、滤镜等），但资源有限。</li>
+<li>误差分析能快速估算每个方向的<strong>性能提升上限（Performance Ceiling）</strong> ，帮助你做出高性价比决策。</li>
+</ul>
+<blockquote>
+<p>💡 <strong>关键洞察</strong>：<br>如果某类错误只占总错误的 5%，即使你<strong>100%解决它</strong>，整体错误率最多下降 5% × 总错误率。</p>
+</blockquote>
+<hr>
+<h2 id="三、误差分析的标准流程"><a href="#三、误差分析的标准流程" class="headerlink" title="三、误差分析的标准流程"></a>三、误差分析的标准流程</h2><h3 id="步骤-1：收集错误样本"><a href="#步骤-1：收集错误样本" class="headerlink" title="步骤 1：收集错误样本"></a>步骤 1：收集错误样本</h3><ul>
+<li>从<strong>开发集（Dev Set）</strong>  中选出模型预测错误的样本。</li>
+<li>建议数量：<strong>50~100 个</strong>（足够统计，又不至于耗时过长）。</li>
+</ul>
+<h3 id="步骤-2：人工逐个检查"><a href="#步骤-2：人工逐个检查" class="headerlink" title="步骤 2：人工逐个检查"></a>步骤 2：人工逐个检查</h3><ul>
+<li><p>对每个错误样本，判断其属于哪一类错误（可预设类别，也可动态新增）。</p>
+</li>
+<li><p>常见错误类型示例：</p>
+<ul>
+<li>被误分类为猫的<strong>狗</strong></li>
+<li><strong>大型猫科动物</strong>（狮子、豹子等）</li>
+<li><strong>图像模糊</strong></li>
+<li><strong>Instagram&#x2F;Snapchat 滤镜干扰</strong></li>
+<li><strong>标注错误（Label Noise）</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="步骤-3：建立分析表格（推荐电子表格）"><a href="#步骤-3：建立分析表格（推荐电子表格）" class="headerlink" title="步骤 3：建立分析表格（推荐电子表格）"></a>步骤 3：建立分析表格（推荐电子表格）</h3><table>
+<thead>
+<tr>
+<th>样本编号</th>
+<th>是否为狗</th>
+<th>是否为大猫</th>
+<th>是否模糊</th>
+<th>是否有滤镜</th>
+<th>备注（Comment）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>✓</td>
+<td></td>
+<td></td>
+<td></td>
+<td>比特犬，像猫</td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td></td>
+<td>✓</td>
+<td></td>
+<td>雨天拍摄，模糊</td>
+</tr>
+<tr>
+<td>3</td>
+<td></td>
+<td>✓</td>
+<td>✓</td>
+<td></td>
+<td>动物园狮子</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody></table>
+<h3 id="步骤-4：统计各类错误占比"><a href="#步骤-4：统计各类错误占比" class="headerlink" title="步骤 4：统计各类错误占比"></a>步骤 4：统计各类错误占比</h3><p>假设共检查 100 个错误样本：</p>
+<ul>
+<li>狗：8 个 → <strong>8%</strong></li>
+<li>大型猫科动物：43 个 → <strong>43%</strong></li>
+<li>模糊图像：61 个 → <strong>61%</strong></li>
+<li>滤镜：12 个 → <strong>12%</strong></li>
+</ul>
+<blockquote>
+<p>⚠️ 注意：百分比之和可能超过 100%，因为一个样本可能属于多个错误类型（如“模糊的大猫”）。</p>
+</blockquote>
+<hr>
+<h2 id="四、如何利用误差分析结果做决策？"><a href="#四、如何利用误差分析结果做决策？" class="headerlink" title="四、如何利用误差分析结果做决策？"></a>四、如何利用误差分析结果做决策？</h2><h3 id="1-计算性能提升上限（Performance-Ceiling）"><a href="#1-计算性能提升上限（Performance-Ceiling）" class="headerlink" title="1. 计算性能提升上限（Performance Ceiling）"></a>1. 计算性能提升上限（Performance Ceiling）</h3><p>设当前开发集错误率为 $E &#x3D; 10%$，总样本数为 $N &#x3D; 1000$，则错误样本数为 100。</p>
+<ul>
+<li><p>若“狗”类错误占 8%，即 8 个样本。</p>
+</li>
+<li><p>即使你<strong>完全消除所有狗的误判</strong>，错误数最多减少 8。</p>
+</li>
+<li><p>新错误率：</p>
+<p>$$<br>E_{\text{new}} &#x3D; \frac{100 - 8}{1000} &#x3D; 9.2%<br>$$</p>
+</li>
+<li><p>相对改进幅度：</p>
+<p>$$<br>\Delta E &#x3D; \frac{8}{100} &#x3D; 8% \quad \text{（相对于错误样本）}<br>$$</p>
+</li>
+</ul>
+<blockquote>
+<p>📌 <strong>结论</strong>：优先处理<strong>占比高</strong>的错误类型（如模糊图 61% &gt; 大猫 43% &gt; 滤镜 12% &gt; 狗 8%）。</p>
+</blockquote>
+<h3 id="2-动态发现新错误类型"><a href="#2-动态发现新错误类型" class="headerlink" title="2. 动态发现新错误类型"></a>2. 动态发现新错误类型</h3><ul>
+<li>在检查过程中，若频繁遇到未预设的错误（如“夜间低光照图像”），可<strong>立即新增一列</strong>。</li>
+<li>这体现了误差分析的<strong>灵活性与启发性</strong>。</li>
+</ul>
+<hr>
+<h2 id="五、误差分析的实践建议"><a href="#五、误差分析的实践建议" class="headerlink" title="五、误差分析的实践建议"></a>五、误差分析的实践建议</h2><table>
+<thead>
+<tr>
+<th>建议</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>✅ <strong>快速执行</strong></td>
+<td>100 个样本通常只需 5–30 分钟</td>
+</tr>
+<tr>
+<td>✅ <strong>不要追求完美</strong></td>
+<td>不需要精确到小数点，粗略估计即可指导方向</td>
+</tr>
+<tr>
+<td>✅ <strong>多人交叉验证</strong></td>
+<td>可让多个成员独立标注，提高可靠性</td>
+</tr>
+<tr>
+<td>❌ <strong>不要自动化初期分析</strong></td>
+<td>初期必须人工看图，才能发现模式</td>
+</tr>
+<tr>
+<td>⚠️ <strong>注意标注错误</strong></td>
+<td>若发现开发集本身标签错误，需单独记录并考虑清洗数据</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="六、数学表达（KaTeX-兼容）"><a href="#六、数学表达（KaTeX-兼容）" class="headerlink" title="六、数学表达（KaTeX 兼容）"></a>六、数学表达（KaTeX 兼容）</h2><ul>
+<li><p>设总开发集大小为 $N$，错误样本数为 $N_{\text{err}}$，错误率：</p>
+<p>$$<br>E &#x3D; \frac{N_{\text{err}}}{N}<br>$$</p>
+</li>
+<li><p>设某类错误在错误样本中占比为 $p$（如 $p &#x3D; 0.61$ 表示 61% 错误是模糊图），则该类错误对应的样本数为：</p>
+<p>$$<br>N_{\text{type}} &#x3D; p \cdot N_{\text{err}}<br>$$</p>
+</li>
+<li><p>若完全解决该类错误，新错误率为：</p>
+<p>$$<br>E_{\text{new}} &#x3D; \frac{N_{\text{err}} - N_{\text{type}}}{N} &#x3D; E (1 - p)<br>$$</p>
+</li>
+<li><p>相对错误减少比例（针对错误样本）：</p>
+<p>$$<br>\text{Improvement} &#x3D; p \times 100%<br>$$</p>
+</li>
+</ul>
+<hr>
+<h2 id="七、总结：误差分析的核心价值"><a href="#七、总结：误差分析的核心价值" class="headerlink" title="七、总结：误差分析的核心价值"></a>七、总结：误差分析的核心价值</h2><blockquote>
+<p> <strong>“Don’t spend months optimizing a problem that only accounts for 5% of your errors.”</strong><br>—— 吴恩达</p>
+</blockquote>
+<ul>
+<li>误差分析是<strong>连接工程直觉与数据驱动决策</strong>的桥梁。</li>
+<li>它用极低成本（几分钟到几小时）避免了<strong>数月无效开发</strong>。</li>
+<li>它不仅告诉你“<strong>做什么</strong>”，还告诉你“<strong>不做什</strong>么”。</li>
+</ul>
+<hr>
+<p>✅ <strong>行动建议</strong>：<br>下次调试模型时，先暂停编码，打开开发集错误样本，手动检查 100 张图——这可能是你本周最有价值的 20 分钟。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A51/09%20%E5%8F%AF%E9%81%BF%E5%85%8D%E5%81%8F%E5%B7%AE%EF%BC%88Avoidable%20Bias%EF%BC%89/" rel="prev" title="09 可避免偏差（Avoidable Bias）">
+                  <i class="fa fa-angle-left"></i> 09 可避免偏差（Avoidable Bias）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A52/02%20%E6%B8%85%E9%99%A4%E6%A0%87%E6%B3%A8%E9%94%99%E8%AF%AF%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%88Cleaning%20up%20Incorrectly%20Labeled%20Data%EF%BC%89/" rel="next" title="02 清除标注错误的数据（Cleaning up Incorrectly Labeled Data）">
+                  02 清除标注错误的数据（Cleaning up Incorrectly Labeled Data） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rion</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">184k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">11:10</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

@@ -128,7 +128,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">13</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">155</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">13</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">165</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -193,7 +193,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/blog/archives/">
-          <span class="site-state-item-count">155</span>
+          <span class="site-state-item-count">165</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -247,7 +247,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/03%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E9%85%8D%E6%96%B9%EF%BC%88Basic%20Recipe%20for%20Machine%20Learning%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/13%20%E6%A2%AF%E5%BA%A6%E6%A3%80%E6%9F%A5%EF%BC%88Gradient%20Checking%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.jpg">
@@ -265,7 +265,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/03%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E9%85%8D%E6%96%B9%EF%BC%88Basic%20Recipe%20for%20Machine%20Learning%EF%BC%89/" class="post-title-link" itemprop="url">03 机器学习基本配方（Basic Recipe for Machine Learning）</a>
+          <a href="/blog/13%20%E6%A2%AF%E5%BA%A6%E6%A3%80%E6%9F%A5%EF%BC%88Gradient%20Checking%EF%BC%89/" class="post-title-link" itemprop="url">13 梯度检查（Gradient Checking）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -276,7 +276,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-26 16:25:29" itemprop="dateCreated datePublished" datetime="2025-12-26T16:25:29+00:00">2025-12-26</time>
+      <time title="创建时间：2026-01-01 20:53:34" itemprop="dateCreated datePublished" datetime="2026-01-01T20:53:34+00:00">2026-01-01</time>
     </span>
 
   
@@ -286,14 +286,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1k</span>
+      <span>1.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
+      <span>5 分钟</span>
     </span>
 </div>
 
@@ -304,10 +304,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="一、核心目标"><a href="#一、核心目标" class="headerlink" title="一、核心目标"></a>一、核心目标</h2><p>　　系统性地诊断并改进神经网络模型的性能，主要围绕两个关键问题：</p>
+          <h3 id="一、目的与意义"><a href="#一、目的与意义" class="headerlink" title="一、目的与意义"></a>一、目的与意义</h3><p>　　梯度检查是一种<strong>验证反向传播（Backpropagation）实现是否正确</strong>的重要调试技术。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/03%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E9%85%8D%E6%96%B9%EF%BC%88Basic%20Recipe%20for%20Machine%20Learning%EF%BC%89/#more" rel="contents">
+              <a class="btn" href="/blog/13%20%E6%A2%AF%E5%BA%A6%E6%A3%80%E6%9F%A5%EF%BC%88Gradient%20Checking%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -338,7 +338,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/02%20Bias%EF%BC%88%E5%81%8F%E5%B7%AE%EF%BC%89%E4%B8%8E%20Variance%EF%BC%88%E6%96%B9%E5%B7%AE%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/12%20%E6%A2%AF%E5%BA%A6%E7%9A%84%E6%95%B0%E5%80%BC%E8%BF%91%E4%BC%BC%EF%BC%88Numerical%20Approximation%20of%20Gradients%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.jpg">
@@ -356,7 +356,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/02%20Bias%EF%BC%88%E5%81%8F%E5%B7%AE%EF%BC%89%E4%B8%8E%20Variance%EF%BC%88%E6%96%B9%E5%B7%AE%EF%BC%89/" class="post-title-link" itemprop="url">02 Bias（偏差）与 Variance（方差）</a>
+          <a href="/blog/12%20%E6%A2%AF%E5%BA%A6%E7%9A%84%E6%95%B0%E5%80%BC%E8%BF%91%E4%BC%BC%EF%BC%88Numerical%20Approximation%20of%20Gradients%EF%BC%89/" class="post-title-link" itemprop="url">12 梯度的数值近似（Numerical Approximation of Gradients）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -367,7 +367,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-26 16:17:41" itemprop="dateCreated datePublished" datetime="2025-12-26T16:17:41+00:00">2025-12-26</time>
+      <time title="创建时间：2026-01-01 20:48:19" itemprop="dateCreated datePublished" datetime="2026-01-01T20:48:19+00:00">2026-01-01</time>
     </span>
 
   
@@ -377,14 +377,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1k</span>
+      <span>726</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
+      <span>3 分钟</span>
     </span>
 </div>
 
@@ -395,10 +395,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="一、核心概念：偏差与方差"><a href="#一、核心概念：偏差与方差" class="headerlink" title="一、核心概念：偏差与方差"></a>一、核心概念：偏差与方差</h2><p>　　在机器学习中，模型的泛化误差（Generalization Error）可分解为三部分：</p>
+          <h2 id="🎯-课程核心目标"><a href="#🎯-课程核心目标" class="headerlink" title="🎯 课程核心目标"></a>🎯 课程核心目标</h2><p>　　本节旨在讲解如何<strong>通过数值方法近似计算梯度</strong>，为后续的 <strong>梯度检验（Gradient Checking）</strong>  打下基础。梯度检验是一种验证反向传播（Backpropagation）实现是否正确的关键技术。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/02%20Bias%EF%BC%88%E5%81%8F%E5%B7%AE%EF%BC%89%E4%B8%8E%20Variance%EF%BC%88%E6%96%B9%E5%B7%AE%EF%BC%89/#more" rel="contents">
+              <a class="btn" href="/blog/12%20%E6%A2%AF%E5%BA%A6%E7%9A%84%E6%95%B0%E5%80%BC%E8%BF%91%E4%BC%BC%EF%BC%88Numerical%20Approximation%20of%20Gradients%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -429,7 +429,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/01%20%E8%AE%AD%E7%BB%83%E9%9B%86%EF%BC%88Train%EF%BC%89%E3%80%81%E5%BC%80%E5%8F%91%E9%9B%86%EF%BC%88Dev%EF%BC%89%E5%92%8C%E6%B5%8B%E8%AF%95%E9%9B%86%EF%BC%88Test%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/11%20%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%9D%83%E9%87%8D%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%88Weight%20Initialization%20for%20Deep%20Networks%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.jpg">
@@ -447,7 +447,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/01%20%E8%AE%AD%E7%BB%83%E9%9B%86%EF%BC%88Train%EF%BC%89%E3%80%81%E5%BC%80%E5%8F%91%E9%9B%86%EF%BC%88Dev%EF%BC%89%E5%92%8C%E6%B5%8B%E8%AF%95%E9%9B%86%EF%BC%88Test%EF%BC%89/" class="post-title-link" itemprop="url">01 训练集（Train）、开发集（Dev）和测试集（Test）</a>
+          <a href="/blog/11%20%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%9D%83%E9%87%8D%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%88Weight%20Initialization%20for%20Deep%20Networks%EF%BC%89/" class="post-title-link" itemprop="url">11 深度神经网络的权重初始化（Weight Initialization for Deep Networks）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -458,7 +458,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-26 15:59:20" itemprop="dateCreated datePublished" datetime="2025-12-26T15:59:20+00:00">2025-12-26</time>
+      <time title="创建时间：2026-01-01 20:42:48" itemprop="dateCreated datePublished" datetime="2026-01-01T20:42:48+00:00">2026-01-01</time>
     </span>
 
   
@@ -468,14 +468,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2k</span>
+      <span>920</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>7 分钟</span>
+      <span>3 分钟</span>
     </span>
 </div>
 
@@ -486,14 +486,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="一、背景：应用机器学习是一个高度迭代的过程"><a href="#一、背景：应用机器学习是一个高度迭代的过程" class="headerlink" title="一、背景：应用机器学习是一个高度迭代的过程"></a>一、背景：应用机器学习是一个高度迭代的过程</h2><ul>
-<li>在实际深度学习项目中，你无法在第一次就准确设定所有超参数（如网络层数、每层神经元数量、学习率、激活函数等）。</li>
-<li>因此，<strong>应用机器学习 &#x3D; 提出想法 → 编码实现 → 实验评估 → 迭代优化</strong>。</li>
-<li><strong>迭代效率</strong> 决定了你能否快速找到高性能模型。</li>
-</ul>
+          <h2 id="🧠-课程核心目标"><a href="#🧠-课程核心目标" class="headerlink" title="🧠 课程核心目标"></a>🧠 课程核心目标</h2><p>　　解决深度神经网络训练中的 <strong>梯度消失（vanishing gradients）</strong>  和 <strong>梯度爆炸（exploding gradients）</strong>  问题。<br>虽然权重初始化不能完全消除该问题，但<strong>合理的初始化策略能显著缓解</strong>，从而提升训练稳定性和收敛速度。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/01%20%E8%AE%AD%E7%BB%83%E9%9B%86%EF%BC%88Train%EF%BC%89%E3%80%81%E5%BC%80%E5%8F%91%E9%9B%86%EF%BC%88Dev%EF%BC%89%E5%92%8C%E6%B5%8B%E8%AF%95%E9%9B%86%EF%BC%88Test%EF%BC%89/#more" rel="contents">
+              <a class="btn" href="/blog/11%20%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%9D%83%E9%87%8D%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%88Weight%20Initialization%20for%20Deep%20Networks%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -524,7 +520,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/39%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%A4%A7%E8%84%91%E5%85%B3%E7%B3%BB/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/10%20%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1%E4%B8%8E%E6%A2%AF%E5%BA%A6%E7%88%86%E7%82%B8%E9%97%AE%E9%A2%98%EF%BC%88Vanishing%20%EF%BC%8F%20Exploding%20Gradients%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.jpg">
@@ -542,7 +538,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/39%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%A4%A7%E8%84%91%E5%85%B3%E7%B3%BB/" class="post-title-link" itemprop="url">39 神经网络与大脑关系</a>
+          <a href="/blog/10%20%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1%E4%B8%8E%E6%A2%AF%E5%BA%A6%E7%88%86%E7%82%B8%E9%97%AE%E9%A2%98%EF%BC%88Vanishing%20%EF%BC%8F%20Exploding%20Gradients%EF%BC%89/" class="post-title-link" itemprop="url">10 梯度消失与梯度爆炸问题（Vanishing ／ Exploding Gradients）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -553,7 +549,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-24 19:09:32" itemprop="dateCreated datePublished" datetime="2025-12-24T19:09:32+00:00">2025-12-24</time>
+      <time title="创建时间：2026-01-01 20:27:47" itemprop="dateCreated datePublished" datetime="2026-01-01T20:27:47+00:00">2026-01-01</time>
     </span>
 
   
@@ -563,14 +559,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.1k</span>
+      <span>817</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
+      <span>3 分钟</span>
     </span>
 </div>
 
@@ -581,12 +577,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="🧠-一、核心观点：深度学习-≠-人脑"><a href="#🧠-一、核心观点：深度学习-≠-人脑" class="headerlink" title="🧠 一、核心观点：深度学习 ≠ 人脑"></a>🧠 一、核心观点：深度学习 ≠ 人脑</h2><blockquote>
-<p> <strong>“What does deep learning have to do with the brain? At the risk of giving away the punchline, I would say not a whole lot.”</strong></p>
-</blockquote>
+          <h2 id="🔍-1-问题背景"><a href="#🔍-1-问题背景" class="headerlink" title="🔍 1. 问题背景"></a>🔍 1. 问题背景</h2><p>　　在训练<strong>非常深的神经网络</strong>（如 L &#x3D; 100+ 层）时，会出现以下现象：</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/39%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%A4%A7%E8%84%91%E5%85%B3%E7%B3%BB/#more" rel="contents">
+              <a class="btn" href="/blog/10%20%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1%E4%B8%8E%E6%A2%AF%E5%BA%A6%E7%88%86%E7%82%B8%E9%97%AE%E9%A2%98%EF%BC%88Vanishing%20%EF%BC%8F%20Exploding%20Gradients%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -617,7 +611,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/38%20%E5%8F%82%E6%95%B0%EF%BC%88Parameters%EF%BC%89%E4%B8%8E%E8%B6%85%E5%8F%82%E6%95%B0%EF%BC%88Hyperparameters%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/09%20%E8%BE%93%E5%85%A5%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%88Normalizing%20Inputs%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.jpg">
@@ -635,7 +629,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/38%20%E5%8F%82%E6%95%B0%EF%BC%88Parameters%EF%BC%89%E4%B8%8E%E8%B6%85%E5%8F%82%E6%95%B0%EF%BC%88Hyperparameters%EF%BC%89/" class="post-title-link" itemprop="url">38 参数（Parameters）与超参数（Hyperparameters）</a>
+          <a href="/blog/09%20%E8%BE%93%E5%85%A5%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%88Normalizing%20Inputs%EF%BC%89/" class="post-title-link" itemprop="url">09 输入归一化（Normalizing Inputs）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -646,7 +640,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-24 19:09:09" itemprop="dateCreated datePublished" datetime="2025-12-24T19:09:09+00:00">2025-12-24</time>
+      <time title="创建时间：2026-01-01 20:18:27" itemprop="dateCreated datePublished" datetime="2026-01-01T20:18:27+00:00">2026-01-01</time>
     </span>
 
   
@@ -656,7 +650,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1k</span>
+      <span>1.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -674,10 +668,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="一、核心概念区分"><a href="#一、核心概念区分" class="headerlink" title="一、核心概念区分"></a>一、核心概念区分</h2><h3 id="1-参数（Parameters）"><a href="#1-参数（Parameters）" class="headerlink" title="1. 参数（Parameters）"></a>1. 参数（Parameters）</h3>
+          <h3 id="一、为什么要归一化输入？"><a href="#一、为什么要归一化输入？" class="headerlink" title="一、为什么要归一化输入？"></a>一、为什么要归一化输入？</h3><p>　　在训练神经网络时，<strong>如果输入特征的尺度（scale）差异很大</strong>（例如一个特征范围是 $[0, 1]$，另一个是 $[1, 1000]$），会导致：</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/38%20%E5%8F%82%E6%95%B0%EF%BC%88Parameters%EF%BC%89%E4%B8%8E%E8%B6%85%E5%8F%82%E6%95%B0%EF%BC%88Hyperparameters%EF%BC%89/#more" rel="contents">
+              <a class="btn" href="/blog/09%20%E8%BE%93%E5%85%A5%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%88Normalizing%20Inputs%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -701,7 +695,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/blog/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/blog/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/31/">31</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/blog/page/11/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/blog/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/blog/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/33/">33</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/blog/page/11/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -724,14 +718,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">172k</span>
+    <span title="站点总字数">184k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">10:27</span>
+    <span title="站点阅读时长">11:10</span>
   </span>
 </div>
 

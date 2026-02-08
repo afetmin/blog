@@ -128,7 +128,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">13</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">155</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">13</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">165</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -193,7 +193,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/blog/archives/">
-          <span class="site-state-item-count">155</span>
+          <span class="site-state-item-count">165</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -247,7 +247,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/22%20Adam%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%EF%BC%88Adam%20Optimization%20Algorithm%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/32%20Softmax%20%E5%9B%9E%E5%BD%92/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.jpg">
@@ -265,7 +265,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/22%20Adam%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%EF%BC%88Adam%20Optimization%20Algorithm%EF%BC%89/" class="post-title-link" itemprop="url">22 Adam 优化算法（Adam Optimization Algorithm）</a>
+          <a href="/blog/32%20Softmax%20%E5%9B%9E%E5%BD%92/" class="post-title-link" itemprop="url">32 Softmax 回归</a>
         </h2>
 
         <div class="post-meta-container">
@@ -276,7 +276,384 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-01-02 11:16:03" itemprop="dateCreated datePublished" datetime="2026-01-02T11:16:03+00:00">2026-01-02</time>
+      <time title="创建时间：2026-01-05 20:28:31" itemprop="dateCreated datePublished" datetime="2026-01-05T20:28:31+00:00">2026-01-05</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>885</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="一、问题背景：从二分类到多分类"><a href="#一、问题背景：从二分类到多分类" class="headerlink" title="一、问题背景：从二分类到多分类"></a>一、问题背景：从二分类到多分类</h3><ul>
+<li><strong>Logistic 回归</strong>适用于<strong>二分类</strong>（输出为 0 或 1）。</li>
+<li>当面对 <strong>$C$</strong> <strong>个类别</strong>（$C \geq 2$）的分类任务时（如猫、狗、小鸡、“其他”），需要使用 <strong>Softmax 回归</strong>——这是 Logistic 回归在多分类场景下的自然推广。</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/32%20Softmax%20%E5%9B%9E%E5%BD%92/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/31%20%E6%B5%8B%E8%AF%95%E6%97%B6%E7%9A%84%20Batch%20Normalization%EF%BC%88Batch%20Norm%20at%20Test%20Time%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/31%20%E6%B5%8B%E8%AF%95%E6%97%B6%E7%9A%84%20Batch%20Normalization%EF%BC%88Batch%20Norm%20at%20Test%20Time%EF%BC%89/" class="post-title-link" itemprop="url">31 测试时的 Batch Normalization（Batch Norm at Test Time）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-05 20:27:05" itemprop="dateCreated datePublished" datetime="2026-01-05T20:27:05+00:00">2026-01-05</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>908</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="一、背景与动机"><a href="#一、背景与动机" class="headerlink" title="一、背景与动机"></a>一、背景与动机</h3><ul>
+<li><p><strong>训练阶段</strong>：Batch Norm 对每个 mini-batch 中的激活值 $z^{(i)}$ 进行归一化，依赖该 batch 的均值 $\mu$ 和方差 $\sigma^2$。</p>
+</li>
+<li><p><strong>测试阶段问题</strong>：</p>
+<ul>
+<li>测试时通常<strong>逐样本推理</strong>（batch size &#x3D; 1）；</li>
+<li>单个样本无法计算有意义的均值和方差；</li>
+<li>因此不能直接使用训练时的 batch-wise 统计量。</li>
+</ul>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/31%20%E6%B5%8B%E8%AF%95%E6%97%B6%E7%9A%84%20Batch%20Normalization%EF%BC%88Batch%20Norm%20at%20Test%20Time%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/30%20Batch%20Normalization%20%E4%B8%BA%E4%BD%95%E6%9C%89%E6%95%88%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/30%20Batch%20Normalization%20%E4%B8%BA%E4%BD%95%E6%9C%89%E6%95%88%EF%BC%9F/" class="post-title-link" itemprop="url">30 Batch Normalization 为何有效？</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-05 20:25:53" itemprop="dateCreated datePublished" datetime="2026-01-05T20:25:53+00:00">2026-01-05</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="一、直观理解：对隐藏层激活值进行归一化，加速训练"><a href="#一、直观理解：对隐藏层激活值进行归一化，加速训练" class="headerlink" title="一、直观理解：对隐藏层激活值进行归一化，加速训练"></a>一、直观理解：对隐藏层激活值进行归一化，加速训练</h3><p>　　在传统神经网络中，我们常对<strong>输入特征</strong> $x$ 进行归一化（如减去均值、除以标准差），使其具有相近的尺度（例如均值为 0，方差为 1），从而<strong>加速优化过程</strong>。<br>Batch Norm 将这一思想<strong>推广到每一层的隐藏单元</strong>（即中间激活值），使得每一层的输入分布更稳定。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/30%20Batch%20Normalization%20%E4%B8%BA%E4%BD%95%E6%9C%89%E6%95%88%EF%BC%9F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/29%20%E5%B0%86%20Batch%20Norm%20%E6%8B%9F%E5%90%88%E8%BF%9B%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88Fitting%20Batch%20Norm%20into%20a%20Neural%20Network%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/29%20%E5%B0%86%20Batch%20Norm%20%E6%8B%9F%E5%90%88%E8%BF%9B%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88Fitting%20Batch%20Norm%20into%20a%20Neural%20Network%EF%BC%89/" class="post-title-link" itemprop="url">29 将 Batch Norm 拟合进神经网络（Fitting Batch Norm into a Neural Network）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-05 20:21:59" itemprop="dateCreated datePublished" datetime="2026-01-05T20:21:59+00:00">2026-01-05</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>927</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="一、核心思想"><a href="#一、核心思想" class="headerlink" title="一、核心思想"></a>一、核心思想</h3><p>　　<strong>Batch Normalization（BN）</strong>  是在神经网络的每一层中，在计算线性输出 $z^{[l]}$ 之后、激活函数 $g^{[l]}$ 之前，对 $z^{[l]}$ 进行归一化处理，从而加速训练、提升稳定性并减少对初始化的敏感性。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/29%20%E5%B0%86%20Batch%20Norm%20%E6%8B%9F%E5%90%88%E8%BF%9B%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88Fitting%20Batch%20Norm%20into%20a%20Neural%20Network%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/28%20%E5%BD%92%E4%B8%80%E5%8C%96%E7%BD%91%E7%BB%9C%E7%9A%84%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%EF%BC%88Normalizing%20activations%20in%20a%20network%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/28%20%E5%BD%92%E4%B8%80%E5%8C%96%E7%BD%91%E7%BB%9C%E7%9A%84%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%EF%BC%88Normalizing%20activations%20in%20a%20network%EF%BC%89/" class="post-title-link" itemprop="url">28 归一化网络的激活函数（Normalizing activations in a network）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-05 20:12:05" itemprop="dateCreated datePublished" datetime="2026-01-05T20:12:05+00:00">2026-01-05</time>
     </span>
 
   
@@ -304,374 +681,25 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="✅-简介"><a href="#✅-简介" class="headerlink" title="✅ 简介"></a>✅ 简介</h3><p>　　在深度学习的发展历程中，许多研究人员提出了新的优化算法，但大多数仅在特定问题上表现良好，缺乏泛化能力。因此，社区对新优化算法持谨慎态度。</p>
+          <h3 id="1-动机：为什么需要归一化？"><a href="#1-动机：为什么需要归一化？" class="headerlink" title="1. 动机：为什么需要归一化？"></a>1. <strong>动机：为什么需要归一化？</strong></h3><ul>
+<li><p>在训练浅层模型（如 Logistic 回归）时，<strong>对输入特征</strong> <strong>$x$</strong> <strong>进行归一化</strong>（减均值、除标准差）能显著加速收敛。</p>
+<ul>
+<li>原因：使损失函数的等高线更“圆”，优化路径更直接。</li>
+</ul>
+</li>
+<li><p>在深度神经网络中，<strong>每一层的输入实际上是前一层的激活输出</strong>（如 $a^{[l-1]}$ 或 $z^{[l-1]}$）。</p>
+</li>
+<li><p>随着网络加深，<strong>内部协变量偏移（Internal Covariate Shift）</strong>  问题出现：</p>
+<ul>
+<li>每一层的输入分布会随着前层参数更新而不断变化，导致训练不稳定、收敛慢。</li>
+</ul>
+</li>
+<li><p><strong>核心思想</strong>：不仅归一化输入 $x$，还对<strong>每一隐藏层的中间激活值进行归一化</strong>，从而稳定训练过程。</p>
+</li>
+</ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/22%20Adam%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%EF%BC%88Adam%20Optimization%20Algorithm%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/21%20RMSprop%EF%BC%88Root%20Mean%20Square%20Propagation%EF%BC%89%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-      <meta itemprop="name" content="Rion">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="DevDino 🦖">
-      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | DevDino 🦖">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/21%20RMSprop%EF%BC%88Root%20Mean%20Square%20Propagation%EF%BC%89%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">21 RMSprop（Root Mean Square Propagation） 优化算法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-01-02 11:09:49" itemprop="dateCreated datePublished" datetime="2026-01-02T11:09:49+00:00">2026-01-02</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>780</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="🧠-RMSprop-算法详解总结"><a href="#🧠-RMSprop-算法详解总结" class="headerlink" title="🧠 RMSprop 算法详解总结"></a>🧠 RMSprop 算法详解总结</h2><h3 id="一、问题背景：梯度下降中的震荡问题"><a href="#一、问题背景：梯度下降中的震荡问题" class="headerlink" title="一、问题背景：梯度下降中的震荡问题"></a>一、问题背景：梯度下降中的震荡问题</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/21%20RMSprop%EF%BC%88Root%20Mean%20Square%20Propagation%EF%BC%89%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/20%20%E5%8A%A8%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%EF%BC%88Gradient%20Descent%20with%20Momentum%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-      <meta itemprop="name" content="Rion">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="DevDino 🦖">
-      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | DevDino 🦖">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/20%20%E5%8A%A8%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%EF%BC%88Gradient%20Descent%20with%20Momentum%EF%BC%89/" class="post-title-link" itemprop="url">20 动量梯度下降法（Gradient Descent with Momentum）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-01-02 11:04:50" itemprop="dateCreated datePublished" datetime="2026-01-02T11:04:50+00:00">2026-01-02</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>743</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="🧠-一、动机：为什么需要动量？"><a href="#🧠-一、动机：为什么需要动量？" class="headerlink" title="🧠 一、动机：为什么需要动量？"></a>🧠 一、动机：为什么需要动量？</h2><p>　　标准梯度下降在优化具有“狭长椭圆”等高线的损失函数时，会出现<strong>剧烈振荡</strong>（尤其在垂直方向），导致：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/20%20%E5%8A%A8%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%EF%BC%88Gradient%20Descent%20with%20Momentum%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/19%20%E6%8C%87%E6%95%B0%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87%E4%B8%AD%E7%9A%84%E5%81%8F%E5%B7%AE%E4%BF%AE%E6%AD%A3%EF%BC%88Bias%20Correction%20in%20Exponentially%20Weighted%20Averages%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-      <meta itemprop="name" content="Rion">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="DevDino 🦖">
-      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | DevDino 🦖">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/19%20%E6%8C%87%E6%95%B0%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87%E4%B8%AD%E7%9A%84%E5%81%8F%E5%B7%AE%E4%BF%AE%E6%AD%A3%EF%BC%88Bias%20Correction%20in%20Exponentially%20Weighted%20Averages%EF%BC%89/" class="post-title-link" itemprop="url">19 指数加权平均中的偏差修正（Bias Correction in Exponentially Weighted Averages）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-01-02 11:03:28" itemprop="dateCreated datePublished" datetime="2026-01-02T11:03:28+00:00">2026-01-02</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>888</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="一、背景：什么是指数加权平均？"><a href="#一、背景：什么是指数加权平均？" class="headerlink" title="一、背景：什么是指数加权平均？"></a>一、背景：什么是指数加权平均？</h3><p>　　在优化算法（如 Momentum、RMSProp、Adam）中，我们经常使用 <strong>指数加权平均（Exponentially Weighted Average, EWA）</strong>  来平滑序列数据（例如梯度、温度等）。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/19%20%E6%8C%87%E6%95%B0%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87%E4%B8%AD%E7%9A%84%E5%81%8F%E5%B7%AE%E4%BF%AE%E6%AD%A3%EF%BC%88Bias%20Correction%20in%20Exponentially%20Weighted%20Averages%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/18%20%E4%BA%86%E8%A7%A3%E6%8C%87%E6%95%B0%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-      <meta itemprop="name" content="Rion">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="DevDino 🦖">
-      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | DevDino 🦖">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/18%20%E4%BA%86%E8%A7%A3%E6%8C%87%E6%95%B0%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87/" class="post-title-link" itemprop="url">18 了解指数加权平均</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-01-02 11:01:36" itemprop="dateCreated datePublished" datetime="2026-01-02T11:01:36+00:00">2026-01-02</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.7k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="一、什么是指数加权平均？"><a href="#一、什么是指数加权平均？" class="headerlink" title="一、什么是指数加权平均？"></a>一、什么是指数加权平均？</h2><p>　　指数加权平均是一种<strong>高效计算时间序列数据滑动平均值</strong>的方法，广泛应用于深度学习中的优化算法（如 Momentum、RMSProp、Adam 等）。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/18%20%E4%BA%86%E8%A7%A3%E6%8C%87%E6%95%B0%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87/#more" rel="contents">
+              <a class="btn" href="/blog/28%20%E5%BD%92%E4%B8%80%E5%8C%96%E7%BD%91%E7%BB%9C%E7%9A%84%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%EF%BC%88Normalizing%20activations%20in%20a%20network%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -695,7 +723,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/blog/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/blog/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/31/">31</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/blog/page/7/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/blog/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/blog/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/33/">33</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/blog/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -718,14 +746,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">172k</span>
+    <span title="站点总字数">184k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">10:27</span>
+    <span title="站点阅读时长">11:10</span>
   </span>
 </div>
 

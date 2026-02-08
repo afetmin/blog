@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A52/02%20%E6%B8%85%E9%99%A4%E6%A0%87%E6%B3%A8%E9%94%99%E8%AF%AF%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%88Cleaning%20up%20Incorrectly%20Labeled%20Data%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A52/02%20%E6%B8%85%E9%99%A4%E6%A0%87%E6%B3%A8%E9%94%99%E8%AF%AF%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%88Cleaning%20up%20Incorrectly%20Labeled%20Data%EF%BC%89/","path":"机器学习策略2/02 清除标注错误的数据（Cleaning up Incorrectly Labeled Data）/","title":"02 清除标注错误的数据（Cleaning up Incorrectly Labeled Data）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>02 清除标注错误的数据（Cleaning up Incorrectly Labeled Data） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A52/02%20%E6%B8%85%E9%99%A4%E6%A0%87%E6%B3%A8%E9%94%99%E8%AF%AF%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%88Cleaning%20up%20Incorrectly%20Labeled%20Data%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">13</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">165</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#02-%E6%B8%85%E9%99%A4%E6%A0%87%E6%B3%A8%E9%94%99%E8%AF%AF%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%88Cleaning-up-Incorrectly-Labeled-Data%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">02 清除标注错误的数据（Cleaning up Incorrectly Labeled Data）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E9%97%AE%E9%A2%98%E8%83%8C%E6%99%AF"><span class="nav-number">1.1.</span> <span class="nav-text">一、问题背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%98%AF%E5%90%A6%E5%80%BC%E5%BE%97%E4%BF%AE%E6%AD%A3%E9%94%99%E8%AF%AF%E6%A0%87%E7%AD%BE%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">二、是否值得修正错误标签？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%9C%85-%E6%A0%B8%E5%BF%83%E5%8E%9F%E5%88%99%EF%BC%9A"><span class="nav-number">1.2.1.</span> <span class="nav-text">✅ 核心原则：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%AE%AD%E7%BB%83%E9%9B%86-vs-%E5%BC%80%E5%8F%91-%E6%B5%8B%E8%AF%95%E9%9B%86%E4%B8%AD%E7%9A%84%E6%A0%87%E7%AD%BE%E9%94%99%E8%AF%AF"><span class="nav-number">1.3.</span> <span class="nav-text">三、训练集 vs 开发&#x2F;测试集中的标签错误</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%AE%AD%E7%BB%83%E9%9B%86%E4%B8%AD%E7%9A%84%E6%A0%87%E7%AD%BE%E9%94%99%E8%AF%AF"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. 训练集中的标签错误</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%BC%80%E5%8F%91%E9%9B%86-%E6%B5%8B%E8%AF%95%E9%9B%86%E4%B8%AD%E7%9A%84%E6%A0%87%E7%AD%BE%E9%94%99%E8%AF%AF"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. 开发集 &#x2F; 测试集中的标签错误</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%F0%9F%94%8D-%E9%94%99%E8%AF%AF%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">🔍 错误分析方法：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%F0%9F%93%8A-%E5%86%B3%E7%AD%96%E4%BE%9D%E6%8D%AE%EF%BC%9A%E7%9C%8B%E4%B8%89%E4%B8%AA%E5%85%B3%E9%94%AE%E6%95%B0%E5%AD%97"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">📊 决策依据：看三个关键数字</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%F0%9F%A7%A0-%E4%B8%A4%E7%A7%8D%E5%85%B8%E5%9E%8B%E5%9C%BA%E6%99%AF%EF%BC%9A"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">🧠 两种典型场景：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%BF%AE%E6%AD%A3%E5%BC%80%E5%8F%91-%E6%B5%8B%E8%AF%95%E9%9B%86%E6%A0%87%E7%AD%BE%E7%9A%84%E5%AE%9E%E8%B7%B5%E5%8E%9F%E5%88%99"><span class="nav-number">1.4.</span> <span class="nav-text">四、修正开发&#x2F;测试集标签的实践原则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%9C%85-%E5%8E%9F%E5%88%99-1%EF%BC%9A%E5%BC%80%E5%8F%91%E9%9B%86%E4%B8%8E%E6%B5%8B%E8%AF%95%E9%9B%86%E5%BF%85%E9%A1%BB%E5%90%8C%E6%AD%A5%E4%BF%AE%E6%AD%A3"><span class="nav-number">1.4.1.</span> <span class="nav-text">✅ 原则 1：开发集与测试集必须同步修正</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%9C%85-%E5%8E%9F%E5%88%99-2%EF%BC%9A%E4%B8%8D%E4%BB%85%E6%A3%80%E6%9F%A5%E6%A8%A1%E5%9E%8B%E5%87%BA%E9%94%99%E7%9A%84%E6%A0%B7%E6%9C%AC%EF%BC%8C%E4%B9%9F%E5%BA%94%E6%A3%80%E6%9F%A5%E6%A8%A1%E5%9E%8B%E6%AD%A3%E7%A1%AE%E7%9A%84%E6%A0%B7%E6%9C%AC"><span class="nav-number">1.4.2.</span> <span class="nav-text">✅ 原则 2：不仅检查模型出错的样本，也应检查模型正确的样本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%9C%85-%E5%8E%9F%E5%88%99-3%EF%BC%9A%E8%AE%AD%E7%BB%83%E9%9B%86%E6%A0%87%E7%AD%BE%E5%8F%AF%E4%B8%8D%E4%BF%AE%E6%AD%A3"><span class="nav-number">1.4.3.</span> <span class="nav-text">✅ 原则 3：训练集标签可不修正</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%B7%A5%E7%A8%8B%E5%AE%9E%E8%B7%B5%E5%BB%BA%E8%AE%AE%EF%BC%88%E5%90%B4%E6%81%A9%E8%BE%BE%E7%BB%8F%E9%AA%8C%E4%B9%8B%E8%B0%88%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">五、工程实践建议（吴恩达经验之谈）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%85%B3%E9%94%AE%E5%85%AC%E5%BC%8F%E6%80%BB%E7%BB%93%EF%BC%88KaTeX-%E5%85%BC%E5%AE%B9%EF%BC%89"><span class="nav-number">1.6.</span> <span class="nav-text">六、关键公式总结（KaTeX 兼容）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E6%80%BB%E7%BB%93%E5%8F%A3%E8%AF%80%EF%BC%88%E4%BE%BF%E4%BA%8E%E8%AE%B0%E5%BF%86%EF%BC%89"><span class="nav-number">1.7.</span> <span class="nav-text">七、总结口诀（便于记忆）</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rion"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rion</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">165</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A52/02%20%E6%B8%85%E9%99%A4%E6%A0%87%E6%B3%A8%E9%94%99%E8%AF%AF%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%88Cleaning%20up%20Incorrectly%20Labeled%20Data%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="02 清除标注错误的数据（Cleaning up Incorrectly Labeled Data） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          02 清除标注错误的数据（Cleaning up Incorrectly Labeled Data）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-18 10:33:32" itemprop="dateCreated datePublished" datetime="2026-01-18T10:33:32+00:00">2026-01-18</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="02-清除标注错误的数据（Cleaning-up-Incorrectly-Labeled-Data）"><a href="#02-清除标注错误的数据（Cleaning-up-Incorrectly-Labeled-Data）" class="headerlink" title="02 清除标注错误的数据（Cleaning up Incorrectly Labeled Data）"></a>02 清除标注错误的数据（Cleaning up Incorrectly Labeled Data）</h1><h3 id="一、问题背景"><a href="#一、问题背景" class="headerlink" title="一、问题背景"></a>一、问题背景</h3><p>在监督学习中，训练数据由输入 $x^{(i)}$ 和标签 $y^{(i)}$ 构成。但在实际项目中，<strong>标签可能出错</strong>（即人类标注错误），例如：</p>
+<ul>
+<li>将狗误标为猫（$y&#x3D;1$ 应为 $y&#x3D;0$）；</li>
+<li>或将非猫图像（如猫的图画）误标为猫。</li>
+</ul>
+<p>这类样本称为  <strong>“标记错误的样本（incorrectly labeled examples）”</strong> 。</p>
+<hr>
+<h3 id="二、是否值得修正错误标签？"><a href="#二、是否值得修正错误标签？" class="headerlink" title="二、是否值得修正错误标签？"></a>二、是否值得修正错误标签？</h3><h4 id="✅-核心原则："><a href="#✅-核心原则：" class="headerlink" title="✅ 核心原则："></a>✅ 核心原则：</h4><blockquote>
+<p><strong>是否修正标签，取决于该类错误对模型性能评估和优化的影响程度。</strong></p>
+</blockquote>
+<hr>
+<h3 id="三、训练集-vs-开发-测试集中的标签错误"><a href="#三、训练集-vs-开发-测试集中的标签错误" class="headerlink" title="三、训练集 vs 开发&#x2F;测试集中的标签错误"></a>三、训练集 vs 开发&#x2F;测试集中的标签错误</h3><h4 id="1-训练集中的标签错误"><a href="#1-训练集中的标签错误" class="headerlink" title="1. 训练集中的标签错误"></a>1. <strong>训练集中的标签错误</strong></h4><ul>
+<li><p><strong>深度学习对随机标签错误具有鲁棒性（robust）</strong> ：</p>
+<ul>
+<li>如果错误是<strong>随机的</strong>（如偶尔按错键），且比例不高，通常<strong>无需修正</strong>。</li>
+<li>模型仍能从大量正确样本中学习到有效模式。</li>
+</ul>
+</li>
+<li><p><strong>但系统性错误（systematic errors）很危险</strong>：</p>
+<ul>
+<li>例如：总是把白狗标为猫 → 模型会学到错误的决策边界。</li>
+<li>这类错误<strong>必须修正</strong>。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>📌 <strong>建议</strong>：若资源有限，可优先不修正训练集标签；若发现系统性偏差，则需处理。</p>
+</blockquote>
+<hr>
+<h4 id="2-开发集-测试集中的标签错误"><a href="#2-开发集-测试集中的标签错误" class="headerlink" title="2. 开发集 &#x2F; 测试集中的标签错误"></a>2. <strong>开发集 &#x2F; 测试集中的标签错误</strong></h4><p>开发集和测试集用于<strong>评估和比较模型性能</strong>，其标签准确性<strong>至关重要</strong>。</p>
+<h5 id="🔍-错误分析方法："><a href="#🔍-错误分析方法：" class="headerlink" title="🔍 错误分析方法："></a>🔍 错误分析方法：</h5><p>在错误分析表中增加一列：“<strong>是否标签错误？</strong> ”</p>
+<table>
+<thead>
+<tr>
+<th>样本ID</th>
+<th>模型预测</th>
+<th>开发集标签</th>
+<th>是否错误？</th>
+<th>错误类型（如：狗→猫）</th>
+<th>是否标签错误？</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>98</td>
+<td>0</td>
+<td>1</td>
+<td>是</td>
+<td>背景有猫未被注意</td>
+<td>✔️</td>
+</tr>
+</tbody></table>
+<p>通过统计，可得：</p>
+<ul>
+<li>总开发集错误率：$E_{\text{dev}}$</li>
+<li>其中因标签错误导致的错误占比：$E_{\text{label}}$</li>
+</ul>
+<h5 id="📊-决策依据：看三个关键数字"><a href="#📊-决策依据：看三个关键数字" class="headerlink" title="📊 决策依据：看三个关键数字"></a>📊 决策依据：看三个关键数字</h5><ol>
+<li><strong>整体开发集错误率</strong>：$E_{\text{dev}}$</li>
+<li><strong>标签错误导致的绝对错误率</strong>：$E_{\text{label}}$</li>
+<li><strong>标签错误占总错误的比例</strong>：$\frac{E_{\text{label}}}{E_{\text{dev}}}$</li>
+</ol>
+<h5 id="🧠-两种典型场景："><a href="#🧠-两种典型场景：" class="headerlink" title="🧠 两种典型场景："></a>🧠 两种典型场景：</h5><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>$E_{\text{dev}}$</th>
+<th>$E_{\text{label}}$</th>
+<th>$\frac{E_{\text{label}}}{E_{\text{dev}}}$</th>
+<th>建议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>初期模型</td>
+<td>10%</td>
+<td>0.6%</td>
+<td>6%</td>
+<td><strong>不优先修正</strong>，聚焦其他错误（如狗→猫）</td>
+</tr>
+<tr>
+<td>高性能模型</td>
+<td>2%</td>
+<td>0.6%</td>
+<td><strong>30%</strong></td>
+<td><strong>应修正标签</strong>，否则评估不可靠</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>💡 <strong>关键洞见</strong>：当模型性能提升后，标签错误在总错误中的<strong>相对占比显著上升</strong>，此时修正标签变得<strong>非常有价值</strong>。</p>
+</blockquote>
+<hr>
+<h3 id="四、修正开发-测试集标签的实践原则"><a href="#四、修正开发-测试集标签的实践原则" class="headerlink" title="四、修正开发&#x2F;测试集标签的实践原则"></a>四、修正开发&#x2F;测试集标签的实践原则</h3><h4 id="✅-原则-1：开发集与测试集必须同步修正"><a href="#✅-原则-1：开发集与测试集必须同步修正" class="headerlink" title="✅ 原则 1：开发集与测试集必须同步修正"></a>✅ 原则 1：<strong>开发集与测试集必须同步修正</strong></h4><ul>
+<li>两者需<strong>来自同一分布</strong>。</li>
+<li>若只修正开发集，会导致分布偏移（distribution shift），影响泛化评估。</li>
+<li><strong>做法</strong>：雇佣标注员时，<strong>同时检查 dev 和 test 集</strong>。</li>
+</ul>
+<h4 id="✅-原则-2：不仅检查模型出错的样本，也应检查模型正确的样本"><a href="#✅-原则-2：不仅检查模型出错的样本，也应检查模型正确的样本" class="headerlink" title="✅ 原则 2：不仅检查模型出错的样本，也应检查模型正确的样本"></a>✅ 原则 2：<strong>不仅检查模型出错的样本，也应检查模型正确的样本</strong></h4><ul>
+<li><p><strong>原因</strong>：有些样本模型“猜对了”，但标签本身是错的。</p>
+<ul>
+<li>例如：标签为猫（$y&#x3D;1$），实际是狗，但模型碰巧输出 1。</li>
+<li>若不修正，会<strong>低估真实错误率</strong>，产生“虚假优势”。</li>
+</ul>
+</li>
+<li><p><strong>现实限制</strong>：由于正确样本占比高（如 98%），全检成本高。</p>
+<ul>
+<li><strong>折中做法</strong>：通常只检查错误样本，但需意识到此偏差。</li>
+</ul>
+</li>
+</ul>
+<h4 id="✅-原则-3：训练集标签可不修正"><a href="#✅-原则-3：训练集标签可不修正" class="headerlink" title="✅ 原则 3：训练集标签可不修正"></a>✅ 原则 3：<strong>训练集标签可不修正</strong></h4><ul>
+<li>训练集通常远大于 dev&#x2F;test 集。</li>
+<li>深度学习对训练集中的随机标签噪声鲁棒。</li>
+<li><strong>策略</strong>：优先保证 dev&#x2F;test 标签质量，训练集可容忍一定噪声。</li>
+</ul>
+<blockquote>
+<p>⚠️ 注意：若训练集与 dev&#x2F;test 分布不同（如网络图片 vs 手机拍摄），这是另一个问题（后续课程讨论），但<strong>dev&#x2F;test 同分布是底线</strong>。</p>
+</blockquote>
+<hr>
+<h3 id="五、工程实践建议（吴恩达经验之谈）"><a href="#五、工程实践建议（吴恩达经验之谈）" class="headerlink" title="五、工程实践建议（吴恩达经验之谈）"></a>五、工程实践建议（吴恩达经验之谈）</h3><ol>
+<li><p><strong>不要迷信“端到端深度学习”</strong></p>
+<blockquote>
+<p>“我只是把数据喂给算法，效果拔群” —— 这在研究中常见，但在<strong>实际系统构建中不现实</strong>。</p>
+</blockquote>
+</li>
+<li><p><strong>亲自查看数据</strong></p>
+<ul>
+<li>花 1–2 小时检查 100–200 个错误样本，能快速定位瓶颈。</li>
+<li><strong>人工错误分析</strong>是高效迭代的关键。</li>
+</ul>
+</li>
+<li><p><strong>数据质量 &gt; 模型复杂度</strong></p>
+<ul>
+<li>在高精度阶段，<strong>标签噪声可能成为主要瓶颈</strong>。</li>
+<li>修正标签有时比调参更有效。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="六、关键公式总结（KaTeX-兼容）"><a href="#六、关键公式总结（KaTeX-兼容）" class="headerlink" title="六、关键公式总结（KaTeX 兼容）"></a>六、关键公式总结（KaTeX 兼容）</h3><ul>
+<li><p>开发集总错误率：</p>
+<p>$$<br>E_{\text{dev}} &#x3D; \frac{1}{m_{\text{dev}}} \sum_{i&#x3D;1}^{m_{\text{dev}}} \mathbb{1}\left( \hat{y}^{(i)} \neq y^{(i)}_{\text{dev}} \right)<br>$$</p>
+</li>
+<li><p>其中因标签错误导致的错误数：</p>
+<p>$$<br>E_{\text{label}} &#x3D; \frac{1}{m_{\text{dev}}} \sum_{i&#x3D;1}^{m_{\text{dev}}} \mathbb{1}\left( \hat{y}^{(i)} \neq y^{(i)}<em>{\text{dev}} \land y^{(i)}</em>{\text{true}} \neq y^{(i)}_{\text{dev}} \right)<br>$$</p>
+</li>
+<li><p>标签错误占总错误比例：</p>
+<p>$$<br>\text{Label Error Ratio} &#x3D; \frac{E_{\text{label}}}{E_{\text{dev}}}<br>$$</p>
+</li>
+</ul>
+<blockquote>
+<p>其中 $\mathbb{1}(\cdot)$ 为指示函数，$y_{\text{true}}$ 为真实标签（需人工核查）。</p>
+</blockquote>
+<hr>
+<h3 id="七、总结口诀（便于记忆）"><a href="#七、总结口诀（便于记忆）" class="headerlink" title="七、总结口诀（便于记忆）"></a>七、总结口诀（便于记忆）</h3><blockquote>
+<ul>
+<li><strong>训练标签错，随机可放过；系统性错误，必须马上改。</strong></li>
+<li><strong>开发测试错，影响评估准；错误占比高，修正不能拖。</strong></li>
+<li><strong>Dev Test 同分布，修正要同步；只改错样本，小心有偏差。</strong></li>
+<li><strong>高手看数据，不靠猜模型；亲手查百例，胜过调千参。</strong></li>
+</ul>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A52/01%20%E8%BF%9B%E8%A1%8C%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90%EF%BC%88Carrying%20out%20error%20analysis%EF%BC%89/" rel="prev" title="01 进行误差分析（Carrying out error analysis）">
+                  <i class="fa fa-angle-left"></i> 01 进行误差分析（Carrying out error analysis）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A52/03%20%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E4%BD%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%B3%BB%E7%BB%9F%EF%BC%8C%E5%B9%B6%E8%BF%9B%E8%A1%8C%E8%BF%AD%E4%BB%A3/" rel="next" title="03 快速搭建你的第一个系统，并进行迭代">
+                  03 快速搭建你的第一个系统，并进行迭代 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Rion</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">184k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">11:10</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>
