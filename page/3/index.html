@@ -128,7 +128,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">143</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">13</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">155</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -193,13 +193,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/blog/archives/">
-          <span class="site-state-item-count">143</span>
+          <span class="site-state-item-count">155</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/blog/categories/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -247,7 +247,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/25%20%E8%B6%85%E5%8F%82%E6%95%B0%E8%B0%83%E8%AF%95%EF%BC%88Hyperparameter%20Tuning%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A51/02%20%E6%AD%A3%E4%BA%A4%E5%8C%96%EF%BC%88Orthogonalization%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.jpg">
@@ -265,7 +265,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/25%20%E8%B6%85%E5%8F%82%E6%95%B0%E8%B0%83%E8%AF%95%EF%BC%88Hyperparameter%20Tuning%EF%BC%89/" class="post-title-link" itemprop="url">25 超参数调试（Hyperparameter Tuning）</a>
+          <a href="/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A51/02%20%E6%AD%A3%E4%BA%A4%E5%8C%96%EF%BC%88Orthogonalization%EF%BC%89/" class="post-title-link" itemprop="url">02 正交化（Orthogonalization）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -276,98 +276,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-01-05 20:05:22" itemprop="dateCreated datePublished" datetime="2026-01-05T20:05:22+00:00">2026-01-05</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>950</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="一、为什么需要超参数调试？"><a href="#一、为什么需要超参数调试？" class="headerlink" title="一、为什么需要超参数调试？"></a>一、为什么需要超参数调试？</h3><p>　　在深度学习中，模型性能高度依赖于<strong>超参数</strong>（hyperparameters）的选择。这些参数<strong>不能通过训练自动学习</strong>，必须由开发者手动设定或通过搜索策略优化。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/25%20%E8%B6%85%E5%8F%82%E6%95%B0%E8%B0%83%E8%AF%95%EF%BC%88Hyperparameter%20Tuning%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/24%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E4%BC%98%E5%8C%96%E6%8C%91%E6%88%98%20%E2%80%94%E2%80%94%20%E5%B1%80%E9%83%A8%E6%9C%80%E4%BC%98%20vs%20%E9%9E%8D%E7%82%B9%20vs%20%E5%B9%B3%E7%A8%B3%E6%AE%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-      <meta itemprop="name" content="Rion">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="DevDino 🦖">
-      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | DevDino 🦖">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/24%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E4%BC%98%E5%8C%96%E6%8C%91%E6%88%98%20%E2%80%94%E2%80%94%20%E5%B1%80%E9%83%A8%E6%9C%80%E4%BC%98%20vs%20%E9%9E%8D%E7%82%B9%20vs%20%E5%B9%B3%E7%A8%B3%E6%AE%B5/" class="post-title-link" itemprop="url">24 深度学习中的优化挑战 —— 局部最优 vs 鞍点 vs 平稳段</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-01-05 20:02:10" itemprop="dateCreated datePublished" datetime="2026-01-05T20:02:10+00:00">2026-01-05</time>
+      <time title="创建时间：2026-01-11 14:53:34" itemprop="dateCreated datePublished" datetime="2026-01-11T14:53:34+00:00">2026-01-11</time>
     </span>
 
   
@@ -395,10 +304,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="一、传统观点-vs-现代认知"><a href="#一、传统观点-vs-现代认知" class="headerlink" title="一、传统观点 vs 现代认知"></a>一、传统观点 vs 现代认知</h3><h4 id="1-早期担忧：陷入“极差”的局部最优"><a href="#1-早期担忧：陷入“极差”的局部最优" class="headerlink" title="1. 早期担忧：陷入“极差”的局部最优"></a>1. 早期担忧：陷入“极差”的局部最优</h4>
+          <h1 id="02-正交化（Orthogonalization）"><a href="#02-正交化（Orthogonalization）" class="headerlink" title="02 正交化（Orthogonalization）"></a>02 正交化（Orthogonalization）</h1><h2 id="一、正交化的核心思想"><a href="#一、正交化的核心思想" class="headerlink" title="一、正交化的核心思想"></a>一、正交化的核心思想</h2>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/24%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E4%BC%98%E5%8C%96%E6%8C%91%E6%88%98%20%E2%80%94%E2%80%94%20%E5%B1%80%E9%83%A8%E6%9C%80%E4%BC%98%20vs%20%E9%9E%8D%E7%82%B9%20vs%20%E5%B9%B3%E7%A8%B3%E6%AE%B5/#more" rel="contents">
+              <a class="btn" href="/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A51/02%20%E6%AD%A3%E4%BA%A4%E5%8C%96%EF%BC%88Orthogonalization%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -429,7 +338,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/23%20%E5%AD%A6%E4%B9%A0%E7%8E%87%E8%A1%B0%E5%87%8F%EF%BC%88Learning%20Rate%20Decay%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A51/01%20%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AFML%E7%AD%96%E7%95%A5%EF%BC%9F%EF%BC%88Why%20ML%20Strategy_%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.jpg">
@@ -447,7 +356,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/23%20%E5%AD%A6%E4%B9%A0%E7%8E%87%E8%A1%B0%E5%87%8F%EF%BC%88Learning%20Rate%20Decay%EF%BC%89/" class="post-title-link" itemprop="url">23 学习率衰减（Learning Rate Decay）</a>
+          <a href="/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A51/01%20%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AFML%E7%AD%96%E7%95%A5%EF%BC%9F%EF%BC%88Why%20ML%20Strategy_%EF%BC%89/" class="post-title-link" itemprop="url">01 为什么是ML策略？（Why ML Strategy?）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -458,7 +367,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-01-05 19:59:50" itemprop="dateCreated datePublished" datetime="2026-01-05T19:59:50+00:00">2026-01-05</time>
+      <time title="创建时间：2026-01-11 14:47:53" itemprop="dateCreated datePublished" datetime="2026-01-11T14:47:53+00:00">2026-01-11</time>
     </span>
 
   
@@ -468,14 +377,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>791</span>
+      <span>437</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -486,10 +395,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="一、为什么要使用学习率衰减？"><a href="#一、为什么要使用学习率衰减？" class="headerlink" title="一、为什么要使用学习率衰减？"></a>一、为什么要使用学习率衰减？</h3><p>　　在使用 <strong>Mini-batch 梯度下降法</strong> 时：</p>
+          <h1 id="01-为什么是ML策略？（Why-ML-Strategy-）"><a href="#01-为什么是ML策略？（Why-ML-Strategy-）" class="headerlink" title="01 为什么是ML策略？（Why ML Strategy?）"></a>01 为什么是ML策略？（Why ML Strategy?）</h1><h4 id="1-什么是ML策略？"><a href="#1-什么是ML策略？" class="headerlink" title="1. 什么是ML策略？"></a>1. 什么是ML策略？</h4>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/23%20%E5%AD%A6%E4%B9%A0%E7%8E%87%E8%A1%B0%E5%87%8F%EF%BC%88Learning%20Rate%20Decay%EF%BC%89/#more" rel="contents">
+              <a class="btn" href="/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A51/01%20%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AFML%E7%AD%96%E7%95%A5%EF%BC%9F%EF%BC%88Why%20ML%20Strategy_%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -520,7 +429,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/22%20Adam%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%EF%BC%88Adam%20Optimization%20Algorithm%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/35%20TensorFlow%20%E5%9F%BA%E7%A1%80%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86%E6%9C%BA%E5%88%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.jpg">
@@ -538,7 +447,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/22%20Adam%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%EF%BC%88Adam%20Optimization%20Algorithm%EF%BC%89/" class="post-title-link" itemprop="url">22 Adam 优化算法（Adam Optimization Algorithm）</a>
+          <a href="/blog/35%20TensorFlow%20%E5%9F%BA%E7%A1%80%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">35 TensorFlow 基础与自动微分机制</a>
         </h2>
 
         <div class="post-meta-container">
@@ -549,7 +458,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-01-02 11:16:03" itemprop="dateCreated datePublished" datetime="2026-01-02T11:16:03+00:00">2026-01-02</time>
+      <time title="创建时间：2026-01-05 20:35:56" itemprop="dateCreated datePublished" datetime="2026-01-05T20:35:56+00:00">2026-01-05</time>
     </span>
 
   
@@ -559,7 +468,98 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1k</span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="一、核心目标"><a href="#一、核心目标" class="headerlink" title="一、核心目标"></a>一、核心目标</h3><p>　　通过一个简单的二次损失函数优化问题，演示 <strong>TensorFlow 程序的基本结构</strong>，并揭示其如何自动完成：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/35%20TensorFlow%20%E5%9F%BA%E7%A1%80%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86%E6%9C%BA%E5%88%B6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/34%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%EF%BC%88Deep%20Learning%20Frameworks%EF%BC%89%E7%9A%84%E4%BB%B7%E5%80%BC%E4%B8%8E%E9%80%89%E6%8B%A9%E6%A0%87%E5%87%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Rion">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/34%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%EF%BC%88Deep%20Learning%20Frameworks%EF%BC%89%E7%9A%84%E4%BB%B7%E5%80%BC%E4%B8%8E%E9%80%89%E6%8B%A9%E6%A0%87%E5%87%86/" class="post-title-link" itemprop="url">34 深度学习框架（Deep Learning Frameworks）的价值与选择标准</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-05 20:34:39" itemprop="dateCreated datePublished" datetime="2026-01-05T20:34:39+00:00">2026-01-05</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -577,10 +577,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="✅-简介"><a href="#✅-简介" class="headerlink" title="✅ 简介"></a>✅ 简介</h3><p>　　在深度学习的发展历程中，许多研究人员提出了新的优化算法，但大多数仅在特定问题上表现良好，缺乏泛化能力。因此，社区对新优化算法持谨慎态度。</p>
+          <h3 id="一、为什么需要深度学习框架？"><a href="#一、为什么需要深度学习框架？" class="headerlink" title="一、为什么需要深度学习框架？"></a>一、为什么需要深度学习框架？</h3><p>　　尽管从零开始用 Python + NumPy 实现神经网络（如前向传播、反向传播、梯度下降等）有助于<strong>理解底层原理</strong>，但在实际工程中存在明显局限：</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/22%20Adam%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%EF%BC%88Adam%20Optimization%20Algorithm%EF%BC%89/#more" rel="contents">
+              <a class="btn" href="/blog/34%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%EF%BC%88Deep%20Learning%20Frameworks%EF%BC%89%E7%9A%84%E4%BB%B7%E5%80%BC%E4%B8%8E%E9%80%89%E6%8B%A9%E6%A0%87%E5%87%86/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -611,7 +611,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/21%20RMSprop%EF%BC%88Root%20Mean%20Square%20Propagation%EF%BC%89%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/33%20%E8%AE%AD%E7%BB%83%E4%B8%80%E4%B8%AA%E4%BD%BF%E7%94%A8%E4%BA%86%20Softmax%20%E7%9A%84%E5%88%86%E7%B1%BB%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.jpg">
@@ -629,7 +629,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/21%20RMSprop%EF%BC%88Root%20Mean%20Square%20Propagation%EF%BC%89%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">21 RMSprop（Root Mean Square Propagation） 优化算法</a>
+          <a href="/blog/33%20%E8%AE%AD%E7%BB%83%E4%B8%80%E4%B8%AA%E4%BD%BF%E7%94%A8%E4%BA%86%20Softmax%20%E7%9A%84%E5%88%86%E7%B1%BB%E5%99%A8/" class="post-title-link" itemprop="url">33 训练一个使用了 Softmax 的分类器</a>
         </h2>
 
         <div class="post-meta-container">
@@ -640,7 +640,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-01-02 11:09:49" itemprop="dateCreated datePublished" datetime="2026-01-02T11:09:49+00:00">2026-01-02</time>
+      <time title="创建时间：2026-01-05 20:31:51" itemprop="dateCreated datePublished" datetime="2026-01-05T20:31:51+00:00">2026-01-05</time>
     </span>
 
   
@@ -650,7 +650,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>780</span>
+      <span>915</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -668,10 +668,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="🧠-RMSprop-算法详解总结"><a href="#🧠-RMSprop-算法详解总结" class="headerlink" title="🧠 RMSprop 算法详解总结"></a>🧠 RMSprop 算法详解总结</h2><h3 id="一、问题背景：梯度下降中的震荡问题"><a href="#一、问题背景：梯度下降中的震荡问题" class="headerlink" title="一、问题背景：梯度下降中的震荡问题"></a>一、问题背景：梯度下降中的震荡问题</h3>
+          <h2 id="🧠-一、Softmax-激活函数回顾"><a href="#🧠-一、Softmax-激活函数回顾" class="headerlink" title="🧠 一、Softmax 激活函数回顾"></a>🧠 一、Softmax 激活函数回顾</h2><p>　　Softmax 是用于多分类任务（$C \geq 2$）的输出层激活函数，将线性输出 $z^{[L]} \in \mathbb{R}^C$ 转换为概率分布：</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/21%20RMSprop%EF%BC%88Root%20Mean%20Square%20Propagation%EF%BC%89%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/#more" rel="contents">
+              <a class="btn" href="/blog/33%20%E8%AE%AD%E7%BB%83%E4%B8%80%E4%B8%AA%E4%BD%BF%E7%94%A8%E4%BA%86%20Softmax%20%E7%9A%84%E5%88%86%E7%B1%BB%E5%99%A8/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -695,7 +695,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/blog/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/blog/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/29/">29</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/blog/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/blog/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/blog/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/31/">31</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/blog/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -718,14 +718,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">160k</span>
+    <span title="站点总字数">172k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">9:43</span>
+    <span title="站点阅读时长">10:27</span>
   </span>
 </div>
 
