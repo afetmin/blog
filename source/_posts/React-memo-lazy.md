@@ -72,7 +72,7 @@ const fetchData = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
-        name: "ranxiu",
+        name: "Blum",
         msg: "a lot of data",
       })
     }, 1000)
