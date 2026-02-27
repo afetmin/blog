@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/05%20%E5%B8%A6%E6%AD%A5%E9%95%BF%E7%9A%84%E5%8D%B7%E7%A7%AF%EF%BC%88Strided%20Convolutions%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/05%20%E5%B8%A6%E6%AD%A5%E9%95%BF%E7%9A%84%E5%8D%B7%E7%A7%AF%EF%BC%88Strided%20Convolutions%EF%BC%89/","path":"卷积神经网络1/05 带步长的卷积（Strided Convolutions）/","title":"05 带步长的卷积（Strided Convolutions）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>05 带步长的卷积（Strided Convolutions） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/05%20%E5%B8%A6%E6%AD%A5%E9%95%BF%E7%9A%84%E5%8D%B7%E7%A7%AF%EF%BC%88Strided%20Convolutions%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">205</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#05-%E5%B8%A6%E6%AD%A5%E9%95%BF%E7%9A%84%E5%8D%B7%E7%A7%AF%EF%BC%88Strided-Convolutions%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">05 带步长的卷积（Strided Convolutions）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%9B%9E%E9%A1%BE"><span class="nav-number">1.1.</span> <span class="nav-text">一、基本概念回顾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%B8%A6%E6%AD%A5%E9%95%BF%E7%9A%84%E5%8D%B7%E7%A7%AF%EF%BC%88Strided-Convolution%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">二、带步长的卷积（Strided Convolution）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%AD%A5%E9%95%BF%EF%BC%88Stride%EF%BC%89%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 步长（Stride）定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E8%BE%93%E5%87%BA%E5%B0%BA%E5%AF%B8%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 输出尺寸计算公式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%A4%BA%E4%BE%8B%E9%AA%8C%E8%AF%81"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. 示例验证</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%BE%B9%E7%95%8C%E6%83%85%E5%86%B5%E5%A4%84%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">三、边界情况处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%85%B3%E4%BA%8E%E2%80%9C%E5%8D%B7%E7%A7%AF%E2%80%9D-vs-%E2%80%9C%E4%BA%92%E7%9B%B8%E5%85%B3%E2%80%9D%E7%9A%84%E6%8A%80%E6%9C%AF%E8%AF%B4%E6%98%8E"><span class="nav-number">1.4.</span> <span class="nav-text">四、关于“卷积” vs “互相关”的技术说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%85%B3%E9%94%AE%E5%85%AC%E5%BC%8F%E6%B1%87%E6%80%BB%EF%BC%88KaTeX-%E5%85%BC%E5%AE%B9%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">五、关键公式汇总（KaTeX 兼容）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE"><span class="nav-number">1.6.</span> <span class="nav-text">六、学习建议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E9%A2%84%E5%91%8A%EF%BC%88%E8%AF%BE%E7%A8%8B%E4%B8%8B%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%89"><span class="nav-number">1.7.</span> <span class="nav-text">七、预告（课程下一部分）</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Blum"
+      src="/blog/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Blum</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">205</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/04%20%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E5%8D%B7%E7%A7%AF%E5%AE%9E%E7%8E%B0%EF%BC%88Convolutional%20Implementation%20of%20Sliding%20Windows%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-02-06</time>
+        <br>
+      04 滑动窗口的卷积实现（Convolutional Implementation of Sliding Windows）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/07%20%E5%8D%95%E5%B1%82%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-18</time>
+        <br>
+      07 单层卷积神经网络
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/11%20%E4%B8%80%E7%BB%B4%E5%88%B0%E4%B8%89%E7%BB%B4%E6%8E%A8%E5%B9%BF%EF%BC%881D%20and%203D%20generalizations%20of%20models%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-02-08</time>
+        <br>
+      11 一维到三维推广（1D and 3D generalizations of models）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/06%20%E4%B8%89%E7%BB%B4%E5%8D%B7%E7%A7%AF%EF%BC%88Convolutions%20over%20Volumes%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-18</time>
+        <br>
+      06 三维卷积（Convolutions over Volumes）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/09%20%E6%B1%A0%E5%8C%96%E5%B1%82%EF%BC%88Pooling%20Layers%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-18</time>
+        <br>
+      09 池化层（Pooling Layers）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/05%20%E5%B8%A6%E6%AD%A5%E9%95%BF%E7%9A%84%E5%8D%B7%E7%A7%AF%EF%BC%88Strided%20Convolutions%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Blum">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="05 带步长的卷积（Strided Convolutions） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          05 带步长的卷积（Strided Convolutions）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-18 12:15:18" itemprop="dateCreated datePublished" datetime="2026-01-18T12:15:18+00:00">2026-01-18</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>940</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="05-带步长的卷积（Strided-Convolutions）"><a href="#05-带步长的卷积（Strided-Convolutions）" class="headerlink" title="05 带步长的卷积（Strided Convolutions）"></a>05 带步长的卷积（Strided Convolutions）</h1><h3 id="一、基本概念回顾"><a href="#一、基本概念回顾" class="headerlink" title="一、基本概念回顾"></a>一、基本概念回顾</h3><p>在标准卷积中，我们使用一个 <strong>滤波器（filter）</strong> （也称卷积核）在输入图像上滑动，逐点进行<strong>逐元素相乘再求和</strong>，生成输出特征图（feature map）。</p>
+<ul>
+<li>输入图像尺寸：$n \times n$</li>
+<li>滤波器尺寸：$f \times f$</li>
+<li>Padding（填充）：$p$</li>
+<li>Stride（步长）：$s$</li>
+</ul>
+<blockquote>
+<p>💡 <strong>注意</strong>：在深度学习中，所谓的“卷积”实际上是指<strong>互相关（cross-correlation）</strong> ，即<strong>不翻转滤波器</strong>。尽管数学或信号处理中“卷积”包含翻转操作，但深度学习惯例省略此步骤，仍称其为“卷积”。</p>
+</blockquote>
+<hr>
+<h3 id="二、带步长的卷积（Strided-Convolution）"><a href="#二、带步长的卷积（Strided-Convolution）" class="headerlink" title="二、带步长的卷积（Strided Convolution）"></a>二、带步长的卷积（Strided Convolution）</h3><h4 id="1-步长（Stride）定义"><a href="#1-步长（Stride）定义" class="headerlink" title="1. 步长（Stride）定义"></a>1. 步长（Stride）定义</h4><ul>
+<li><strong>步长</strong> <strong>$s$</strong> 表示滤波器每次滑动的像素数。</li>
+<li>当 $s &#x3D; 1$：标准卷积，逐像素滑动。</li>
+<li>当 $s &#x3D; 2$：每次跳过 1 个像素，滑动 2 个位置。</li>
+</ul>
+<h4 id="2-输出尺寸计算公式"><a href="#2-输出尺寸计算公式" class="headerlink" title="2. 输出尺寸计算公式"></a>2. 输出尺寸计算公式</h4><p>当对一个 $n \times n$ 的输入图像，使用 $f \times f$ 的滤波器，padding 为 $p$，stride 为 $s$ 时，输出特征图的尺寸为：</p>
+<p>$$<br>\left\lfloor \frac{n + 2p - f}{s} + 1 \right\rfloor \times \left\lfloor \frac{n + 2p - f}{s} + 1 \right\rfloor<br>$$</p>
+<blockquote>
+<p>✅ <strong>关键点</strong>：</p>
+<ul>
+<li>若结果不是整数，<strong>向下取整（floor）</strong> 。</li>
+<li>这是因为只有当滤波器<strong>完全落在（填充后的）输入区域内</strong>时，才进行一次有效卷积运算。</li>
+<li>向下取整确保了不会对部分超出边界的区域进行计算。</li>
+</ul>
+</blockquote>
+<h4 id="3-示例验证"><a href="#3-示例验证" class="headerlink" title="3. 示例验证"></a>3. 示例验证</h4><ul>
+<li>输入：$7 \times 7$</li>
+<li>滤波器：$3 \times 3$</li>
+<li>Padding：$p &#x3D; 0$</li>
+<li>Stride：$s &#x3D; 2$</li>
+</ul>
+<p>代入公式：</p>
+<p>$$<br>\left\lfloor \frac{7 + 2 \cdot 0 - 3}{2} + 1 \right\rfloor &#x3D; \left\lfloor \frac{4}{2} + 1 \right\rfloor &#x3D; \left\lfloor 2 + 1 \right\rfloor &#x3D; 3<br>$$</p>
+<p>→ 输出尺寸为 $3 \times 3$，与课程示例一致。</p>
+<hr>
+<h3 id="三、边界情况处理"><a href="#三、边界情况处理" class="headerlink" title="三、边界情况处理"></a>三、边界情况处理</h3><ul>
+<li>如果 $\frac{n + 2p - f}{s} + 1$ 不是整数，则<strong>丢弃</strong>无法完整覆盖滤波器的边缘区域。</li>
+<li>这是深度学习框架（如 TensorFlow、PyTorch）中的<strong>默认行为</strong>（除非特别指定“same” padding 等策略）。</li>
+</ul>
+<hr>
+<h3 id="四、关于“卷积”-vs-“互相关”的技术说明"><a href="#四、关于“卷积”-vs-“互相关”的技术说明" class="headerlink" title="四、关于“卷积” vs “互相关”的技术说明"></a>四、关于“卷积” vs “互相关”的技术说明</h3><table>
+<thead>
+<tr>
+<th>领域</th>
+<th>操作</th>
+<th>是否翻转滤波器</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数学 &#x2F; 信号处理</td>
+<td>卷积（Convolution）</td>
+<td>✅ 是（先水平+垂直翻转）</td>
+</tr>
+<tr>
+<td>深度学习</td>
+<td>通常称为“卷积”</td>
+<td>❌ 否（实际是互相关）</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p><strong>为什么深度学习不用翻转？</strong></p>
+<ul>
+<li>翻转对特征提取无实质帮助；</li>
+<li>学习过程中滤波器权重是<strong>可训练的</strong>，无论是否翻转，网络都能学到等效的模式；</li>
+<li>省略翻转可简化实现，提升效率。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>📌 <strong>结论</strong>：在 CNN 中，“卷积” &#x3D; <strong>互相关（无翻转）</strong> ，这是行业标准约定。</p>
+</blockquote>
+<hr>
+<h3 id="五、关键公式汇总（KaTeX-兼容）"><a href="#五、关键公式汇总（KaTeX-兼容）" class="headerlink" title="五、关键公式汇总（KaTeX 兼容）"></a>五、关键公式汇总（KaTeX 兼容）</h3><ol>
+<li><p><strong>输出尺寸公式（方形输入）</strong> ：</p>
+<p>$$<br>n_{\text{out}} &#x3D; \left\lfloor \frac{n + 2p - f}{s} + 1 \right\rfloor<br>$$</p>
+</li>
+<li><p><strong>通用形式（矩形输入</strong> **$n_H \times n_W$**​ <strong>）</strong> ：</p>
+<p>$$<br>H_{\text{out}} &#x3D; \left\lfloor \frac{n_H + 2p - f}{s} + 1 \right\rfloor, \quad<br>W_{\text{out}} &#x3D; \left\lfloor \frac{n_W + 2p - f}{s} + 1 \right\rfloor<br>$$</p>
+</li>
+<li><p><strong>向下取整符号</strong>：</p>
+<p>$$<br>\lfloor x \rfloor &#x3D; \text{floor}(x)<br>$$</p>
+</li>
+</ol>
+<hr>
+<h3 id="六、学习建议"><a href="#六、学习建议" class="headerlink" title="六、学习建议"></a>六、学习建议</h3><ul>
+<li><strong>动手验证</strong>：尝试不同 $n, f, p, s$ 组合，手动计算输出尺寸，加深理解。</li>
+<li><strong>编程实践</strong>：在 PyTorch 或 TensorFlow 中使用 <code>Conv2d</code>​ 层，调整 <code>stride</code>​ 和 <code>padding</code> 参数，观察输出形状变化。</li>
+<li><strong>注意维度匹配</strong>：在构建深层网络时，合理设计 stride 和 padding 可控制特征图分辨率，影响模型感受与计算量。</li>
+</ul>
+<hr>
+<h3 id="七、预告（课程下一部分）"><a href="#七、预告（课程下一部分）" class="headerlink" title="七、预告（课程下一部分）"></a>七、预告（课程下一部分）</h3><p>下一节将讲解 <strong>对立体（volume）进行卷积</strong>，即处理 <strong>多通道输入（如 RGB 图像）</strong>  和 <strong>多滤波器输出</strong>，这是构建真实 CNN 的核心。</p>
+<hr>
+<p>✅ <strong>总结一句话</strong>：</p>
+<blockquote>
+<p><strong>带步长的卷积通过控制滑动步幅</strong> <strong>$s$</strong> <strong>来调节输出分辨率，其尺寸由公式</strong> <strong>$\left\lfloor \frac{n + 2p - f}{s} + 1 \right\rfloor$</strong> <strong>决定；深度学习中的“卷积”实为互相关，无需翻转滤波器。</strong></p>
+</blockquote>
+<p>‍</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/04%20%E5%8D%B7%E7%A7%AF%E6%93%8D%E4%BD%9C%E4%B8%AD%E7%9A%84%20Padding%EF%BC%88%E5%A1%AB%E5%85%85%EF%BC%89/" rel="prev" title="04 卷积操作中的 Padding（填充）">
+                  <i class="fa fa-angle-left"></i> 04 卷积操作中的 Padding（填充）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/06%20%E4%B8%89%E7%BB%B4%E5%8D%B7%E7%A7%AF%EF%BC%88Convolutions%20over%20Volumes%EF%BC%89/" rel="next" title="06 三维卷积（Convolutions over Volumes）">
+                  06 三维卷积（Convolutions over Volumes） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Blum</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">227k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:45</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

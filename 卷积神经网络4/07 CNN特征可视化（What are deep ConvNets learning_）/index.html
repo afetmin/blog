@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/07%20CNN%E7%89%B9%E5%BE%81%E5%8F%AF%E8%A7%86%E5%8C%96%EF%BC%88What%20are%20deep%20ConvNets%20learning_%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/07%20CNN%E7%89%B9%E5%BE%81%E5%8F%AF%E8%A7%86%E5%8C%96%EF%BC%88What%20are%20deep%20ConvNets%20learning_%EF%BC%89/","path":"卷积神经网络4/07 CNN特征可视化（What are deep ConvNets learning_）/","title":"07 CNN特征可视化（What are deep ConvNets learning?）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>07 CNN特征可视化（What are deep ConvNets learning?） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/07%20CNN%E7%89%B9%E5%BE%81%E5%8F%AF%E8%A7%86%E5%8C%96%EF%BC%88What%20are%20deep%20ConvNets%20learning_%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">205</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#07-CNN%E7%89%B9%E5%BE%81%E5%8F%AF%E8%A7%86%E5%8C%96%EF%BC%88What-are-deep-ConvNets-learning-%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">07 CNN特征可视化（What are deep ConvNets learning?）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98%EF%BC%9A%E6%B7%B1%E5%BA%A6%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%88%B0%E5%BA%95%E5%9C%A8%E5%AD%A6%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">一、核心问题：深度卷积神经网络到底在学什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%8F%AF%E8%A7%86%E5%8C%96%E6%96%B9%E6%B3%95%EF%BC%9A%E6%9C%80%E5%A4%A7%E5%8C%96%E6%BF%80%E6%B4%BB%E5%9B%BE%E5%83%8F%E5%9D%97%EF%BC%88Activation-Maximization%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">二、可视化方法：最大化激活图像块（Activation Maximization）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3%EF%BC%9A"><span class="nav-number">1.2.1.</span> <span class="nav-text">基本思想：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%90%84%E5%B1%82%E7%89%B9%E5%BE%81%E5%8F%AF%E8%A7%86%E5%8C%96%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90"><span class="nav-number">1.3.</span> <span class="nav-text">三、各层特征可视化结果分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%AC%AC%E4%B8%80%E5%B1%82%EF%BC%88Layer-1%EF%BC%89%EF%BC%9A%E6%A3%80%E6%B5%8B%E7%AE%80%E5%8D%95%E5%B1%80%E9%83%A8%E7%89%B9%E5%BE%81"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. 第一层（Layer 1）：检测简单局部特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%AC%AC%E4%BA%8C%E5%B1%82%EF%BC%88Layer-2%EF%BC%89%EF%BC%9A%E7%BB%84%E5%90%88%E8%BE%B9%E7%BC%98-%E2%86%92-%E7%BA%B9%E7%90%86%E4%B8%8E%E7%AE%80%E5%8D%95%E5%BD%A2%E7%8A%B6"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. 第二层（Layer 2）：组合边缘 → 纹理与简单形状</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%AC%AC%E4%B8%89%E5%B1%82%EF%BC%88Layer-3%EF%BC%89%EF%BC%9A%E8%AF%86%E5%88%AB%E8%AF%AD%E4%B9%89%E9%83%A8%E4%BB%B6"><span class="nav-number">1.3.3.</span> <span class="nav-text">3. 第三层（Layer 3）：识别语义部件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E7%AC%AC%E5%9B%9B%E5%B1%82%EF%BC%88Layer-4%EF%BC%89%EF%BC%9A%E6%A3%80%E6%B5%8B%E5%85%B7%E4%BD%93%E7%89%A9%E4%BD%93%E7%B1%BB%E5%88%AB"><span class="nav-number">1.3.4.</span> <span class="nav-text">4. 第四层（Layer 4）：检测具体物体类别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%AC%AC%E4%BA%94%E5%B1%82%EF%BC%88Layer-5%EF%BC%8C%E5%A6%82AlexNet%E6%9C%80%E5%90%8E%E5%8D%B7%E7%A7%AF%E5%B1%82%EF%BC%89%EF%BC%9A%E9%AB%98%E9%98%B6%E8%AF%AD%E4%B9%89%E6%A6%82%E5%BF%B5"><span class="nav-number">1.3.5.</span> <span class="nav-text">5. 第五层（Layer 5，如AlexNet最后卷积层）：高阶语义概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%B1%82%E7%BA%A7%E7%89%B9%E5%BE%81%E6%BC%94%E8%BF%9B%E8%A7%84%E5%BE%8B%E6%80%BB%E7%BB%93"><span class="nav-number">1.4.</span> <span class="nav-text">四、层级特征演进规律总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%8A%80%E6%9C%AF%E8%83%8C%E6%99%AF%E4%B8%8E%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">1.5.</span> <span class="nav-text">五、技术背景与参考文献</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E4%B8%8E%E5%90%8E%E7%BB%AD%E5%86%85%E5%AE%B9%E7%9A%84%E8%81%94%E7%B3%BB%EF%BC%9A%E7%A5%9E%E7%BB%8F%E9%A3%8E%E6%A0%BC%E8%BF%81%E7%A7%BB%EF%BC%88Neural-Style-Transfer%EF%BC%89"><span class="nav-number">1.6.</span> <span class="nav-text">六、与后续内容的联系：神经风格迁移（Neural Style Transfer）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%85%AC%E5%BC%8F%E6%B1%87%E6%80%BB%EF%BC%88KaTeX-%E5%85%BC%E5%AE%B9%EF%BC%89"><span class="nav-number">1.7.</span> <span class="nav-text">七、公式汇总（KaTeX 兼容）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE"><span class="nav-number">1.8.</span> <span class="nav-text">八、学习建议</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Blum"
+      src="/blog/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Blum</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">205</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/25%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%90%91%E9%87%8F%E5%8C%96%E5%AE%9E%E7%8E%B0%EF%BC%88Vectorized%20Implementation%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-17</time>
+        <br>
+      25 神经网络中的向量化实现（Vectorized Implementation）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/23%20%E8%AE%A1%E7%AE%97%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E8%BE%93%E5%87%BA/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-17</time>
+        <br>
+      23 计算神经网络的输出
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/27%20%E4%B8%BA%E4%BB%80%E4%B9%88%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%BF%85%E9%A1%BB%E4%BD%BF%E7%94%A8%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%EF%BC%9F/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-21</time>
+        <br>
+      27 为什么神经网络必须使用非线性激活函数？
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/30%20%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%9B%B4%E8%A7%89%EF%BC%88Backpropagation%20Intuition%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-21</time>
+        <br>
+      30 反向传播直觉（Backpropagation Intuition）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/13%20%E5%9C%A8%20m%20%E4%B8%AA%E6%A0%B7%E6%9C%AC%E4%B8%8A%E6%89%A7%E8%A1%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20on%20m%20Examples%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-08</time>
+        <br>
+      13 在 m 个样本上执行梯度下降（Gradient Descent on m Examples）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/07%20CNN%E7%89%B9%E5%BE%81%E5%8F%AF%E8%A7%86%E5%8C%96%EF%BC%88What%20are%20deep%20ConvNets%20learning_%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Blum">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="07 CNN特征可视化（What are deep ConvNets learning?） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          07 CNN特征可视化（What are deep ConvNets learning?）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-08 11:47:27" itemprop="dateCreated datePublished" datetime="2026-02-08T11:47:27+00:00">2026-02-08</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="07-CNN特征可视化（What-are-deep-ConvNets-learning-）"><a href="#07-CNN特征可视化（What-are-deep-ConvNets-learning-）" class="headerlink" title="07 CNN特征可视化（What are deep ConvNets learning?）"></a>07 CNN特征可视化（What are deep ConvNets learning?）</h1><h2 id="一、核心问题：深度卷积神经网络到底在学什么？"><a href="#一、核心问题：深度卷积神经网络到底在学什么？" class="headerlink" title="一、核心问题：深度卷积神经网络到底在学什么？"></a>一、核心问题：深度卷积神经网络到底在学什么？</h2><p>深度卷积神经网络（ConvNets）通过多层非线性变换从原始图像中自动提取特征。理解每一层学到的内容，有助于：</p>
+<ul>
+<li>解释模型行为</li>
+<li>调试网络结构</li>
+<li>构建高级应用（如<strong>神经风格迁移</strong>）</li>
+</ul>
+<p>本节通过<strong>特征可视化</strong>方法，揭示不同深度隐藏单元所响应的图像模式。</p>
+<hr>
+<h2 id="二、可视化方法：最大化激活图像块（Activation-Maximization）"><a href="#二、可视化方法：最大化激活图像块（Activation-Maximization）" class="headerlink" title="二、可视化方法：最大化激活图像块（Activation Maximization）"></a>二、可视化方法：最大化激活图像块（Activation Maximization）</h2><h3 id="基本思想："><a href="#基本思想：" class="headerlink" title="基本思想："></a>基本思想：</h3><p>对某个特定隐藏单元 $h^{(l)}_k$（第 $l$ 层第 $k$ 个神经元），在训练集上寻找使其激活值最大的输入图像或图像块：</p>
+<p>$$<br>\text{Find } \mathbf{x}^* &#x3D; \arg\max_{\mathbf{x} \in \mathcal{D}} , h^{(l)}_k(\mathbf{x})<br>$$</p>
+<p>其中：</p>
+<ul>
+<li>$\mathcal{D}$ 是训练数据集</li>
+<li>$h^{(l)}_k(\mathbf{x})$ 表示输入 $\mathbf{x}$ 经过前 $l$ 层后第 $k$ 个单元的输出（激活值）</li>
+</ul>
+<blockquote>
+<p>实际操作中，常使用梯度上升法直接优化输入图像以最大化目标神经元响应（但本视频采用更简单的“遍历训练集找最大激活样本”的方式）。</p>
+</blockquote>
+<hr>
+<h2 id="三、各层特征可视化结果分析"><a href="#三、各层特征可视化结果分析" class="headerlink" title="三、各层特征可视化结果分析"></a>三、各层特征可视化结果分析</h2><h3 id="1-第一层（Layer-1）：检测简单局部特征"><a href="#1-第一层（Layer-1）：检测简单局部特征" class="headerlink" title="1. 第一层（Layer 1）：检测简单局部特征"></a>1. 第一层（Layer 1）：检测<strong>简单局部特征</strong></h3><ul>
+<li><p>每个神经元的感受区域（Receptive Field）很小（如 $11 \times 11$ 或 $5 \times 5$）</p>
+</li>
+<li><p>可视化显示：神经元对<strong>边缘、颜色、方向性线条</strong>敏感</p>
+<ul>
+<li>例如：垂直边缘、水平边缘、绿色左侧亮右侧暗等</li>
+</ul>
+</li>
+<li><p>典型响应模式：</p>
+<p>$$<br>\text{Edge detectors}, \quad \text{Color blobs}, \quad \text{Orientation-selective filters}<br>$$</p>
+</li>
+</ul>
+<blockquote>
+<p>✅ <strong>结论</strong>：浅层学习<strong>通用低级视觉特征</strong>，与生物视觉皮层V1区类似。</p>
+</blockquote>
+<hr>
+<h3 id="2-第二层（Layer-2）：组合边缘-→-纹理与简单形状"><a href="#2-第二层（Layer-2）：组合边缘-→-纹理与简单形状" class="headerlink" title="2. 第二层（Layer 2）：组合边缘 → 纹理与简单形状"></a>2. 第二层（Layer 2）：组合边缘 → <strong>纹理与简单形状</strong></h3><ul>
+<li><p>感受区域变大，可整合多个第一层特征</p>
+</li>
+<li><p>可视化显示：</p>
+<ul>
+<li>垂直条纹组合（如栅栏）</li>
+<li>圆形轮廓（如轮子、眼睛）</li>
+<li>更复杂的角点或交叉线</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<ul>
+<li>神经元A：响应密集垂直线</li>
+<li>神经元B：左侧有圆形时激活强</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>✅ <strong>结论</strong>：中层开始编码<strong>局部几何结构</strong>和<strong>重复纹理</strong>。</p>
+</blockquote>
+<hr>
+<h3 id="3-第三层（Layer-3）：识别语义部件"><a href="#3-第三层（Layer-3）：识别语义部件" class="headerlink" title="3. 第三层（Layer 3）：识别语义部件"></a>3. 第三层（Layer 3）：识别<strong>语义部件</strong></h3><ul>
+<li><p>感受区域覆盖更大图像区域</p>
+</li>
+<li><p>可视化显示：</p>
+<ul>
+<li>车轮（圆形+辐条）</li>
+<li>人脸&#x2F;人体局部（如眼睛、躯干）</li>
+<li>规则图案（蜂窝、网格、方格）</li>
+</ul>
+</li>
+<li><p>部分神经元已具<strong>类别倾向性</strong></p>
+</li>
+</ul>
+<blockquote>
+<p>✅ <strong>结论</strong>：深层开始捕捉<strong>物体组成部分</strong>（parts-based representation）。</p>
+</blockquote>
+<hr>
+<h3 id="4-第四层（Layer-4）：检测具体物体类别"><a href="#4-第四层（Layer-4）：检测具体物体类别" class="headerlink" title="4. 第四层（Layer 4）：检测具体物体类别"></a>4. 第四层（Layer 4）：检测<strong>具体物体类别</strong></h3><ul>
+<li><p>可视化显示高度语义化的响应：</p>
+<ul>
+<li>狗脸（特定品种，姿态相似）</li>
+<li>水面反光区域</li>
+<li>鸟类的脚（细长、分趾）</li>
+</ul>
+</li>
+<li><p>神经元表现出<strong>类别选择性</strong>（category-selective）</p>
+</li>
+</ul>
+<blockquote>
+<p>✅ <strong>结论</strong>：接近分类层，特征具有<strong>强语义意义</strong>。</p>
+</blockquote>
+<hr>
+<h3 id="5-第五层（Layer-5，如AlexNet最后卷积层）：高阶语义概念"><a href="#5-第五层（Layer-5，如AlexNet最后卷积层）：高阶语义概念" class="headerlink" title="5. 第五层（Layer 5，如AlexNet最后卷积层）：高阶语义概念"></a>5. 第五层（Layer 5，如AlexNet最后卷积层）：<strong>高阶语义概念</strong></h3><ul>
+<li><p>可视化显示：</p>
+<ul>
+<li><strong>狗检测器</strong>：能泛化到多种狗（比Layer 4更鲁棒）</li>
+<li><strong>键盘检测器</strong>：响应密集按键排列（点阵结构）</li>
+<li><strong>文本检测器</strong>：对字符区域敏感（需谨慎解读）</li>
+<li><strong>花朵检测器</strong>：对花瓣、花蕊结构响应</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>✅ <strong>结论</strong>：最深层神经元可视为<strong>概念检测器</strong>（concept detectors），直接关联高层语义。</p>
+</blockquote>
+<hr>
+<h2 id="四、层级特征演进规律总结"><a href="#四、层级特征演进规律总结" class="headerlink" title="四、层级特征演进规律总结"></a>四、层级特征演进规律总结</h2><table>
+<thead>
+<tr>
+<th>网络深度</th>
+<th>特征类型</th>
+<th>语义级别</th>
+<th>典型响应</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Layer 1</td>
+<td>边缘、颜色、方向</td>
+<td>低级（Low-level）</td>
+<td>Sobel-like filters</td>
+</tr>
+<tr>
+<td>Layer 2</td>
+<td>纹理、简单形状</td>
+<td>中低级</td>
+<td>条纹、圆弧、角点</td>
+</tr>
+<tr>
+<td>Layer 3</td>
+<td>物体部件</td>
+<td>中级（Mid-level）</td>
+<td>轮子、眼睛、网格</td>
+</tr>
+<tr>
+<td>Layer 4</td>
+<td>具体物体（受限）</td>
+<td>中高级</td>
+<td>狗脸、鸟脚、水面</td>
+</tr>
+<tr>
+<td>Layer 5</td>
+<td>抽象概念&#x2F;类别</td>
+<td>高级（High-level）</td>
+<td>多样狗、键盘、花、文字</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>📌 <strong>关键洞见</strong>：<br>卷积网络通过<strong>层次化组合</strong>，从像素 → 边缘 → 纹理 → 部件 → 物体，逐步构建<strong>由简到繁的语义表示</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="五、技术背景与参考文献"><a href="#五、技术背景与参考文献" class="headerlink" title="五、技术背景与参考文献"></a>五、技术背景与参考文献</h2><ul>
+<li><p>本节可视化方法简化自 Zeiler &amp; Fergus (2013) 的经典工作：</p>
+<blockquote>
+<p><strong>Zeiler M D, Fergus R. Visualizing and Understanding Convolutional Networks.</strong><br><em>In: ECCV 2014. Lecture Notes in Computer Science, vol 8689. Springer.</em></p>
+</blockquote>
+</li>
+<li><p>他们提出 <strong>Deconvolutional Network（反卷积网络）</strong>  方法，通过<strong>反向映射</strong>将高层激活投影回像素空间，实现更精确的特征可视化。</p>
+</li>
+</ul>
+<hr>
+<h2 id="六、与后续内容的联系：神经风格迁移（Neural-Style-Transfer）"><a href="#六、与后续内容的联系：神经风格迁移（Neural-Style-Transfer）" class="headerlink" title="六、与后续内容的联系：神经风格迁移（Neural Style Transfer）"></a>六、与后续内容的联系：神经风格迁移（Neural Style Transfer）</h2><ul>
+<li><strong>内容表示</strong>（Content Representation）：通常取自<strong>较深卷积层</strong>（如Layer 4或5），因其编码高级语义。</li>
+<li><strong>风格表示</strong>（Style Representation）：通常取自<strong>多个浅层到中层</strong>（如Layer 1~4），因其包含纹理、颜色、笔触等风格信息。</li>
+</ul>
+<blockquote>
+<p>因此，理解各层特征性质是设计风格迁移损失函数的基础。</p>
+</blockquote>
+<hr>
+<h2 id="七、公式汇总（KaTeX-兼容）"><a href="#七、公式汇总（KaTeX-兼容）" class="headerlink" title="七、公式汇总（KaTeX 兼容）"></a>七、公式汇总（KaTeX 兼容）</h2><ol>
+<li><p><strong>激活最大化目标</strong>：</p>
+<p>$$<br>\mathbf{x}^* &#x3D; \underset{\mathbf{x} \in \mathcal{D}}{\arg\max} ; h^{(l)}_k(\mathbf{x})<br>$$</p>
+</li>
+<li><p><strong>感受区域增长</strong>（近似）：</p>
+<p>$$<br>\text{RF}^{(l)} \approx \text{RF}^{(l-1)} + (\text{kernel}<em>l - 1) \times \prod</em>{i&#x3D;1}^{l-1} \text{stride}_i<br>$$</p>
+</li>
+<li><p><strong>风格迁移中的Gram矩阵</strong>（预告）：</p>
+<p>$$<br>G^{(l)}<em>{ij} &#x3D; \frac{1}{H_l W_l C_l} \sum</em>{h&#x3D;1}^{H_l} \sum_{w&#x3D;1}^{W_l} F^{(l)}<em>{hi}(x) F^{(l)}</em>{hj}(x)<br>$$</p>
+<p>（用于捕获层 $l$ 的<strong>特征相关性</strong>，即“风格”）</p>
+</li>
+</ol>
+<hr>
+<h2 id="八、学习建议"><a href="#八、学习建议" class="headerlink" title="八、学习建议"></a>八、学习建议</h2><ul>
+<li>动手实践：使用 PyTorch&#x2F;TensorFlow 可视化预训练 ResNet&#x2F;VGG 各层激活</li>
+<li>对比不同网络（AlexNet vs VGG vs ResNet）的特征演化差异</li>
+<li>思考：为何浅层特征更适合“风格”，深层更适合“内容”？</li>
+</ul>
+<hr>
+<p>✅ 本总结系统梳理了CNN特征可视化的原理、现象与意义，为理解深度学习表征机制及后续应用（如风格迁移、可解释AI）奠定坚实基础。</p>
+<p>‍</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/06%20%E7%A5%9E%E7%BB%8F%E9%A3%8E%E6%A0%BC%E8%BF%81%E7%A7%BB/" rel="prev" title="06 神经风格迁移">
+                  <i class="fa fa-angle-left"></i> 06 神经风格迁移
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/08%20%E4%BB%A3%E4%BB%B7%E5%87%BD%E6%95%B0%EF%BC%88Cost%20function%EF%BC%89/" rel="next" title="08 代价函数（Cost function）">
+                  08 代价函数（Cost function） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Blum</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">227k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:45</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

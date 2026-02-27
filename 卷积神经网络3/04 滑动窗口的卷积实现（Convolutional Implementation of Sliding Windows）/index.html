@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/04%20%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E5%8D%B7%E7%A7%AF%E5%AE%9E%E7%8E%B0%EF%BC%88Convolutional%20Implementation%20of%20Sliding%20Windows%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/04%20%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E5%8D%B7%E7%A7%AF%E5%AE%9E%E7%8E%B0%EF%BC%88Convolutional%20Implementation%20of%20Sliding%20Windows%EF%BC%89/","path":"卷积神经网络3/04 滑动窗口的卷积实现（Convolutional Implementation of Sliding Windows）/","title":"04 滑动窗口的卷积实现（Convolutional Implementation of Sliding Windows）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>04 滑动窗口的卷积实现（Convolutional Implementation of Sliding Windows） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/04%20%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E5%8D%B7%E7%A7%AF%E5%AE%9E%E7%8E%B0%EF%BC%88Convolutional%20Implementation%20of%20Sliding%20Windows%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">205</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#04-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E5%8D%B7%E7%A7%AF%E5%AE%9E%E7%8E%B0%EF%BC%88Convolutional-Implementation-of-Sliding-Windows%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">04 滑动窗口的卷积实现（Convolutional Implementation of Sliding Windows）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%83%8C%E6%99%AF%EF%BC%9A%E4%BC%A0%E7%BB%9F%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E6%96%B9%E6%B3%95%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">一、背景：传统滑动窗口方法的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9%EF%BC%9A"><span class="nav-number">1.1.1.</span> <span class="nav-text">缺点：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%EF%BC%9A%E5%B0%86%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%8D%B7%E7%A7%AF%E5%B1%82"><span class="nav-number">1.2.</span> <span class="nav-text">二、核心思想：将全连接层转换为卷积层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%BB%A5%E7%A4%BA%E4%BE%8B%E7%BD%91%E7%BB%9C%E4%B8%BA%E4%BE%8B%EF%BC%89%EF%BC%9A"><span class="nav-number">1.2.1.</span> <span class="nav-text">转换过程详解（以示例网络为例）：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%9C%85-%E8%BD%AC%E6%8D%A2%E6%AD%A5%E9%AA%A4%EF%BC%9A"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">✅ 转换步骤：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E5%8D%B7%E7%A7%AF%E5%AE%9E%E7%8E%B0%EF%BC%88%E9%AB%98%E6%95%88%E7%89%88%E6%9C%AC%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">三、滑动窗口的卷积实现（高效版本）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF%E8%AE%BE%E5%AE%9A%EF%BC%9A"><span class="nav-number">1.3.1.</span> <span class="nav-text">场景设定：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="nav-number">1.3.2.</span> <span class="nav-text">传统方法：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="nav-number">1.3.3.</span> <span class="nav-text">卷积实现方法：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E8%A7%A3%E9%87%8A%EF%BC%9A"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">输出解释：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%B8%80%E8%88%AC%E5%8C%96%E5%85%AC%E5%BC%8F%E6%8E%A8%E5%AF%BC"><span class="nav-number">1.4.</span> <span class="nav-text">四、一般化公式推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B%E6%80%BB%E7%BB%93"><span class="nav-number">1.5.</span> <span class="nav-text">五、算法流程总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE%E4%B8%8E%E5%BB%B6%E4%BC%B8"><span class="nav-number">1.6.</span> <span class="nav-text">六、参考文献与延伸</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%85%B3%E9%94%AE%E5%85%AC%E5%BC%8F%E6%B1%87%E6%80%BB"><span class="nav-number">1.7.</span> <span class="nav-text">七、关键公式汇总</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Blum"
+      src="/blog/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Blum</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">205</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/11%20%E4%B8%80%E7%BB%B4%E5%88%B0%E4%B8%89%E7%BB%B4%E6%8E%A8%E5%B9%BF%EF%BC%881D%20and%203D%20generalizations%20of%20models%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-02-08</time>
+        <br>
+      11 一维到三维推广（1D and 3D generalizations of models）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/06%20%E4%B8%89%E7%BB%B4%E5%8D%B7%E7%A7%AF%EF%BC%88Convolutions%20over%20Volumes%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-18</time>
+        <br>
+      06 三维卷积（Convolutions over Volumes）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/25%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%90%91%E9%87%8F%E5%8C%96%E5%AE%9E%E7%8E%B0%EF%BC%88Vectorized%20Implementation%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-17</time>
+        <br>
+      25 神经网络中的向量化实现（Vectorized Implementation）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/23%20%E8%AE%A1%E7%AE%97%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E8%BE%93%E5%87%BA/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-17</time>
+        <br>
+      23 计算神经网络的输出
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/05%20%E5%B8%A6%E6%AD%A5%E9%95%BF%E7%9A%84%E5%8D%B7%E7%A7%AF%EF%BC%88Strided%20Convolutions%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-18</time>
+        <br>
+      05 带步长的卷积（Strided Convolutions）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/04%20%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E5%8D%B7%E7%A7%AF%E5%AE%9E%E7%8E%B0%EF%BC%88Convolutional%20Implementation%20of%20Sliding%20Windows%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Blum">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="04 滑动窗口的卷积实现（Convolutional Implementation of Sliding Windows） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          04 滑动窗口的卷积实现（Convolutional Implementation of Sliding Windows）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-06 16:09:41" itemprop="dateCreated datePublished" datetime="2026-02-06T16:09:41+00:00">2026-02-06</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="04-滑动窗口的卷积实现（Convolutional-Implementation-of-Sliding-Windows）"><a href="#04-滑动窗口的卷积实现（Convolutional-Implementation-of-Sliding-Windows）" class="headerlink" title="04 滑动窗口的卷积实现（Convolutional Implementation of Sliding Windows）"></a>04 滑动窗口的卷积实现（Convolutional Implementation of Sliding Windows）</h1><h2 id="一、背景：传统滑动窗口方法的问题"><a href="#一、背景：传统滑动窗口方法的问题" class="headerlink" title="一、背景：传统滑动窗口方法的问题"></a>一、背景：传统滑动窗口方法的问题</h2><p>在目标检测任务中，传统滑动窗口方法的做法是：</p>
+<ul>
+<li>将输入图像划分为多个固定大小（如 $14 \times 14$）的子区域；</li>
+<li>对每个子区域单独送入一个训练好的分类 CNN；</li>
+<li>输出该区域是否包含目标（如行人、汽车等）及其类别概率。</li>
+</ul>
+<h3 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h3><ul>
+<li><strong>计算冗余严重</strong>：相邻窗口之间存在大量重叠区域，导致重复前向传播；</li>
+<li><strong>效率低下</strong>：对每个窗口独立运行整个网络，时间复杂度高。</li>
+</ul>
+<hr>
+<h2 id="二、核心思想：将全连接层转换为卷积层"><a href="#二、核心思想：将全连接层转换为卷积层" class="headerlink" title="二、核心思想：将全连接层转换为卷积层"></a>二、核心思想：将全连接层转换为卷积层</h2><p>为了提升效率，关键在于 <strong>将全连接层（Fully Connected Layer）替换为卷积层（Convolutional Layer）</strong> ，从而使得整个网络变为“全卷积网络”（Fully Convolutional Network, FCN），支持任意尺寸输入并一次性输出所有窗口的预测结果。</p>
+<h3 id="转换过程详解（以示例网络为例）："><a href="#转换过程详解（以示例网络为例）：" class="headerlink" title="转换过程详解（以示例网络为例）："></a>转换过程详解（以示例网络为例）：</h3><p>原始网络结构（用于 $14 \times 14 \times 3$ 输入）：</p>
+<ol>
+<li>卷积层：$5 \times 5$ 卷积核 ×16 → 输出 $10 \times 10 \times 16$</li>
+<li>最大池化：$2 \times 2$，步长 2 → 输出 $5 \times 5 \times 16$</li>
+<li>全连接层：400 个神经元</li>
+<li>全连接层 + Softmax：输出 4 类概率（如行人、汽车、摩托车、背景）</li>
+</ol>
+<h4 id="✅-转换步骤："><a href="#✅-转换步骤：" class="headerlink" title="✅ 转换步骤："></a>✅ 转换步骤：</h4><ol>
+<li><p><strong>第一全连接层 → 卷积层</strong></p>
+<ul>
+<li>原输入：$5 \times 5 \times 16$</li>
+<li>使用 <strong>$5 \times 5 \times 16$</strong> <strong>的卷积核</strong>，共 400 个</li>
+<li>输出：$1 \times 1 \times 400$</li>
+<li>数学上等价于全连接：每个输出单元 &#x3D; $\sum_{i,j,k} w_{ijk}^{(l)} \cdot a_{ijk}^{(l-1)} + b^{(l)}$</li>
+</ul>
+</li>
+<li><p><strong>第二全连接层 →</strong>  <strong>$1 \times 1$</strong> <strong>卷积层</strong></p>
+<ul>
+<li>输入：$1 \times 1 \times 400$</li>
+<li>使用 <strong>$1 \times 1 \times 400$</strong> <strong>卷积核</strong>，共 400 个</li>
+<li>输出：$1 \times 1 \times 400$</li>
+</ul>
+</li>
+<li><p><strong>Softmax 层 →</strong>  <strong>$1 \times 1$</strong> <strong>卷积 + Softmax</strong></p>
+<ul>
+<li>使用 4 个 $1 \times 1 \times 400$ 卷积核</li>
+<li>输出：$1 \times 1 \times 4$，即 4 个类别的概率分布</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>📌 <strong>关键结论</strong>：全连接层本质上是空间维度为 $1 \times 1$ 的卷积操作。将其显式写成卷积形式后，网络可接受任意尺寸输入。</p>
+</blockquote>
+<hr>
+<h2 id="三、滑动窗口的卷积实现（高效版本）"><a href="#三、滑动窗口的卷积实现（高效版本）" class="headerlink" title="三、滑动窗口的卷积实现（高效版本）"></a>三、滑动窗口的卷积实现（高效版本）</h2><h3 id="场景设定："><a href="#场景设定：" class="headerlink" title="场景设定："></a>场景设定：</h3><ul>
+<li>原训练图像尺寸：$14 \times 14 \times 3$</li>
+<li>测试图像尺寸：$16 \times 16 \times 3$</li>
+<li>滑动窗口步长：2 像素 → 共有 $2 \times 2 &#x3D; 4$ 个窗口位置</li>
+</ul>
+<h3 id="传统方法："><a href="#传统方法：" class="headerlink" title="传统方法："></a>传统方法：</h3><ul>
+<li>分别裁剪 4 个 $14 \times 14$ 区域，各自前向传播 → 4 次独立计算</li>
+</ul>
+<h3 id="卷积实现方法："><a href="#卷积实现方法：" class="headerlink" title="卷积实现方法："></a>卷积实现方法：</h3><ul>
+<li><strong>将整张</strong> <strong>$16 \times 16 \times 3$</strong> <strong>图像一次性输入全卷积网络</strong></li>
+<li>网络自动在内部完成“滑动窗口”的等效计算</li>
+<li>输出为 $2 \times 2 \times 4$ 的张量，每个 $(i,j)$ 位置对应原图中第 $(i,j)$ 个窗口的 4 类概率</li>
+</ul>
+<h4 id="输出解释："><a href="#输出解释：" class="headerlink" title="输出解释："></a>输出解释：</h4><p>设输出张量为 $\mathbf{Y} \in \mathbb{R}^{2 \times 2 \times 4}$，则：</p>
+<ul>
+<li>$\mathbf{Y}[0,0,:]$：左上角 $14 \times 14$ 区域的预测</li>
+<li>$\mathbf{Y}[0,1,:]$：右上角区域预测</li>
+<li>$\mathbf{Y}[1,0,:]$：左下角区域预测</li>
+<li>$\mathbf{Y}[1,1,:]$：右下角区域预测</li>
+</ul>
+<blockquote>
+<p>✅ <strong>优势</strong>：共享卷积特征计算，避免重复；只需一次前向传播即可获得所有窗口结果。</p>
+</blockquote>
+<hr>
+<h2 id="四、一般化公式推导"><a href="#四、一般化公式推导" class="headerlink" title="四、一般化公式推导"></a>四、一般化公式推导</h2><p>设输入图像尺寸为 $H \times W \times C$，滑动窗口大小为 $h \times w$，步长为 $s$，则：</p>
+<ul>
+<li><p>滑动窗口数量（输出网格大小）为：</p>
+<p>$$<br>H_{\text{out}} &#x3D; \left\lfloor \frac{H - h}{s} \right\rfloor + 1,\quad<br>W_{\text{out}} &#x3D; \left\lfloor \frac{W - w}{s} \right\rfloor + 1<br>$$</p>
+</li>
+</ul>
+<p>当使用全卷积网络时，若网络最后的卷积层感受野等于 $h \times w$，且总下采样倍率为 $r$（由池化和卷积步长决定），则：</p>
+<ul>
+<li>输入尺寸 $H \times W$ → 输出尺寸 $\frac{H}{r} \times \frac{W}{r}$</li>
+<li>若 $r &#x3D; s$ 且 $h &#x3D; r \cdot k$（$k$ 为某整数），则输出网格自然对应滑动窗口位置</li>
+</ul>
+<blockquote>
+<p>💡 在示例中，最大池化步长为 2，总下采样率 $r&#x3D;2$，故 $16 \to 8$，但因窗口为 $14$，实际有效输出为 $2 \times 2$（因 $16 - 14 &#x3D; 2$，步长 2 → 2 个位置）。</p>
+</blockquote>
+<hr>
+<h2 id="五、算法流程总结"><a href="#五、算法流程总结" class="headerlink" title="五、算法流程总结"></a>五、算法流程总结</h2><ol>
+<li><p><strong>训练阶段</strong>：</p>
+<ul>
+<li>使用固定尺寸图像（如 $14 \times 14$）训练 CNN 分类器</li>
+<li>将全连接层替换为等效卷积层，构建全卷积网络（FCN）</li>
+</ul>
+</li>
+<li><p><strong>推理阶段</strong>：</p>
+<ul>
+<li>输入任意尺寸图像（如 $28 \times 28$）</li>
+<li>网络输出一个 <strong>密集预测图</strong>（dense prediction map），如 $8 \times 8 \times 4$</li>
+<li>每个空间位置 $(i,j)$ 对应原图中以 $(i \cdot s, j \cdot s)$ 为中心的窗口的分类结果</li>
+</ul>
+</li>
+<li><p><strong>优点</strong>：</p>
+<ul>
+<li>计算高效（共享特征）</li>
+<li>支持任意输入尺寸</li>
+<li>适用于密集预测任务（如目标检测、语义分割）</li>
+</ul>
+</li>
+<li><p><strong>局限性</strong>：</p>
+<ul>
+<li>边界框位置由滑动窗口网格决定，<strong>定位精度受限于步长</strong> <strong>$s$</strong></li>
+<li>无法生成任意形状或尺度的边界框（需后续引入如 <strong>Region Proposal</strong> 或 <strong>YOLO&#x2F;SSD</strong> 等方法改进）</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="六、参考文献与延伸"><a href="#六、参考文献与延伸" class="headerlink" title="六、参考文献与延伸"></a>六、参考文献与延伸</h2><ul>
+<li><p><strong>OverFeat (2013)</strong> ：首次系统提出用全卷积网络实现滑动窗口检测</p>
+<blockquote>
+<p>Sermanet, P., et al. <em>OverFeat: Integrated Recognition, Localization and Detection using Convolutional Networks.</em>  arXiv:1312.6229</p>
+</blockquote>
+</li>
+<li><p><strong>后续发展</strong>：</p>
+<ul>
+<li>R-CNN 系列引入 Region Proposal 解决定位不准问题</li>
+<li>YOLO、SSD 直接回归边界框，摆脱滑动窗口范式</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="七、关键公式汇总"><a href="#七、关键公式汇总" class="headerlink" title="七、关键公式汇总"></a>七、关键公式汇总</h2><ol>
+<li><p><strong>卷积输出尺寸（无填充）</strong> ：</p>
+<p>$$<br>H_{\text{out}} &#x3D; \left\lfloor \frac{H_{\text{in}} - K}{S} \right\rfloor + 1<br>$$</p>
+<p>其中 $K$ 为卷积核大小，$S$ 为步长。</p>
+</li>
+<li><p><strong>全连接 → 卷积等价性</strong>：</p>
+<p>$$<br>z^{(l)} &#x3D; \mathbf{W}^{(l)} \mathbf{a}^{(l-1)} + \mathbf{b}^{(l)}<br>\quad \Leftrightarrow \quad<br>Z^{(l)} &#x3D; \text{Conv}\left(A^{(l-1)},\ \mathcal{K}^{(l)}\right) + b^{(l)}<br>$$</p>
+<p>当 $\mathcal{K}^{(l)}$ 的空间尺寸等于 $A^{(l-1)}$ 的空间尺寸时，输出为 $1 \times 1$。</p>
+</li>
+<li><p><strong>滑动窗口数量</strong>：</p>
+<p>$$<br>N_{\text{windows}} &#x3D; \left( \left\lfloor \frac{W - w}{s} \right\rfloor + 1 \right) \times \left( \left\lfloor \frac{H - h}{s} \right\rfloor + 1 \right)<br>$$</p>
+</li>
+</ol>
+<hr>
+<p>通过本节学习，你应掌握：<strong>如何将分类 CNN 改造为支持高效滑动窗口检测的全卷积网络</strong>，这是现代目标检测（如 Faster R-CNN 的 RPN、YOLO 的早期版本）的重要基础。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/03%20%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%88Object%20Detection%EF%BC%89/" rel="prev" title="03 目标检测（Object Detection）">
+                  <i class="fa fa-angle-left"></i> 03 目标检测（Object Detection）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/05%20Bounding%20Box%E9%A2%84%E6%B5%8B%EF%BC%88YOLO%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%EF%BC%89/" rel="next" title="05 Bounding Box预测（YOLO算法基础）">
+                  05 Bounding Box预测（YOLO算法基础） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Blum</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">227k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:45</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

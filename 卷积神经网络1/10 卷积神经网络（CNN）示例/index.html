@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/10%20%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88CNN%EF%BC%89%E7%A4%BA%E4%BE%8B/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/10%20%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88CNN%EF%BC%89%E7%A4%BA%E4%BE%8B/","path":"卷积神经网络1/10 卷积神经网络（CNN）示例/","title":"10 卷积神经网络（CNN）示例"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>10 卷积神经网络（CNN）示例 | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/10%20%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88CNN%EF%BC%89%E7%A4%BA%E4%BE%8B/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">205</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#10-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88CNN%EF%BC%89%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.</span> <span class="nav-text">10 卷积神经网络（CNN）示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88CNN%EF%BC%89%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93-%E2%80%94%E2%80%94-%E5%90%B4%E6%81%A9%E8%BE%BE%E3%80%8A%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%8B%E7%B3%BB%E5%88%97%E8%AF%BE%E7%A8%8B%E7%B2%BE%E8%AE%B2"><span class="nav-number">2.</span> <span class="nav-text">卷积神经网络（CNN）课程总结 —— 吴恩达《深度学习》系列课程精讲</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8E%AF-%E8%AF%BE%E7%A8%8B%E7%9B%AE%E6%A0%87"><span class="nav-number">2.1.</span> <span class="nav-text">🎯 课程目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%A7-%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%A6%82%E8%A7%88"><span class="nav-number">2.2.</span> <span class="nav-text">🔧 网络结构概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%B1-%E5%9F%BA%E6%9C%AC%E6%9E%84%E9%80%A0%E6%A8%A1%E5%9D%97%E8%A7%A3%E6%9E%90"><span class="nav-number">2.3.</span> <span class="nav-text">🧱 基本构造模块解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%BE%93%E5%85%A5%E5%B1%82"><span class="nav-number">2.3.1.</span> <span class="nav-text">1. 输入层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%8D%B7%E7%A7%AF%E5%B1%82%EF%BC%88CONV1%EF%BC%89"><span class="nav-number">2.3.2.</span> <span class="nav-text">2. 卷积层（CONV1）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%EF%BC%9A"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">参数设置：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E5%B0%BA%E5%AF%B8%E8%AE%A1%E7%AE%97%EF%BC%9A"><span class="nav-number">2.3.2.2.</span> <span class="nav-text">输出尺寸计算：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E5%80%BC%E5%A4%A7%E5%B0%8F%EF%BC%9A"><span class="nav-number">2.3.2.3.</span> <span class="nav-text">激活值大小：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E6%95%B0%E9%87%8F%E8%AE%A1%E7%AE%97%EF%BC%9A"><span class="nav-number">2.3.2.4.</span> <span class="nav-text">参数数量计算：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%B1%A0%E5%8C%96%E5%B1%82%EF%BC%88POOL1%EF%BC%89"><span class="nav-number">2.3.3.</span> <span class="nav-text">3. 池化层（POOL1）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E5%B0%BA%E5%AF%B8%EF%BC%9A"><span class="nav-number">2.3.3.1.</span> <span class="nav-text">输出尺寸：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E5%80%BC%E5%A4%A7%E5%B0%8F%EF%BC%9A-1"><span class="nav-number">2.3.3.2.</span> <span class="nav-text">激活值大小：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E7%AC%AC%E4%BA%8C%E5%8D%B7%E7%A7%AF%E5%B1%82%EF%BC%88CONV2%EF%BC%89"><span class="nav-number">2.3.4.</span> <span class="nav-text">4. 第二卷积层（CONV2）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E5%B0%BA%E5%AF%B8%EF%BC%9A-1"><span class="nav-number">2.3.4.1.</span> <span class="nav-text">输出尺寸：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E5%80%BC%E5%A4%A7%E5%B0%8F%EF%BC%9A-2"><span class="nav-number">2.3.4.2.</span> <span class="nav-text">激活值大小：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E6%95%B0%E9%87%8F%EF%BC%9A"><span class="nav-number">2.3.4.3.</span> <span class="nav-text">参数数量：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%AC%AC%E4%BA%8C%E6%B1%A0%E5%8C%96%E5%B1%82%EF%BC%88POOL2%EF%BC%89"><span class="nav-number">2.3.5.</span> <span class="nav-text">5. 第二池化层（POOL2）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E5%B0%BA%E5%AF%B8%EF%BC%9A-2"><span class="nav-number">2.3.5.1.</span> <span class="nav-text">输出尺寸：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E5%80%BC%E5%A4%A7%E5%B0%8F%EF%BC%9A-3"><span class="nav-number">2.3.5.2.</span> <span class="nav-text">激活值大小：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82%EF%BC%88FC3%EF%BC%89"><span class="nav-number">2.3.6.</span> <span class="nav-text">6. 全连接层（FC3）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9D%83%E9%87%8D%E7%9F%A9%E9%98%B5%E7%BB%B4%E5%BA%A6%EF%BC%9A"><span class="nav-number">2.3.6.1.</span> <span class="nav-text">权重矩阵维度：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E6%95%B0%E9%87%8F%EF%BC%9A-1"><span class="nav-number">2.3.6.2.</span> <span class="nav-text">参数数量：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82%EF%BC%88FC4%EF%BC%89"><span class="nav-number">2.3.7.</span> <span class="nav-text">7. 全连接层（FC4）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E6%95%B0%E9%87%8F%EF%BC%9A-2"><span class="nav-number">2.3.7.1.</span> <span class="nav-text">参数数量：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-Softmax-%E5%B1%82"><span class="nav-number">2.3.8.</span> <span class="nav-text">8. Softmax 层</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8A-%E5%8F%82%E6%95%B0%E6%80%BB%E7%BB%93%EF%BC%88%E4%BF%AE%E6%AD%A3%E7%89%88%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">📊 参数总结（修正版）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E6%8F%90%E7%82%BC"><span class="nav-number">2.5.</span> <span class="nav-text">✅ 核心知识点提炼</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%8D%B7%E7%A7%AF%E5%B1%82%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F"><span class="nav-number">2.5.1.</span> <span class="nav-text">1. 卷积层参数计算公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%B1%A0%E5%8C%96%E5%B1%82%E7%89%B9%E6%80%A7"><span class="nav-number">2.5.2.</span> <span class="nav-text">2. 池化层特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82%E5%8F%82%E6%95%B0"><span class="nav-number">2.5.3.</span> <span class="nav-text">3. 全连接层参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%BF%80%E6%B4%BB%E5%80%BC%E5%A4%A7%E5%B0%8F%E5%8F%98%E5%8C%96%E8%B6%8B%E5%8A%BF"><span class="nav-number">2.5.4.</span> <span class="nav-text">4. 激活值大小变化趋势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%BD%91%E7%BB%9C%E5%B1%82%E7%BA%A7%E5%88%92%E5%88%86%E6%83%AF%E4%BE%8B"><span class="nav-number">2.5.5.</span> <span class="nav-text">5. 网络层级划分惯例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E5%85%B8%E5%9E%8B-CNN-%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.5.6.</span> <span class="nav-text">6. 典型 CNN 架构模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%92%A1-%E8%AE%BE%E8%AE%A1%E5%BB%BA%E8%AE%AE%EF%BC%88%E5%90%B4%E6%81%A9%E8%BE%BE%E7%BB%8F%E9%AA%8C%EF%BC%89"><span class="nav-number">2.6.</span> <span class="nav-text">💡 设计建议（吴恩达经验）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%A0-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8%E5%8D%B7%E7%A7%AF%EF%BC%9F"><span class="nav-number">2.7.</span> <span class="nav-text">🧠 为什么使用卷积？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E7%9A%84%E4%BC%98%E5%8A%BF%EF%BC%9A"><span class="nav-number">2.7.1.</span> <span class="nav-text">卷积的优势：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%98-%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE"><span class="nav-number">2.8.</span> <span class="nav-text">📘 学习建议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E7%BB%83%E4%B9%A0%EF%BC%9A"><span class="nav-number">2.8.1.</span> <span class="nav-text">推荐练习：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%A9-%E9%99%84%E5%BD%95%EF%BC%9A%E5%AE%8C%E6%95%B4%E5%85%AC%E5%BC%8F%E6%B1%87%E6%80%BB%EF%BC%88LaTeX-%E5%85%BC%E5%AE%B9%EF%BC%89"><span class="nav-number">2.9.</span> <span class="nav-text">🧩 附录：完整公式汇总（LaTeX 兼容）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E6%80%BB%E7%BB%93"><span class="nav-number">2.10.</span> <span class="nav-text">✅ 总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Blum"
+      src="/blog/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Blum</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">205</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/11%20%E4%B8%80%E7%BB%B4%E5%88%B0%E4%B8%89%E7%BB%B4%E6%8E%A8%E5%B9%BF%EF%BC%881D%20and%203D%20generalizations%20of%20models%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-02-08</time>
+        <br>
+      11 一维到三维推广（1D and 3D generalizations of models）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/06%20%E4%B8%89%E7%BB%B4%E5%8D%B7%E7%A7%AF%EF%BC%88Convolutions%20over%20Volumes%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-18</time>
+        <br>
+      06 三维卷积（Convolutions over Volumes）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/04%20%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E5%8D%B7%E7%A7%AF%E5%AE%9E%E7%8E%B0%EF%BC%88Convolutional%20Implementation%20of%20Sliding%20Windows%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-02-06</time>
+        <br>
+      04 滑动窗口的卷积实现（Convolutional Implementation of Sliding Windows）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/05%20%E8%B0%B7%E6%AD%8C%20Inception%20%E7%BD%91%E7%BB%9C%E7%AE%80%E4%BB%8B%EF%BC%88Inception%20network%20motivation%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-26</time>
+        <br>
+      05 谷歌 Inception 网络简介（Inception network motivation）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/08%20%E7%AE%80%E5%8D%95%E5%8D%B7%E7%A7%AF%E7%BD%91%E7%BB%9C%E7%A4%BA%E4%BE%8B/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-18</time>
+        <br>
+      08 简单卷积网络示例
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/10%20%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88CNN%EF%BC%89%E7%A4%BA%E4%BE%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Blum">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="10 卷积神经网络（CNN）示例 | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          10 卷积神经网络（CNN）示例
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-18 12:59:20" itemprop="dateCreated datePublished" datetime="2026-01-18T12:59:20+00:00">2026-01-18</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="10-卷积神经网络（CNN）示例"><a href="#10-卷积神经网络（CNN）示例" class="headerlink" title="10 卷积神经网络（CNN）示例"></a>10 卷积神经网络（CNN）示例</h1><h1 id="卷积神经网络（CNN）课程总结-——-吴恩达《深度学习》系列课程精讲"><a href="#卷积神经网络（CNN）课程总结-——-吴恩达《深度学习》系列课程精讲" class="headerlink" title="卷积神经网络（CNN）课程总结 —— 吴恩达《深度学习》系列课程精讲"></a>卷积神经网络（CNN）课程总结 —— 吴恩达《深度学习》系列课程精讲</h1><hr>
+<h2 id="🎯-课程目标"><a href="#🎯-课程目标" class="headerlink" title="🎯 课程目标"></a>🎯 课程目标</h2><p>本节课程旨在通过一个<strong>典型卷积神经网络结构示例</strong>，帮助理解 CNN 的基本构建模块、各层的参数计算方法以及整体网络设计逻辑。该模型受经典 LeNet-5 启发，适用于手写数字识别任务（如 MNIST 数据集），是计算机视觉中非常典型的架构。</p>
+<hr>
+<h2 id="🔧-网络结构概览"><a href="#🔧-网络结构概览" class="headerlink" title="🔧 网络结构概览"></a>🔧 网络结构概览</h2><table>
+<thead>
+<tr>
+<th>层名</th>
+<th>类型</th>
+<th>超参数</th>
+<th>输出形状</th>
+<th>激活值大小</th>
+<th>参数数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Input</td>
+<td>输入</td>
+<td>-</td>
+<td>(32,32,3)</td>
+<td>3072</td>
+<td>0</td>
+</tr>
+<tr>
+<td>CONV1</td>
+<td>卷积</td>
+<td>$f&#x3D;5, s&#x3D;1, p&#x3D;0$, 过滤器数 &#x3D; 6</td>
+<td>(28,28,6)</td>
+<td>6,272</td>
+<td>208</td>
+</tr>
+<tr>
+<td>POOL1</td>
+<td>最大池化</td>
+<td>$f&#x3D;2, s&#x3D;2$</td>
+<td>(14,14,6)</td>
+<td>1,568</td>
+<td>0</td>
+</tr>
+<tr>
+<td>CONV2</td>
+<td>卷积</td>
+<td>$f&#x3D;5, s&#x3D;1, p&#x3D;0$, 过滤器数 &#x3D; 16</td>
+<td>(10,10,16)</td>
+<td>1,600</td>
+<td>416</td>
+</tr>
+<tr>
+<td>POOL2</td>
+<td>最大池化</td>
+<td>$f&#x3D;2, s&#x3D;2$</td>
+<td>(5,5,16)</td>
+<td>400</td>
+<td>0</td>
+</tr>
+<tr>
+<td>FC3</td>
+<td>全连接</td>
+<td>120 个神经元</td>
+<td>(120,1)</td>
+<td>120</td>
+<td>48,001</td>
+</tr>
+<tr>
+<td>FC4</td>
+<td>全连接</td>
+<td>84 个神经元</td>
+<td>(84,1)</td>
+<td>84</td>
+<td>10,081</td>
+</tr>
+<tr>
+<td>Softmax</td>
+<td>分类输出</td>
+<td>-</td>
+<td>(10,1)</td>
+<td>10</td>
+<td>841</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>✅ <strong>注</strong>：激活值大小 &#x3D; 所有维度乘积（即元素总数）</p>
+</blockquote>
+<hr>
+<h2 id="🧱-基本构造模块解析"><a href="#🧱-基本构造模块解析" class="headerlink" title="🧱 基本构造模块解析"></a>🧱 基本构造模块解析</h2><h3 id="1-输入层"><a href="#1-输入层" class="headerlink" title="1. 输入层"></a>1. <strong>输入层</strong></h3><ul>
+<li><p>输入图像尺寸：$32 \times 32 \times 3$</p>
+</li>
+<li><p>表示一张 RGB 图像</p>
+</li>
+<li><p>总激活值大小：</p>
+<p>$$<br>32 \times 32 \times 3 &#x3D; 3072<br>$$</p>
+</li>
+</ul>
+<hr>
+<h3 id="2-卷积层（CONV1）"><a href="#2-卷积层（CONV1）" class="headerlink" title="2. 卷积层（CONV1）"></a>2. <strong>卷积层（CONV1）</strong></h3><h4 id="参数设置："><a href="#参数设置：" class="headerlink" title="参数设置："></a>参数设置：</h4><ul>
+<li>过滤器大小：$f &#x3D; 5$</li>
+<li>步幅：$s &#x3D; 1$</li>
+<li>Padding：$p &#x3D; 0$</li>
+<li>过滤器数量：$C_{\text{out}} &#x3D; 6$</li>
+</ul>
+<h4 id="输出尺寸计算："><a href="#输出尺寸计算：" class="headerlink" title="输出尺寸计算："></a>输出尺寸计算：</h4><p>$$<br>H’ &#x3D; \frac{H - f}{s} + 1 &#x3D; \frac{32 - 5}{1} + 1 &#x3D; 28 \<br>W’ &#x3D; \frac{W - f}{s} + 1 &#x3D; \frac{32 - 5}{1} + 1 &#x3D; 28 \<br>C’ &#x3D; 6<br>$$</p>
+<p>所以输出为：$(28, 28, 6)$</p>
+<h4 id="激活值大小："><a href="#激活值大小：" class="headerlink" title="激活值大小："></a>激活值大小：</h4><p>$$<br>28 \times 28 \times 6 &#x3D; 6,!272<br>$$</p>
+<h4 id="参数数量计算："><a href="#参数数量计算：" class="headerlink" title="参数数量计算："></a>参数数量计算：</h4><p>每个过滤器是 $5 \times 5 \times 3$，共 6 个过滤器，加上偏置项：</p>
+<p>$$<br>\text{参数数} &#x3D; (5 \times 5 \times 3) \times 6 + 6 &#x3D; 450 + 6 &#x3D; \boxed{456}<br>$$</p>
+<p>⚠️ <strong>但原文表中写的是 208？</strong><br>→ 实际上这里可能存在笔误或数据错误。我们重新核对：</p>
+<p>如果原题说“过滤器个数为6”，且输入通道为3，则单个过滤器参数为 $5\times5\times3 &#x3D; 75$，6个过滤器共 $75 \times 6 &#x3D; 450$，加偏置 $6$，总参数应为 $456$。</p>
+<p>但表格中写的是 <strong>208</strong>，这可能对应的是 <strong>6 个过滤器，但输入通道为 1（灰度图）</strong>  的情况：</p>
+<p>$$<br>(5 \times 5 \times 1) \times 6 + 6 &#x3D; 150 + 6 &#x3D; 156<br>$$</p>
+<p>也不对。</p>
+<p>再看：若输入是 $32\times32\times3$，而过滤器是 $5\times5\times3$，则每过滤器 75 个权重，6 个 → $6 \times 75 &#x3D; 450$，+6 偏置 &#x3D; <strong>456</strong></p>
+<p>✅ <strong>结论：表格中的 “208” 很可能是错误的！正确值应为 456。</strong></p>
+<p>不过为了与原始资料一致，我们先保留其标注方式，并指出问题。</p>
+<blockquote>
+<p>❗ 注意：在实际教学中，有时会简化数值以方便演示。但严格来说，此处参数应为 456。</p>
+</blockquote>
+<hr>
+<h3 id="3-池化层（POOL1）"><a href="#3-池化层（POOL1）" class="headerlink" title="3. 池化层（POOL1）"></a>3. <strong>池化层（POOL1）</strong></h3><ul>
+<li>使用最大池化（Max Pooling）</li>
+<li>超参数：$f&#x3D;2, s&#x3D;2$</li>
+<li>不使用 padding</li>
+<li>无学习参数（仅超参数）</li>
+</ul>
+<h4 id="输出尺寸："><a href="#输出尺寸：" class="headerlink" title="输出尺寸："></a>输出尺寸：</h4><p>$$<br>H’ &#x3D; \frac{28 - 2}{2} + 1 &#x3D; 14 \<br>W’ &#x3D; \frac{28 - 2}{2} + 1 &#x3D; 14 \<br>C’ &#x3D; 6<br>$$</p>
+<p>输出：$(14, 14, 6)$</p>
+<h4 id="激活值大小：-1"><a href="#激活值大小：-1" class="headerlink" title="激活值大小："></a>激活值大小：</h4><p>$$<br>14 \times 14 \times 6 &#x3D; 1,!176<br>$$</p>
+<p>❌ 但表中写的是 1,568？<br>→ 14×14×6 &#x3D; <strong>1176</strong>，不是 1568！</p>
+<p>再次发现矛盾！</p>
+<p>检查是否是之前的错误延续？</p>
+<p>再看：CONV1 输出是 (28,28,6)，那 POOL1 是对它做池化：</p>
+<p>$$<br>\frac{28 - 2}{2} + 1 &#x3D; 14 \quad \Rightarrow \quad (14,14,6)<br>\Rightarrow 14 \times 14 \times 6 &#x3D; 1,!176<br>$$</p>
+<p>但表中写的是 <strong>1,568</strong>，这是 $14 \times 14 \times 8 &#x3D; 1568$，说明可能是通道数错标了？</p>
+<p>或者——是不是 CONV1 的输出是 8 个通道？但文中说是 6 个。</p>
+<p>👉 <strong>推测</strong>：表格中存在多处笔误，包括：</p>
+<table>
+<thead>
+<tr>
+<th>错误点</th>
+<th>应为</th>
+<th>实际写成</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CONV1 参数</td>
+<td>456</td>
+<td>208</td>
+</tr>
+<tr>
+<td>POOL1 激活值</td>
+<td>1176</td>
+<td>1568</td>
+</tr>
+<tr>
+<td>CONV2 参数</td>
+<td>416</td>
+<td>416 ✅（合理）</td>
+</tr>
+</tbody></table>
+<p>但继续分析时仍按逻辑推导为准。</p>
+<hr>
+<h3 id="4-第二卷积层（CONV2）"><a href="#4-第二卷积层（CONV2）" class="headerlink" title="4. 第二卷积层（CONV2）"></a>4. <strong>第二卷积层（CONV2）</strong></h3><ul>
+<li>过滤器大小：$f&#x3D;5$</li>
+<li>步幅：$s&#x3D;1$</li>
+<li>Padding：0</li>
+<li>过滤器数量：16</li>
+<li>输入：$(14,14,6)$</li>
+</ul>
+<h4 id="输出尺寸：-1"><a href="#输出尺寸：-1" class="headerlink" title="输出尺寸："></a>输出尺寸：</h4><p>$$<br>H’ &#x3D; \frac{14 - 5}{1} + 1 &#x3D; 10 \<br>W’ &#x3D; \frac{14 - 5}{1} + 1 &#x3D; 10 \<br>C’ &#x3D; 16<br>$$</p>
+<p>输出：$(10,10,16)$</p>
+<h4 id="激活值大小：-2"><a href="#激活值大小：-2" class="headerlink" title="激活值大小："></a>激活值大小：</h4><p>$$<br>10 \times 10 \times 16 &#x3D; 1,!600<br>$$</p>
+<h4 id="参数数量："><a href="#参数数量：" class="headerlink" title="参数数量："></a>参数数量：</h4><p>每个过滤器：$5 \times 5 \times 6 &#x3D; 150$<br>16 个过滤器：$150 \times 16 &#x3D; 2,!400$</p>
+<ul>
+<li>偏置：16</li>
+</ul>
+<p>$$<br>\text{总参数} &#x3D; 2,!400 + 16 &#x3D; \boxed{2,!416}<br>$$</p>
+<hr>
+<h3 id="5-第二池化层（POOL2）"><a href="#5-第二池化层（POOL2）" class="headerlink" title="5. 第二池化层（POOL2）"></a>5. <strong>第二池化层（POOL2）</strong></h3><ul>
+<li>Max pooling: $f&#x3D;2, s&#x3D;2$</li>
+<li>输入：$(10,10,16)$</li>
+</ul>
+<h4 id="输出尺寸：-2"><a href="#输出尺寸：-2" class="headerlink" title="输出尺寸："></a>输出尺寸：</h4><p>$$<br>\frac{10 - 2}{2} + 1 &#x3D; 5 \quad \Rightarrow \quad (5,5,16)<br>$$</p>
+<h4 id="激活值大小：-3"><a href="#激活值大小：-3" class="headerlink" title="激活值大小："></a>激活值大小：</h4><p>$$<br>5 \times 5 \times 16 &#x3D; 400<br>$$</p>
+<hr>
+<h3 id="6-全连接层（FC3）"><a href="#6-全连接层（FC3）" class="headerlink" title="6. 全连接层（FC3）"></a>6. <strong>全连接层（FC3）</strong></h3><ul>
+<li>将 POOL2 输出展平：$5 \times 5 \times 16 &#x3D; 400$</li>
+<li>输入维度：400</li>
+<li>输出维度：120</li>
+</ul>
+<h4 id="权重矩阵维度："><a href="#权重矩阵维度：" class="headerlink" title="权重矩阵维度："></a>权重矩阵维度：</h4><p>$$<br>W \in \mathbb{R}^{120 \times 400}, \quad b \in \mathbb{R}^{120}<br>$$</p>
+<h4 id="参数数量：-1"><a href="#参数数量：-1" class="headerlink" title="参数数量："></a>参数数量：</h4><p>$$<br>120 \times 400 + 120 &#x3D; 48,!000 + 120 &#x3D; \boxed{48,!120}<br>$$</p>
+<hr>
+<h3 id="7-全连接层（FC4）"><a href="#7-全连接层（FC4）" class="headerlink" title="7. 全连接层（FC4）"></a>7. <strong>全连接层（FC4）</strong></h3><ul>
+<li>输入：120</li>
+<li>输出：84</li>
+</ul>
+<h4 id="参数数量：-2"><a href="#参数数量：-2" class="headerlink" title="参数数量："></a>参数数量：</h4><p>$$<br>84 \times 120 + 84 &#x3D; 10,!080 + 84 &#x3D; \boxed{10,!164}<br>$$</p>
+<hr>
+<h3 id="8-Softmax-层"><a href="#8-Softmax-层" class="headerlink" title="8. Softmax 层"></a>8. <strong>Softmax 层</strong></h3><ul>
+<li><p>输入：84</p>
+</li>
+<li><p>输出：10（分类数）</p>
+</li>
+<li><p>参数数量：</p>
+<p>$$<br>10 \times 84 + 10 &#x3D; 840 + 10 &#x3D; \boxed{850}<br>$$</p>
+</li>
+</ul>
+<hr>
+<h2 id="📊-参数总结（修正版）"><a href="#📊-参数总结（修正版）" class="headerlink" title="📊 参数总结（修正版）"></a>📊 参数总结（修正版）</h2><table>
+<thead>
+<tr>
+<th>层</th>
+<th>参数数（修正后）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CONV1</td>
+<td>$(5×5×3)×6 + 6 &#x3D; 456$</td>
+</tr>
+<tr>
+<td>POOL1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>CONV2</td>
+<td>$(5×5×6)×16 + 16 &#x3D; 2416$</td>
+</tr>
+<tr>
+<td>POOL2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>FC3</td>
+<td>$120×400 + 120 &#x3D; 48,120$</td>
+</tr>
+<tr>
+<td>FC4</td>
+<td>$84×120 + 84 &#x3D; 10,164$</td>
+</tr>
+<tr>
+<td>Softmax</td>
+<td>$10×84 + 10 &#x3D; 850$</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>⚠️ 原始表格中的参数数量大多偏低，可能是由于通道数或偏置计算错误。</p>
+</blockquote>
+<hr>
+<h2 id="✅-核心知识点提炼"><a href="#✅-核心知识点提炼" class="headerlink" title="✅ 核心知识点提炼"></a>✅ 核心知识点提炼</h2><h3 id="1-卷积层参数计算公式"><a href="#1-卷积层参数计算公式" class="headerlink" title="1. 卷积层参数计算公式"></a>1. <strong>卷积层参数计算公式</strong></h3><p>对于一个卷积层：</p>
+<ul>
+<li><p>输入：$(H, W, C_{\text{in}})$</p>
+</li>
+<li><p>过滤器：$(f, f, C_{\text{in}}, C_{\text{out}})$</p>
+</li>
+<li><p>参数数量：</p>
+<p>$$<br>\text{params} &#x3D; f \cdot f \cdot C_{\text{in}} \cdot C_{\text{out}} + C_{\text{out}}<br>$$</p>
+<p>（权重 + 偏置）</p>
+</li>
+</ul>
+<hr>
+<h3 id="2-池化层特性"><a href="#2-池化层特性" class="headerlink" title="2. 池化层特性"></a>2. <strong>池化层特性</strong></h3><ul>
+<li><strong>无训练参数</strong></li>
+<li>仅依赖超参数（$f, s$）</li>
+<li>常用最大池化（Max Pooling）</li>
+<li>作用：降低空间分辨率，提升平移不变性</li>
+</ul>
+<hr>
+<h3 id="3-全连接层参数"><a href="#3-全连接层参数" class="headerlink" title="3. 全连接层参数"></a>3. <strong>全连接层参数</strong></h3><ul>
+<li><p>输入维度 $d$，输出维度 $k$</p>
+</li>
+<li><p>参数数：</p>
+<p>$$<br>\text{params} &#x3D; d \cdot k + k &#x3D; k(d + 1)<br>$$</p>
+</li>
+</ul>
+<hr>
+<h3 id="4-激活值大小变化趋势"><a href="#4-激活值大小变化趋势" class="headerlink" title="4. 激活值大小变化趋势"></a>4. <strong>激活值大小变化趋势</strong></h3><p>随着网络加深：</p>
+<ul>
+<li><strong>高度和宽度减少</strong>：32 → 28 → 14 → 10 → 5</li>
+<li><strong>通道数增加</strong>：3 → 6 → 16 → …</li>
+<li><strong>激活值总量逐渐减小</strong>：3072 → 6272 → 1176 → 1600 → 400 → 120 → 84 → 10</li>
+</ul>
+<blockquote>
+<p>✅ 设计原则：避免激活值下降过快，否则信息丢失严重。</p>
+</blockquote>
+<hr>
+<h3 id="5-网络层级划分惯例"><a href="#5-网络层级划分惯例" class="headerlink" title="5. 网络层级划分惯例"></a>5. <strong>网络层级划分惯例</strong></h3><ul>
+<li><strong>Layer1</strong>：CONV1 + POOL1（视为一层）</li>
+<li><strong>Layer2</strong>：CONV2 + POOL2</li>
+<li><strong>Layer3~4</strong>：FC3, FC4</li>
+<li><strong>统计层数时，通常只计含参数的层（如卷积、全连接）</strong></li>
+</ul>
+<hr>
+<h3 id="6-典型-CNN-架构模式"><a href="#6-典型-CNN-架构模式" class="headerlink" title="6. 典型 CNN 架构模式"></a>6. <strong>典型 CNN 架构模式</strong></h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Input → [Conv → Pool] × n → [FC] × m → Softmax</span><br></pre></td></tr></table></figure>
+
+<p>即：</p>
+<ul>
+<li>多组“卷积 + 池化”堆叠</li>
+<li>后接若干全连接层</li>
+<li>最终输出分类概率</li>
+</ul>
+<hr>
+<h2 id="💡-设计建议（吴恩达经验）"><a href="#💡-设计建议（吴恩达经验）" class="headerlink" title="💡 设计建议（吴恩达经验）"></a>💡 设计建议（吴恩达经验）</h2><ol>
+<li><strong>不要盲目调参</strong>：参考已有成功架构（如 LeNet-5, AlexNet, VGG）</li>
+<li><strong>复用成熟框架</strong>：如 TensorFlow, PyTorch 中预定义模型</li>
+<li><strong>关注模式而非细节</strong>：理解“卷积→池化→全连接”的流程</li>
+<li><strong>优先考虑可复现性</strong>：从文献中找灵感，验证效果</li>
+</ol>
+<hr>
+<h2 id="🧠-为什么使用卷积？"><a href="#🧠-为什么使用卷积？" class="headerlink" title="🧠 为什么使用卷积？"></a>🧠 为什么使用卷积？</h2><p>虽然本节课未展开，但可提前预告：</p>
+<h3 id="卷积的优势："><a href="#卷积的优势：" class="headerlink" title="卷积的优势："></a>卷积的优势：</h3><ol>
+<li><strong>局部感知</strong>：利用局部感受提取特征</li>
+<li><strong>权值共享</strong>：同一过滤器在整个图像上滑动，减少参数</li>
+<li><strong>平移不变性</strong>：对象位置变化不影响识别</li>
+<li><strong>层次化特征提取</strong>：低层提取边缘、角点；高层提取复杂结构</li>
+</ol>
+<hr>
+<h2 id="📘-学习建议"><a href="#📘-学习建议" class="headerlink" title="📘 学习建议"></a>📘 学习建议</h2><h3 id="推荐练习："><a href="#推荐练习：" class="headerlink" title="推荐练习："></a>推荐练习：</h3><ol>
+<li>手动计算每一层的输出尺寸和参数数量</li>
+<li>使用 Python 实现该网络（PyTorch &#x2F; TensorFlow）</li>
+<li>对比 LeNet-5 结构（注意：LeNet-5 输入为 28x28x1，黑白图）</li>
+</ol>
+<hr>
+<h2 id="🧩-附录：完整公式汇总（LaTeX-兼容）"><a href="#🧩-附录：完整公式汇总（LaTeX-兼容）" class="headerlink" title="🧩 附录：完整公式汇总（LaTeX 兼容）"></a>🧩 附录：完整公式汇总（LaTeX 兼容）</h2><figure class="highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="comment">% 输出尺寸计算（卷积）</span></span><br><span class="line">H&#x27; = <span class="keyword">\frac</span>&#123;H - f&#125;&#123;s&#125; + 1 <span class="keyword">\\</span></span><br><span class="line">W&#x27; = <span class="keyword">\frac</span>&#123;W - f&#125;&#123;s&#125; + 1</span><br><span class="line"></span><br><span class="line"><span class="comment">% 池化输出尺寸</span></span><br><span class="line">H&#x27; = <span class="keyword">\frac</span>&#123;H - f&#125;&#123;s&#125; + 1 <span class="keyword">\quad</span> (<span class="keyword">\text</span>&#123;同卷积&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">% 卷积层参数数</span></span><br><span class="line"><span class="keyword">\text</span>&#123;params&#125;<span class="built_in">_</span>&#123;<span class="keyword">\text</span>&#123;conv&#125;&#125; = f<span class="built_in">^</span>2 <span class="keyword">\cdot</span> C<span class="built_in">_</span>&#123;<span class="keyword">\text</span>&#123;in&#125;&#125; <span class="keyword">\cdot</span> C<span class="built_in">_</span>&#123;<span class="keyword">\text</span>&#123;out&#125;&#125; + C<span class="built_in">_</span>&#123;<span class="keyword">\text</span>&#123;out&#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">% 全连接层参数数</span></span><br><span class="line"><span class="keyword">\text</span>&#123;params&#125;<span class="built_in">_</span>&#123;<span class="keyword">\text</span>&#123;fc&#125;&#125; = d <span class="keyword">\cdot</span> k + k = k(d + 1)</span><br><span class="line"></span><br><span class="line"><span class="comment">% 激活值大小</span></span><br><span class="line"><span class="keyword">\text</span>&#123;activation size&#125; = H <span class="keyword">\cdot</span> W <span class="keyword">\cdot</span> C</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="✅-总结"><a href="#✅-总结" class="headerlink" title="✅ 总结"></a>✅ 总结</h2><table>
+<thead>
+<tr>
+<th>主题</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>网络类型</strong></td>
+<td>典型 CNN（受 LeNet-5 启发）</td>
+</tr>
+<tr>
+<td><strong>输入</strong></td>
+<td>$32 \times 32 \times 3$ RGB 图像</td>
+</tr>
+<tr>
+<td><strong>输出</strong></td>
+<td>10 类 softmax（0-9 数字识别）</td>
+</tr>
+<tr>
+<td><strong>关键模块</strong></td>
+<td>卷积、池化、全连接、softmax</td>
+</tr>
+<tr>
+<td><strong>参数分布</strong></td>
+<td>大部分参数集中在全连接层</td>
+</tr>
+<tr>
+<td><strong>设计模式</strong></td>
+<td>[Conv + Pool] × 2 → FC × 2 → Softmax</td>
+</tr>
+<tr>
+<td><strong>重要原则</strong></td>
+<td>层级化特征提取、参数共享、降维处理</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/09%20%E6%B1%A0%E5%8C%96%E5%B1%82%EF%BC%88Pooling%20Layers%EF%BC%89/" rel="prev" title="09 池化层（Pooling Layers）">
+                  <i class="fa fa-angle-left"></i> 09 池化层（Pooling Layers）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/11%20%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8%E5%8D%B7%E7%A7%AF%EF%BC%9F%EF%BC%88Why%20Convolutions_%EF%BC%89/" rel="next" title="11 为什么使用卷积？（Why Convolutions?）">
+                  11 为什么使用卷积？（Why Convolutions?） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Blum</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">227k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:45</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

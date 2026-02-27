@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/02%20%E7%BB%8F%E5%85%B8%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88Classic%20Networks%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/02%20%E7%BB%8F%E5%85%B8%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88Classic%20Networks%EF%BC%89/","path":"卷积神经网络2/02 经典神经网络（Classic Networks）/","title":"02 经典神经网络（Classic Networks）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>02 经典神经网络（Classic Networks） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/02%20%E7%BB%8F%E5%85%B8%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88Classic%20Networks%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">205</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#02-%E7%BB%8F%E5%85%B8%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88Classic-Networks%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">02 经典神经网络（Classic Networks）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93"><span class="nav-number">2.</span> <span class="nav-text">课程总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8E%AF-%E8%AF%BE%E7%A8%8B%E7%9B%AE%E6%A0%87"><span class="nav-number">2.1.</span> <span class="nav-text">🎯 课程目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%B9-1-LeNet-5%EF%BC%881998%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">🔹 1. LeNet-5（1998）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E8%83%8C%E6%99%AF"><span class="nav-number">2.2.1.</span> <span class="nav-text">✅ 背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%90-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="nav-number">2.2.2.</span> <span class="nav-text">📐 输入输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%B1-%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84"><span class="nav-number">2.2.3.</span> <span class="nav-text">🧱 网络结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%94%81-%E5%B0%BA%E5%AF%B8%E5%8F%98%E5%8C%96%E8%A7%84%E5%BE%8B"><span class="nav-number">2.2.4.</span> <span class="nav-text">🔁 尺寸变化规律</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%92%A1-%E8%AE%BE%E8%AE%A1%E7%89%B9%E7%82%B9"><span class="nav-number">2.2.5.</span> <span class="nav-text">💡 设计特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9D%8C-%E5%B7%B2%E6%B7%98%E6%B1%B0%E7%9A%84%E6%8A%80%E6%9C%AF"><span class="nav-number">2.2.6.</span> <span class="nav-text">❌ 已淘汰的技术</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%B9-2-AlexNet%EF%BC%882012%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">🔹 2. AlexNet（2012）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E8%83%8C%E6%99%AF-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">✅ 背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%90-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA-1"><span class="nav-number">2.3.2.</span> <span class="nav-text">📐 输入输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%B1-%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84-1"><span class="nav-number">2.3.3.</span> <span class="nav-text">🧱 网络结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%94%81-%E5%B0%BA%E5%AF%B8%E5%8F%98%E5%8C%96"><span class="nav-number">2.3.4.</span> <span class="nav-text">🔁 尺寸变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8E%AF-%E5%85%B3%E9%94%AE%E5%88%9B%E6%96%B0%E7%82%B9"><span class="nav-number">2.3.5.</span> <span class="nav-text">🎯 关键创新点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-ReLU-%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">2.3.5.1.</span> <span class="nav-text">1. ReLU 激活函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Dropout"><span class="nav-number">2.3.5.2.</span> <span class="nav-text">2. Dropout</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%B1%80%E9%83%A8%E5%93%8D%E5%BA%94%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%88LRN%EF%BC%89"><span class="nav-number">2.3.5.3.</span> <span class="nav-text">3. 局部响应归一化（LRN）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%A4%9A-GPU-%E5%B9%B6%E8%A1%8C%E8%AE%AD%E7%BB%83"><span class="nav-number">2.3.5.4.</span> <span class="nav-text">4. 多 GPU 并行训练</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%88-%E5%8F%82%E6%95%B0%E9%87%8F"><span class="nav-number">2.3.6.</span> <span class="nav-text">📈 参数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E9%87%8D%E8%A6%81%E5%BD%B1%E5%93%8D"><span class="nav-number">2.3.7.</span> <span class="nav-text">✅ 重要影响</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%B9-3-VGG-16%EF%BC%882014%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">🔹 3. VGG-16（2014）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E8%83%8C%E6%99%AF-2"><span class="nav-number">2.4.1.</span> <span class="nav-text">✅ 背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%90-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA-2"><span class="nav-number">2.4.2.</span> <span class="nav-text">📐 输入输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%B1-%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%EF%BC%88%E7%AE%80%E8%A6%81%EF%BC%89"><span class="nav-number">2.4.3.</span> <span class="nav-text">🧱 网络结构（简要）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%94%81-%E5%B0%BA%E5%AF%B8%E5%8F%98%E5%8C%96%E8%A7%84%E5%BE%8B-1"><span class="nav-number">2.4.4.</span> <span class="nav-text">🔁 尺寸变化规律</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-number">2.4.5.</span> <span class="nav-text">✅ 设计原则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%B0%8F%E5%8D%B7%E7%A7%AF%E6%A0%B8"><span class="nav-number">2.4.5.1.</span> <span class="nav-text">1. 小卷积核</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Same-Padding"><span class="nav-number">2.4.5.2.</span> <span class="nav-text">2. Same Padding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%BB%9F%E4%B8%80%E7%BB%93%E6%9E%84"><span class="nav-number">2.4.5.3.</span> <span class="nav-text">3. 统一结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%8F%82%E6%95%B0%E9%87%8F%E5%A4%A7%E4%BD%86%E7%BB%93%E6%9E%84%E7%AE%80%E5%8D%95"><span class="nav-number">2.4.5.4.</span> <span class="nav-text">4. 参数量大但结构简单</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9A%A0%EF%B8%8F-%E7%BC%BA%E7%82%B9"><span class="nav-number">2.4.6.</span> <span class="nav-text">⚠️ 缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%8D-%E5%AF%B9%E6%AF%94%E6%80%BB%E7%BB%93%E8%A1%A8"><span class="nav-number">2.5.</span> <span class="nav-text">🔍 对比总结表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9A-%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE"><span class="nav-number">2.6.</span> <span class="nav-text">📚 学习建议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB%E9%A1%BA%E5%BA%8F"><span class="nav-number">2.6.1.</span> <span class="nav-text">✅ 推荐阅读顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%9B%A0%EF%B8%8F-%E5%AE%9E%E8%B7%B5%E5%BB%BA%E8%AE%AE"><span class="nav-number">2.6.2.</span> <span class="nav-text">🛠️ 实践建议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%9A-%E6%80%BB%E7%BB%93"><span class="nav-number">2.7.</span> <span class="nav-text">🔚 总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Blum"
+      src="/blog/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Blum</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">205</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/07%20%E5%8D%95%E5%B1%82%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-18</time>
+        <br>
+      07 单层卷积神经网络
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/10%20%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88CNN%EF%BC%89%E7%A4%BA%E4%BE%8B/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-18</time>
+        <br>
+      10 卷积神经网络（CNN）示例
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/04%20%E5%8D%B7%E7%A7%AF%E6%93%8D%E4%BD%9C%E4%B8%AD%E7%9A%84%20Padding%EF%BC%88%E5%A1%AB%E5%85%85%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-18</time>
+        <br>
+      04 卷积操作中的 Padding（填充）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/05%20%E5%B8%A6%E6%AD%A5%E9%95%BF%E7%9A%84%E5%8D%B7%E7%A7%AF%EF%BC%88Strided%20Convolutions%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-18</time>
+        <br>
+      05 带步长的卷积（Strided Convolutions）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/01%20%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%BF%9B%E8%A1%8C%E5%AE%9E%E4%BE%8B%E6%8E%A2%E7%A9%B6%EF%BC%9F%EF%BC%88Why%20look%20at%20case%20studies_%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-21</time>
+        <br>
+      01 为什么要进行实例探究？（Why look at case studies?）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/02%20%E7%BB%8F%E5%85%B8%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88Classic%20Networks%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Blum">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="02 经典神经网络（Classic Networks） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          02 经典神经网络（Classic Networks）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-21 07:46:48" itemprop="dateCreated datePublished" datetime="2026-01-21T07:46:48+00:00">2026-01-21</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="02-经典神经网络（Classic-Networks）"><a href="#02-经典神经网络（Classic-Networks）" class="headerlink" title="02 经典神经网络（Classic Networks）"></a>02 经典神经网络（Classic Networks）</h1><h1 id="课程总结"><a href="#课程总结" class="headerlink" title="课程总结"></a><strong>课程总结</strong></h1><p>本节课程介绍了深度学习发展史中三个具有里程碑意义的经典卷积神经网络（CNN）结构：<strong>LeNet-5、AlexNet 和 VGG-16</strong>。这些模型为现代计算机视觉奠定了基础，理解它们的结构、设计思想和历史背景对于深入掌握深度学习至关重要。</p>
+<hr>
+<h2 id="🎯-课程目标"><a href="#🎯-课程目标" class="headerlink" title="🎯 课程目标"></a>🎯 课程目标</h2><ul>
+<li>理解 LeNet-5、AlexNet、VGG-16 的整体架构与关键组件。</li>
+<li>掌握每种网络的输入输出尺寸变化规律。</li>
+<li>学习经典网络的设计理念及其对后续研究的影响。</li>
+<li>认识到激活函数、池化方式、GPU并行训练等关键技术的发展演变。</li>
+</ul>
+<hr>
+<h2 id="🔹-1-LeNet-5（1998）"><a href="#🔹-1-LeNet-5（1998）" class="headerlink" title="🔹 1. LeNet-5（1998）"></a>🔹 1. LeNet-5（1998）</h2><h3 id="✅-背景"><a href="#✅-背景" class="headerlink" title="✅ 背景"></a>✅ 背景</h3><p>由 Yann LeCun 提出，用于手写数字识别（MNIST 数据集），是最早的成功 CNN 模型之一。</p>
+<h3 id="📐-输入输出"><a href="#📐-输入输出" class="headerlink" title="📐 输入输出"></a>📐 输入输出</h3><ul>
+<li>输入：$32 \times 32 \times 1$（灰度图像）</li>
+<li>输出：10 类分类结果（0–9）</li>
+</ul>
+<h3 id="🧱-网络结构"><a href="#🧱-网络结构" class="headerlink" title="🧱 网络结构"></a>🧱 网络结构</h3><table>
+<thead>
+<tr>
+<th>层</th>
+<th>操作</th>
+<th>参数&#x2F;尺寸</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C1</td>
+<td>卷积层</td>
+<td>$6$ 个 $5\times5$ 过滤器，步幅 $s&#x3D;1$，padding&#x3D;0输出：$28\times28\times6$</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>平均池化</td>
+<td>$2\times2$ 池化窗口，步幅 $s&#x3D;2$输出：$14\times14\times6$</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>卷积层</td>
+<td>$16$ 个 $5\times5$ 过滤器，步幅 $s&#x3D;1$，padding&#x3D;0输出：$10\times10\times16$</td>
+</tr>
+<tr>
+<td>S4</td>
+<td>平均池化</td>
+<td>$2\times2$，步幅 $s&#x3D;2$输出：$5\times5\times16$</td>
+</tr>
+<tr>
+<td>F5</td>
+<td>全连接层</td>
+<td>$400$ 个节点 → $120$ 个神经元</td>
+</tr>
+<tr>
+<td>F6</td>
+<td>全连接层</td>
+<td>$120$ → $84$ 个神经元</td>
+</tr>
+<tr>
+<td>Output</td>
+<td>分类器</td>
+<td>$84$ → $10$（使用 softmax 或旧式分类器）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>⚠️ 注意：LeNet-5 使用的是 <strong>sigmoid</strong> 和 <strong>tanh</strong> 激活函数，而非 ReLU。</p>
+</blockquote>
+<h3 id="🔁-尺寸变化规律"><a href="#🔁-尺寸变化规律" class="headerlink" title="🔁 尺寸变化规律"></a>🔁 尺寸变化规律</h3><ul>
+<li><p>图像高度&#x2F;宽度逐层减小：</p>
+<p>$$<br>32 \xrightarrow{\text{conv}} 28 \xrightarrow{\text{pool}} 14 \xrightarrow{\text{conv}} 10 \xrightarrow{\text{pool}} 5<br>$$</p>
+</li>
+<li><p>通道数逐步增加：$1 \to 6 \to 16$</p>
+</li>
+</ul>
+<h3 id="💡-设计特点"><a href="#💡-设计特点" class="headerlink" title="💡 设计特点"></a>💡 设计特点</h3><ul>
+<li><strong>卷积 + 池化交替</strong>：典型的“卷积-池化”模块组合。</li>
+<li><strong>参数少</strong>：约 <strong>6 万个参数</strong>，适合当时硬件条件。</li>
+<li><strong>无 padding</strong>：采用 valid 卷积，导致尺寸持续缩小。</li>
+<li><strong>非线性处理</strong>：池化后接 sigmoid 函数（现已不常用）。</li>
+</ul>
+<h3 id="❌-已淘汰的技术"><a href="#❌-已淘汰的技术" class="headerlink" title="❌ 已淘汰的技术"></a>❌ 已淘汰的技术</h3><ul>
+<li>使用 <strong>sigmoid&#x2F;tanh</strong> 激活函数（梯度消失问题严重）</li>
+<li>池化后接非线性函数（如 sigmoid）</li>
+<li>复杂的跨层连接设计（部分已被简化）</li>
+</ul>
+<hr>
+<h2 id="🔹-2-AlexNet（2012）"><a href="#🔹-2-AlexNet（2012）" class="headerlink" title="🔹 2. AlexNet（2012）"></a>🔹 2. AlexNet（2012）</h2><h3 id="✅-背景-1"><a href="#✅-背景-1" class="headerlink" title="✅ 背景"></a>✅ 背景</h3><p>由 Alex Krizhevsky、Ilya Sutskever 和 Geoffrey Hinton 提出，在 ImageNet 上取得突破性成果，标志着深度学习在计算机视觉中的崛起。</p>
+<h3 id="📐-输入输出-1"><a href="#📐-输入输出-1" class="headerlink" title="📐 输入输出"></a>📐 输入输出</h3><ul>
+<li>输入：$227\times227\times3$（RGB 图像）</li>
+<li>输出：1000 类分类（ImageNet）</li>
+</ul>
+<blockquote>
+<p>注：原文用 $224\times224$，但 $227$ 更利于整除计算。</p>
+</blockquote>
+<h3 id="🧱-网络结构-1"><a href="#🧱-网络结构-1" class="headerlink" title="🧱 网络结构"></a>🧱 网络结构</h3><table>
+<thead>
+<tr>
+<th>层</th>
+<th>操作</th>
+<th>参数&#x2F;尺寸</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Conv1</td>
+<td>$96$ 个 $11\times11$ 过滤器，步幅 $s&#x3D;4$，padding&#x3D;0输出：$55\times55\times96$</td>
+<td></td>
+</tr>
+<tr>
+<td>Pool1</td>
+<td>$3\times3$ 最大池化，步幅 $s&#x3D;2$输出：$27\times27\times96$</td>
+<td></td>
+</tr>
+<tr>
+<td>Conv2</td>
+<td>$256$ 个 $5\times5$ 过滤器，步幅 $s&#x3D;1$，padding&#x3D;2（same）输出：$27\times27\times256$</td>
+<td></td>
+</tr>
+<tr>
+<td>Pool2</td>
+<td>$3\times3$ 最大池化，步幅 $s&#x3D;2$输出：$13\times13\times256$</td>
+<td></td>
+</tr>
+<tr>
+<td>Conv3</td>
+<td>$384$ 个 $3\times3$ 过滤器，步幅 $s&#x3D;1$，padding&#x3D;1（same）输出：$13\times13\times384$</td>
+<td></td>
+</tr>
+<tr>
+<td>Conv4</td>
+<td>$384$ 个 $3\times3$ 过滤器，步幅 $s&#x3D;1$，padding&#x3D;1输出：$13\times13\times384$</td>
+<td></td>
+</tr>
+<tr>
+<td>Conv5</td>
+<td>$256$ 个 $3\times3$ 过滤器，步幅 $s&#x3D;1$，padding&#x3D;1输出：$13\times13\times256$</td>
+<td></td>
+</tr>
+<tr>
+<td>Pool5</td>
+<td>$3\times3$ 最大池化，步幅 $s&#x3D;2$输出：$6\times6\times256$</td>
+<td></td>
+</tr>
+<tr>
+<td>FC6</td>
+<td>全连接层</td>
+<td>$6\times6\times256 &#x3D; 9216$ → $4096$</td>
+</tr>
+<tr>
+<td>FC7</td>
+<td>全连接层</td>
+<td>$4096$ → $4096$</td>
+</tr>
+<tr>
+<td>FC8</td>
+<td>全连接层</td>
+<td>$4096$ → $1000$</td>
+</tr>
+<tr>
+<td>Softmax</td>
+<td>输出层</td>
+<td>分类概率分布</td>
+</tr>
+</tbody></table>
+<h3 id="🔁-尺寸变化"><a href="#🔁-尺寸变化" class="headerlink" title="🔁 尺寸变化"></a>🔁 尺寸变化</h3><p>$$<br>227 \xrightarrow{\text{conv}} 55 \xrightarrow{\text{pool}} 27 \xrightarrow{\text{conv}} 27 \xrightarrow{\text{pool}} 13 \xrightarrow{\text{conv}} 13 \xrightarrow{\text{pool}} 6<br>$$</p>
+<h3 id="🎯-关键创新点"><a href="#🎯-关键创新点" class="headerlink" title="🎯 关键创新点"></a>🎯 关键创新点</h3><h4 id="1-ReLU-激活函数"><a href="#1-ReLU-激活函数" class="headerlink" title="1. ReLU 激活函数"></a>1. <strong>ReLU 激活函数</strong></h4><ul>
+<li><p>替代 sigmoid&#x2F;tanh，缓解梯度消失问题。</p>
+</li>
+<li><p>定义：</p>
+<p>$$<br>\text{ReLU}(x) &#x3D; \max(0, x)<br>$$</p>
+</li>
+</ul>
+<h4 id="2-Dropout"><a href="#2-Dropout" class="headerlink" title="2. Dropout"></a>2. <strong>Dropout</strong></h4><ul>
+<li>在全连接层中使用 dropout（通常为 0.5），防止过拟合。</li>
+</ul>
+<h4 id="3-局部响应归一化（LRN）"><a href="#3-局部响应归一化（LRN）" class="headerlink" title="3. 局部响应归一化（LRN）"></a>3. <strong>局部响应归一化（LRN）</strong></h4><ul>
+<li><p>动机：增强特征之间的竞争性，抑制高激活值。</p>
+</li>
+<li><p>公式（局部响应归一化）：</p>
+<p>$$<br>b_{x,y}^i &#x3D; \frac{a_{x,y}^i}{\left(k + \alpha \sum_{j&#x3D;\max(0,i-n&#x2F;2)}^{\min(N-1,i+n&#x2F;2)} (a_{x,y}^j)^2\right)^\beta}<br>$$</p>
+<ul>
+<li>$a$: 卷积输出</li>
+<li>$b$: 归一化后输出</li>
+<li>$k, \alpha, \beta$: 超参数（原论文中 $k&#x3D;2, \alpha&#x3D;1e^{-4}, \beta&#x3D;0.75$）</li>
+</ul>
+</li>
+<li><p>❌ 当前已基本不用，效果有限。</p>
+</li>
+</ul>
+<h4 id="4-多-GPU-并行训练"><a href="#4-多-GPU-并行训练" class="headerlink" title="4. 多 GPU 并行训练"></a>4. <strong>多 GPU 并行训练</strong></h4><ul>
+<li>将网络分为两部分，分别在两个 GPU 上运行。</li>
+<li>通过通信机制同步中间层输出（如第 5 层）。</li>
+<li>解决了当时显存不足的问题。</li>
+</ul>
+<h3 id="📈-参数量"><a href="#📈-参数量" class="headerlink" title="📈 参数量"></a>📈 参数量</h3><ul>
+<li>总参数数：约 <strong>6000 万</strong>（60M）</li>
+<li>比 LeNet-5 增加了约 <strong>1000 倍</strong></li>
+</ul>
+<h3 id="✅-重要影响"><a href="#✅-重要影响" class="headerlink" title="✅ 重要影响"></a>✅ 重要影响</h3><ul>
+<li>首次证明深度 CNN 可以在大规模图像分类任务上超越传统方法。</li>
+<li>推动 GPU 在深度学习中的广泛应用。</li>
+<li>引发了深度学习在 CV 领域的革命。</li>
+</ul>
+<hr>
+<h2 id="🔹-3-VGG-16（2014）"><a href="#🔹-3-VGG-16（2014）" class="headerlink" title="🔹 3. VGG-16（2014）"></a>🔹 3. VGG-16（2014）</h2><h3 id="✅-背景-2"><a href="#✅-背景-2" class="headerlink" title="✅ 背景"></a>✅ 背景</h3><p>由 Karen Simonyan 和 Andrew Zisserman 提出，强调 <strong>简洁性和一致性</strong>，结构规整易实现。</p>
+<h3 id="📐-输入输出-2"><a href="#📐-输入输出-2" class="headerlink" title="📐 输入输出"></a>📐 输入输出</h3><ul>
+<li>输入：$224\times224\times3$</li>
+<li>输出：1000 类分类</li>
+</ul>
+<h3 id="🧱-网络结构（简要）"><a href="#🧱-网络结构（简要）" class="headerlink" title="🧱 网络结构（简要）"></a>🧱 网络结构（简要）</h3><table>
+<thead>
+<tr>
+<th>模块</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Block 1</td>
+<td>2× $3\times3$ 卷积（64 通道），+ MaxPool</td>
+</tr>
+<tr>
+<td>Block 2</td>
+<td>2× $3\times3$ 卷积（128 通道），+ MaxPool</td>
+</tr>
+<tr>
+<td>Block 3</td>
+<td>3× $3\times3$ 卷积（256 通道），+ MaxPool</td>
+</tr>
+<tr>
+<td>Block 4</td>
+<td>3× $3\times3$ 卷积（512 通道），+ MaxPool</td>
+</tr>
+<tr>
+<td>Block 5</td>
+<td>3× $3\times3$ 卷积（512 通道），+ MaxPool</td>
+</tr>
+<tr>
+<td>FC</td>
+<td>3 个全连接层：$4096 \to 4096 \to 1000$</td>
+</tr>
+<tr>
+<td>Output</td>
+<td>Softmax</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>注：VGG-16 名字来源于 <strong>16 个卷积层 + 全连接层</strong> 的总数。</p>
+</blockquote>
+<h3 id="🔁-尺寸变化规律-1"><a href="#🔁-尺寸变化规律-1" class="headerlink" title="🔁 尺寸变化规律"></a>🔁 尺寸变化规律</h3><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>尺寸</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>输入</td>
+<td>$224\times224\times3$</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Conv1</td>
+<td>$224\times224\times64$</td>
+<td>same 卷积</td>
+</tr>
+<tr>
+<td>Conv2</td>
+<td>$224\times224\times64$</td>
+<td>same 卷积</td>
+</tr>
+<tr>
+<td>Pool1</td>
+<td>$112\times112\times64$</td>
+<td>$2\times2$ 池化，步幅 2</td>
+</tr>
+<tr>
+<td>Conv3</td>
+<td>$112\times112\times128$</td>
+<td>same 卷积</td>
+</tr>
+<tr>
+<td>Conv4</td>
+<td>$112\times112\times128$</td>
+<td>same 卷积</td>
+</tr>
+<tr>
+<td>Pool2</td>
+<td>$56\times56\times128$</td>
+<td>池化</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr>
+<td>Final Feature Map</td>
+<td>$7\times7\times512$</td>
+<td>最终池化</td>
+</tr>
+<tr>
+<td>FC</td>
+<td>$4096$ → $4096$ → $1000$</td>
+<td>展平后全连接</td>
+</tr>
+</tbody></table>
+<h3 id="✅-设计原则"><a href="#✅-设计原则" class="headerlink" title="✅ 设计原则"></a>✅ 设计原则</h3><h4 id="1-小卷积核"><a href="#1-小卷积核" class="headerlink" title="1. 小卷积核"></a>1. <strong>小卷积核</strong></h4><ul>
+<li><p>使用 $3\times3$ 卷积核，替代更大的核。</p>
+</li>
+<li><p>优势：</p>
+<ul>
+<li>参数少</li>
+<li>可堆叠更深</li>
+<li>更强的非线性表达能力</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-Same-Padding"><a href="#2-Same-Padding" class="headerlink" title="2. Same Padding"></a>2. <strong>Same Padding</strong></h4><ul>
+<li><p>所有卷积层均使用 <code>same</code> 模式，保持空间维度不变。</p>
+</li>
+<li><p>公式：</p>
+<p>$$<br>\text{Padding} &#x3D; \left\lfloor \frac{k - 1}{2} \right\rfloor<br>$$</p>
+<p>其中 $k&#x3D;3$，故 padding&#x3D;1。</p>
+</li>
+</ul>
+<h4 id="3-统一结构"><a href="#3-统一结构" class="headerlink" title="3. 统一结构"></a>3. <strong>统一结构</strong></h4><ul>
+<li>每组卷积层后跟一个最大池化层。</li>
+<li>通道数按 <strong>2 倍递增</strong>：64 → 128 → 256 → 512</li>
+<li>每次池化将空间尺寸缩小一半。</li>
+</ul>
+<h4 id="4-参数量大但结构简单"><a href="#4-参数量大但结构简单" class="headerlink" title="4. 参数量大但结构简单"></a>4. <strong>参数量大但结构简单</strong></h4><ul>
+<li>总参数数：约 <strong>1.38 亿</strong>（138M）</li>
+<li>优点：易于理解和复现</li>
+<li>缺点：计算成本高，训练慢</li>
+</ul>
+<h3 id="⚠️-缺点"><a href="#⚠️-缺点" class="headerlink" title="⚠️ 缺点"></a>⚠️ 缺点</h3><ul>
+<li>模型庞大，内存占用高</li>
+<li>不如后来的 ResNet 等高效</li>
+<li>后续被更轻量化的模型取代（如 MobileNet）</li>
+</ul>
+<hr>
+<h2 id="🔍-对比总结表"><a href="#🔍-对比总结表" class="headerlink" title="🔍 对比总结表"></a>🔍 对比总结表</h2><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>LeNet-5</th>
+<th>AlexNet</th>
+<th>VGG-16</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>发布年份</td>
+<td>1998</td>
+<td>2012</td>
+<td>2014</td>
+</tr>
+<tr>
+<td>输入大小</td>
+<td>$32\times32\times1$</td>
+<td>$227\times227\times3$</td>
+<td>$224\times224\times3$</td>
+</tr>
+<tr>
+<td>任务</td>
+<td>手写数字识别</td>
+<td>ImageNet 分类</td>
+<td>ImageNet 分类</td>
+</tr>
+<tr>
+<td>参数量</td>
+<td>~60K</td>
+<td>~60M</td>
+<td>~138M</td>
+</tr>
+<tr>
+<td>激活函数</td>
+<td>sigmoid&#x2F;tanh</td>
+<td>ReLU</td>
+<td>ReLU</td>
+</tr>
+<tr>
+<td>池化类型</td>
+<td>平均池化</td>
+<td>最大池化</td>
+<td>最大池化</td>
+</tr>
+<tr>
+<td>是否使用 LRN</td>
+<td>否</td>
+<td>是（已弃用）</td>
+<td>否</td>
+</tr>
+<tr>
+<td>是否使用 Dropout</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>是否使用 GPU 并行</td>
+<td>否</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>卷积核大小</td>
+<td>$5\times5$</td>
+<td>$11\times11$, $5\times5$, $3\times3$</td>
+<td>$3\times3$</td>
+</tr>
+<tr>
+<td>结构复杂度</td>
+<td>简单</td>
+<td>中等</td>
+<td>规整但深</td>
+</tr>
+<tr>
+<td>主要贡献</td>
+<td>首个成功 CNN</td>
+<td>推动深度学习革命</td>
+<td>简洁一致的设计范式</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="📚-学习建议"><a href="#📚-学习建议" class="headerlink" title="📚 学习建议"></a>📚 学习建议</h2><h3 id="✅-推荐阅读顺序"><a href="#✅-推荐阅读顺序" class="headerlink" title="✅ 推荐阅读顺序"></a>✅ 推荐阅读顺序</h3><ol>
+<li><strong>AlexNet 论文</strong>：最容易理解，包含大量实用技巧。</li>
+<li><strong>VGG 论文</strong>：结构清晰，适合初学者模仿。</li>
+<li><strong>LeNet-5 论文</strong>：较难读，需了解早期技术背景。</li>
+</ol>
+<h3 id="🛠️-实践建议"><a href="#🛠️-实践建议" class="headerlink" title="🛠️ 实践建议"></a>🛠️ 实践建议</h3><ul>
+<li>使用 PyTorch 或 TensorFlow 复现这三个模型。</li>
+<li>观察不同模型在 CIFAR-10 或 MNIST 上的表现差异。</li>
+<li>比较参数量、推理速度、准确率。</li>
+</ul>
+<hr>
+<h2 id="🔚-总结"><a href="#🔚-总结" class="headerlink" title="🔚 总结"></a>🔚 总结</h2><p>这三款经典网络代表了深度学习发展的三个阶段：</p>
+<ol>
+<li><strong>LeNet-5</strong>：开创者，验证了 CNN 的可行性。</li>
+<li><strong>AlexNet</strong>：引爆者，展示了深度网络的强大能力。</li>
+<li><strong>VGG-16</strong>：规范化者，提出了简洁而有效的设计原则。</li>
+</ol>
+<p>尽管它们已被更先进的模型（如 ResNet、EfficientNet）超越，但其设计理念仍然深刻影响着今天的神经网络架构。</p>
+<blockquote>
+<p>💡 下节课预告：我们将进入 <strong>Residual Networks（ResNets）</strong> ，学习如何解决深度网络中的梯度消失问题，以及残差连接的核心思想。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/01%20%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%BF%9B%E8%A1%8C%E5%AE%9E%E4%BE%8B%E6%8E%A2%E7%A9%B6%EF%BC%9F%EF%BC%88Why%20look%20at%20case%20studies_%EF%BC%89/" rel="prev" title="01 为什么要进行实例探究？（Why look at case studies?）">
+                  <i class="fa fa-angle-left"></i> 01 为什么要进行实例探究？（Why look at case studies?）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/03%20%E6%AE%8B%E5%B7%AE%E7%BD%91%E7%BB%9C%EF%BC%88ResNets%EF%BC%89%E2%80%94%E2%80%94%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E7%AA%81%E7%A0%B4/" rel="next" title="03 残差网络（ResNets）——深度神经网络的突破">
+                  03 残差网络（ResNets）——深度神经网络的突破 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Blum</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">227k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:45</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

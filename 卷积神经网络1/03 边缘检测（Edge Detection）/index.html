@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/03%20%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%EF%BC%88Edge%20Detection%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/03%20%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%EF%BC%88Edge%20Detection%EF%BC%89/","path":"卷积神经网络1/03 边缘检测（Edge Detection）/","title":"03 边缘检测（Edge Detection）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>03 边缘检测（Edge Detection） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/03%20%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%EF%BC%88Edge%20Detection%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">205</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#03-%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%EF%BC%88Edge-Detection%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">03 边缘检测（Edge Detection）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%EF%BC%9A%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B-%E5%8D%B7%E7%A7%AF%E8%BF%90%E7%AE%97"><span class="nav-number">1.1.</span> <span class="nav-text">一、核心思想：边缘检测 &#x3D; 卷积运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%9E%82%E7%9B%B4%E4%B8%8E%E6%B0%B4%E5%B9%B3%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B"><span class="nav-number">1.2.</span> <span class="nav-text">二、垂直与水平边缘检测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9E%82%E7%9B%B4%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E5%99%A8%EF%BC%88Vertical-Edge-Detector%EF%BC%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 垂直边缘检测器（Vertical Edge Detector）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%B0%B4%E5%B9%B3%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E5%99%A8%EF%BC%88Horizontal-Edge-Detector%EF%BC%89"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 水平边缘检测器（Horizontal Edge Detector）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%BB%8F%E5%85%B8%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E7%AE%97%E5%AD%90%EF%BC%88Hand-crafted-Filters%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">三、经典边缘检测算子（Hand-crafted Filters）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Sobel-%E7%AE%97%E5%AD%90%EF%BC%88Sobel-Filter%EF%BC%89"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. Sobel 算子（Sobel Filter）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Scharr-%E7%AE%97%E5%AD%90%EF%BC%88Scharr-Filter%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. Scharr 算子（Scharr Filter）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%BB%8E%E6%89%8B%E5%B7%A5%E8%AE%BE%E8%AE%A1%E5%88%B0%E5%8F%AF%E5%AD%A6%E4%B9%A0%E6%BB%A4%E6%B3%A2%E5%99%A8%EF%BC%88Learnable-Filters%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">四、从手工设计到可学习滤波器（Learnable Filters）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%80%9D%E6%83%B3%EF%BC%9A"><span class="nav-number">1.4.1.</span> <span class="nav-text">关键思想：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8A%BF%EF%BC%9A"><span class="nav-number">1.4.2.</span> <span class="nav-text">优势：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%9B%BE%E5%83%8F%E5%B0%BA%E5%AF%B8%E4%B8%8E%E8%BE%B9%E7%BC%98%E5%93%8D%E5%BA%94%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">1.5.</span> <span class="nav-text">五、图像尺寸与边缘响应的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%80%BB%E7%BB%93%E8%A6%81%E7%82%B9%EF%BC%88Key-Takeaways%EF%BC%89"><span class="nav-number">1.6.</span> <span class="nav-text">六、总结要点（Key Takeaways）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%90%8E%E7%BB%AD%E5%86%85%E5%AE%B9%E9%A2%84%E5%91%8A"><span class="nav-number">1.7.</span> <span class="nav-text">七、后续内容预告</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Blum"
+      src="/blog/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Blum</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">205</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/02%20%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E7%A4%BA%E4%BE%8B%EF%BC%88Edge%20Detection%20Example%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-18</time>
+        <br>
+      02 边缘检测示例（Edge Detection Example）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/18%20Python%20%E4%B8%AD%E7%9A%84%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6%EF%BC%88Broadcasting%20in%20Python%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-15</time>
+        <br>
+      18 Python 中的广播机制（Broadcasting in Python）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/11%20%E4%B8%80%E7%BB%B4%E5%88%B0%E4%B8%89%E7%BB%B4%E6%8E%A8%E5%B9%BF%EF%BC%881D%20and%203D%20generalizations%20of%20models%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-02-08</time>
+        <br>
+      11 一维到三维推广（1D and 3D generalizations of models）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/32%20Softmax%20%E5%9B%9E%E5%BD%92/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-05</time>
+        <br>
+      32 Softmax 回归
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/06%20%E4%B8%89%E7%BB%B4%E5%8D%B7%E7%A7%AF%EF%BC%88Convolutions%20over%20Volumes%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-18</time>
+        <br>
+      06 三维卷积（Convolutions over Volumes）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/03%20%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%EF%BC%88Edge%20Detection%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Blum">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="03 边缘检测（Edge Detection） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          03 边缘检测（Edge Detection）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-18 12:04:58" itemprop="dateCreated datePublished" datetime="2026-01-18T12:04:58+00:00">2026-01-18</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="03-边缘检测（Edge-Detection）"><a href="#03-边缘检测（Edge-Detection）" class="headerlink" title="03 边缘检测（Edge Detection）"></a>03 边缘检测（Edge Detection）</h1><h2 id="一、核心思想：边缘检测-卷积运算"><a href="#一、核心思想：边缘检测-卷积运算" class="headerlink" title="一、核心思想：边缘检测 &#x3D; 卷积运算"></a>一、核心思想：边缘检测 &#x3D; 卷积运算</h2><p>边缘检测的本质是通过<strong>卷积核（filter &#x2F; kernel）</strong> 对图像进行滑动窗口操作，突出图像中亮度发生剧烈变化的位置——即“边缘”。</p>
+<ul>
+<li><p>图像可视为二维矩阵 $I \in \mathbb{R}^{H \times W}$。</p>
+</li>
+<li><p>卷积核为小尺寸矩阵（如 $3 \times 3$），记作 $K \in \mathbb{R}^{k \times k}$。</p>
+</li>
+<li><p>卷积输出（特征图）为：</p>
+<p>$$<br>(I * K)<em>{i,j} &#x3D; \sum</em>{m&#x3D;0}^{k-1} \sum_{n&#x3D;0}^{k-1} I_{i+m, j+n} \cdot K_{m,n}<br>$$</p>
+</li>
+</ul>
+<blockquote>
+<p>注：此处为“有效卷积”（valid convolution），不考虑 padding。</p>
+</blockquote>
+<hr>
+<h2 id="二、垂直与水平边缘检测"><a href="#二、垂直与水平边缘检测" class="headerlink" title="二、垂直与水平边缘检测"></a>二、垂直与水平边缘检测</h2><h3 id="1-垂直边缘检测器（Vertical-Edge-Detector）"><a href="#1-垂直边缘检测器（Vertical-Edge-Detector）" class="headerlink" title="1. 垂直边缘检测器（Vertical Edge Detector）"></a>1. 垂直边缘检测器（Vertical Edge Detector）</h3><p>典型卷积核：</p>
+<p>$$<br>K_{\text{vert}} &#x3D;<br>\begin{bmatrix}<br>1 &amp; 0 &amp; -1 \<br>1 &amp; 0 &amp; -1 \<br>1 &amp; 0 &amp; -1<br>\end{bmatrix}<br>$$</p>
+<ul>
+<li><strong>作用</strong>：检测图像中<strong>从左到右由亮变暗</strong>的垂直边缘。</li>
+<li>若结果为正（如 +30），表示<strong>左侧亮、右侧暗</strong>（正边）；</li>
+<li>若结果为负（如 -30），表示<strong>左侧暗、右侧亮</strong>（负边）。</li>
+</ul>
+<blockquote>
+<p>✅ 正负号区分了明暗过渡方向。</p>
+</blockquote>
+<p>若不关心方向，可取绝对值：</p>
+<p>$$<br>|I * K_{\text{vert}}|<br>$$</p>
+<h3 id="2-水平边缘检测器（Horizontal-Edge-Detector）"><a href="#2-水平边缘检测器（Horizontal-Edge-Detector）" class="headerlink" title="2. 水平边缘检测器（Horizontal Edge Detector）"></a>2. 水平边缘检测器（Horizontal Edge Detector）</h3><p>典型卷积核：</p>
+<p>$$<br>K_{\text{horiz}} &#x3D;<br>\begin{bmatrix}<br>1 &amp; 1 &amp; 1 \<br>0 &amp; 0 &amp; 0 \<br>-1 &amp; -1 &amp; -1<br>\end{bmatrix}<br>$$</p>
+<ul>
+<li><strong>作用</strong>：检测<strong>从上到下由亮变暗</strong>的水平边缘。</li>
+<li>正响应：上亮下暗；负响应：上暗下亮。</li>
+</ul>
+<hr>
+<h2 id="三、经典边缘检测算子（Hand-crafted-Filters）"><a href="#三、经典边缘检测算子（Hand-crafted-Filters）" class="headerlink" title="三、经典边缘检测算子（Hand-crafted Filters）"></a>三、经典边缘检测算子（Hand-crafted Filters）</h2><h3 id="1-Sobel-算子（Sobel-Filter）"><a href="#1-Sobel-算子（Sobel-Filter）" class="headerlink" title="1. Sobel 算子（Sobel Filter）"></a>1. Sobel 算子（Sobel Filter）</h3><p>增强中心行&#x2F;列权重，提升抗噪能力：</p>
+<ul>
+<li><p>垂直 Sobel：</p>
+<p>$$<br>K_{\text{Sobel, vert}} &#x3D;<br>\begin{bmatrix}<br>1 &amp; 0 &amp; -1 \<br>2 &amp; 0 &amp; -2 \<br>1 &amp; 0 &amp; -1<br>\end{bmatrix}<br>$$</p>
+</li>
+<li><p>水平 Sobel：</p>
+<p>$$<br>K_{\text{Sobel, horiz}} &#x3D;<br>\begin{bmatrix}<br>1 &amp; 2 &amp; 1 \<br>0 &amp; 0 &amp; 0 \<br>-1 &amp; -2 &amp; -1<br>\end{bmatrix}<br>$$</p>
+</li>
+</ul>
+<blockquote>
+<p>✅ 中心加权 → 对噪声更鲁棒。</p>
+</blockquote>
+<hr>
+<h3 id="2-Scharr-算子（Scharr-Filter）"><a href="#2-Scharr-算子（Scharr-Filter）" class="headerlink" title="2. Scharr 算子（Scharr Filter）"></a>2. Scharr 算子（Scharr Filter）</h3><p>比 Sobel 更精确地逼近梯度导数：</p>
+<ul>
+<li><p>垂直 Scharr：</p>
+<p>$$<br>K_{\text{Scharr, vert}} &#x3D;<br>\begin{bmatrix}<br>3 &amp; 0 &amp; -3 \<br>10 &amp; 0 &amp; -10 \<br>3 &amp; 0 &amp; -3<br>\end{bmatrix}<br>$$</p>
+</li>
+<li><p>水平 Scharr 可通过对转获得。</p>
+</li>
+</ul>
+<blockquote>
+<p>✅ 在小尺度下梯度估计更准确。</p>
+</blockquote>
+<hr>
+<h2 id="四、从手工设计到可学习滤波器（Learnable-Filters）"><a href="#四、从手工设计到可学习滤波器（Learnable-Filters）" class="headerlink" title="四、从手工设计到可学习滤波器（Learnable Filters）"></a>四、从手工设计到可学习滤波器（Learnable Filters）</h2><h3 id="关键思想："><a href="#关键思想：" class="headerlink" title="关键思想："></a>关键思想：</h3><blockquote>
+<p><strong>不再固定卷积核数值，而是将其视为可训练参数！</strong></p>
+</blockquote>
+<ul>
+<li><p>将 $3 \times 3$ 卷积核中的 9 个元素视为<strong>可学习参数</strong>：</p>
+<p>$$<br>K &#x3D;<br>\begin{bmatrix}<br>w_1 &amp; w_2 &amp; w_3 \<br>w_4 &amp; w_5 &amp; w_6 \<br>w_7 &amp; w_8 &amp; w_9<br>\end{bmatrix}<br>\quad \text{其中 } w_i \text{ 通过反向传播优化}<br>$$</p>
+</li>
+<li><p>在深度学习中，这些参数在训练过程中自动调整，以提取对任务最有用的特征（如边缘、纹理、角点等）。</p>
+</li>
+</ul>
+<h3 id="优势："><a href="#优势：" class="headerlink" title="优势："></a>优势：</h3><ul>
+<li>可检测<strong>任意角度</strong>的边缘（不仅是 0°、90°，还包括 45°、73° 等）；</li>
+<li>可学习<strong>非传统模式</strong>的特征（甚至无明确物理解释的滤波器）；</li>
+<li>自适应于具体任务（分类、检测、分割等）。</li>
+</ul>
+<blockquote>
+<p>💡 卷积神经网络（CNN）的第一层通常学习到的就是类似 Gabor 或边缘检测器的低级视觉特征。</p>
+</blockquote>
+<hr>
+<h2 id="五、图像尺寸与边缘响应的关系"><a href="#五、图像尺寸与边缘响应的关系" class="headerlink" title="五、图像尺寸与边缘响应的关系"></a>五、图像尺寸与边缘响应的关系</h2><ul>
+<li>在<strong>小图像</strong>（如 $6 \times 6$）中，边缘区域占比大，中间可能出现“混合响应”（如 +10 表示部分正边 + 部分负边抵消）。</li>
+<li>在<strong>大图像</strong>（如 $1000 \times 1000$）中，边缘区域占比极小，中间过渡带影响可忽略，边缘响应更清晰。</li>
+</ul>
+<hr>
+<h2 id="六、总结要点（Key-Takeaways）"><a href="#六、总结要点（Key-Takeaways）" class="headerlink" title="六、总结要点（Key Takeaways）"></a>六、总结要点（Key Takeaways）</h2><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>卷积 &#x3D; 边缘检测基础</strong></td>
+<td>所有边缘检测本质都是卷积运算</td>
+</tr>
+<tr>
+<td><strong>正&#x2F;负响应</strong></td>
+<td>区分明暗过渡方向（亮→暗 vs 暗→亮）</td>
+</tr>
+<tr>
+<td><strong>垂直 vs 水平滤波器</strong></td>
+<td>结构互为转置，分别检测不同方向边缘</td>
+</tr>
+<tr>
+<td><strong>Sobel &#x2F; Scharr</strong></td>
+<td>经典手工设计算子，具抗噪性或高精度</td>
+</tr>
+<tr>
+<td><strong>可学习滤波器</strong></td>
+<td>将卷积核参数化，通过反向传播自动优化</td>
+</tr>
+<tr>
+<td><strong>CNN 的第一层</strong></td>
+<td>通常自动学习出边缘、条纹等低级特征</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="七、后续内容预告"><a href="#七、后续内容预告" class="headerlink" title="七、后续内容预告"></a>七、后续内容预告</h2><p>接下来将学习：</p>
+<ul>
+<li><strong>Padding</strong>（填充）：控制输出尺寸，保留边界信息；</li>
+<li><strong>Stride</strong>（步长）：控制卷积滑动步幅；</li>
+<li>这些是构建<strong>卷积神经网络（CNN）</strong> 的基础模块。</li>
+</ul>
+<hr>
+<blockquote>
+<p>📌 <strong>学习建议</strong>：动手实现一个简单的卷积函数，用上述滤波器对灰度图做边缘检测，观察正负响应与图像结构的关系。再尝试用 PyTorch&#x2F;TensorFlow 定义一个可学习的 $3\times3$ 卷积层，可视化其学到的核——你会发现它很像 Sobel 或 Gabor 滤波器！</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/02%20%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E7%A4%BA%E4%BE%8B%EF%BC%88Edge%20Detection%20Example%EF%BC%89/" rel="prev" title="02 边缘检测示例（Edge Detection Example）">
+                  <i class="fa fa-angle-left"></i> 02 边缘检测示例（Edge Detection Example）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/04%20%E5%8D%B7%E7%A7%AF%E6%93%8D%E4%BD%9C%E4%B8%AD%E7%9A%84%20Padding%EF%BC%88%E5%A1%AB%E5%85%85%EF%BC%89/" rel="next" title="04 卷积操作中的 Padding（填充）">
+                  04 卷积操作中的 Padding（填充） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Blum</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">227k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:45</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

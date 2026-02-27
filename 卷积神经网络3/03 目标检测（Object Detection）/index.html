@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/03%20%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%88Object%20Detection%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/03%20%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%88Object%20Detection%EF%BC%89/","path":"卷积神经网络3/03 目标检测（Object Detection）/","title":"03 目标检测（Object Detection）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>03 目标检测（Object Detection） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/03%20%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%88Object%20Detection%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">205</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#03-%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%88Object-Detection%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">03 目标检测（Object Detection）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%AF%BE%E7%A8%8B%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.</span> <span class="nav-text">一、课程目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86%E5%9B%9E%E9%A1%BE"><span class="nav-number">1.2.</span> <span class="nav-text">二、前置知识回顾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95%EF%BC%88Sliding-Window-Detection%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">三、滑动窗口目标检测算法（Sliding Window Detection）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. 基本思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. 算法步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%9E%84%E5%BB%BA%E8%AE%AD%E7%BB%83%E9%9B%86"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">（1）构建训练集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E6%A3%80%E6%B5%8B%EF%BC%88%E6%B5%8B%E8%AF%95%E9%98%B6%E6%AE%B5%EF%BC%89"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">（2）滑动窗口检测（测试阶段）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98%EF%BC%9A%E8%AE%A1%E7%AE%97%E6%95%88%E7%8E%87%E4%BD%8E%E4%B8%8B"><span class="nav-number">1.4.</span> <span class="nav-text">四、核心问题：计算效率低下</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%A0%E7%BB%9F%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3-CNN-%E4%B8%8D%E5%AE%9E%E7%94%A8%EF%BC%9F"><span class="nav-number">1.4.1.</span> <span class="nav-text">为什么传统滑动窗口 + CNN 不实用？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E9%A2%84%E5%91%8A%EF%BC%88%E4%B8%8B%E8%8A%82%E8%AF%BE%E5%86%85%E5%AE%B9%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">五、解决方案预告（下节课内容）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%95%B0%E5%AD%A6%E8%A1%A8%E8%BE%BE%EF%BC%88KaTeX-%E5%85%BC%E5%AE%B9%EF%BC%89"><span class="nav-number">1.6.</span> <span class="nav-text">六、数学表达（KaTeX 兼容）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AE%9A%E4%BD%8D%E8%BE%93%E5%87%BA%E5%90%91%E9%87%8F%EF%BC%88%E5%9B%9E%E9%A1%BE%EF%BC%89"><span class="nav-number">1.6.1.</span> <span class="nav-text">1. 定位输出向量（回顾）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E9%A2%84%E6%B5%8B"><span class="nav-number">1.6.2.</span> <span class="nav-text">2. 滑动窗口预测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%A4%9A%E5%B0%BA%E5%BA%A6%E6%A3%80%E6%B5%8B"><span class="nav-number">1.6.3.</span> <span class="nav-text">3. 多尺度检测</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E6%80%BB%E7%BB%93%E8%A6%81%E7%82%B9"><span class="nav-number">1.7.</span> <span class="nav-text">七、总结要点</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Blum"
+      src="/blog/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Blum</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">205</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/11%20%E4%B8%80%E7%BB%B4%E5%88%B0%E4%B8%89%E7%BB%B4%E6%8E%A8%E5%B9%BF%EF%BC%881D%20and%203D%20generalizations%20of%20models%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-02-08</time>
+        <br>
+      11 一维到三维推广（1D and 3D generalizations of models）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/04%20%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E5%8D%B7%E7%A7%AF%E5%AE%9E%E7%8E%B0%EF%BC%88Convolutional%20Implementation%20of%20Sliding%20Windows%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-02-06</time>
+        <br>
+      04 滑动窗口的卷积实现（Convolutional Implementation of Sliding Windows）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/01%20%E7%9B%AE%E6%A0%87%E5%AE%9A%E4%BD%8D%EF%BC%88Object%20Localization%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-02-06</time>
+        <br>
+      01 目标定位（Object Localization）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/06%20%E4%B8%89%E7%BB%B4%E5%8D%B7%E7%A7%AF%EF%BC%88Convolutions%20over%20Volumes%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-18</time>
+        <br>
+      06 三维卷积（Convolutions over Volumes）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/02%20%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B%E7%A4%BA%E4%BE%8B%EF%BC%88Edge%20Detection%20Example%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-18</time>
+        <br>
+      02 边缘检测示例（Edge Detection Example）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/03%20%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%88Object%20Detection%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Blum">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="03 目标检测（Object Detection） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          03 目标检测（Object Detection）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-06 16:06:13" itemprop="dateCreated datePublished" datetime="2026-02-06T16:06:13+00:00">2026-02-06</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="03-目标检测（Object-Detection）"><a href="#03-目标检测（Object-Detection）" class="headerlink" title="03 目标检测（Object Detection）"></a>03 目标检测（Object Detection）</h1><h2 id="一、课程目标"><a href="#一、课程目标" class="headerlink" title="一、课程目标"></a>一、课程目标</h2><p>本节旨在讲解如何构建一个 <strong>基于滑动窗口（Sliding Window）的卷积神经网络目标检测系统</strong>，从基础的图像分类与定位任务出发，逐步过渡到多目标检测场景。</p>
+<hr>
+<h2 id="二、前置知识回顾"><a href="#二、前置知识回顾" class="headerlink" title="二、前置知识回顾"></a>二、前置知识回顾</h2><p>在进入目标检测前，课程已覆盖两个相关任务：</p>
+<ul>
+<li><strong>图像分类（Image Classification）</strong> ：判断图像中是否包含某类物体（如“是否有车”）。</li>
+<li><strong>对象定位（Object Localization）</strong> ：不仅判断类别，还输出边界框参数 $(b_x, b_y, b_h, b_w)$，实现“在哪里 + 是什么”。</li>
+</ul>
+<p>目标检测 &#x3D; 多实例的对象定位 + 分类。</p>
+<hr>
+<h2 id="三、滑动窗口目标检测算法（Sliding-Window-Detection）"><a href="#三、滑动窗口目标检测算法（Sliding-Window-Detection）" class="headerlink" title="三、滑动窗口目标检测算法（Sliding Window Detection）"></a>三、滑动窗口目标检测算法（Sliding Window Detection）</h2><h3 id="1-基本思想"><a href="#1-基本思想" class="headerlink" title="1. 基本思想"></a>1. 基本思想</h3><blockquote>
+<p>将整张图像划分为多个局部区域（窗口），对每个窗口单独运行一个<strong>预训练好的分类器</strong>（通常是 CNN），判断该区域内是否包含目标（如汽车）。</p>
+</blockquote>
+<h3 id="2-算法步骤"><a href="#2-算法步骤" class="headerlink" title="2. 算法步骤"></a>2. 算法步骤</h3><h4 id="（1）构建训练集"><a href="#（1）构建训练集" class="headerlink" title="（1）构建训练集"></a>（1）构建训练集</h4><ul>
+<li><p>收集大量<strong>裁剪后</strong>的图像样本：</p>
+<ul>
+<li>正样本：图像几乎被目标（如汽车）完全占据；</li>
+<li>负样本：不含目标的背景图像。</li>
+</ul>
+</li>
+<li><p>训练一个 CNN 分类器：</p>
+<p>$$<br>\text{输入：} x \in \mathbb{R}^{H \times W \times 3}, \quad \text{输出：} \hat{y} \in {0, 1}<br>$$</p>
+</li>
+</ul>
+<h4 id="（2）滑动窗口检测（测试阶段）"><a href="#（2）滑动窗口检测（测试阶段）" class="headerlink" title="（2）滑动窗口检测（测试阶段）"></a>（2）滑动窗口检测（测试阶段）</h4><p>对一张完整测试图像 $I$：</p>
+<ol>
+<li><strong>固定窗口尺寸</strong> $w \times h$；</li>
+<li>以<strong>步长（stride）</strong>  $s$ 在图像上滑动窗口；</li>
+<li>对每个窗口区域 $I_{\text{crop}}$，输入 CNN 得到预测 $\hat{y}$；</li>
+<li>若 $\hat{y} &#x3D; 1$，则在原图对应位置绘制检测框；</li>
+<li><strong>更换更大&#x2F;更小的窗口尺寸</strong>，重复上述过程（处理多尺度问题）。</li>
+</ol>
+<blockquote>
+<p>✅ 优点：概念简单，易于理解。<br>❌ 缺点：<strong>计算成本极高</strong>——每个窗口都要独立前向传播一次 CNN。</p>
+</blockquote>
+<hr>
+<h2 id="四、核心问题：计算效率低下"><a href="#四、核心问题：计算效率低下" class="headerlink" title="四、核心问题：计算效率低下"></a>四、核心问题：计算效率低下</h2><h3 id="为什么传统滑动窗口-CNN-不实用？"><a href="#为什么传统滑动窗口-CNN-不实用？" class="headerlink" title="为什么传统滑动窗口 + CNN 不实用？"></a>为什么传统滑动窗口 + CNN 不实用？</h3><ul>
+<li>卷积网络单次推理成本远高于传统线性分类器（如 SVM + HOG）；</li>
+<li>若使用小步长（如 $s&#x3D;1$）和多尺度窗口，窗口数量可达数万甚至数十万；</li>
+<li>导致<strong>冗余计算严重</strong>：相邻窗口高度重叠，但 CNN 仍重复提取相似特征。</li>
+</ul>
+<blockquote>
+<p>📌 举例：一张 $1000 \times 1000$ 图像，用 $64 \times 64$ 窗口、步长 8，仅单尺度就有约 $(1000&#x2F;8)^2 \approx 15,625$ 个窗口！</p>
+</blockquote>
+<hr>
+<h2 id="五、解决方案预告（下节课内容）"><a href="#五、解决方案预告（下节课内容）" class="headerlink" title="五、解决方案预告（下节课内容）"></a>五、解决方案预告（下节课内容）</h2><p>虽然本节未展开，但课程明确指出：</p>
+<blockquote>
+<p>“<strong>计算成本问题已有很好解决方案</strong>” —— 指的是 <strong>将全连接层替换为卷积层</strong>，从而实现 <strong>卷积化的滑动窗口（Convolutional Sliding Window）</strong> 。</p>
+</blockquote>
+<p>其核心思想是：</p>
+<ul>
+<li>利用卷积操作的<strong>平移不变性</strong>和<strong>计算共享性</strong>；</li>
+<li>一次性对整张图像做前向传播，<strong>等效于同时处理所有滑动窗口</strong>；</li>
+<li>极大提升效率，为 YOLO、SSD 等现代检测器奠定基础。</li>
+</ul>
+<hr>
+<h2 id="六、数学表达（KaTeX-兼容）"><a href="#六、数学表达（KaTeX-兼容）" class="headerlink" title="六、数学表达（KaTeX 兼容）"></a>六、数学表达（KaTeX 兼容）</h2><h3 id="1-定位输出向量（回顾）"><a href="#1-定位输出向量（回顾）" class="headerlink" title="1. 定位输出向量（回顾）"></a>1. 定位输出向量（回顾）</h3><p>对于单目标定位，标签向量为：</p>
+<p>$$<br>y &#x3D;<br>\begin{bmatrix}<br>p_c \<br>b_x \<br>b_y \<br>b_h \<br>b_w \<br>c_1 \<br>c_2 \<br>c_3<br>\end{bmatrix}<br>$$</p>
+<p>其中：</p>
+<ul>
+<li>$p_c &#x3D; 1$ 表示存在目标，否则 $p_c &#x3D; 0$；</li>
+<li>$(b_x, b_y)$ 是边界框中心坐标（归一化到 $[0,1]$）；</li>
+<li>$b_h, b_w$ 是高和宽（也归一化）；</li>
+<li>$c_i$ 是类别 one-hot 编码。</li>
+</ul>
+<h3 id="2-滑动窗口预测"><a href="#2-滑动窗口预测" class="headerlink" title="2. 滑动窗口预测"></a>2. 滑动窗口预测</h3><p>对每个窗口位置 $(i,j)$，CNN 输出：</p>
+<p>$$<br>\hat{y}<em>{ij} &#x3D; f</em>{\theta}(I[i:i+h, j:j+w])<br>$$</p>
+<p>若 $\hat{y}_{ij} &gt; \tau$（阈值），则在 $(i,j)$ 处标记检测框。</p>
+<h3 id="3-多尺度检测"><a href="#3-多尺度检测" class="headerlink" title="3. 多尺度检测"></a>3. 多尺度检测</h3><p>设窗口尺寸集合为 ${S_1, S_2, \dots, S_K}$，则总检测结果为：</p>
+<p>$$<br>\mathcal{D} &#x3D; \bigcup_{k&#x3D;1}^{K} \left{ (x, y, S_k) \mid f_{\theta}(I[x:x+S_k^h, y:y+S_k^w]) &#x3D; 1 \right}<br>$$</p>
+<hr>
+<h2 id="七、总结要点"><a href="#七、总结要点" class="headerlink" title="七、总结要点"></a>七、总结要点</h2><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>任务目标</strong></td>
+<td>在图像中同时完成“分类 + 定位”，支持多目标</td>
+</tr>
+<tr>
+<td><strong>核心方法</strong></td>
+<td>滑动窗口 + 预训练 CNN 分类器</td>
+</tr>
+<tr>
+<td><strong>关键步骤</strong></td>
+<td>裁剪训练 → 滑动窗口 → 多尺度遍历 → 合并结果</td>
+</tr>
+<tr>
+<td><strong>主要缺陷</strong></td>
+<td>计算冗余大、速度慢、难以实时</td>
+</tr>
+<tr>
+<td><strong>后续方向</strong></td>
+<td>卷积化滑动窗口（全卷积网络）、YOLO、RPN 等高效架构</td>
+</tr>
+</tbody></table>
+<hr>
+<blockquote>
+<p>💡 <strong>学习建议</strong>：滑动窗口虽已过时，但它是理解现代检测器（如 R-CNN、YOLO）演进逻辑的<strong>重要起点</strong>。务必掌握其思想局限与优化动机。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/02%20%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B/" rel="prev" title="02 特征点检测">
+                  <i class="fa fa-angle-left"></i> 02 特征点检测
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/04%20%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E5%8D%B7%E7%A7%AF%E5%AE%9E%E7%8E%B0%EF%BC%88Convolutional%20Implementation%20of%20Sliding%20Windows%EF%BC%89/" rel="next" title="04 滑动窗口的卷积实现（Convolutional Implementation of Sliding Windows）">
+                  04 滑动窗口的卷积实现（Convolutional Implementation of Sliding Windows） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Blum</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">227k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:45</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

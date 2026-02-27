@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/09%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E7%8E%B0%E7%8A%B6%EF%BC%88The%20state%20of%20computer%20vision%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/09%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E7%8E%B0%E7%8A%B6%EF%BC%88The%20state%20of%20computer%20vision%EF%BC%89/","path":"卷积神经网络2/09 计算机视觉现状（The state of computer vision）/","title":"09 计算机视觉现状（The state of computer vision）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>09 计算机视觉现状（The state of computer vision） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/09%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E7%8E%B0%E7%8A%B6%EF%BC%88The%20state%20of%20computer%20vision%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">205</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#09-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E7%8E%B0%E7%8A%B6%EF%BC%88The-state-of-computer-vision%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">09 计算机视觉现状（The state of computer vision）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%A0-%E4%B8%80%E3%80%81%E6%A0%B8%E5%BF%83%E8%A7%82%E7%82%B9%E6%A6%82%E8%A7%88"><span class="nav-number">1.1.</span> <span class="nav-text">🧠 一、核心观点概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8A-%E4%BA%8C%E3%80%81%E6%95%B0%E6%8D%AE%E9%87%8F%E4%B8%8E%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">1.2.</span> <span class="nav-text">📊 二、数据量与算法设计的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%95%B0%E6%8D%AE%E9%87%8F%E8%B0%B1%E7%B3%BB%EF%BC%88Data-Spectrum%EF%BC%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 数据量谱系（Data Spectrum）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8F%97%EF%B8%8F-%E4%B8%89%E3%80%81%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E4%B8%BA%E4%BD%95%E6%9B%B4%E4%BE%9D%E8%B5%96%E6%89%8B%E5%B7%A5%E5%B7%A5%E7%A8%8B%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">🏗️ 三、计算机视觉为何更依赖手工工程？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90%EF%BC%9A"><span class="nav-number">1.3.1.</span> <span class="nav-text">原因分析：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%81-%E5%9B%9B%E3%80%81%E8%BF%81%E7%A7%BB%E5%AD%A6%E4%B9%A0%EF%BC%9A%E5%B0%8F%E6%95%B0%E6%8D%AE%E4%B8%8B%E7%9A%84%E5%88%A9%E5%99%A8"><span class="nav-number">1.4.</span> <span class="nav-text">🔁 四、迁移学习：小数据下的利器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%81%E7%A7%BB%E5%AD%A6%E4%B9%A0%E6%B5%81%E7%A8%8B%EF%BC%9A"><span class="nav-number">1.4.1.</span> <span class="nav-text">迁移学习流程：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8F%86-%E4%BA%94%E3%80%81%E7%AB%9E%E8%B5%9B%E6%8A%80%E5%B7%A7-vs-%E7%94%9F%E4%BA%A7%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.5.</span> <span class="nav-text">🏆 五、竞赛技巧 vs. 生产系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%A9-%E5%85%AD%E3%80%81%E5%AE%9E%E7%94%A8%E5%BB%BA%E8%AE%AE%EF%BC%9A%E5%A6%82%E4%BD%95%E6%9E%84%E5%BB%BA%E7%9C%9F%E5%AE%9E-CV-%E7%B3%BB%E7%BB%9F%EF%BC%9F"><span class="nav-number">1.6.</span> <span class="nav-text">🧩 六、实用建议：如何构建真实 CV 系统？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%98-%E4%B8%83%E3%80%81%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE%E4%B8%8E%E8%B5%84%E6%BA%90"><span class="nav-number">1.7.</span> <span class="nav-text">📘 七、参考文献与资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E6%80%BB%E7%BB%93%E9%87%91%E5%8F%A5"><span class="nav-number">1.8.</span> <span class="nav-text">✅ 总结金句</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Blum"
+      src="/blog/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Blum</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">205</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/19%20%E6%8C%87%E6%95%B0%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87%E4%B8%AD%E7%9A%84%E5%81%8F%E5%B7%AE%E4%BF%AE%E6%AD%A3%EF%BC%88Bias%20Correction%20in%20Exponentially%20Weighted%20Averages%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-02</time>
+        <br>
+      19 指数加权平均中的偏差修正（Bias Correction in Exponentially Weighted Averages）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E4%BB%8E%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%E4%BC%98%E5%8C%96%E6%80%A7%E8%83%BD/" rel="bookmark">
+        <time class="popular-posts-time">2025-03-09</time>
+        <br>
+      从代码实现方式优化性能
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/12%20%E6%A2%AF%E5%BA%A6%E7%9A%84%E6%95%B0%E5%80%BC%E8%BF%91%E4%BC%BC%EF%BC%88Numerical%20Approximation%20of%20Gradients%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-01</time>
+        <br>
+      12 梯度的数值近似（Numerical Approximation of Gradients）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/13%20%E6%A2%AF%E5%BA%A6%E6%A3%80%E6%9F%A5%EF%BC%88Gradient%20Checking%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-01</time>
+        <br>
+      13 梯度检查（Gradient Checking）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/18%20%E4%BA%86%E8%A7%A3%E6%8C%87%E6%95%B0%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-02</time>
+        <br>
+      18 了解指数加权平均
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/09%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E7%8E%B0%E7%8A%B6%EF%BC%88The%20state%20of%20computer%20vision%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Blum">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="09 计算机视觉现状（The state of computer vision） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          09 计算机视觉现状（The state of computer vision）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-01-26 07:59:10" itemprop="dateCreated datePublished" datetime="2026-01-26T07:59:10+00:00">2026-01-26</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="09-计算机视觉现状（The-state-of-computer-vision）"><a href="#09-计算机视觉现状（The-state-of-computer-vision）" class="headerlink" title="09 计算机视觉现状（The state of computer vision）"></a>09 计算机视觉现状（The state of computer vision）</h1><h2 id="🧠-一、核心观点概览"><a href="#🧠-一、核心观点概览" class="headerlink" title="🧠 一、核心观点概览"></a>🧠 一、核心观点概览</h2><p>计算机视觉（Computer Vision, CV）是深度学习最成功的应用领域之一，但与其他领域（如语音识别、NLP）相比，它具有以下特点：</p>
+<ul>
+<li><strong>数据相对稀缺</strong>：即使有百万级图像数据集，对于高复杂度任务（如目标检测）仍显不足。</li>
+<li><strong>高度依赖手工工程（Hand-engineering）</strong> ：因数据有限，需精心设计网络架构、特征提取方式等。</li>
+<li><strong>迁移学习（Transfer Learning）至关重要</strong>：利用预训练模型微调，可显著提升小数据集上的性能。</li>
+<li><strong>竞赛技巧 ≠ 生产实践</strong>：许多提升基准测试（benchmark）性能的方法（如集成、多裁剪）在实际部署中成本过高。</li>
+</ul>
+<hr>
+<h2 id="📊-二、数据量与算法设计的关系"><a href="#📊-二、数据量与算法设计的关系" class="headerlink" title="📊 二、数据量与算法设计的关系"></a>📊 二、数据量与算法设计的关系</h2><h3 id="1-数据量谱系（Data-Spectrum）"><a href="#1-数据量谱系（Data-Spectrum）" class="headerlink" title="1. 数据量谱系（Data Spectrum）"></a>1. 数据量谱系（Data Spectrum）</h3><table>
+<thead>
+<tr>
+<th>数据量</th>
+<th>算法策略</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>大量数据</strong></td>
+<td>简单模型 + 自动学习</td>
+<td>少手工特征，靠大模型从数据中学习一切</td>
+</tr>
+<tr>
+<td><strong>少量数据</strong></td>
+<td>复杂手工工程</td>
+<td>需精心设计特征、网络结构、正则化等</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>关键洞察</strong>：<br>当标签数据 $D &#x3D; {(x^{(i)}, y^{(i)})}_{i&#x3D;1}^N$ 较小时，模型泛化能力受限，必须引入<strong>先验知识</strong>（prior knowledge），而这种先验常通过手工工程实现。</p>
+</blockquote>
+<hr>
+<h2 id="🏗️-三、计算机视觉为何更依赖手工工程？"><a href="#🏗️-三、计算机视觉为何更依赖手工工程？" class="headerlink" title="🏗️ 三、计算机视觉为何更依赖手工工程？"></a>🏗️ 三、计算机视觉为何更依赖手工工程？</h2><h3 id="原因分析："><a href="#原因分析：" class="headerlink" title="原因分析："></a>原因分析：</h3><ol>
+<li><p><strong>任务复杂度高</strong></p>
+<ul>
+<li>图像识别（Image Classification）：输入为像素矩阵 $x \in \mathbb{R}^{H \times W \times C}$，输出类别 $y \in {1, 2, …, K}$。</li>
+<li>目标检测（Object Detection）：需同时预测类别和边界框 $(y, b_x, b_y, b_w, b_h)$，标注成本更高 → 数据更少。</li>
+</ul>
+</li>
+<li><p><strong>有效数据不足</strong><br>即使 ImageNet 有 1400 万张图，对细粒度任务或特定领域（如医疗影像）仍远远不够。</p>
+</li>
+<li><p><strong>架构创新驱动性能提升</strong><br>因数据有限，研究者通过设计更优网络结构（如 ResNet、Inception）来弥补数据不足：</p>
+<p>$$<br>\text{Performance} \approx f(\text{Architecture}, \text{Data}, \text{Optimization})<br>$$</p>
+<p>当 Data 固定时，提升 Architecture 成为主要手段。</p>
+</li>
+</ol>
+<hr>
+<h2 id="🔁-四、迁移学习：小数据下的利器"><a href="#🔁-四、迁移学习：小数据下的利器" class="headerlink" title="🔁 四、迁移学习：小数据下的利器"></a>🔁 四、迁移学习：小数据下的利器</h2><h3 id="迁移学习流程："><a href="#迁移学习流程：" class="headerlink" title="迁移学习流程："></a>迁移学习流程：</h3><ol>
+<li><p>在大规模数据集（如 ImageNet）上预训练模型 $f_{\theta_{\text{pre}}}$</p>
+</li>
+<li><p>在目标任务小数据集上微调（fine-tune）部分或全部参数：</p>
+<p>$$<br>\theta^* &#x3D; \arg\min_{\theta} \sum_{i&#x3D;1}^{N_{\text{small}}} \mathcal{L}(f_{\theta}(x^{(i)}), y^{(i)})<br>$$</p>
+<p>其中 $N_{\text{small}} \ll N_{\text{ImageNet}}$</p>
+</li>
+</ol>
+<blockquote>
+<p>✅ <strong>优势</strong>：避免从零训练，节省计算资源，提升小样本性能。<br>💡 <strong>建议</strong>：优先使用开源预训练模型（如 ResNet50 from <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2ZjaG9sbGV0L2RlZXAtbGVhcm5pbmctbW9kZWxzL2Jsb2IvbWFzdGVyL3Jlc25ldDUwLnB5">fchollet&#x2F;deep-learning-models<i class="fa fa-external-link-alt"></i></span>）。</p>
+</blockquote>
+<hr>
+<h2 id="🏆-五、竞赛技巧-vs-生产系统"><a href="#🏆-五、竞赛技巧-vs-生产系统" class="headerlink" title="🏆 五、竞赛技巧 vs. 生产系统"></a>🏆 五、竞赛技巧 vs. 生产系统</h2><table>
+<thead>
+<tr>
+<th>技巧</th>
+<th>描述</th>
+<th>是否适合生产</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>模型集成（Ensemble）</strong></td>
+<td>训练多个独立模型，平均输出：$$\hat{y} &#x3D; \frac{1}{M} \sum_{m&#x3D;1}^{M} f_{\theta_m}(x)$$</td>
+<td>❌ 否（计算开销大，延迟高）</td>
+</tr>
+<tr>
+<td><strong>测试时多裁剪（Multi-crop at test time）</strong></td>
+<td>对单张图生成多个裁剪&#x2F;翻转版本（如 10-crop），平均预测结果</td>
+<td>⚠️ 谨慎（增加 10 倍推理时间）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>📌 <strong>重要提醒</strong>：<br>这些方法在 <strong>ImageNet Top-1&#x2F;Top-5 Accuracy</strong> 等 benchmark 上可提升 1–2%，但<strong>极少用于线上服务系统</strong>，除非有极高算力预算。</p>
+</blockquote>
+<hr>
+<h2 id="🧩-六、实用建议：如何构建真实-CV-系统？"><a href="#🧩-六、实用建议：如何构建真实-CV-系统？" class="headerlink" title="🧩 六、实用建议：如何构建真实 CV 系统？"></a>🧩 六、实用建议：如何构建真实 CV 系统？</h2><ol>
+<li><p><strong>不要重复造轮子</strong></p>
+<ul>
+<li>使用已被验证的架构（如 ResNet、EfficientNet）。</li>
+<li>采用开源实现（含超参、学习率调度等细节）。</li>
+</ul>
+</li>
+<li><p><strong>优先使用预训练模型 + 微调</strong></p>
+<ul>
+<li>尤其当你的数据集 &lt; 10,000 张图时。</li>
+</ul>
+</li>
+<li><p><strong>避免过度优化 benchmark 指标</strong></p>
+<ul>
+<li>关注 <strong>推理速度、内存占用、鲁棒性、可维护性</strong>。</li>
+</ul>
+</li>
+<li><p><strong>理解任务本质</strong></p>
+<ul>
+<li>分类？检测？分割？不同任务数据稀缺程度不同，策略应调整。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="📘-七、参考文献与资源"><a href="#📘-七、参考文献与资源" class="headerlink" title="📘 七、参考文献与资源"></a>📘 七、参考文献与资源</h2><ul>
+<li><p><strong>ResNet 原文</strong>：<br>He, K., Zhang, X., Ren, S., &amp; Sun, J. (2015). <em>Deep Residual Learning for Image Recognition</em>. <span class="exturl" data-url="aHR0cHM6Ly9hcnhpdi5vcmcvYWJzLzE1MTIuMDMzODU=">arXiv:1512.03385<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><strong>代码实现</strong>：<br>François Chollet 的 ResNet50 实现：<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2ZjaG9sbGV0L2RlZXAtbGVhcm5pbmctbW9kZWxzL2Jsb2IvbWFzdGVyL3Jlc25ldDUwLnB5">https://github.com/fchollet/deep-learning-models/blob/master/resnet50.py<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><strong>关键概念</strong>：</p>
+<ul>
+<li><strong>Benchmark</strong>：标准化性能评估平台（如 ImageNet、COCO）</li>
+<li><strong>Hand-engineering</strong>：人工设计特征或结构（vs. end-to-end learning）</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="✅-总结金句"><a href="#✅-总结金句" class="headerlink" title="✅ 总结金句"></a>✅ 总结金句</h2><blockquote>
+<p>“当你有很多数据时，让数据说话；当你没有很多数据时，让专家说话。”<br>—— Andrew Ng</p>
+</blockquote>
+<blockquote>
+<p>“在计算机视觉中，一个好架构的价值，往往超过十倍的数据。”（在小数据场景下）</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/08%20%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA%EF%BC%88Data%20Augmentation%EF%BC%89/" rel="prev" title="08 数据增强（Data Augmentation）">
+                  <i class="fa fa-angle-left"></i> 08 数据增强（Data Augmentation）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/01%20%E7%9B%AE%E6%A0%87%E5%AE%9A%E4%BD%8D%EF%BC%88Object%20Localization%EF%BC%89/" rel="next" title="01 目标定位（Object Localization）">
+                  01 目标定位（Object Localization） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Blum</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">227k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:45</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>
