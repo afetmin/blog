@@ -1,5 +1,5 @@
 ---
-title: 09 YOLO 算法（Putting it together: YOLO algorithm）
+title: 09 YOLO 算法（Putting it together： YOLO algorithm）
 date: 2026-02-06T16:26:40Z
 lastmod: 2026-02-06T16:29:45Z
 categories: 卷积神经网络
