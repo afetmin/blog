@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/09%20YOLO%20%E7%AE%97%E6%B3%95%EF%BC%88Putting%20it%20together%20YOLO%20algorithm%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/09%20YOLO%20%E7%AE%97%E6%B3%95%EF%BC%88Putting%20it%20together%20YOLO%20algorithm%EF%BC%89/","path":"卷积神经网络3/09 YOLO 算法（Putting it together YOLO algorithm）/","title":"09 YOLO 算法（Putting it together： YOLO algorithm）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>09 YOLO 算法（Putting it together： YOLO algorithm） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/09%20YOLO%20%E7%AE%97%E6%B3%95%EF%BC%88Putting%20it%20together%20YOLO%20algorithm%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">207</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#09-YOLO-%E7%AE%97%E6%B3%95%EF%BC%88Putting-it-together-YOLO-algorithm%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">09 YOLO 算法（Putting it together: YOLO algorithm）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%A0-%E4%B8%80%E3%80%81YOLO-%E7%AE%97%E6%B3%95%E6%95%B4%E4%BD%93%E6%80%9D%E6%83%B3"><span class="nav-number">1.1.</span> <span class="nav-text">🧠 一、YOLO 算法整体思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%A6-%E4%BA%8C%E3%80%81%E8%AE%AD%E7%BB%83%E9%9B%86%E6%9E%84%E9%80%A0%EF%BC%88Ground-Truth-Labeling%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">📦 二、训练集构造（Ground Truth Labeling）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%B1%BB%E5%88%AB%E8%AE%BE%E5%AE%9A"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 类别设定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Anchor-Boxes"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. Anchor Boxes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%BE%93%E5%87%BA%E5%BC%A0%E9%87%8F%E7%BB%B4%E5%BA%A6"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. 输出张量维度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%95%B4%E4%BD%93%E8%BE%93%E5%87%BA%E5%BD%A2%E7%8A%B6"><span class="nav-number">1.2.4.</span> <span class="nav-text">4. 整体输出形状</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%8D-%E4%B8%89%E3%80%81%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B%E5%85%B3%E9%94%AE%E7%BB%86%E8%8A%82"><span class="nav-number">1.3.</span> <span class="nav-text">🔍 三、训练过程关键细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A4%96-%E5%9B%9B%E3%80%81%E6%8E%A8%E7%90%86%EF%BC%88%E9%A2%84%E6%B5%8B%EF%BC%89%E8%BF%87%E7%A8%8B"><span class="nav-number">1.4.</span> <span class="nav-text">🤖 四、推理（预测）过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%B9-%E4%BA%94%E3%80%81%E5%90%8E%E5%A4%84%E7%90%86%EF%BC%9A%E9%9D%9E%E6%9E%81%E5%A4%A7%E5%80%BC%E6%8A%91%E5%88%B6%EF%BC%88Non-Max-Suppression-NMS%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">🧹 五、后处理：非极大值抑制（Non-Max Suppression, NMS）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="nav-number">1.5.1.</span> <span class="nav-text">步骤如下：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-%E5%85%AD%E3%80%81YOLO-%E6%A0%B8%E5%BF%83%E4%BC%98%E5%8A%BF%E6%80%BB%E7%BB%93"><span class="nav-number">1.6.</span> <span class="nav-text">📌 六、YOLO 核心优势总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%98-%E4%B8%83%E3%80%81%E5%85%B3%E9%94%AE%E5%85%AC%E5%BC%8F%E6%B1%87%E6%80%BB%EF%BC%88KaTeX-%E5%85%BC%E5%AE%B9%EF%BC%89"><span class="nav-number">1.7.</span> <span class="nav-text">📘 七、关键公式汇总（KaTeX 兼容）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE"><span class="nav-number">1.8.</span> <span class="nav-text">✅ 学习建议</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Blum"
+      src="/blog/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Blum</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">207</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/08%20Anchor%20Boxes%EF%BC%88%E9%94%9A%E6%A1%86%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-02-06</time>
+        <br>
+      08 Anchor Boxes（锚框）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/11%20%E4%B8%80%E7%BB%B4%E5%88%B0%E4%B8%89%E7%BB%B4%E6%8E%A8%E5%B9%BF%EF%BC%881D%20and%203D%20generalizations%20of%20models%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-02-08</time>
+        <br>
+      11 一维到三维推广（1D and 3D generalizations of models）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/04%20%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E5%8D%B7%E7%A7%AF%E5%AE%9E%E7%8E%B0%EF%BC%88Convolutional%20Implementation%20of%20Sliding%20Windows%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-02-06</time>
+        <br>
+      04 滑动窗口的卷积实现（Convolutional Implementation of Sliding Windows）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C1/06%20%E4%B8%89%E7%BB%B4%E5%8D%B7%E7%A7%AF%EF%BC%88Convolutions%20over%20Volumes%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-18</time>
+        <br>
+      06 三维卷积（Convolutions over Volumes）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/34%20%E6%AD%A3%E7%A1%AE%E8%AE%BE%E7%BD%AE%E7%9F%A9%E9%98%B5%E7%BB%B4%E5%BA%A6/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-24</time>
+        <br>
+      34 正确设置矩阵维度
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/09%20YOLO%20%E7%AE%97%E6%B3%95%EF%BC%88Putting%20it%20together%20YOLO%20algorithm%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Blum">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="09 YOLO 算法（Putting it together： YOLO algorithm） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          09 YOLO 算法（Putting it together： YOLO algorithm）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-06 16:26:40" itemprop="dateCreated datePublished" datetime="2026-02-06T16:26:40+00:00">2026-02-06</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="09-YOLO-算法（Putting-it-together-YOLO-algorithm）"><a href="#09-YOLO-算法（Putting-it-together-YOLO-algorithm）" class="headerlink" title="09 YOLO 算法（Putting it together: YOLO algorithm）"></a>09 YOLO 算法（Putting it together: YOLO algorithm）</h1><h2 id="🧠-一、YOLO-算法整体思想"><a href="#🧠-一、YOLO-算法整体思想" class="headerlink" title="🧠 一、YOLO 算法整体思想"></a>🧠 一、YOLO 算法整体思想</h2><p>YOLO（You Only Look Once）是一种<strong>单阶段（one-stage）目标检测算法</strong>，其核心思想是：</p>
+<blockquote>
+<p>将目标检测问题转化为<strong>回归问题</strong>：给定一张图像，通过一个卷积神经网络直接预测出所有目标的边界框（bounding box）及其类别概率。</p>
+</blockquote>
+<p>YOLO 将输入图像划分为 $S \times S$ 的网格（grid cells），每个网格负责预测若干个边界框（通常借助 anchor boxes），并判断这些框是否包含目标以及属于哪一类。</p>
+<hr>
+<h2 id="📦-二、训练集构造（Ground-Truth-Labeling）"><a href="#📦-二、训练集构造（Ground-Truth-Labeling）" class="headerlink" title="📦 二、训练集构造（Ground Truth Labeling）"></a>📦 二、训练集构造（Ground Truth Labeling）</h2><h3 id="1-类别设定"><a href="#1-类别设定" class="headerlink" title="1. 类别设定"></a>1. 类别设定</h3><ul>
+<li>假设要检测 $C &#x3D; 3$ 类目标：行人、汽车、摩托车。</li>
+<li><strong>不显式定义“背景”类</strong>，而是通过置信度 $\mathbb{1}_{\text{obj}}$ 判断是否有目标。</li>
+</ul>
+<h3 id="2-Anchor-Boxes"><a href="#2-Anchor-Boxes" class="headerlink" title="2. Anchor Boxes"></a>2. Anchor Boxes</h3><ul>
+<li>使用 $B &#x3D; 2$ 个预定义的 anchor boxes（具有不同宽高比）。</li>
+<li>每个 anchor box 对应一个预测分支。</li>
+</ul>
+<h3 id="3-输出张量维度"><a href="#3-输出张量维度" class="headerlink" title="3. 输出张量维度"></a>3. 输出张量维度</h3><p>对每个网格单元，输出一个向量：</p>
+<p>$$<br>\underbrace{[p_c, b_x, b_y, b_h, b_w, c_1, c_2, c_3]}_{8\text{ 维}} \quad \text{（每个 anchor box）}<br>$$</p>
+<p>其中：</p>
+<ul>
+<li>$p_c &#x3D; \mathbb{1}_{\text{obj}}$：该 anchor box 是否包含目标（0 或 1）；</li>
+<li>$(b_x, b_y)$：边界框中心相对于当前网格左上角的偏移（归一化到 [0,1]）；</li>
+<li>$(b_h, b_w)$：边界框高度和宽度（相对于整张图像的比例）；</li>
+<li>$c_1, c_2, c_3$：one-hot 编码的类别概率（仅当 $p_c&#x3D;1$ 时有效）。</li>
+</ul>
+<blockquote>
+<p>⚠️ 注意：若某网格无目标，则对应 anchor box 的 $p_c &#x3D; 0$，其余值为 “don’t care”，训练时不参与损失计算。</p>
+</blockquote>
+<h3 id="4-整体输出形状"><a href="#4-整体输出形状" class="headerlink" title="4. 整体输出形状"></a>4. 整体输出形状</h3><ul>
+<li><p>网格大小：$S \times S &#x3D; 3 \times 3$（教学示例）；</p>
+</li>
+<li><p>每个网格有 $B &#x3D; 2$ 个 anchor boxes；</p>
+</li>
+<li><p>每个 anchor 输出 8 维向量；</p>
+</li>
+<li><p>总输出张量：</p>
+<p>$$<br>S \times S \times B \times (5 + C) &#x3D; 3 \times 3 \times 2 \times 8 &#x3D; 3 \times 3 \times 16<br>$$</p>
+</li>
+</ul>
+<blockquote>
+<p>✅ 实际应用中常用 $S &#x3D; 19$，$B &#x3D; 5$，则输出为 $19 \times 19 \times 5 \times 8 &#x3D; 19 \times 19 \times 40$。</p>
+</blockquote>
+<hr>
+<h2 id="🔍-三、训练过程关键细节"><a href="#🔍-三、训练过程关键细节" class="headerlink" title="🔍 三、训练过程关键细节"></a>🔍 三、训练过程关键细节</h2><ul>
+<li><strong>目标分配规则</strong>：对每个真实边界框（ground truth box），计算其与所有 anchor boxes 的 <strong>IoU（交并比）</strong> ，将其分配给 <strong>IoU 最大的那个 anchor box</strong>。</li>
+<li>只有被分配的 anchor box 的 $p_c &#x3D; 1$，其余 anchor boxes 在该网格中 $p_c &#x3D; 0$。</li>
+<li>类别标签 $c_i$ 仅在 $p_c &#x3D; 1$ 时有意义。</li>
+</ul>
+<hr>
+<h2 id="🤖-四、推理（预测）过程"><a href="#🤖-四、推理（预测）过程" class="headerlink" title="🤖 四、推理（预测）过程"></a>🤖 四、推理（预测）过程</h2><p>输入图像 → 卷积网络 → 输出 $S \times S \times B \times (5 + C)$ 张量。</p>
+<p>对每个网格中的每个 anchor box，网络输出：</p>
+<ul>
+<li>一个置信度分数 $p_c$（实际实现中常为 sigmoid 输出，表示存在目标的概率）；</li>
+<li>边界框坐标 $(b_x, b_y, b_h, b_w)$；</li>
+<li>类别概率分布（通常为 softmax 或 sigmoid 输出）。</li>
+</ul>
+<blockquote>
+<p>💡 注意：即使某网格无目标，网络仍会输出具体数值（不能输出“don’t care”），但因 $p_c \approx 0$，这些预测会被后续过滤。</p>
+</blockquote>
+<hr>
+<h2 id="🧹-五、后处理：非极大值抑制（Non-Max-Suppression-NMS）"><a href="#🧹-五、后处理：非极大值抑制（Non-Max-Suppression-NMS）" class="headerlink" title="🧹 五、后处理：非极大值抑制（Non-Max Suppression, NMS）"></a>🧹 五、后处理：非极大值抑制（Non-Max Suppression, NMS）</h2><p>由于每个网格可能输出多个重叠的预测框，需进行 NMS 去除冗余。</p>
+<h3 id="步骤如下："><a href="#步骤如下：" class="headerlink" title="步骤如下："></a>步骤如下：</h3><ol>
+<li><p><strong>过滤低置信度预测</strong>：<br>设定阈值 $\tau$（如 0.6），丢弃所有满足</p>
+<p>$$<br>p_c &lt; \tau<br>$$</p>
+<p>的预测框。</p>
+</li>
+<li><p><strong>按类别分别处理</strong>：<br>对每个类别 $c \in {1, 2, 3}$（行人、汽车、摩托车）：</p>
+<ul>
+<li><p>提取所有预测为该类别的边界框；</p>
+</li>
+<li><p>计算每个框的 <strong>类别置信度得分</strong>：</p>
+<p>$$<br>\text{score}_c &#x3D; p_c \cdot P(\text{class}&#x3D;c)<br>$$</p>
+</li>
+<li><p>对该类别的所有框执行 NMS：</p>
+<ul>
+<li>选择得分最高的框；</li>
+<li>删除与其 IoU &gt; 阈值（如 0.5）的其他框；</li>
+<li>重复直至无剩余框。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>输出最终检测结果</strong>：保留所有通过 NMS 的边界框及其类别。</p>
+</li>
+</ol>
+<blockquote>
+<p>✅ <strong>关键点</strong>：YOLO 对每个类别独立运行 NMS，避免不同类别之间的误抑制。</p>
+</blockquote>
+<hr>
+<h2 id="📌-六、YOLO-核心优势总结"><a href="#📌-六、YOLO-核心优势总结" class="headerlink" title="📌 六、YOLO 核心优势总结"></a>📌 六、YOLO 核心优势总结</h2><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>端到端训练</strong></td>
+<td>单一网络同时学习定位与分类</td>
+</tr>
+<tr>
+<td><strong>实时性高</strong></td>
+<td>只需一次前向传播即可完成检测</td>
+</tr>
+<tr>
+<td><strong>全局上下文感知</strong></td>
+<td>不像滑动窗口或 R-CNN 系列，YOLO 利用整图信息做预测</td>
+</tr>
+<tr>
+<td><strong>结构简洁</strong></td>
+<td>易于部署，适合嵌入式或移动端</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="📘-七、关键公式汇总（KaTeX-兼容）"><a href="#📘-七、关键公式汇总（KaTeX-兼容）" class="headerlink" title="📘 七、关键公式汇总（KaTeX 兼容）"></a>📘 七、关键公式汇总（KaTeX 兼容）</h2><ol>
+<li><p><strong>输出向量结构（每个 anchor box）</strong> ：</p>
+<p>$$<br>\left[ p_c,\ b_x,\ b_y,\ b_h,\ b_w,\ c_1,\ c_2,\ \dots,\ c_C \right] \in \mathbb{R}^{5 + C}<br>$$</p>
+</li>
+<li><p><strong>整体输出张量</strong>：</p>
+<p>$$<br>\mathbf{Y} \in \mathbb{R}^{S \times S \times B \times (5 + C)}<br>$$</p>
+</li>
+<li><p><strong>类别置信度得分（用于 NMS）</strong> ：</p>
+<p>$$<br>\text{score}_c &#x3D; p_c \cdot P(c \mid \text{obj})<br>$$</p>
+</li>
+<li><p><strong>IoU（交并比）</strong> ：</p>
+<p>$$<br>\text{IoU}(A, B) &#x3D; \frac{|A \cap B|}{|A \cup B|}<br>$$</p>
+</li>
+</ol>
+<hr>
+<h2 id="✅-学习建议"><a href="#✅-学习建议" class="headerlink" title="✅ 学习建议"></a>✅ 学习建议</h2><ul>
+<li>动手实现 YOLO 的简化版（如 $3\times3$ 网格 + 2 anchors）有助于理解 label 构造与 loss 设计；</li>
+<li>注意区分 <strong>训练时的 ground truth 构造</strong> 与 <strong>推理时的预测解码</strong>；</li>
+<li>NMS 是目标检测通用技术，不仅用于 YOLO，也用于 Faster R-CNN、SSD 等。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/08%20Anchor%20Boxes%EF%BC%88%E9%94%9A%E6%A1%86%EF%BC%89/" rel="prev" title="08 Anchor Boxes（锚框）">
+                  <i class="fa fa-angle-left"></i> 08 Anchor Boxes（锚框）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/10%20%E5%80%99%E9%80%89%E5%8C%BA%E5%9F%9F%EF%BC%88Region%20Proposals,%20Optional%EF%BC%89/" rel="next" title="10 候选区域（Region Proposals, Optional）">
+                  10 候选区域（Region Proposals, Optional） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Blum</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">230k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">13:57</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>
