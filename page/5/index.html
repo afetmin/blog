@@ -128,7 +128,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">14</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">207</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">219</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -193,13 +193,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/blog/archives/">
-          <span class="site-state-item-count">207</span>
+          <span class="site-state-item-count">219</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/blog/categories/">
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -247,7 +247,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/02%20%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/04%20Triplet%20%E6%8D%9F%E5%A4%B1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.png">
@@ -265,7 +265,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/02%20%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B/" class="post-title-link" itemprop="url">02 特征点检测</a>
+          <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/04%20Triplet%20%E6%8D%9F%E5%A4%B1/" class="post-title-link" itemprop="url">04 Triplet 损失</a>
         </h2>
 
         <div class="post-meta-container">
@@ -276,7 +276,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-02-06 16:05:18" itemprop="dateCreated datePublished" datetime="2026-02-06T16:05:18+00:00">2026-02-06</time>
+      <time title="创建时间：2026-02-08 11:28:57" itemprop="dateCreated datePublished" datetime="2026-02-08T11:28:57+00:00">2026-02-08</time>
     </span>
 
   
@@ -286,7 +286,189 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>709</span>
+      <span>992</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="04-Triplet-损失"><a href="#04-Triplet-损失" class="headerlink" title="04 Triplet 损失"></a>04 Triplet 损失</h1><h2 id="🧠-一、Triplet-损失的核心思想"><a href="#🧠-一、Triplet-损失的核心思想" class="headerlink" title="🧠 一、Triplet 损失的核心思想"></a>🧠 一、Triplet 损失的核心思想</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/04%20Triplet%20%E6%8D%9F%E5%A4%B1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/03%20Siamese%20%E7%BD%91%E7%BB%9C%EF%BC%88%E7%94%A8%E4%BA%8E%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Blum">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/03%20Siamese%20%E7%BD%91%E7%BB%9C%EF%BC%88%E7%94%A8%E4%BA%8E%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%EF%BC%89/" class="post-title-link" itemprop="url">03 Siamese 网络（用于人脸识别）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-08 11:23:06" itemprop="dateCreated datePublished" datetime="2026-02-08T11:23:06+00:00">2026-02-08</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>622</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="03-Siamese-网络（用于人脸识别）"><a href="#03-Siamese-网络（用于人脸识别）" class="headerlink" title="03 Siamese 网络（用于人脸识别）"></a>03 Siamese 网络（用于人脸识别）</h1><h3 id="一、核心思想"><a href="#一、核心思想" class="headerlink" title="一、核心思想"></a>一、核心思想</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/03%20Siamese%20%E7%BD%91%E7%BB%9C%EF%BC%88%E7%94%A8%E4%BA%8E%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/02%20One-Shot%20Learning%EF%BC%88%E4%B8%80%E6%AC%A1%E6%80%A7%E5%AD%A6%E4%B9%A0%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Blum">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/02%20One-Shot%20Learning%EF%BC%88%E4%B8%80%E6%AC%A1%E6%80%A7%E5%AD%A6%E4%B9%A0%EF%BC%89/" class="post-title-link" itemprop="url">02 One-Shot Learning（一次性学习）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-08 11:18:59" itemprop="dateCreated datePublished" datetime="2026-02-08T11:18:59+00:00">2026-02-08</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>862</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -304,10 +486,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="02-特征点检测"><a href="#02-特征点检测" class="headerlink" title="02 特征点检测"></a>02 特征点检测</h1><h4 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h4>
+          <h1 id="02-One-Shot-Learning（一次性学习）"><a href="#02-One-Shot-Learning（一次性学习）" class="headerlink" title="02 One-Shot Learning（一次性学习）"></a>02 One-Shot Learning（一次性学习）</h1><h3 id="一、问题背景"><a href="#一、问题背景" class="headerlink" title="一、问题背景"></a>一、问题背景</h3>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/02%20%E7%89%B9%E5%BE%81%E7%82%B9%E6%A3%80%E6%B5%8B/#more" rel="contents">
+              <a class="btn" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/02%20One-Shot%20Learning%EF%BC%88%E4%B8%80%E6%AC%A1%E6%80%A7%E5%AD%A6%E4%B9%A0%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -338,7 +520,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/01%20%E7%9B%AE%E6%A0%87%E5%AE%9A%E4%BD%8D%EF%BC%88Object%20Localization%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/01%20%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%EF%BC%9F%EF%BC%88What%20is%20face%20recognition_%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.png">
@@ -356,7 +538,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/01%20%E7%9B%AE%E6%A0%87%E5%AE%9A%E4%BD%8D%EF%BC%88Object%20Localization%EF%BC%89/" class="post-title-link" itemprop="url">01 目标定位（Object Localization）</a>
+          <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/01%20%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%EF%BC%9F%EF%BC%88What%20is%20face%20recognition_%EF%BC%89/" class="post-title-link" itemprop="url">01 什么是人脸识别？（What is face recognition?）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -367,280 +549,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-02-06 15:57:31" itemprop="dateCreated datePublished" datetime="2026-02-06T15:57:31+00:00">2026-02-06</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.2k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="01-目标定位（Object-Localization）"><a href="#01-目标定位（Object-Localization）" class="headerlink" title="01 目标定位（Object Localization）"></a>01 目标定位（Object Localization）</h1><h2 id="🎯-一、任务定义：从图像分类到目标定位"><a href="#🎯-一、任务定义：从图像分类到目标定位" class="headerlink" title="🎯 一、任务定义：从图像分类到目标定位"></a>🎯 一、任务定义：从图像分类到目标定位</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/01%20%E7%9B%AE%E6%A0%87%E5%AE%9A%E4%BD%8D%EF%BC%88Object%20Localization%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/09%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E7%8E%B0%E7%8A%B6%EF%BC%88The%20state%20of%20computer%20vision%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.png">
-      <meta itemprop="name" content="Blum">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="DevDino 🦖">
-      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | DevDino 🦖">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/09%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E7%8E%B0%E7%8A%B6%EF%BC%88The%20state%20of%20computer%20vision%EF%BC%89/" class="post-title-link" itemprop="url">09 计算机视觉现状（The state of computer vision）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-01-26 07:59:10" itemprop="dateCreated datePublished" datetime="2026-01-26T07:59:10+00:00">2026-01-26</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.1k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="09-计算机视觉现状（The-state-of-computer-vision）"><a href="#09-计算机视觉现状（The-state-of-computer-vision）" class="headerlink" title="09 计算机视觉现状（The state of computer vision）"></a>09 计算机视觉现状（The state of computer vision）</h1><h2 id="🧠-一、核心观点概览"><a href="#🧠-一、核心观点概览" class="headerlink" title="🧠 一、核心观点概览"></a>🧠 一、核心观点概览</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/09%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E7%8E%B0%E7%8A%B6%EF%BC%88The%20state%20of%20computer%20vision%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/08%20%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA%EF%BC%88Data%20Augmentation%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.png">
-      <meta itemprop="name" content="Blum">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="DevDino 🦖">
-      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | DevDino 🦖">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/08%20%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA%EF%BC%88Data%20Augmentation%EF%BC%89/" class="post-title-link" itemprop="url">08 数据增强（Data Augmentation）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-01-26 07:58:36" itemprop="dateCreated datePublished" datetime="2026-01-26T07:58:36+00:00">2026-01-26</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.1k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="08-数据增强（Data-Augmentation）"><a href="#08-数据增强（Data-Augmentation）" class="headerlink" title="08 数据增强（Data Augmentation）"></a>08 数据增强（Data Augmentation）</h1><h3 id="一、为什么需要数据增强？"><a href="#一、为什么需要数据增强？" class="headerlink" title="一、为什么需要数据增强？"></a>一、为什么需要数据增强？</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/08%20%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA%EF%BC%88Data%20Augmentation%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/07%20%E8%BF%81%E7%A7%BB%E5%AD%A6%E4%B9%A0%EF%BC%88Transfer%20Learning%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.png">
-      <meta itemprop="name" content="Blum">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="DevDino 🦖">
-      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | DevDino 🦖">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/07%20%E8%BF%81%E7%A7%BB%E5%AD%A6%E4%B9%A0%EF%BC%88Transfer%20Learning%EF%BC%89/" class="post-title-link" itemprop="url">07 迁移学习（Transfer Learning）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-01-26 07:55:20" itemprop="dateCreated datePublished" datetime="2026-01-26T07:55:20+00:00">2026-01-26</time>
+      <time title="创建时间：2026-02-08 11:15:34" itemprop="dateCreated datePublished" datetime="2026-02-08T11:15:34+00:00">2026-02-08</time>
     </span>
 
   
@@ -668,10 +577,101 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="07-迁移学习（Transfer-Learning）"><a href="#07-迁移学习（Transfer-Learning）" class="headerlink" title="07 迁移学习（Transfer Learning）"></a>07 迁移学习（Transfer Learning）</h1><p>迁移学习（Transfer Learning）是深度学习，尤其是<strong>计算机视觉</strong>（Computer Vision）领域中极为重要且高效的技术。其核心思想是：<strong>利用在大规模数据集上预训练好的模型权重，作为新任务模型的初始化参数，从而显著提升小数据集上的训练效果与收敛速度</strong>。</p>
+          <h1 id="01-什么是人脸识别？（What-is-face-recognition-）"><a href="#01-什么是人脸识别？（What-is-face-recognition-）" class="headerlink" title="01 什么是人脸识别？（What is face recognition?）"></a>01 什么是人脸识别？（What is face recognition?）</h1><h3 id="一、课程背景与目标"><a href="#一、课程背景与目标" class="headerlink" title="一、课程背景与目标"></a>一、课程背景与目标</h3>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C2/07%20%E8%BF%81%E7%A7%BB%E5%AD%A6%E4%B9%A0%EF%BC%88Transfer%20Learning%EF%BC%89/#more" rel="contents">
+              <a class="btn" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/01%20%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%EF%BC%9F%EF%BC%88What%20is%20face%20recognition_%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/10%20%E5%80%99%E9%80%89%E5%8C%BA%E5%9F%9F%EF%BC%88Region%20Proposals,%20Optional%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Blum">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/10%20%E5%80%99%E9%80%89%E5%8C%BA%E5%9F%9F%EF%BC%88Region%20Proposals,%20Optional%EF%BC%89/" class="post-title-link" itemprop="url">10 候选区域（Region Proposals, Optional）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-06 16:29:54" itemprop="dateCreated datePublished" datetime="2026-02-06T16:29:54+00:00">2026-02-06</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="10-候选区域（Region-Proposals-Optional）"><a href="#10-候选区域（Region-Proposals-Optional）" class="headerlink" title="10 候选区域（Region Proposals, Optional）"></a>10 候选区域（Region Proposals, Optional）</h1><h2 id="🧠-一、核心思想：从滑动窗口到候选区域"><a href="#🧠-一、核心思想：从滑动窗口到候选区域" class="headerlink" title="🧠 一、核心思想：从滑动窗口到候选区域"></a>🧠 一、核心思想：从滑动窗口到候选区域</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3/10%20%E5%80%99%E9%80%89%E5%8C%BA%E5%9F%9F%EF%BC%88Region%20Proposals,%20Optional%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -695,7 +695,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/blog/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/blog/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/42/">42</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/blog/page/6/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/blog/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/blog/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/44/">44</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/blog/page/6/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -718,14 +718,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">230k</span>
+    <span title="站点总字数">242k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">13:57</span>
+    <span title="站点阅读时长">14:38</span>
   </span>
 </div>
 

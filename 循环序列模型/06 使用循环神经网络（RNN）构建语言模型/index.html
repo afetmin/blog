@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E5%BE%AA%E7%8E%AF%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B/06%20%E4%BD%BF%E7%94%A8%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88RNN%EF%BC%89%E6%9E%84%E5%BB%BA%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E5%BE%AA%E7%8E%AF%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B/06%20%E4%BD%BF%E7%94%A8%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88RNN%EF%BC%89%E6%9E%84%E5%BB%BA%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/","path":"循环序列模型/06 使用循环神经网络（RNN）构建语言模型/","title":"06 使用循环神经网络（RNN）构建语言模型"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>06 使用循环神经网络（RNN）构建语言模型 | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/%E5%BE%AA%E7%8E%AF%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B/06%20%E4%BD%BF%E7%94%A8%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88RNN%EF%BC%89%E6%9E%84%E5%BB%BA%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">219</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E4%BD%9C%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">1. 语言模型的定义与作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%AD%E6%96%99%E5%BA%93%E6%9E%84%E5%BB%BA"><span class="nav-number">2.</span> <span class="nav-text">2. 数据预处理与语料库构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-RNN-%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">3. RNN 语言模型架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%B5%81%E7%A8%8B"><span class="nav-number">3.1.</span> <span class="nav-text">网络结构流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0-Loss-Function"><span class="nav-number">4.</span> <span class="nav-text">4. 损失函数 (Loss Function)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%8F%A5%E5%AD%90%E6%A6%82%E7%8E%87%E8%AE%A1%E7%AE%97"><span class="nav-number">5.</span> <span class="nav-text">5. 句子概率计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E5%90%8E%E7%BB%AD%E5%BA%94%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">6. 后续应用</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Blum"
+      src="/blog/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Blum</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/32%20Softmax%20%E5%9B%9E%E5%BD%92/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-05</time>
+        <br>
+      32 Softmax 回归
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/33%20%E8%AE%AD%E7%BB%83%E4%B8%80%E4%B8%AA%E4%BD%BF%E7%94%A8%E4%BA%86%20Softmax%20%E7%9A%84%E5%88%86%E7%B1%BB%E5%99%A8/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-05</time>
+        <br>
+      33 训练一个使用了 Softmax 的分类器
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/11%20%E4%B8%80%E7%BB%B4%E5%88%B0%E4%B8%89%E7%BB%B4%E6%8E%A8%E5%B9%BF%EF%BC%881D%20and%203D%20generalizations%20of%20models%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-02-08</time>
+        <br>
+      11 一维到三维推广（1D and 3D generalizations of models）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%BE%AA%E7%8E%AF%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B/06%20%E4%BD%BF%E7%94%A8%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88RNN%EF%BC%89%E6%9E%84%E5%BB%BA%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Blum">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="06 使用循环神经网络（RNN）构建语言模型 | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          06 使用循环神经网络（RNN）构建语言模型
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-08 02:43:53" itemprop="dateCreated datePublished" datetime="2026-03-08T02:43:53+00:00">2026-03-08</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>862</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="1-语言模型的定义与作用"><a href="#1-语言模型的定义与作用" class="headerlink" title="1. 语言模型的定义与作用"></a>1. 语言模型的定义与作用</h3><ul>
+<li><p><strong>定义</strong>：语言模型用于计算一个特定句子（文本序列）出现的概率 $P(y^{&lt;1&gt;}, y^{&lt;2&gt;}, \dots, y^{})$。</p>
+</li>
+<li><p><strong>应用场景</strong>：</p>
+<ul>
+<li><p><strong>语音识别</strong>：区分发音相似但意义不同的词（如 “pear” vs “pair”）。系统会选择概率更高的句子。</p>
+<ul>
+<li>例如：$P(\text{“apple and pear salad”}) \gg P(\text{“apple and pair salad”})$。</li>
+</ul>
+</li>
+<li><p><strong>机器翻译</strong>：帮助生成最自然、概率最高的目标语言句子。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-数据预处理与语料库构建"><a href="#2-数据预处理与语料库构建" class="headerlink" title="2. 数据预处理与语料库构建"></a>2. 数据预处理与语料库构建</h3><p>　　构建模型前需要大型文本语料库（Corpus），并进行以下处理：</p>
+<ul>
+<li><p><strong>标记化 (Tokenization)</strong> ：将句子拆分为单词，并映射为字典中的索引（One-hot向量）。</p>
+</li>
+<li><p><strong>特殊标记</strong>：</p>
+<ul>
+<li><strong>EOS (End of Sentence)</strong> ：附加在句子末尾，表示句子结束。</li>
+<li><strong>UNK (Unknown)</strong> ：当遇到字典外的小众词汇（如 “Mau”）时，用此标记替换，仅对 UNK 建立概率模型。</li>
+</ul>
+</li>
+<li><p><strong>标点处理</strong>：可根据需求决定是否将标点符号视为独立标记（笔记示例中忽略了句号）。</p>
+</li>
+</ul>
+<h3 id="3-RNN-语言模型架构"><a href="#3-RNN-语言模型架构" class="headerlink" title="3. RNN 语言模型架构"></a>3. RNN 语言模型架构</h3><p>　　RNN 通过从左到右依次预测下一个词来建模序列概率。</p>
+<h4 id="网络结构流程"><a href="#网络结构流程" class="headerlink" title="网络结构流程"></a>网络结构流程</h4><p>　　假设输入序列为 $y^{&lt;1&gt;}, y^{&lt;2&gt;}, \dots, y^{}$（其中 $y^{}$ 为 EOS）：</p>
+<ol>
+<li><p><strong>初始化</strong>：</p>
+<ul>
+<li>激活值 $a^{&lt;0&gt;} &#x3D; \vec{0}$</li>
+<li>输入 $\hat{y}^{&lt;0&gt;} &#x3D; \vec{0}$ (或作为占位符)</li>
+</ul>
+</li>
+<li><p><strong>时间步</strong> <strong>$t$</strong> <strong>的计算</strong> ($t &#x3D; 1, 2, \dots, T_y$)：</p>
+<ul>
+<li><p><strong>输入</strong>：上一个时间步的真实单词 $y^{}$（训练时）和上一个隐藏状态 $a^{}$。</p>
+</li>
+<li><p><strong>隐藏层更新</strong>：计算当前激活项 $a^{}$。</p>
+</li>
+<li><p><strong>输出预测</strong>：通过 Softmax 层输出当前步的预测概率分布 $\hat{y}^{}$。</p>
+<ul>
+<li>$\hat{y}^{}$ 是一个向量，维度等于字典大小（+ UNK + EOS）。</li>
+<li>它表示在已知前 $t-1$ 个词的条件下，下一个词是字典中任意单词的概率：$P(y^{} | y^{&lt;1&gt;}, \dots, y^{})$。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>训练机制</strong>：</p>
+<ul>
+<li>在训练过程中，每个时间步都使用<strong>真实的上一时刻单词</strong>（Ground Truth）作为输入，而不是模型预测的词。这被称为“教师强制”（Teacher Forcing）。</li>
+<li>模型目标是让预测分布 $\hat{y}^{}$ 尽可能接近真实标签 $y^{}$。</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-损失函数-Loss-Function"><a href="#4-损失函数-Loss-Function" class="headerlink" title="4. 损失函数 (Loss Function)"></a>4. 损失函数 (Loss Function)</h3><p>　　为了训练网络，定义如下代价函数：</p>
+<ul>
+<li><p><strong>单步损失</strong>：在时间步 $t$，若真实标签为 $y^{}$，预测值为 $\hat{y}^{}$，则使用 Softmax 损失（交叉熵损失）：</p>
+<p>$$<br>\mathcal{L}^{}(\hat{y}^{}, y^{}) &#x3D; - \sum_{k} y_k^{} \log(\hat{y}_k^{})<br>$$</p>
+<p> <em>(注：由于</em> <em>$y^{}$</em> <em>是 One-hot 向量，实际计算简化为</em> *$-\log(\hat{y}_{true}^{})$*​ <em>)</em></p>
+</li>
+<li><p><strong>总损失函数</strong>：整个序列所有时间步损失之和：</p>
+<p>$$<br>\mathcal{L} &#x3D; \sum_{t&#x3D;1}^{T_y} \mathcal{L}^{}(\hat{y}^{}, y^{})<br>$$</p>
+</li>
+</ul>
+<h3 id="5-句子概率计算"><a href="#5-句子概率计算" class="headerlink" title="5. 句子概率计算"></a>5. 句子概率计算</h3><p>　　训练好的模型可以计算任意新句子 $y^{&lt;1&gt;}, y^{&lt;2&gt;}, \dots, y^{}$ 的联合概率。根据链式法则，该概率等于各步条件概率的乘积：</p>
+<p>$$<br>P(y^{&lt;1&gt;}, \dots, y^{}) &#x3D; P(y^{&lt;1&gt;}) \times P(y^{&lt;2&gt;} | y^{&lt;1&gt;}) \times P(y^{&lt;3&gt;} | y^{&lt;1&gt;}, y^{&lt;2&gt;}) \times \dots \times P(y^{} | y^{&lt;1&gt;}, \dots, y^{})<br>$$</p>
+<p>　　对应到 RNN 的输出即为：</p>
+<p>$$<br>P(\text{Sentence}) &#x3D; \prod_{t&#x3D;1}^{n} \hat{y}^{}_{y^{}}<br>$$</p>
+<p>　　 <em>(其中</em> <em>$\hat{y}^{}_{y^{}}$</em> <em>表示模型在第</em> <em>$t$</em> <em>步预测出真实词</em> <em>$y^{}$</em> <em>的概率值)</em></p>
+<h3 id="6-后续应用"><a href="#6-后续应用" class="headerlink" title="6. 后续应用"></a>6. 后续应用</h3><ul>
+<li><strong>序列生成 (Sampling)</strong> ：利用训练好的模型，可以通过从 Softmax 输出的概率分布中采样来生成新的文本序列（如莎士比亚风格的文本）。此时，输入不再是真实标签，而是上一步模型采样得到的词。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E5%BE%AA%E7%8E%AF%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B/05%20%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88Different%20types%20of%20RNNs%EF%BC%89/" rel="prev" title="05 不同类型的循环神经网络（Different types of RNNs）">
+                  <i class="fa fa-angle-left"></i> 05 不同类型的循环神经网络（Different types of RNNs）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/%E5%BE%AA%E7%8E%AF%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B/07%20%E6%96%B0%E5%BA%8F%E5%88%97%E9%87%87%E6%A0%B7%EF%BC%88Sampling%20novel%20sequences%EF%BC%89/" rel="next" title="07 新序列采样（Sampling novel sequences）">
+                  07 新序列采样（Sampling novel sequences） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Blum</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">242k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">14:38</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>
