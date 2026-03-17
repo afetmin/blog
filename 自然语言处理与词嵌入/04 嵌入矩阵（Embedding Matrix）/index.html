@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/04%20%E5%B5%8C%E5%85%A5%E7%9F%A9%E9%98%B5%EF%BC%88Embedding%20Matrix%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/04%20%E5%B5%8C%E5%85%A5%E7%9F%A9%E9%98%B5%EF%BC%88Embedding%20Matrix%EF%BC%89/","path":"自然语言处理与词嵌入/04 嵌入矩阵（Embedding Matrix）/","title":"04 嵌入矩阵（Embedding Matrix）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>04 嵌入矩阵（Embedding Matrix） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/04%20%E5%B5%8C%E5%85%A5%E7%9F%A9%E9%98%B5%EF%BC%88Embedding%20Matrix%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">240</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B8%80%E8%8A%82%E5%9C%A8%E8%AE%B2%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">这一节在讲什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B5%8C%E5%85%A5%E7%9F%A9%E9%98%B5%E9%95%BF%E4%BB%80%E4%B9%88%E6%A0%B7"><span class="nav-number">2.</span> <span class="nav-text">嵌入矩阵长什么样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#one-hot-%E4%B9%98%E5%B5%8C%E5%85%A5%E7%9F%A9%E9%98%B5%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88"><span class="nav-number">3.</span> <span class="nav-text">one-hot 乘嵌入矩阵会发生什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%BB%B6%E4%BA%8B%E6%88%90%E7%AB%8B"><span class="nav-number">4.</span> <span class="nav-text">为什么这件事成立</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%99%BD%E5%8F%AF%E4%BB%A5%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3"><span class="nav-number">5.</span> <span class="nav-text">小白可以怎么理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E5%AE%9E%E7%8E%B0%E9%87%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E7%9C%9F%E5%81%9A%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">实际实现里为什么不真做矩阵乘法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B8%80%E8%8A%82%E6%9C%80%E8%AF%A5%E8%AE%B0%E4%BD%8F%E7%9A%84%E5%85%AC%E5%BC%8F"><span class="nav-number">7.</span> <span class="nav-text">这一节最该记住的公式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B5%8C%E5%85%A5%E7%9F%A9%E9%98%B5"><span class="nav-number">7.1.</span> <span class="nav-text">嵌入矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87-one-hot-%E5%8F%96%E8%AF%8D%E5%90%91%E9%87%8F"><span class="nav-number">7.2.</span> <span class="nav-text">通过 one-hot 取词向量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E4%BB%BB%E6%84%8F%E8%AF%8D-w"><span class="nav-number">7.3.</span> <span class="nav-text">对任意词 $w$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B8%80%E8%8A%82%E6%9C%80%E8%AF%A5%E8%AE%B0%E4%BD%8F%E7%9A%84%E8%A6%81%E7%82%B9"><span class="nav-number">8.</span> <span class="nav-text">这一节最该记住的要点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%81%E7%82%B9-1%EF%BC%9A%E8%AF%8D%E5%B5%8C%E5%85%A5%E4%B8%8D%E6%98%AF%E4%B8%80%E4%B8%AA%E4%B8%AA%E9%9B%B6%E6%95%A3%E5%AD%A6%E7%9A%84%EF%BC%8C%E8%80%8C%E6%98%AF%E4%B8%80%E8%B5%B7%E6%94%BE%E5%9C%A8%E7%9F%A9%E9%98%B5-E-%E9%87%8C%E5%AD%A6"><span class="nav-number">8.1.</span> <span class="nav-text">要点 1：词嵌入不是一个个零散学的，而是一起放在矩阵 $E$ 里学</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%81%E7%82%B9-2%EF%BC%9A%E5%B5%8C%E5%85%A5%E7%9F%A9%E9%98%B5%E7%9A%84%E5%88%97%E5%B0%B1%E6%98%AF%E8%AF%8D%E5%90%91%E9%87%8F"><span class="nav-number">8.2.</span> <span class="nav-text">要点 2：嵌入矩阵的列就是词向量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%81%E7%82%B9-3%EF%BC%9A%E5%AE%9E%E9%99%85%E5%AE%9E%E7%8E%B0%E4%B8%AD%E6%9B%B4%E5%83%8F%E6%9F%A5%E8%A1%A8%E8%80%8C%E4%B8%8D%E6%98%AF%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95"><span class="nav-number">8.3.</span> <span class="nav-text">要点 3：实际实现中更像查表而不是矩阵乘法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B8%80%E8%8A%82%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="nav-number">9.</span> <span class="nav-text">这一节一句话总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Blum"
+      src="/blog/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Blum</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">240</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/07%20%E8%B4%9F%E9%87%87%E6%A0%B7%EF%BC%88Negative%20Sampling%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-03-17</time>
+        <br>
+      07 负采样（Negative Sampling）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/01%20%E8%AF%8D%E6%B1%87%E8%A1%A8%E5%BE%81%EF%BC%88Word%20Representation%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-03-16</time>
+        <br>
+      01 词汇表征（Word Representation）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/05%20%E5%AD%A6%E4%B9%A0%E8%AF%8D%E5%B5%8C%E5%85%A5%EF%BC%88Learning%20Word%20Embeddings%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-03-17</time>
+        <br>
+      05 学习词嵌入（Learning Word Embeddings）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/06%20Word2Vec/" rel="bookmark">
+        <time class="popular-posts-time">2026-03-17</time>
+        <br>
+      06 Word2Vec
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C4/11%20%E4%B8%80%E7%BB%B4%E5%88%B0%E4%B8%89%E7%BB%B4%E6%8E%A8%E5%B9%BF%EF%BC%881D%20and%203D%20generalizations%20of%20models%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-02-08</time>
+        <br>
+      11 一维到三维推广（1D and 3D generalizations of models）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/04%20%E5%B5%8C%E5%85%A5%E7%9F%A9%E9%98%B5%EF%BC%88Embedding%20Matrix%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Blum">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="04 嵌入矩阵（Embedding Matrix） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          04 嵌入矩阵（Embedding Matrix）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-16 23:58:10" itemprop="dateCreated datePublished" datetime="2026-03-16T23:58:10+00:00">2026-03-16</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>623</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="这一节在讲什么"><a href="#这一节在讲什么" class="headerlink" title="这一节在讲什么"></a>这一节在讲什么</h2><p>　　这一节把前面的词嵌入概念正式写成矩阵形式。</p>
+<p>　　核心结论只有一句：</p>
+<blockquote>
+<p>学习词嵌入，本质上就是在学习一个嵌入矩阵 $E$。</p>
+</blockquote>
+<h2 id="嵌入矩阵长什么样"><a href="#嵌入矩阵长什么样" class="headerlink" title="嵌入矩阵长什么样"></a>嵌入矩阵长什么样</h2><p>　　假设：</p>
+<ul>
+<li>词表大小是 $V&#x3D;10000$</li>
+<li>每个词向量维度是 $d&#x3D;300$</li>
+</ul>
+<p>　　那么嵌入矩阵可以写成：</p>
+<p>$$<br>E \in \mathbb{R}^{300 \times 10000}<br>$$</p>
+<p>　　你可以把它理解成：</p>
+<ul>
+<li>每一列对应一个词</li>
+<li>每一列都是这个词的 300 维嵌入向量</li>
+</ul>
+<h2 id="one-hot-乘嵌入矩阵会发生什么"><a href="#one-hot-乘嵌入矩阵会发生什么" class="headerlink" title="one-hot 乘嵌入矩阵会发生什么"></a>one-hot 乘嵌入矩阵会发生什么</h2><p>　　假设 <code>orange</code> 的编号是 6257，对应 one-hot 向量：</p>
+<p>$$<br>O_{6257}<br>$$</p>
+<p>　　那么：</p>
+<p>$$<br>EO_{6257} &#x3D; e_{6257}<br>$$</p>
+<p>　　结果就是第 6257 列，也就是 <code>orange</code> 的词向量。</p>
+<p>　　更一般地：</p>
+<p>$$<br>EO_j &#x3D; e_j<br>$$</p>
+<h2 id="为什么这件事成立"><a href="#为什么这件事成立" class="headerlink" title="为什么这件事成立"></a>为什么这件事成立</h2><p>　　因为 one-hot 向量只有一个位置是 1，其他全是 0。</p>
+<p>　　所以矩阵乘法时，实际上只会把第 $j$ 列“选出来”。</p>
+<p>　　这就是嵌入层查表的数学本质。</p>
+<h2 id="小白可以怎么理解"><a href="#小白可以怎么理解" class="headerlink" title="小白可以怎么理解"></a>小白可以怎么理解</h2><p>　　你可以把嵌入矩阵想成一个大词典表格：</p>
+<ul>
+<li>列标题是词</li>
+<li>每列下面是这个词的向量</li>
+</ul>
+<p>　　one-hot 向量就像一个“索引指针”，<br>告诉系统要把哪一列取出来。</p>
+<h2 id="实际实现里为什么不真做矩阵乘法"><a href="#实际实现里为什么不真做矩阵乘法" class="headerlink" title="实际实现里为什么不真做矩阵乘法"></a>实际实现里为什么不真做矩阵乘法</h2><p>　　课程里特别提醒了一个工程点：</p>
+<p>　　虽然写成 $EO_j$ 很方便，<br>但真正实现时通常不会傻乎乎做完整矩阵乘法。</p>
+<p>　　因为：</p>
+<ul>
+<li>$O_j$ 几乎全是 0</li>
+<li>大部分乘法都在乘 0</li>
+<li>太浪费</li>
+</ul>
+<p>　　实际系统更像是：</p>
+<blockquote>
+<p>直接按索引取第 $j$ 列。</p>
+</blockquote>
+<p>　　这也是为什么很多框架会提供 <code>Embedding</code> 层。</p>
+<h2 id="这一节最该记住的公式"><a href="#这一节最该记住的公式" class="headerlink" title="这一节最该记住的公式"></a>这一节最该记住的公式</h2><h3 id="嵌入矩阵"><a href="#嵌入矩阵" class="headerlink" title="嵌入矩阵"></a>嵌入矩阵</h3><p>$$<br>E \in \mathbb{R}^{d \times V}<br>$$</p>
+<h3 id="通过-one-hot-取词向量"><a href="#通过-one-hot-取词向量" class="headerlink" title="通过 one-hot 取词向量"></a>通过 one-hot 取词向量</h3><p>$$<br>EO_j &#x3D; e_j<br>$$</p>
+<h3 id="对任意词-w"><a href="#对任意词-w" class="headerlink" title="对任意词 $w$"></a>对任意词 $w$</h3><p>$$<br>e_w<br>$$</p>
+<p>　　表示词 $w$ 的嵌入向量。</p>
+<h2 id="这一节最该记住的要点"><a href="#这一节最该记住的要点" class="headerlink" title="这一节最该记住的要点"></a>这一节最该记住的要点</h2><h3 id="要点-1：词嵌入不是一个个零散学的，而是一起放在矩阵-E-里学"><a href="#要点-1：词嵌入不是一个个零散学的，而是一起放在矩阵-E-里学" class="headerlink" title="要点 1：词嵌入不是一个个零散学的，而是一起放在矩阵 $E$ 里学"></a>要点 1：词嵌入不是一个个零散学的，而是一起放在矩阵 $E$ 里学</h3><p>　　这让表达更统一。</p>
+<h3 id="要点-2：嵌入矩阵的列就是词向量"><a href="#要点-2：嵌入矩阵的列就是词向量" class="headerlink" title="要点 2：嵌入矩阵的列就是词向量"></a>要点 2：嵌入矩阵的列就是词向量</h3><p>　　one-hot 乘矩阵，本质上就是取列。</p>
+<h3 id="要点-3：实际实现中更像查表而不是矩阵乘法"><a href="#要点-3：实际实现中更像查表而不是矩阵乘法" class="headerlink" title="要点 3：实际实现中更像查表而不是矩阵乘法"></a>要点 3：实际实现中更像查表而不是矩阵乘法</h3><p>　　这是一个重要的工程优化点。</p>
+<h2 id="这一节一句话总结"><a href="#这一节一句话总结" class="headerlink" title="这一节一句话总结"></a>这一节一句话总结</h2><p>　　嵌入矩阵就是“整个词表的词向量总表”，而 $EO_j&#x3D;e_j$ 这件事说明：从 one-hot 到词嵌入，本质上就是按词编号从矩阵里把对应那一列取出来。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/03%20%E8%AF%8D%E5%B5%8C%E5%85%A5%E7%9A%84%E7%89%B9%E6%80%A7%EF%BC%88Properties%20of%20Word%20Embeddings%EF%BC%89/" rel="prev" title="03 词嵌入的特性（Properties of Word Embeddings）">
+                  <i class="fa fa-angle-left"></i> 03 词嵌入的特性（Properties of Word Embeddings）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/05%20%E5%AD%A6%E4%B9%A0%E8%AF%8D%E5%B5%8C%E5%85%A5%EF%BC%88Learning%20Word%20Embeddings%EF%BC%89/" rel="next" title="05 学习词嵌入（Learning Word Embeddings）">
+                  05 学习词嵌入（Learning Word Embeddings） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Blum</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">262k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:54</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

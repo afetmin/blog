@@ -128,7 +128,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">219</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">240</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -193,13 +193,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/blog/archives/">
-          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-count">240</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/blog/categories/">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -247,7 +247,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/02%20Bias%EF%BC%88%E5%81%8F%E5%B7%AE%EF%BC%89%E4%B8%8E%20Variance%EF%BC%88%E6%96%B9%E5%B7%AE%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/22%20Adam%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%EF%BC%88Adam%20Optimization%20Algorithm%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.png">
@@ -265,7 +265,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/02%20Bias%EF%BC%88%E5%81%8F%E5%B7%AE%EF%BC%89%E4%B8%8E%20Variance%EF%BC%88%E6%96%B9%E5%B7%AE%EF%BC%89/" class="post-title-link" itemprop="url">02 Bias（偏差）与 Variance（方差）</a>
+          <a href="/blog/22%20Adam%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%EF%BC%88Adam%20Optimization%20Algorithm%EF%BC%89/" class="post-title-link" itemprop="url">22 Adam 优化算法（Adam Optimization Algorithm）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -276,7 +276,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-26 16:17:41" itemprop="dateCreated datePublished" datetime="2025-12-26T16:17:41+00:00">2025-12-26</time>
+      <time title="创建时间：2026-01-02 11:16:03" itemprop="dateCreated datePublished" datetime="2026-01-02T11:16:03+00:00">2026-01-02</time>
     </span>
 
   
@@ -304,10 +304,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="一、核心概念：偏差与方差"><a href="#一、核心概念：偏差与方差" class="headerlink" title="一、核心概念：偏差与方差"></a>一、核心概念：偏差与方差</h2><p>　　在机器学习中，模型的泛化误差（Generalization Error）可分解为三部分：</p>
+          <h3 id="✅-简介"><a href="#✅-简介" class="headerlink" title="✅ 简介"></a>✅ 简介</h3><p>　　在深度学习的发展历程中，许多研究人员提出了新的优化算法，但大多数仅在特定问题上表现良好，缺乏泛化能力。因此，社区对新优化算法持谨慎态度。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/02%20Bias%EF%BC%88%E5%81%8F%E5%B7%AE%EF%BC%89%E4%B8%8E%20Variance%EF%BC%88%E6%96%B9%E5%B7%AE%EF%BC%89/#more" rel="contents">
+              <a class="btn" href="/blog/22%20Adam%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%EF%BC%88Adam%20Optimization%20Algorithm%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -338,7 +338,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/01%20%E8%AE%AD%E7%BB%83%E9%9B%86%EF%BC%88Train%EF%BC%89%E3%80%81%E5%BC%80%E5%8F%91%E9%9B%86%EF%BC%88Dev%EF%BC%89%E5%92%8C%E6%B5%8B%E8%AF%95%E9%9B%86%EF%BC%88Test%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/21%20RMSprop%EF%BC%88Root%20Mean%20Square%20Propagation%EF%BC%89%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.png">
@@ -356,7 +356,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/01%20%E8%AE%AD%E7%BB%83%E9%9B%86%EF%BC%88Train%EF%BC%89%E3%80%81%E5%BC%80%E5%8F%91%E9%9B%86%EF%BC%88Dev%EF%BC%89%E5%92%8C%E6%B5%8B%E8%AF%95%E9%9B%86%EF%BC%88Test%EF%BC%89/" class="post-title-link" itemprop="url">01 训练集（Train）、开发集（Dev）和测试集（Test）</a>
+          <a href="/blog/21%20RMSprop%EF%BC%88Root%20Mean%20Square%20Propagation%EF%BC%89%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">21 RMSprop（Root Mean Square Propagation） 优化算法</a>
         </h2>
 
         <div class="post-meta-container">
@@ -367,7 +367,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-26 15:59:20" itemprop="dateCreated datePublished" datetime="2025-12-26T15:59:20+00:00">2025-12-26</time>
+      <time title="创建时间：2026-01-02 11:09:49" itemprop="dateCreated datePublished" datetime="2026-01-02T11:09:49+00:00">2026-01-02</time>
     </span>
 
   
@@ -377,14 +377,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2k</span>
+      <span>780</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>7 分钟</span>
+      <span>3 分钟</span>
     </span>
 </div>
 
@@ -395,14 +395,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="一、背景：应用机器学习是一个高度迭代的过程"><a href="#一、背景：应用机器学习是一个高度迭代的过程" class="headerlink" title="一、背景：应用机器学习是一个高度迭代的过程"></a>一、背景：应用机器学习是一个高度迭代的过程</h2><ul>
-<li>在实际深度学习项目中，你无法在第一次就准确设定所有超参数（如网络层数、每层神经元数量、学习率、激活函数等）。</li>
-<li>因此，<strong>应用机器学习 &#x3D; 提出想法 → 编码实现 → 实验评估 → 迭代优化</strong>。</li>
-<li><strong>迭代效率</strong> 决定了你能否快速找到高性能模型。</li>
-</ul>
+          <h2 id="🧠-RMSprop-算法详解总结"><a href="#🧠-RMSprop-算法详解总结" class="headerlink" title="🧠 RMSprop 算法详解总结"></a>🧠 RMSprop 算法详解总结</h2><h3 id="一、问题背景：梯度下降中的震荡问题"><a href="#一、问题背景：梯度下降中的震荡问题" class="headerlink" title="一、问题背景：梯度下降中的震荡问题"></a>一、问题背景：梯度下降中的震荡问题</h3>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/01%20%E8%AE%AD%E7%BB%83%E9%9B%86%EF%BC%88Train%EF%BC%89%E3%80%81%E5%BC%80%E5%8F%91%E9%9B%86%EF%BC%88Dev%EF%BC%89%E5%92%8C%E6%B5%8B%E8%AF%95%E9%9B%86%EF%BC%88Test%EF%BC%89/#more" rel="contents">
+              <a class="btn" href="/blog/21%20RMSprop%EF%BC%88Root%20Mean%20Square%20Propagation%EF%BC%89%20%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -433,7 +429,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/39%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%A4%A7%E8%84%91%E5%85%B3%E7%B3%BB/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/20%20%E5%8A%A8%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%EF%BC%88Gradient%20Descent%20with%20Momentum%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.png">
@@ -451,7 +447,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/39%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%A4%A7%E8%84%91%E5%85%B3%E7%B3%BB/" class="post-title-link" itemprop="url">39 神经网络与大脑关系</a>
+          <a href="/blog/20%20%E5%8A%A8%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%EF%BC%88Gradient%20Descent%20with%20Momentum%EF%BC%89/" class="post-title-link" itemprop="url">20 动量梯度下降法（Gradient Descent with Momentum）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -462,7 +458,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-24 19:09:32" itemprop="dateCreated datePublished" datetime="2025-12-24T19:09:32+00:00">2025-12-24</time>
+      <time title="创建时间：2026-01-02 11:04:50" itemprop="dateCreated datePublished" datetime="2026-01-02T11:04:50+00:00">2026-01-02</time>
     </span>
 
   
@@ -472,14 +468,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.1k</span>
+      <span>743</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
+      <span>3 分钟</span>
     </span>
 </div>
 
@@ -490,12 +486,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="🧠-一、核心观点：深度学习-≠-人脑"><a href="#🧠-一、核心观点：深度学习-≠-人脑" class="headerlink" title="🧠 一、核心观点：深度学习 ≠ 人脑"></a>🧠 一、核心观点：深度学习 ≠ 人脑</h2><blockquote>
-<p> <strong>“What does deep learning have to do with the brain? At the risk of giving away the punchline, I would say not a whole lot.”</strong></p>
-</blockquote>
+          <h2 id="🧠-一、动机：为什么需要动量？"><a href="#🧠-一、动机：为什么需要动量？" class="headerlink" title="🧠 一、动机：为什么需要动量？"></a>🧠 一、动机：为什么需要动量？</h2><p>　　标准梯度下降在优化具有“狭长椭圆”等高线的损失函数时，会出现<strong>剧烈振荡</strong>（尤其在垂直方向），导致：</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/39%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%A4%A7%E8%84%91%E5%85%B3%E7%B3%BB/#more" rel="contents">
+              <a class="btn" href="/blog/20%20%E5%8A%A8%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%EF%BC%88Gradient%20Descent%20with%20Momentum%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -526,7 +520,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/38%20%E5%8F%82%E6%95%B0%EF%BC%88Parameters%EF%BC%89%E4%B8%8E%E8%B6%85%E5%8F%82%E6%95%B0%EF%BC%88Hyperparameters%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/19%20%E6%8C%87%E6%95%B0%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87%E4%B8%AD%E7%9A%84%E5%81%8F%E5%B7%AE%E4%BF%AE%E6%AD%A3%EF%BC%88Bias%20Correction%20in%20Exponentially%20Weighted%20Averages%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.png">
@@ -544,7 +538,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/38%20%E5%8F%82%E6%95%B0%EF%BC%88Parameters%EF%BC%89%E4%B8%8E%E8%B6%85%E5%8F%82%E6%95%B0%EF%BC%88Hyperparameters%EF%BC%89/" class="post-title-link" itemprop="url">38 参数（Parameters）与超参数（Hyperparameters）</a>
+          <a href="/blog/19%20%E6%8C%87%E6%95%B0%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87%E4%B8%AD%E7%9A%84%E5%81%8F%E5%B7%AE%E4%BF%AE%E6%AD%A3%EF%BC%88Bias%20Correction%20in%20Exponentially%20Weighted%20Averages%EF%BC%89/" class="post-title-link" itemprop="url">19 指数加权平均中的偏差修正（Bias Correction in Exponentially Weighted Averages）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -555,7 +549,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-24 19:09:09" itemprop="dateCreated datePublished" datetime="2025-12-24T19:09:09+00:00">2025-12-24</time>
+      <time title="创建时间：2026-01-02 11:03:28" itemprop="dateCreated datePublished" datetime="2026-01-02T11:03:28+00:00">2026-01-02</time>
     </span>
 
   
@@ -565,14 +559,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1k</span>
+      <span>888</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
+      <span>3 分钟</span>
     </span>
 </div>
 
@@ -583,10 +577,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="一、核心概念区分"><a href="#一、核心概念区分" class="headerlink" title="一、核心概念区分"></a>一、核心概念区分</h2><h3 id="1-参数（Parameters）"><a href="#1-参数（Parameters）" class="headerlink" title="1. 参数（Parameters）"></a>1. 参数（Parameters）</h3>
+          <h3 id="一、背景：什么是指数加权平均？"><a href="#一、背景：什么是指数加权平均？" class="headerlink" title="一、背景：什么是指数加权平均？"></a>一、背景：什么是指数加权平均？</h3><p>　　在优化算法（如 Momentum、RMSProp、Adam）中，我们经常使用 <strong>指数加权平均（Exponentially Weighted Average, EWA）</strong>  来平滑序列数据（例如梯度、温度等）。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/38%20%E5%8F%82%E6%95%B0%EF%BC%88Parameters%EF%BC%89%E4%B8%8E%E8%B6%85%E5%8F%82%E6%95%B0%EF%BC%88Hyperparameters%EF%BC%89/#more" rel="contents">
+              <a class="btn" href="/blog/19%20%E6%8C%87%E6%95%B0%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87%E4%B8%AD%E7%9A%84%E5%81%8F%E5%B7%AE%E4%BF%AE%E6%AD%A3%EF%BC%88Bias%20Correction%20in%20Exponentially%20Weighted%20Averages%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -617,7 +611,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/37%20%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/18%20%E4%BA%86%E8%A7%A3%E6%8C%87%E6%95%B0%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.png">
@@ -635,7 +629,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/37%20%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD/" class="post-title-link" itemprop="url">37 前向传播与反向传播</a>
+          <a href="/blog/18%20%E4%BA%86%E8%A7%A3%E6%8C%87%E6%95%B0%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87/" class="post-title-link" itemprop="url">18 了解指数加权平均</a>
         </h2>
 
         <div class="post-meta-container">
@@ -646,7 +640,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-24 19:08:47" itemprop="dateCreated datePublished" datetime="2025-12-24T19:08:47+00:00">2025-12-24</time>
+      <time title="创建时间：2026-01-02 11:01:36" itemprop="dateCreated datePublished" datetime="2026-01-02T11:01:36+00:00">2026-01-02</time>
     </span>
 
   
@@ -656,14 +650,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1k</span>
+      <span>1.7k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
+      <span>6 分钟</span>
     </span>
 </div>
 
@@ -674,14 +668,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="一、整体目标"><a href="#一、整体目标" class="headerlink" title="一、整体目标"></a>一、整体目标</h3><ul>
-<li>实现一个 <strong>L 层深度神经网络</strong> 的前向传播和反向传播。</li>
-<li>前向传播用于计算预测值 $\hat{y}$；</li>
-<li>反向传播用于计算损失函数对各参数的梯度（$\frac{\partial \mathcal{L}}{\partial W^{[l]}}$, $\frac{\partial \mathcal{L}}{\partial b^{[l]}}$），用于参数更新。</li>
-</ul>
+          <h2 id="一、什么是指数加权平均？"><a href="#一、什么是指数加权平均？" class="headerlink" title="一、什么是指数加权平均？"></a>一、什么是指数加权平均？</h2><p>　　指数加权平均是一种<strong>高效计算时间序列数据滑动平均值</strong>的方法，广泛应用于深度学习中的优化算法（如 Momentum、RMSProp、Adam 等）。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/37%20%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD%E4%B8%8E%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD/#more" rel="contents">
+              <a class="btn" href="/blog/18%20%E4%BA%86%E8%A7%A3%E6%8C%87%E6%95%B0%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -705,7 +695,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/blog/page/22/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/blog/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/44/">44</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/blog/page/24/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/blog/page/22/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/blog/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/48/">48</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/blog/page/24/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -728,14 +718,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">242k</span>
+    <span title="站点总字数">262k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">14:38</span>
+    <span title="站点阅读时长">15:54</span>
   </span>
 </div>
 

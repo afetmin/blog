@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/06%20BLEU%20%E5%BE%97%E5%88%86%EF%BC%88Bleu%20Score%EF%BC%89/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/06%20BLEU%20%E5%BE%97%E5%88%86%EF%BC%88Bleu%20Score%EF%BC%89/","path":"序列模型与注意力机制/06 BLEU 得分（Bleu Score）/","title":"06 BLEU 得分（Bleu Score）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>06 BLEU 得分（Bleu Score） | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/06%20BLEU%20%E5%BE%97%E5%88%86%EF%BC%88Bleu%20Score%EF%BC%89/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">240</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B8%80%E8%8A%82%E5%9C%A8%E8%AE%B2%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">这一节在讲什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%BA%E5%99%A8%E7%BF%BB%E8%AF%91%E4%B8%8D%E5%A5%BD%E8%AF%84%E4%BC%B0"><span class="nav-number">2.</span> <span class="nav-text">为什么机器翻译不好评估</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E9%94%99%E8%AF%AF%E4%BD%86%E7%9B%B4%E8%A7%89%E7%9A%84%E6%83%B3%E6%B3%95%EF%BC%9A%E5%8F%AA%E7%9C%8B%E8%AF%8D%E6%98%AF%E5%90%A6%E5%87%BA%E7%8E%B0%E8%BF%87"><span class="nav-number">3.</span> <span class="nav-text">一个错误但直觉的想法：只看词是否出现过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%80%E4%BB%A5-BLEU-%E7%94%A8%E2%80%9C%E6%88%AA%E6%96%AD%E8%AE%A1%E6%95%B0%E2%80%9D"><span class="nav-number">4.</span> <span class="nav-text">所以 BLEU 用“截断计数”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%98%E8%A6%81%E7%9C%8B%E8%AF%8D%E7%BB%84%EF%BC%8C%E8%80%8C%E4%B8%8D%E5%8F%AA%E6%98%AF%E5%8D%95%E8%AF%8D"><span class="nav-number">5.</span> <span class="nav-text">还要看词组，而不只是单词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E9%87%8C%E7%9A%84-bigram-%E4%BE%8B%E5%AD%90"><span class="nav-number">6.</span> <span class="nav-text">课程里的 bigram 例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E5%BD%A2%E5%BC%8F%E6%80%8E%E4%B9%88%E5%86%99"><span class="nav-number">7.</span> <span class="nav-text">一般形式怎么写</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E8%89%AF%E5%90%8E%E4%B8%80%E5%85%83%E7%B2%BE%E7%A1%AE%E7%8E%87"><span class="nav-number">7.1.</span> <span class="nav-text">改良后一元精确率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E8%89%AF%E5%90%8E-n-%E5%85%83%E7%B2%BE%E7%A1%AE%E7%8E%87"><span class="nav-number">7.2.</span> <span class="nav-text">改良后 $n$ 元精确率</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%BB%88-BLEU-%E6%80%8E%E4%B9%88%E5%90%88%E6%88%90"><span class="nav-number">8.</span> <span class="nav-text">最终 BLEU 怎么合成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E7%AE%80%E7%9F%AD%E6%83%A9%E7%BD%9A-BP"><span class="nav-number">9.</span> <span class="nav-text">为什么需要简短惩罚 BP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%99%BD%E5%8F%AF%E4%BB%A5%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3-BLEU"><span class="nav-number">10.</span> <span class="nav-text">小白可以怎么理解 BLEU</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B8%80%E8%8A%82%E6%9C%80%E8%AF%A5%E8%AE%B0%E4%BD%8F%E7%9A%84%E8%A6%81%E7%82%B9"><span class="nav-number">11.</span> <span class="nav-text">这一节最该记住的要点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%81%E7%82%B9-1%EF%BC%9A%E6%9C%BA%E5%99%A8%E7%BF%BB%E8%AF%91%E7%BB%8F%E5%B8%B8%E4%B8%8D%E6%AD%A2%E4%B8%80%E4%B8%AA%E6%AD%A3%E7%A1%AE%E7%AD%94%E6%A1%88"><span class="nav-number">11.1.</span> <span class="nav-text">要点 1：机器翻译经常不止一个正确答案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%81%E7%82%B9-2%EF%BC%9ABLEU-%E6%A0%B8%E5%BF%83%E7%9C%8B%E7%9A%84%E6%98%AF-n-gram-%E5%8C%B9%E9%85%8D%E7%A8%8B%E5%BA%A6"><span class="nav-number">11.2.</span> <span class="nav-text">要点 2：BLEU 核心看的是 n-gram 匹配程度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%81%E7%82%B9-3%EF%BC%9A%E8%A6%81%E7%94%A8%E6%88%AA%E6%96%AD%E8%AE%A1%E6%95%B0"><span class="nav-number">11.3.</span> <span class="nav-text">要点 3：要用截断计数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%81%E7%82%B9-4%EF%BC%9A%E8%A6%81%E5%8A%A0%E7%AE%80%E7%9F%AD%E6%83%A9%E7%BD%9A"><span class="nav-number">11.4.</span> <span class="nav-text">要点 4：要加简短惩罚</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%81%E7%82%B9-5%EF%BC%9ABLEU-%E6%98%AF%E5%BE%88%E9%87%8D%E8%A6%81%E7%9A%84%E5%8D%95%E4%B8%80%E6%95%B0%E5%80%BC%E6%8C%87%E6%A0%87"><span class="nav-number">11.5.</span> <span class="nav-text">要点 5：BLEU 是很重要的单一数值指标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B8%80%E8%8A%82%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="nav-number">12.</span> <span class="nav-text">这一节一句话总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Blum"
+      src="/blog/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Blum</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">240</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/06%20Dropout%20%E6%AD%A3%E5%88%99%E5%8C%96/" rel="bookmark">
+        <time class="popular-posts-time">2025-12-26</time>
+        <br>
+      06 Dropout 正则化
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/11%20%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%9D%83%E9%87%8D%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%88Weight%20Initialization%20for%20Deep%20Networks%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-01</time>
+        <br>
+      11 深度神经网络的权重初始化（Weight Initialization for Deep Networks）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84JavaScript/" rel="bookmark">
+        <time class="popular-posts-time">2023-08-21</time>
+        <br>
+      高性能的JavaScript
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/03%20%E8%AF%8D%E5%B5%8C%E5%85%A5%E7%9A%84%E7%89%B9%E6%80%A7%EF%BC%88Properties%20of%20Word%20Embeddings%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-03-16</time>
+        <br>
+      03 词嵌入的特性（Properties of Word Embeddings）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/09%20%E6%83%85%E6%84%9F%E5%88%86%E7%B1%BB%EF%BC%88Sentiment%20Classification%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-03-17</time>
+        <br>
+      09 情感分类（Sentiment Classification）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/06%20BLEU%20%E5%BE%97%E5%88%86%EF%BC%88Bleu%20Score%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Blum">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="06 BLEU 得分（Bleu Score） | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          06 BLEU 得分（Bleu Score）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-17 00:06:48" itemprop="dateCreated datePublished" datetime="2026-03-17T00:06:48+00:00">2026-03-17</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="这一节在讲什么"><a href="#这一节在讲什么" class="headerlink" title="这一节在讲什么"></a>这一节在讲什么</h2><p>　　机器翻译有一个麻烦：</p>
+<blockquote>
+<p>同一句法语，可能有好几种都正确的英文翻译。</p>
+</blockquote>
+<p>　　所以不能像分类任务那样，只看“是否完全等于标准答案”。</p>
+<p>　　BLEU 就是为了解决这个问题而设计的自动评价指标。</p>
+<h2 id="为什么机器翻译不好评估"><a href="#为什么机器翻译不好评估" class="headerlink" title="为什么机器翻译不好评估"></a>为什么机器翻译不好评估</h2><p>　　课程里的例子：</p>
+<p>　　法语句子：</p>
+<p>$$<br>\text{Le chat est sur le tapis}<br>$$</p>
+<p>　　参考翻译 1：</p>
+<p>$$<br>\text{The cat is on the mat}<br>$$</p>
+<p>　　参考翻译 2：</p>
+<p>$$<br>\text{There is a cat on the mat}<br>$$</p>
+<p>　　这两句都很好。</p>
+<p>　　所以如果机器输出的不是其中某一句的逐字复制，也不能立刻说它错了。</p>
+<h2 id="一个错误但直觉的想法：只看词是否出现过"><a href="#一个错误但直觉的想法：只看词是否出现过" class="headerlink" title="一个错误但直觉的想法：只看词是否出现过"></a>一个错误但直觉的想法：只看词是否出现过</h2><p>　　假设机器输出：</p>
+<p>$$<br>\text{the the the the the the the}<br>$$</p>
+<p>　　如果你只看“这些词是否出现在参考里”，那每个 <code>the</code> 都确实出现在参考中。</p>
+<p>　　于是会得到一个很离谱的高分。</p>
+<p>　　这显然不合理。</p>
+<h2 id="所以-BLEU-用“截断计数”"><a href="#所以-BLEU-用“截断计数”" class="headerlink" title="所以 BLEU 用“截断计数”"></a>所以 BLEU 用“截断计数”</h2><p>　　做法是：</p>
+<ul>
+<li>某个词在机器输出里出现了很多次</li>
+<li>但它最多只能按参考翻译中出现的最大次数计分</li>
+</ul>
+<p>　　上面的例子里，<code>the</code> 在参考中最多出现 2 次，<br>所以机器虽然输出了 7 次 <code>the</code>，最多也只记 2 次有效。</p>
+<p>　　因此改良后的一元精确率（unigram precision）是：</p>
+<p>$$<br>\frac{2}{7}<br>$$</p>
+<p>　　而不是 $\frac{7}{7}$。</p>
+<h2 id="还要看词组，而不只是单词"><a href="#还要看词组，而不只是单词" class="headerlink" title="还要看词组，而不只是单词"></a>还要看词组，而不只是单词</h2><p>　　BLEU 不只看单词，还看连续词组，也叫 <code>n-gram</code>。</p>
+<ul>
+<li>1 个词叫 unigram</li>
+<li>2 个词连着叫 bigram</li>
+<li>3 个词连着叫 trigram</li>
+<li>以此类推</li>
+</ul>
+<p>　　因为只看单词不够。</p>
+<p>　　比如：</p>
+<p>$$<br>\text{The cat the cat on the mat}<br>$$</p>
+<p>　　这里虽然很多单词都对，但词序明显不自然。</p>
+<p>　　如果看 bigram，就能发现：</p>
+<ul>
+<li>​<code>the cat</code> 还行</li>
+<li>​<code>cat the</code> 就很奇怪</li>
+</ul>
+<p>　　这比只看单词更像“真正的翻译质量”。</p>
+<h2 id="课程里的-bigram-例子"><a href="#课程里的-bigram-例子" class="headerlink" title="课程里的 bigram 例子"></a>课程里的 bigram 例子</h2><p>　　机器输出：</p>
+<p>$$<br>\text{The cat the cat on the mat}<br>$$</p>
+<p>　　它的 bigram 有：</p>
+<ul>
+<li>​<code>the cat</code></li>
+<li>​<code>cat the</code></li>
+<li>​<code>the cat</code></li>
+<li>​<code>cat on</code></li>
+<li>​<code>on the</code></li>
+<li>​<code>the mat</code></li>
+</ul>
+<p>　　对每个 bigram，也做“截断计数”。</p>
+<p>　　课程里最后算出的改良 bigram 精确率是：</p>
+<p>$$<br>\frac{4}{6} &#x3D; \frac{2}{3}<br>$$</p>
+<h2 id="一般形式怎么写"><a href="#一般形式怎么写" class="headerlink" title="一般形式怎么写"></a>一般形式怎么写</h2><h3 id="改良后一元精确率"><a href="#改良后一元精确率" class="headerlink" title="改良后一元精确率"></a>改良后一元精确率</h3><p>$$<br>P_1 &#x3D; \frac{\sum_{\text{unigram} \in \hat y} \mathrm{Count}<em>{\mathrm{clip}}(\text{unigram})}{\sum</em>{\text{unigram} \in \hat y} \mathrm{Count}(\text{unigram})}<br>$$</p>
+<h3 id="改良后-n-元精确率"><a href="#改良后-n-元精确率" class="headerlink" title="改良后 $n$ 元精确率"></a>改良后 $n$ 元精确率</h3><p>$$<br>P_n &#x3D; \frac{\sum_{\text{n-gram} \in \hat y} \mathrm{Count}<em>{\mathrm{clip}}(\text{n-gram})}{\sum</em>{\text{n-gram} \in \hat y} \mathrm{Count}(\text{n-gram})}<br>$$</p>
+<p>　　其中 $\hat y$ 是机器生成的翻译。</p>
+<h2 id="最终-BLEU-怎么合成"><a href="#最终-BLEU-怎么合成" class="headerlink" title="最终 BLEU 怎么合成"></a>最终 BLEU 怎么合成</h2><p>　　课程的意思是：</p>
+<ul>
+<li>先算 $P_1, P_2, P_3, P_4$</li>
+<li>再把它们组合起来</li>
+<li>还要乘一个简短惩罚因子 <code>BP</code></li>
+</ul>
+<p>　　标准写法通常是：</p>
+<p>$$<br>\mathrm{BLEU} &#x3D; \mathrm{BP} \cdot \exp\left(\frac{1}{4}\sum_{n&#x3D;1}^{4} \log P_n\right)<br>$$</p>
+<p>　　这里的 <code>BP</code> 是 brevity penalty，简短惩罚。</p>
+<h2 id="为什么需要简短惩罚-BP"><a href="#为什么需要简短惩罚-BP" class="headerlink" title="为什么需要简短惩罚 BP"></a>为什么需要简短惩罚 BP</h2><p>　　如果系统只输出特别短的句子，反而可能更容易拿到高精确率。</p>
+<p>　　比如它只输出几个非常常见、肯定在参考里出现的词，分数可能不低。</p>
+<p>　　但这种系统显然没真正翻译好。</p>
+<p>　　所以 BLEU 会对“过短输出”额外惩罚。</p>
+<h2 id="小白可以怎么理解-BLEU"><a href="#小白可以怎么理解-BLEU" class="headerlink" title="小白可以怎么理解 BLEU"></a>小白可以怎么理解 BLEU</h2><p>　　它不是在问：</p>
+<blockquote>
+<p>“你和标准答案一模一样吗？”</p>
+</blockquote>
+<p>　　它在问：</p>
+<blockquote>
+<p>“你生成的句子，在用词和局部短语上，和一个或多个人工参考翻译有多像？”</p>
+</blockquote>
+<p>　　所以 BLEU 是“近似自动批改机器翻译”的办法。</p>
+<h2 id="这一节最该记住的要点"><a href="#这一节最该记住的要点" class="headerlink" title="这一节最该记住的要点"></a>这一节最该记住的要点</h2><h3 id="要点-1：机器翻译经常不止一个正确答案"><a href="#要点-1：机器翻译经常不止一个正确答案" class="headerlink" title="要点 1：机器翻译经常不止一个正确答案"></a>要点 1：机器翻译经常不止一个正确答案</h3><p>　　所以不能只用完全匹配来评价。</p>
+<h3 id="要点-2：BLEU-核心看的是-n-gram-匹配程度"><a href="#要点-2：BLEU-核心看的是-n-gram-匹配程度" class="headerlink" title="要点 2：BLEU 核心看的是 n-gram 匹配程度"></a>要点 2：BLEU 核心看的是 n-gram 匹配程度</h3><p>　　不只看单词，还看连续词组。</p>
+<h3 id="要点-3：要用截断计数"><a href="#要点-3：要用截断计数" class="headerlink" title="要点 3：要用截断计数"></a>要点 3：要用截断计数</h3><p>　　防止输出 <code>the the the the...</code> 这种垃圾句子骗高分。</p>
+<h3 id="要点-4：要加简短惩罚"><a href="#要点-4：要加简短惩罚" class="headerlink" title="要点 4：要加简短惩罚"></a>要点 4：要加简短惩罚</h3><p>　　防止系统总输出过短句子。</p>
+<h3 id="要点-5：BLEU-是很重要的单一数值指标"><a href="#要点-5：BLEU-是很重要的单一数值指标" class="headerlink" title="要点 5：BLEU 是很重要的单一数值指标"></a>要点 5：BLEU 是很重要的单一数值指标</h3><p>　　它让不同模型之间能快速比较。</p>
+<h2 id="这一节一句话总结"><a href="#这一节一句话总结" class="headerlink" title="这一节一句话总结"></a>这一节一句话总结</h2><p>　　BLEU 通过比较机器输出和多个参考翻译在 unigram、bigram 等局部片段上的匹配程度，并加入截断计数和简短惩罚，给机器翻译提供了一个非常实用的自动评估分数。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/05%20%E9%9B%86%E6%9D%9F%E6%90%9C%E7%B4%A2%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90/" rel="prev" title="05 集束搜索误差分析">
+                  <i class="fa fa-angle-left"></i> 05 集束搜索误差分析
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/07%20%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%A8%A1%E5%9E%8B%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3%EF%BC%88Attention%20Model%20Intuition%EF%BC%89/" rel="next" title="07 注意力模型直观理解（Attention Model Intuition）">
+                  07 注意力模型直观理解（Attention Model Intuition） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Blum</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">262k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:54</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

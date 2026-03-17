@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="IT-Y25F5RCj2PCcER-kk9d5-HNubsC889CdBMXmjtZY">
+  <meta name="msvalidate.01" content="B87806C7BDCEE73E30D63422AFE6515C">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous" defer></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"afetmin.github.io","root":"/blog/","images":"/blog/images","scheme":"Pisces","darkmode":false,"version":"8.27.0","exturl":true,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-dark"},"prism":{"light":"prism","dark":"prism-one-dark"},"copy_button":{"enable":true,"style":"flat"},"fold":{"enable":true,"height":400},"language":false},"bookmark":{"enable":false,"color":"#222","save":"manual"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/blog/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":true,"trigger":"auto"}}</script><script src="/blog/js/config.js" defer></script>
+
+
+
+<link rel="canonical" href="https://afetmin.github.io/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/06%20Word2Vec/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://afetmin.github.io/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/06%20Word2Vec/","path":"自然语言处理与词嵌入/06 Word2Vec/","title":"06 Word2Vec"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>06 Word2Vec | DevDino 🦖</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCDJNF04LD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-CCDJNF04LD","only_pageview":false,"measure_protocol_api_secret":null}</script>
+  <script src="/blog/js/third-party/analytics/google-analytics.js" defer></script>
+
+  <script src="/blog/js/third-party/analytics/baidu-analytics.js" defer></script>
+  <script async src="https://hm.baidu.com/hm.js?d3c4bbd29d7df929e988a67667b6fe6e"></script>
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/7.2.0/pangu.umd.js" integrity="sha256-JnmRRnJK7DC6RQJbAJb6AXOM9OmWzS6z8eYultk/48Y=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/utils.js" defer></script><script src="/blog/js/motion.js" defer></script><script src="/blog/js/sidebar.js" defer></script><script src="/blog/js/next-boot.js" defer></script><script src="/blog/js/pjax.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/blog/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/blog/js/third-party/fancybox.js" defer></script>
+
+  <script src="/blog/js/third-party/pace.js" defer></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/blog/js/third-party/math/mathjax.js" defer></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quicklink/3.0.1/quicklink.umd.js" integrity="sha256-44BednzIpUeQJcY8qtLyarFu0UCCTbgmWOvaoehiFQQ=" crossorigin="anonymous" defer></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":false,"archive":false,"delay":true,"timeout":2000,"priority":true,"url":"https://afetmin.github.io/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/06%20Word2Vec/"}</script>
+  <script src="/blog/js/third-party/quicklink.js" defer></script>
+
+
+    
+
+<link rel='stylesheet' href='https://chinese-fonts-cdn.deno.dev/packages/lxgwwenkai/dist/lxgwwenkai-light/result.css' /> 
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f7e43abb-be35-494a-8984-2586daf37f19"></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DevDino 🦖</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我曾七次鄙视自己的灵魂</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">240</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B8%80%E8%8A%82%E5%9C%A8%E8%AE%B2%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">这一节在讲什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Skip-Gram-%E7%9A%84%E6%A0%B8%E5%BF%83%E6%83%B3%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">Skip-Gram 的核心想法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%83%E5%88%B0%E5%BA%95%E5%9C%A8%E5%AD%A6%E4%BB%80%E4%B9%88%E7%9B%91%E7%9D%A3%E4%BB%BB%E5%8A%A1"><span class="nav-number">3.</span> <span class="nav-text">它到底在学什么监督任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%85%AC%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">模型公式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#P-t-mid-c"><span class="nav-number">5.</span> <span class="nav-text">$$P(t \mid c)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">5.1.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B8%AA%E6%96%B9%E6%B3%95%E4%BC%9A%E5%AD%A6%E5%87%BA%E5%A5%BD%E8%AF%8D%E5%90%91%E9%87%8F"><span class="nav-number">5.2.</span> <span class="nav-text">为什么这个方法会学出好词向量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B8%AA%E6%96%B9%E6%B3%95%E7%9A%84%E4%B8%BB%E8%A6%81%E9%97%AE%E9%A2%98"><span class="nav-number">5.3.</span> <span class="nav-text">这个方法的主要问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E6%8F%90%E5%88%B0%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%8A%A0%E9%80%9F%E6%96%B9%E5%90%91"><span class="nav-number">5.4.</span> <span class="nav-text">课程提到的两个加速方向</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Hierarchical-Softmax"><span class="nav-number">5.4.1.</span> <span class="nav-text">1. Hierarchical Softmax</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Negative-Sampling"><span class="nav-number">5.4.2.</span> <span class="nav-text">2. Negative Sampling</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Word2Vec-%E9%87%8C%E8%BF%98%E6%9C%89-CBOW"><span class="nav-number">5.5.</span> <span class="nav-text">Word2Vec 里还有 CBOW</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E6%A0%B7%E6%9C%AC%E6%80%8E%E4%B9%88%E9%87%87%E6%89%8D%E5%90%88%E7%90%86"><span class="nav-number">5.6.</span> <span class="nav-text">训练样本怎么采才合理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B8%80%E8%8A%82%E6%9C%80%E8%AF%A5%E8%AE%B0%E4%BD%8F%E7%9A%84%E5%85%AC%E5%BC%8F"><span class="nav-number">5.7.</span> <span class="nav-text">这一节最该记住的公式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E8%AF%8D%E5%B5%8C%E5%85%A5"><span class="nav-number">5.7.1.</span> <span class="nav-text">上下文词嵌入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Skip-Gram-softmax"><span class="nav-number">5.7.2.</span> <span class="nav-text">Skip-Gram softmax</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#P-t-mid-c-1"><span class="nav-number">6.</span> <span class="nav-text">$$P(t \mid c)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#softmax-%E6%8D%9F%E5%A4%B1"><span class="nav-number">6.1.</span> <span class="nav-text">softmax 损失</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B8%80%E8%8A%82%E6%9C%80%E8%AF%A5%E8%AE%B0%E4%BD%8F%E7%9A%84%E8%A6%81%E7%82%B9"><span class="nav-number">6.2.</span> <span class="nav-text">这一节最该记住的要点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%81%E7%82%B9-1%EF%BC%9ASkip-Gram-%E6%98%AF%E2%80%9C%E4%B8%AD%E5%BF%83%E8%AF%8D%E9%A2%84%E6%B5%8B%E9%82%BB%E8%BF%91%E8%AF%8D%E2%80%9D"><span class="nav-number">6.2.1.</span> <span class="nav-text">要点 1：Skip-Gram 是“中心词预测邻近词”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%81%E7%82%B9-2%EF%BC%9A%E5%AE%83%E6%AF%94%E5%AE%8C%E6%95%B4%E7%A5%9E%E7%BB%8F%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E6%9B%B4%E7%AE%80%E5%8D%95"><span class="nav-number">6.2.2.</span> <span class="nav-text">要点 2：它比完整神经语言模型更简单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%81%E7%82%B9-3%EF%BC%9Asoftmax-%E5%88%86%E6%AF%8D%E5%AF%B9%E6%95%B4%E4%B8%AA%E8%AF%8D%E8%A1%A8%E6%B1%82%E5%92%8C%EF%BC%8C%E6%98%AF%E5%AE%83%E7%9A%84%E7%93%B6%E9%A2%88"><span class="nav-number">6.2.3.</span> <span class="nav-text">要点 3：softmax 分母对整个词表求和，是它的瓶颈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%81%E7%82%B9-4%EF%BC%9AWord2Vec-%E4%B8%8D%E6%AD%A2%E4%B8%80%E4%B8%AA%E7%89%88%E6%9C%AC"><span class="nav-number">6.2.4.</span> <span class="nav-text">要点 4：Word2Vec 不止一个版本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E4%B8%80%E8%8A%82%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="nav-number">6.3.</span> <span class="nav-text">这一节一句话总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Blum"
+      src="/blog/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Blum</p>
+  <div class="site-description" itemprop="description">人生苦短，何必荒废时光去遗憾？</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">240</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FmZXRtaW4=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;afetmin"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmtpbmdwZW5ndWluc0AxNjMuY29t" title="E-Mail → mailto:kingpenguins@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aC1DTg=="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+        <div class="pjax">
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/07%20%E8%B4%9F%E9%87%87%E6%A0%B7%EF%BC%88Negative%20Sampling%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-03-17</time>
+        <br>
+      07 负采样（Negative Sampling）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/01%20%E8%AF%8D%E6%B1%87%E8%A1%A8%E5%BE%81%EF%BC%88Word%20Representation%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-03-16</time>
+        <br>
+      01 词汇表征（Word Representation）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/05%20%E5%AD%A6%E4%B9%A0%E8%AF%8D%E5%B5%8C%E5%85%A5%EF%BC%88Learning%20Word%20Embeddings%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-03-17</time>
+        <br>
+      05 学习词嵌入（Learning Word Embeddings）
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/32%20Softmax%20%E5%9B%9E%E5%BD%92/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-05</time>
+        <br>
+      32 Softmax 回归
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/blog/19%20%E6%8C%87%E6%95%B0%E5%8A%A0%E6%9D%83%E5%B9%B3%E5%9D%87%E4%B8%AD%E7%9A%84%E5%81%8F%E5%B7%AE%E4%BF%AE%E6%AD%A3%EF%BC%88Bias%20Correction%20in%20Exponentially%20Weighted%20Averages%EF%BC%89/" rel="bookmark">
+        <time class="popular-posts-time">2026-01-02</time>
+        <br>
+      19 指数加权平均中的偏差修正（Bias Correction in Exponentially Weighted Averages）
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/06%20Word2Vec/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Blum">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="06 Word2Vec | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          06 Word2Vec
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-17 00:01:51" itemprop="dateCreated datePublished" datetime="2026-03-17T00:01:51+00:00">2026-03-17</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>885</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="这一节在讲什么"><a href="#这一节在讲什么" class="headerlink" title="这一节在讲什么"></a>这一节在讲什么</h2><p>　　这一节讲 <code>Word2Vec</code>​，重点是其中的 <code>Skip-Gram</code> 思想。</p>
+<p>　　它比上一节的完整神经语言模型更简单，也更高效。</p>
+<h2 id="Skip-Gram-的核心想法"><a href="#Skip-Gram-的核心想法" class="headerlink" title="Skip-Gram 的核心想法"></a>Skip-Gram 的核心想法</h2><p>　　不是“给很多上下文词，预测中间词”，<br>而是反过来：</p>
+<blockquote>
+<p>给一个中心词，去预测它附近可能出现的词。</p>
+</blockquote>
+<p>　　例如句子：</p>
+<p>$$<br>\text{I want a glass of orange juice to go along with my cereal.}<br>$$</p>
+<p>　　如果选 <code>orange</code> 作为上下文中心词，那么在它附近窗口内，<br>可能抽到这些目标词：</p>
+<ul>
+<li>​<code>juice</code></li>
+<li>​<code>glass</code></li>
+<li>​<code>my</code></li>
+</ul>
+<p>　　这些都能拿来组成训练样本。</p>
+<h2 id="它到底在学什么监督任务"><a href="#它到底在学什么监督任务" class="headerlink" title="它到底在学什么监督任务"></a>它到底在学什么监督任务</h2><p>　　给定上下文词 $c$，预测目标词 $t$。</p>
+<p>　　比如：</p>
+<ul>
+<li>上下文词：<code>orange</code></li>
+<li>目标词：<code>juice</code></li>
+</ul>
+<p>　　模型学习：</p>
+<p>$$<br>P(t \mid c)<br>$$</p>
+<h2 id="模型公式"><a href="#模型公式" class="headerlink" title="模型公式"></a>模型公式</h2><p>　　先把上下文词 one-hot 向量 $O_c$ 映射为嵌入向量：</p>
+<p>$$<br>e_c &#x3D; EO_c<br>$$</p>
+<p>　　然后用 softmax 计算目标词概率：</p>
+<h1 id="P-t-mid-c"><a href="#P-t-mid-c" class="headerlink" title="$$P(t \mid c)"></a>$$<br>P(t \mid c)</h1><p>\frac{\exp(\theta_t^T e_c)}{\sum_{j&#x3D;1}^{V} \exp(\theta_j^T e_c)}<br>$$</p>
+<p>　　其中：</p>
+<ul>
+<li>$e_c$ 是上下文词嵌入</li>
+<li>$\theta_t$ 是目标词对应的 softmax 参数</li>
+<li>$V$ 是词表大小</li>
+</ul>
+<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>　　课程里仍然用标准 softmax 交叉熵：</p>
+<p>$$<br>L(\hat y, y) &#x3D; -\sum_{i&#x3D;1}^{V} y_i \log \hat y_i<br>$$</p>
+<p>　　其中：</p>
+<ul>
+<li>$y$ 是目标词 one-hot 标签</li>
+<li>$\hat y$ 是预测分布</li>
+</ul>
+<h2 id="为什么这个方法会学出好词向量"><a href="#为什么这个方法会学出好词向量" class="headerlink" title="为什么这个方法会学出好词向量"></a>为什么这个方法会学出好词向量</h2><p>　　因为如果：</p>
+<ul>
+<li>​<code>orange</code>​ 常和 <code>juice</code>​、<code>glass</code>​、<code>fruit</code> 等词出现在附近</li>
+<li>​<code>apple</code> 也常和类似的词共现</li>
+</ul>
+<p>　　那模型为了提高预测效果，往往会把 <code>orange</code>​ 和 <code>apple</code> 学成相似向量。</p>
+<h2 id="这个方法的主要问题"><a href="#这个方法的主要问题" class="headerlink" title="这个方法的主要问题"></a>这个方法的主要问题</h2><p>　　最大问题是 softmax 太贵。</p>
+<p>　　因为每算一次：</p>
+<p>$$<br>P(t \mid c)<br>$$</p>
+<p>　　都要在分母里对整个词表求和：</p>
+<p>$$<br>\sum_{j&#x3D;1}^{V} \exp(\theta_j^T e_c)<br>$$</p>
+<p>　　如果词表很大，比如 10 万、100 万，训练就很慢。</p>
+<h2 id="课程提到的两个加速方向"><a href="#课程提到的两个加速方向" class="headerlink" title="课程提到的两个加速方向"></a>课程提到的两个加速方向</h2><h3 id="1-Hierarchical-Softmax"><a href="#1-Hierarchical-Softmax" class="headerlink" title="1. Hierarchical Softmax"></a>1. Hierarchical Softmax</h3><p>　　把“大词表分类”变成树上的一串二分类，<br>计算复杂度更像：</p>
+<p>$$<br>O(\log V)<br>$$</p>
+<p>　　而不是：</p>
+<p>$$<br>O(V)<br>$$</p>
+<h3 id="2-Negative-Sampling"><a href="#2-Negative-Sampling" class="headerlink" title="2. Negative Sampling"></a>2. Negative Sampling</h3><p>　　下一节重点讲，它更常用，也更容易理解。</p>
+<h2 id="Word2Vec-里还有-CBOW"><a href="#Word2Vec-里还有-CBOW" class="headerlink" title="Word2Vec 里还有 CBOW"></a>Word2Vec 里还有 CBOW</h2><p>　　课程也顺带提到另一个版本：<code>CBOW</code>（Continuous Bag of Words）。</p>
+<p>　　区别是：</p>
+<ul>
+<li>​<code>Skip-Gram</code>：中心词预测周围词</li>
+<li>​<code>CBOW</code>：周围词预测中心词</li>
+</ul>
+<p>　　经验上：</p>
+<ul>
+<li>CBOW 在小数据上也不错</li>
+<li>Skip-Gram 在大语料上常更强</li>
+</ul>
+<h2 id="训练样本怎么采才合理"><a href="#训练样本怎么采才合理" class="headerlink" title="训练样本怎么采才合理"></a>训练样本怎么采才合理</h2><p>　　课程还提到一点很重要：</p>
+<p>　　如果你直接按语料频率采上下文词，<br>像 <code>the</code>​、<code>of</code>​、<code>a</code> 这种高频词会占据太多训练资源。</p>
+<p>　　所以真实 Word2Vec 不会简单均匀采样，而会调采样分布，避免太多精力浪费在停用词上。</p>
+<h2 id="这一节最该记住的公式"><a href="#这一节最该记住的公式" class="headerlink" title="这一节最该记住的公式"></a>这一节最该记住的公式</h2><h3 id="上下文词嵌入"><a href="#上下文词嵌入" class="headerlink" title="上下文词嵌入"></a>上下文词嵌入</h3><p>$$<br>e_c &#x3D; EO_c<br>$$</p>
+<h3 id="Skip-Gram-softmax"><a href="#Skip-Gram-softmax" class="headerlink" title="Skip-Gram softmax"></a>Skip-Gram softmax</h3><h1 id="P-t-mid-c-1"><a href="#P-t-mid-c-1" class="headerlink" title="$$P(t \mid c)"></a>$$<br>P(t \mid c)</h1><p>\frac{\exp(\theta_t^T e_c)}{\sum_{j&#x3D;1}^{V} \exp(\theta_j^T e_c)}<br>$$</p>
+<h3 id="softmax-损失"><a href="#softmax-损失" class="headerlink" title="softmax 损失"></a>softmax 损失</h3><p>$$<br>L(\hat y, y) &#x3D; -\sum_{i&#x3D;1}^{V} y_i \log \hat y_i<br>$$</p>
+<h2 id="这一节最该记住的要点"><a href="#这一节最该记住的要点" class="headerlink" title="这一节最该记住的要点"></a>这一节最该记住的要点</h2><h3 id="要点-1：Skip-Gram-是“中心词预测邻近词”"><a href="#要点-1：Skip-Gram-是“中心词预测邻近词”" class="headerlink" title="要点 1：Skip-Gram 是“中心词预测邻近词”"></a>要点 1：Skip-Gram 是“中心词预测邻近词”</h3><p>　　这是 Word2Vec 最核心的直觉。</p>
+<h3 id="要点-2：它比完整神经语言模型更简单"><a href="#要点-2：它比完整神经语言模型更简单" class="headerlink" title="要点 2：它比完整神经语言模型更简单"></a>要点 2：它比完整神经语言模型更简单</h3><p>　　所以训练更高效。</p>
+<h3 id="要点-3：softmax-分母对整个词表求和，是它的瓶颈"><a href="#要点-3：softmax-分母对整个词表求和，是它的瓶颈" class="headerlink" title="要点 3：softmax 分母对整个词表求和，是它的瓶颈"></a>要点 3：softmax 分母对整个词表求和，是它的瓶颈</h3><p>　　这直接引出了下一节的负采样。</p>
+<h3 id="要点-4：Word2Vec-不止一个版本"><a href="#要点-4：Word2Vec-不止一个版本" class="headerlink" title="要点 4：Word2Vec 不止一个版本"></a>要点 4：Word2Vec 不止一个版本</h3><p>　　Skip-Gram 和 CBOW 都很经典。</p>
+<h2 id="这一节一句话总结"><a href="#这一节一句话总结" class="headerlink" title="这一节一句话总结"></a>这一节一句话总结</h2><p>　　Word2Vec 的 Skip-Gram 把“给一个词预测周围词”作为训练目标，用更简单的结构学习词向量，但它的 softmax 仍然昂贵，因此需要进一步的近似方法来提速。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/05%20%E5%AD%A6%E4%B9%A0%E8%AF%8D%E5%B5%8C%E5%85%A5%EF%BC%88Learning%20Word%20Embeddings%EF%BC%89/" rel="prev" title="05 学习词嵌入（Learning Word Embeddings）">
+                  <i class="fa fa-angle-left"></i> 05 学习词嵌入（Learning Word Embeddings）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/blog/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E5%B5%8C%E5%85%A5/07%20%E8%B4%9F%E9%87%87%E6%A0%B7%EF%BC%88Negative%20Sampling%EF%BC%89/" rel="next" title="07 负采样（Negative Sampling）">
+                  07 负采样（Negative Sampling） <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Blum</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">262k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">15:54</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"afetmin/blog","issue_term":"pathname","theme":"github-light"}</script>
+<script src="/blog/js/third-party/comments/utterances.js" defer></script>
+
+</body>
+</html>

@@ -128,7 +128,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">15</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">219</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a></li><li class="menu-item menu-item-categories"><a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a></li><li class="menu-item menu-item-archives"><a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">240</span></a></li><li class="menu-item menu-item-sitemap"><a href="/blog/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -193,13 +193,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/blog/archives/">
-          <span class="site-state-item-count">219</span>
+          <span class="site-state-item-count">240</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/blog/categories/">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -247,7 +247,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/13%20%E5%9C%A8%20m%20%E4%B8%AA%E6%A0%B7%E6%9C%AC%E4%B8%8A%E6%89%A7%E8%A1%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20on%20m%20Examples%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/32%20%E6%B7%B1%E5%BA%A6L%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.png">
@@ -265,7 +265,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/13%20%E5%9C%A8%20m%20%E4%B8%AA%E6%A0%B7%E6%9C%AC%E4%B8%8A%E6%89%A7%E8%A1%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20on%20m%20Examples%EF%BC%89/" class="post-title-link" itemprop="url">13 在 m 个样本上执行梯度下降（Gradient Descent on m Examples）</a>
+          <a href="/blog/32%20%E6%B7%B1%E5%BA%A6L%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="post-title-link" itemprop="url">32 深度L层神经网络</a>
         </h2>
 
         <div class="post-meta-container">
@@ -276,7 +276,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-08 08:14:43" itemprop="dateCreated datePublished" datetime="2025-12-08T08:14:43+00:00">2025-12-08</time>
+      <time title="创建时间：2025-12-24 19:03:25" itemprop="dateCreated datePublished" datetime="2025-12-24T19:03:25+00:00">2025-12-24</time>
     </span>
 
   
@@ -286,7 +286,200 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1k</span>
+      <span>917</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="一、什么是深层神经网络？"><a href="#一、什么是深层神经网络？" class="headerlink" title="一、什么是深层神经网络？"></a>一、什么是深层神经网络？</h2><ul>
+<li><p><strong>Logistic 回归</strong>：可视为 <strong>1 层神经网络</strong>（只有输出层，无隐藏层），属于“浅层模型”。</p>
+</li>
+<li><p><strong>单隐藏层神经网络</strong>：共 <strong>2 层</strong>（1 个隐藏层 + 1 个输出层）。</p>
+</li>
+<li><p><strong>深层神经网络（Deep Neural Network）</strong> ：具有 <strong>多个隐藏层</strong>（通常 ≥2），例如：</p>
+<ul>
+<li>2 个隐藏层 → <strong>3 层网络</strong></li>
+<li>5 个隐藏层 → <strong>6 层网络</strong></li>
+</ul>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/32%20%E6%B7%B1%E5%BA%A6L%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/%E4%BC%8A%E6%81%A9%C2%B7%E5%8F%A4%E5%BE%B7%E8%B4%B9%E6%B4%9B%E8%AE%BF%E8%B0%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Blum">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/%E4%BC%8A%E6%81%A9%C2%B7%E5%8F%A4%E5%BE%B7%E8%B4%B9%E6%B4%9B%E8%AE%BF%E8%B0%88/" class="post-title-link" itemprop="url">伊恩·古德费洛访谈</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-24 19:01:16" itemprop="dateCreated datePublished" datetime="2025-12-24T19:01:16+00:00">2025-12-24</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="一、Ian-Goodfellow-的学术成长路径"><a href="#一、Ian-Goodfellow-的学术成长路径" class="headerlink" title="一、Ian Goodfellow 的学术成长路径"></a>一、Ian Goodfellow 的学术成长路径</h2><h3 id="1-转向-AI-的契机"><a href="#1-转向-AI-的契机" class="headerlink" title="1. 转向 AI 的契机"></a>1. 转向 AI 的契机</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/%E4%BC%8A%E6%81%A9%C2%B7%E5%8F%A4%E5%BE%B7%E8%B4%B9%E6%B4%9B%E8%AE%BF%E8%B0%88/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/31%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E9%9A%8F%E6%9C%BA%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%88Random%20Initialization%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Blum">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DevDino 🦖">
+      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | DevDino 🦖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/31%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E9%9A%8F%E6%9C%BA%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%88Random%20Initialization%EF%BC%89/" class="post-title-link" itemprop="url">31 神经网络中的随机初始化（Random Initialization）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-21 20:09:12" itemprop="dateCreated datePublished" datetime="2025-12-21T20:09:12+00:00">2025-12-21</time>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -304,10 +497,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="🎯-课程目标"><a href="#🎯-课程目标" class="headerlink" title="🎯 课程目标"></a>🎯 课程目标</h2><p>　　本节课程的核心目标是：</p>
+          <h3 id="一、为什么不能将权重初始化为零？"><a href="#一、为什么不能将权重初始化为零？" class="headerlink" title="一、为什么不能将权重初始化为零？"></a>一、为什么不能将权重初始化为零？</h3><p>　　在逻辑回归（Logistic Regression）中，将权重 $\mathbf{w}$ 初始化为零是可以接受的。<br>但在<strong>神经网络</strong>中，如果将所有权重初始化为零，会导致一个严重问题：<strong>对称性问题（Symmetry Problem）</strong> 。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/13%20%E5%9C%A8%20m%20%E4%B8%AA%E6%A0%B7%E6%9C%AC%E4%B8%8A%E6%89%A7%E8%A1%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20on%20m%20Examples%EF%BC%89/#more" rel="contents">
+              <a class="btn" href="/blog/31%20%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E9%9A%8F%E6%9C%BA%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%88Random%20Initialization%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -338,7 +531,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/12%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20for%20Logistic%20Regression%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/30%20%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%9B%B4%E8%A7%89%EF%BC%88Backpropagation%20Intuition%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.png">
@@ -356,7 +549,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/12%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20for%20Logistic%20Regression%EF%BC%89/" class="post-title-link" itemprop="url">12 逻辑回归的梯度下降（Gradient Descent for Logistic Regression）</a>
+          <a href="/blog/30%20%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%9B%B4%E8%A7%89%EF%BC%88Backpropagation%20Intuition%EF%BC%89/" class="post-title-link" itemprop="url">30 反向传播直觉（Backpropagation Intuition）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -367,7 +560,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-08 07:57:27" itemprop="dateCreated datePublished" datetime="2025-12-08T07:57:27+00:00">2025-12-08</time>
+      <time title="创建时间：2025-12-21 20:00:15" itemprop="dateCreated datePublished" datetime="2025-12-21T20:00:15+00:00">2025-12-21</time>
     </span>
 
   
@@ -377,14 +570,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>865</span>
+      <span>1.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -395,11 +588,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>‍</p>
-<h3 id="1-逻辑回归模型回顾"><a href="#1-逻辑回归模型回顾" class="headerlink" title="1. 逻辑回归模型回顾"></a>1. 逻辑回归模型回顾</h3>
+          <h2 id="一、背景：从逻辑回归说起"><a href="#一、背景：从逻辑回归说起" class="headerlink" title="一、背景：从逻辑回归说起"></a>一、背景：从逻辑回归说起</h2><p>　　在逻辑回归中，我们有如下前向传播流程：</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/12%20%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20for%20Logistic%20Regression%EF%BC%89/#more" rel="contents">
+              <a class="btn" href="/blog/30%20%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%9B%B4%E8%A7%89%EF%BC%88Backpropagation%20Intuition%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -430,7 +622,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/11%20%E4%BD%BF%E7%94%A8%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%B1%82%E5%AF%BC%EF%BC%88Derivatives%20with%20a%20Computation%20Graph%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/29%20%E5%8D%95%E9%9A%90%E8%97%8F%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20for%20Neural%20Networks%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.png">
@@ -448,7 +640,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/11%20%E4%BD%BF%E7%94%A8%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%B1%82%E5%AF%BC%EF%BC%88Derivatives%20with%20a%20Computation%20Graph%EF%BC%89/" class="post-title-link" itemprop="url">11 使用计算图求导（Derivatives with a Computation Graph）</a>
+          <a href="/blog/29%20%E5%8D%95%E9%9A%90%E8%97%8F%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20for%20Neural%20Networks%EF%BC%89/" class="post-title-link" itemprop="url">29 单隐藏层神经网络的梯度下降（Gradient Descent for Neural Networks）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -459,7 +651,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-12-08 07:48:53" itemprop="dateCreated datePublished" datetime="2025-12-08T07:48:53+00:00">2025-12-08</time>
+      <time title="创建时间：2025-12-21 19:51:05" itemprop="dateCreated datePublished" datetime="2025-12-21T19:51:05+00:00">2025-12-21</time>
     </span>
 
   
@@ -469,14 +661,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>947</span>
+      <span>1.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -487,199 +679,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="🧠-课程核心思想"><a href="#🧠-课程核心思想" class="headerlink" title="🧠 课程核心思想"></a>🧠 课程核心思想</h2><p>　　在深度学习中，<strong>反向传播（Backpropagation）</strong>  是通过<strong>计算图（Computation Graph）</strong>  高效计算损失函数对各参数偏导数的核心机制。<br>本节通过一个具体例子，展示了如何利用<strong>链式法则（Chain Rule）</strong>  沿着计算图<strong>从右向左（backward pass）</strong>  逐层计算梯度。</p>
+          <h2 id="🧠-课程主题："><a href="#🧠-课程主题：" class="headerlink" title="🧠 课程主题："></a>🧠 课程主题：</h2><p>　　本课程讲解如何对具有<strong>一个隐藏层</strong>的神经网络实现<strong>梯度下降</strong>（Gradient Descent），核心在于<strong>前向传播</strong>（Forward Propagation）和<strong>反向传播</strong>（Backpropagation）的计算流程。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/blog/11%20%E4%BD%BF%E7%94%A8%E8%AE%A1%E7%AE%97%E5%9B%BE%E6%B1%82%E5%AF%BC%EF%BC%88Derivatives%20with%20a%20Computation%20Graph%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/10%20%E8%AE%A1%E7%AE%97%E5%9B%BE%EF%BC%88Computation%20Graph%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.png">
-      <meta itemprop="name" content="Blum">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="DevDino 🦖">
-      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | DevDino 🦖">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/10%20%E8%AE%A1%E7%AE%97%E5%9B%BE%EF%BC%88Computation%20Graph%EF%BC%89/" class="post-title-link" itemprop="url">10 计算图（Computation Graph）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-08 07:45:52" itemprop="dateCreated datePublished" datetime="2025-12-08T07:45:52+00:00">2025-12-08</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>799</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="1-背景与动机"><a href="#1-背景与动机" class="headerlink" title="1. 背景与动机"></a>1. 背景与动机</h3><p>　　在深度学习中，神经网络的计算通常分为两个阶段：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/10%20%E8%AE%A1%E7%AE%97%E5%9B%BE%EF%BC%88Computation%20Graph%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://afetmin.github.io/blog/09%20%E5%AF%BC%E6%95%B0%EF%BC%88Derivatives%EF%BC%89%E7%9A%84%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3%E4%B8%8E%E5%AE%9E%E4%BE%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.png">
-      <meta itemprop="name" content="Blum">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="DevDino 🦖">
-      <meta itemprop="description" content="人生苦短，何必荒废时光去遗憾？">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | DevDino 🦖">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/blog/09%20%E5%AF%BC%E6%95%B0%EF%BC%88Derivatives%EF%BC%89%E7%9A%84%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3%E4%B8%8E%E5%AE%9E%E4%BE%8B/" class="post-title-link" itemprop="url">09 导数（Derivatives）的直观理解与实例</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-12-08 07:42:34" itemprop="dateCreated datePublished" datetime="2025-12-08T07:42:34+00:00">2025-12-08</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>734</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="一、导数的本质：函数在某一点的“斜率”"><a href="#一、导数的本质：函数在某一点的“斜率”" class="headerlink" title="一、导数的本质：函数在某一点的“斜率”"></a>一、导数的本质：函数在某一点的“斜率”</h3><ul>
-<li><p><strong>导数</strong>（Derivative）描述的是函数在某一点处的<strong>瞬时变化率</strong>，也就是该点处切线的<strong>斜率</strong>。</p>
-</li>
-<li><p>对于函数 $f(a)$，其在点 $a$ 处的导数记作：</p>
-<p>$$<br>\frac{d}{da} f(a)<br>$$</p>
-<p>或简写为 $f’(a)$。</p>
-</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blog/09%20%E5%AF%BC%E6%95%B0%EF%BC%88Derivatives%EF%BC%89%E7%9A%84%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3%E4%B8%8E%E5%AE%9E%E4%BE%8B/#more" rel="contents">
+              <a class="btn" href="/blog/29%20%E5%8D%95%E9%9A%90%E8%97%8F%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Gradient%20Descent%20for%20Neural%20Networks%EF%BC%89/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -703,7 +706,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/blog/page/28/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/blog/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/44/">44</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/blog/page/30/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/blog/page/28/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/blog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/blog/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/48/">48</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/blog/page/30/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -726,14 +729,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">242k</span>
+    <span title="站点总字数">262k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">14:38</span>
+    <span title="站点阅读时长">15:54</span>
   </span>
 </div>
 
